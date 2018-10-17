@@ -15,3 +15,4 @@ void ADC1_DMA_Init(void);
 void DAM1_ADC_NVIC(void);
 void ADC_CH_Scan(void);//ÂË²¨
 #endif
+

@@ -42,7 +42,7 @@ extern WM_HWIN CreateR(void);
 */
 void MainTask(void) 
 { 
-	unsigned char  ucKeyCode;
+//	unsigned char  ucKeyCode;
 	GUI_Init();
 	WM_SetDesktopColor(GUI_BLUE);  
 	GUI_Clear();//«Â∆¡
