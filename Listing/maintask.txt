@@ -20,179 +20,190 @@
 000010  2004              MOVS     r0,#4
 000012  f7fffffe          BL       WM_SetCreateFlags
 ;;;50     	PROGBAR_SetDefaultSkin(PROGBAR_SKIN_FLEX);
-000016  483c              LDR      r0,|L1.264|
+000016  4840              LDR      r0,|L1.280|
 000018  f7fffffe          BL       PROGBAR_SetDefaultSkin
 ;;;51     	FRAMEWIN_SetDefaultSkin(FRAMEWIN_SKIN_FLEX);
-00001c  483b              LDR      r0,|L1.268|
+00001c  483f              LDR      r0,|L1.284|
 00001e  f7fffffe          BL       FRAMEWIN_SetDefaultSkin
 ;;;52     	PROGBAR_SetDefaultSkin(PROGBAR_SKIN_FLEX);
-000022  4839              LDR      r0,|L1.264|
+000022  483d              LDR      r0,|L1.280|
 000024  f7fffffe          BL       PROGBAR_SetDefaultSkin
 ;;;53     	BUTTON_SetDefaultSkin(BUTTON_SKIN_FLEX);
-000028  4839              LDR      r0,|L1.272|
+000028  483d              LDR      r0,|L1.288|
 00002a  f7fffffe          BL       BUTTON_SetDefaultSkin
 ;;;54     	CHECKBOX_SetDefaultSkin(CHECKBOX_SKIN_FLEX);
-00002e  4839              LDR      r0,|L1.276|
+00002e  483d              LDR      r0,|L1.292|
 000030  f7fffffe          BL       CHECKBOX_SetDefaultSkin
 ;;;55     	DROPDOWN_SetDefaultSkin(DROPDOWN_SKIN_FLEX);
-000034  4838              LDR      r0,|L1.280|
+000034  483c              LDR      r0,|L1.296|
 000036  f7fffffe          BL       DROPDOWN_SetDefaultSkin
 ;;;56     	SCROLLBAR_SetDefaultSkin(SCROLLBAR_SKIN_FLEX);
-00003a  4838              LDR      r0,|L1.284|
+00003a  483c              LDR      r0,|L1.300|
 00003c  f7fffffe          BL       SCROLLBAR_SetDefaultSkin
 ;;;57     	SLIDER_SetDefaultSkin(SLIDER_SKIN_FLEX);
-000040  4837              LDR      r0,|L1.288|
+000040  483b              LDR      r0,|L1.304|
 000042  f7fffffe          BL       SLIDER_SetDefaultSkin
 ;;;58     	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
-000046  4837              LDR      r0,|L1.292|
+000046  483b              LDR      r0,|L1.308|
 000048  f7fffffe          BL       HEADER_SetDefaultSkin
 ;;;59     	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
-00004c  4836              LDR      r0,|L1.296|
+00004c  483a              LDR      r0,|L1.312|
 00004e  f7fffffe          BL       RADIO_SetDefaultSkin
-;;;60     	CreateR();//ø™ª˙Ω¯»Îƒ⁄◊Ë≤‚ ‘ΩÁ√Ê
-000052  f7fffffe          BL       CreateR
-;;;61     	flag_Load_CC=1;//ø™ª˙∏∫‘ÿƒ¨»œΩ¯»ÎCCƒ£ Ω
-000056  4835              LDR      r0,|L1.300|
-000058  6801              LDR      r1,[r0,#0]  ; flagD
-00005a  f0410180          ORR      r1,r1,#0x80
-00005e  6001              STR      r1,[r0,#0]  ; flagD
-;;;62     	GPIO_ResetBits(GPIOC,GPIO_Pin_12);//CC
-000060  f44f5180          MOV      r1,#0x1000
-000064  4832              LDR      r0,|L1.304|
-000066  f7fffffe          BL       GPIO_ResetBits
-;;;63     	GPIO_SetBits(GPIOA,GPIO_Pin_15);//OFF
-00006a  f44f4100          MOV      r1,#0x8000
-00006e  4831              LDR      r0,|L1.308|
-000070  f7fffffe          BL       GPIO_SetBits
-;;;64     	Flag_Swtich_ON=0;
-000074  4c30              LDR      r4,|L1.312|
-000076  6820              LDR      r0,[r4,#0]  ; flagA
-000078  f0200040          BIC      r0,r0,#0x40
-00007c  6020              STR      r0,[r4,#0]  ; flagA
-;;;65     	while (1)
-;;;66     	{
-;;;67     		TIM_SetCompare1(TIM2,Contr_Current);//Œ»—πµÁ‘¥µÁ¡˜DAC
-00007e  4e2f              LDR      r6,|L1.316|
-;;;68     		TIM_SetCompare2(TIM2,Contr_Voltage);//Œ»—πµÁ‘¥µÁ—πDAC
-000080  4f2f              LDR      r7,|L1.320|
-;;;69     		DAC8531_Send(Contr_Laod);//º”‘ÿDAC÷µ
-000082  f8df80c0          LDR      r8,|L1.324|
-;;;70     		if(Flag_DAC_OFF==0)
-000086  f8df90c0          LDR      r9,|L1.328|
-00008a  f04f4580          MOV      r5,#0x40000000        ;67
-                  |L1.142|
-00008e  8831              LDRH     r1,[r6,#0]            ;67  ; Contr_Current
-000090  4628              MOV      r0,r5                 ;67
-000092  f7fffffe          BL       TIM_SetCompare1
-000096  8839              LDRH     r1,[r7,#0]            ;68  ; Contr_Voltage
-000098  4628              MOV      r0,r5                 ;68
-00009a  f7fffffe          BL       TIM_SetCompare2
-00009e  f8b80000          LDRH     r0,[r8,#0]            ;69  ; Contr_Laod
-0000a2  f7fffffe          BL       DAC8531_Send
-0000a6  f8d90000          LDR      r0,[r9,#0]  ; flagB
-0000aa  0700              LSLS     r0,r0,#28
-0000ac  d401              BMI      |L1.178|
-;;;71     		{
-;;;72     			Transformation_ADC();
-0000ae  f7fffffe          BL       Transformation_ADC
-                  |L1.178|
-;;;73     		}
-;;;74     		if(Flag_ADC_Full==1)
-0000b2  6820              LDR      r0,[r4,#0]  ; flagA
-0000b4  0781              LSLS     r1,r0,#30
-0000b6  d504              BPL      |L1.194|
-;;;75     		{
-;;;76     			Flag_ADC_Full=0;
-0000b8  f0200002          BIC      r0,r0,#2
-0000bc  6020              STR      r0,[r4,#0]  ; flagA
-;;;77     			ADC_CH_Scan();//ADC¬À≤®
-0000be  f7fffffe          BL       ADC_CH_Scan
+;;;60         GPIO_ResetBits(GPIOC,GPIO_Pin_13);
+000052  4c3a              LDR      r4,|L1.316|
+000054  f44f5500          MOV      r5,#0x2000
+000058  4629              MOV      r1,r5
+00005a  4620              MOV      r0,r4
+00005c  f7fffffe          BL       GPIO_ResetBits
+;;;61         GPIO_SetBits(GPIOC,GPIO_Pin_13);//ÂÖ≥Èó≠ÁîµÊ∫êËæìÂá∫ÁªßÁîµÂô®
+000060  4629              MOV      r1,r5
+000062  4620              MOV      r0,r4
+000064  f7fffffe          BL       GPIO_SetBits
+;;;62     	CreateR();//ø™ª˙Ω¯»Îƒ⁄◊Ë≤‚ ‘ΩÁ√Ê
+000068  f7fffffe          BL       CreateR
+;;;63     	flag_Load_CC=1;//ø™ª˙∏∫‘ÿƒ¨»œΩ¯»ÎCCƒ£ Ω
+00006c  4934              LDR      r1,|L1.320|
+00006e  680a              LDR      r2,[r1,#0]  ; flagD
+000070  f0420280          ORR      r2,r2,#0x80
+000074  600a              STR      r2,[r1,#0]  ; flagD
+;;;64     	GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+000076  1521              ASRS     r1,r4,#20
+000078  4620              MOV      r0,r4
+00007a  f7fffffe          BL       GPIO_ResetBits
+;;;65     	GPIO_SetBits(GPIOA,GPIO_Pin_15);//OFF
+00007e  00a9              LSLS     r1,r5,#2
+000080  4830              LDR      r0,|L1.324|
+000082  f7fffffe          BL       GPIO_SetBits
+;;;66     	Flag_Swtich_ON=0;
+000086  4c30              LDR      r4,|L1.328|
+000088  6820              LDR      r0,[r4,#0]  ; flagA
+00008a  f0200040          BIC      r0,r0,#0x40
+00008e  6020              STR      r0,[r4,#0]  ; flagA
+;;;67         
+;;;68     	while (1)
+;;;69     	{
+;;;70     		TIM_SetCompare1(TIM2,Contr_Current);//Œ»—πµÁ‘¥µÁ¡˜DAC
+000090  4e2e              LDR      r6,|L1.332|
+;;;71     		TIM_SetCompare2(TIM2,Contr_Voltage);//Œ»—πµÁ‘¥µÁ—πDAC
+000092  4f2f              LDR      r7,|L1.336|
+;;;72     		DAC8531_Send(Contr_Laod);//º”‘ÿDAC÷µ
+000094  f8df80bc          LDR      r8,|L1.340|
+;;;73     		if(Flag_DAC_OFF==0)
+000098  f8df90bc          LDR      r9,|L1.344|
+00009c  046d              LSLS     r5,r5,#17             ;70
+                  |L1.158|
+00009e  8831              LDRH     r1,[r6,#0]            ;70  ; Contr_Current
+0000a0  4628              MOV      r0,r5                 ;70
+0000a2  f7fffffe          BL       TIM_SetCompare1
+0000a6  8839              LDRH     r1,[r7,#0]            ;71  ; Contr_Voltage
+0000a8  4628              MOV      r0,r5                 ;71
+0000aa  f7fffffe          BL       TIM_SetCompare2
+0000ae  f8b80000          LDRH     r0,[r8,#0]            ;72  ; Contr_Laod
+0000b2  f7fffffe          BL       DAC8531_Send
+0000b6  f8d90000          LDR      r0,[r9,#0]  ; flagB
+0000ba  0700              LSLS     r0,r0,#28
+0000bc  d401              BMI      |L1.194|
+;;;74     		{
+;;;75     			Transformation_ADC();
+0000be  f7fffffe          BL       Transformation_ADC
                   |L1.194|
-;;;78     		}
-;;;79     		AD7689_Scan_CH();//∂¡»°AD7689∏˜Õ®µ¿AD÷µ
-0000c2  f7fffffe          BL       AD7689_Scan_CH
-;;;80     		if(UART_Buffer_Rece_flag==1)
-0000c6  6821              LDR      r1,[r4,#0]  ; flagA
-0000c8  0688              LSLS     r0,r1,#26
-0000ca  d504              BPL      |L1.214|
-;;;81     		{
-;;;82     			UART_Buffer_Rece_flag=0;
-0000cc  f0210020          BIC      r0,r1,#0x20
-0000d0  6020              STR      r0,[r4,#0]  ; flagA
-;;;83     			UART_Action();
-0000d2  f7fffffe          BL       UART_Action
-                  |L1.214|
-;;;84     		}
-;;;85     		if(Flag_Key_Scan==1)
+;;;76     		}
+;;;77     		if(Flag_ADC_Full==1)
+0000c2  6820              LDR      r0,[r4,#0]  ; flagA
+0000c4  0781              LSLS     r1,r0,#30
+0000c6  d504              BPL      |L1.210|
+;;;78     		{
+;;;79     			Flag_ADC_Full=0;
+0000c8  f0200002          BIC      r0,r0,#2
+0000cc  6020              STR      r0,[r4,#0]  ; flagA
+;;;80     			ADC_CH_Scan();//ADC¬À≤®
+0000ce  f7fffffe          BL       ADC_CH_Scan
+                  |L1.210|
+;;;81     		}
+;;;82     		AD7689_Scan_CH();//∂¡»°AD7689∏˜Õ®µ¿AD÷µ
+0000d2  f7fffffe          BL       AD7689_Scan_CH
+;;;83     		if(UART_Buffer_Rece_flag==1)
 0000d6  6821              LDR      r1,[r4,#0]  ; flagA
-0000d8  0708              LSLS     r0,r1,#28
-0000da  d50a              BPL      |L1.242|
-;;;86     		{
-;;;87     			Flag_Key_Scan=0;
-0000dc  f0210008          BIC      r0,r1,#8
+0000d8  0688              LSLS     r0,r1,#26
+0000da  d504              BPL      |L1.230|
+;;;84     		{
+;;;85     			UART_Buffer_Rece_flag=0;
+0000dc  f0210020          BIC      r0,r1,#0x20
 0000e0  6020              STR      r0,[r4,#0]  ; flagA
-;;;88     			NewKey=TM1650_Read_KEY();
-0000e2  f7fffffe          BL       TM1650_Read_KEY
-0000e6  4919              LDR      r1,|L1.332|
-0000e8  7008              STRB     r0,[r1,#0]
-;;;89     			Flag_Key_Scan = 1;
-0000ea  6820              LDR      r0,[r4,#0]  ; flagA
-0000ec  f0400008          ORR      r0,r0,#8
+;;;86     			UART_Action();
+0000e2  f7fffffe          BL       UART_Action
+                  |L1.230|
+;;;87     		}
+;;;88     		if(Flag_Key_Scan==1)
+0000e6  6821              LDR      r1,[r4,#0]  ; flagA
+0000e8  0708              LSLS     r0,r1,#28
+0000ea  d50a              BPL      |L1.258|
+;;;89     		{
+;;;90     			Flag_Key_Scan=0;
+0000ec  f0210008          BIC      r0,r1,#8
 0000f0  6020              STR      r0,[r4,#0]  ; flagA
-                  |L1.242|
-;;;90     		}
-;;;91     		Key_Funtion();//º¸≈Ã¥¶¿Ì
-0000f2  f7fffffe          BL       Key_Funtion
-;;;92     		Temp_Comapre();//∑Á…»øÿ÷∆
-0000f6  f7fffffe          BL       Temp_Comapre
-;;;93     		BEEP_Ring();//∑‰√˘∆˜
-0000fa  f7fffffe          BL       BEEP_Ring
-;;;94     		GUI_Delay(2);//GUIÀ¢–¬
-0000fe  2002              MOVS     r0,#2
-000100  f7fffffe          BL       GUI_Delay
-000104  e7c3              B        |L1.142|
-;;;95     	}
-;;;96       
-;;;97     }
-;;;98     /***************************** ∞≤∏ª¿≥µÁ◊” www.armfly.com (END OF FILE) *********************************/
+;;;91     			NewKey=TM1650_Read_KEY();
+0000f2  f7fffffe          BL       TM1650_Read_KEY
+0000f6  4919              LDR      r1,|L1.348|
+0000f8  7008              STRB     r0,[r1,#0]
+;;;92     			Flag_Key_Scan = 1;
+0000fa  6820              LDR      r0,[r4,#0]  ; flagA
+0000fc  f0400008          ORR      r0,r0,#8
+000100  6020              STR      r0,[r4,#0]  ; flagA
+                  |L1.258|
+;;;93     		}
+;;;94     		Key_Funtion();//º¸≈Ã¥¶¿Ì
+000102  f7fffffe          BL       Key_Funtion
+;;;95     		Temp_Comapre();//∑Á…»øÿ÷∆
+000106  f7fffffe          BL       Temp_Comapre
+;;;96     		BEEP_Ring();//∑‰√˘∆˜
+00010a  f7fffffe          BL       BEEP_Ring
+;;;97     		GUI_Delay(2);//GUIÀ¢–¬
+00010e  2002              MOVS     r0,#2
+000110  f7fffffe          BL       GUI_Delay
+000114  e7c3              B        |L1.158|
+;;;98     	}
+;;;99       
+;;;100    }
+;;;101    /***************************** ∞≤∏ª¿≥µÁ◊” www.armfly.com (END OF FILE) *********************************/
                           ENDP
 
-000106  0000              DCW      0x0000
-                  |L1.264|
-                          DCD      PROGBAR_DrawSkinFlex
-                  |L1.268|
-                          DCD      FRAMEWIN_DrawSkinFlex
-                  |L1.272|
-                          DCD      BUTTON_DrawSkinFlex
-                  |L1.276|
-                          DCD      CHECKBOX_DrawSkinFlex
+000116  0000              DCW      0x0000
                   |L1.280|
-                          DCD      DROPDOWN_DrawSkinFlex
+                          DCD      PROGBAR_DrawSkinFlex
                   |L1.284|
-                          DCD      SCROLLBAR_DrawSkinFlex
+                          DCD      FRAMEWIN_DrawSkinFlex
                   |L1.288|
-                          DCD      SLIDER_DrawSkinFlex
+                          DCD      BUTTON_DrawSkinFlex
                   |L1.292|
-                          DCD      HEADER_DrawSkinFlex
+                          DCD      CHECKBOX_DrawSkinFlex
                   |L1.296|
-                          DCD      RADIO_DrawSkinFlex
+                          DCD      DROPDOWN_DrawSkinFlex
                   |L1.300|
-                          DCD      flagD
+                          DCD      SCROLLBAR_DrawSkinFlex
                   |L1.304|
-                          DCD      0x40020800
+                          DCD      SLIDER_DrawSkinFlex
                   |L1.308|
-                          DCD      0x40020000
+                          DCD      HEADER_DrawSkinFlex
                   |L1.312|
-                          DCD      flagA
+                          DCD      RADIO_DrawSkinFlex
                   |L1.316|
-                          DCD      Contr_Current
+                          DCD      0x40020800
                   |L1.320|
-                          DCD      Contr_Voltage
+                          DCD      flagD
                   |L1.324|
-                          DCD      Contr_Laod
+                          DCD      0x40020000
                   |L1.328|
-                          DCD      flagB
+                          DCD      flagA
                   |L1.332|
+                          DCD      Contr_Current
+                  |L1.336|
+                          DCD      Contr_Voltage
+                  |L1.340|
+                          DCD      Contr_Laod
+                  |L1.344|
+                          DCD      flagB
+                  |L1.348|
                           DCD      NewKey
 
 ;*** Start embedded assembler ***

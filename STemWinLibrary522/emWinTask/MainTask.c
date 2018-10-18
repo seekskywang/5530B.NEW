@@ -57,11 +57,14 @@ void MainTask(void)
 	SLIDER_SetDefaultSkin(SLIDER_SKIN_FLEX);
 	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
 	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
+    GPIO_ResetBits(GPIOC,GPIO_Pin_13);
+    GPIO_SetBits(GPIOC,GPIO_Pin_13);//å…³é—­ç”µæºè¾“å‡ºç»§ç”µå™¨
 	CreateR();//¿ª»ú½øÈëÄÚ×è²âÊÔ½çÃæ
 	flag_Load_CC=1;//¿ª»ú¸ºÔØÄ¬ÈÏ½øÈëCCÄ£Ê½
-	GPIO_ResetBits(GPIOC,GPIO_Pin_12);//CC
+	GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
 	GPIO_SetBits(GPIOA,GPIO_Pin_15);//OFF
 	Flag_Swtich_ON=0;
+    
 	while (1)
 	{
 		TIM_SetCompare1(TIM2,Contr_Current);//ÎÈÑ¹µçÔ´µçÁ÷DAC

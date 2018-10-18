@@ -1,21 +1,21 @@
 L 1 "..\drive\flash.c"
 N/******************** (C) COPYRIGHT 2014 KUNKIN********************
-N * ÎÄ¼þÃû  £ºFLASH.C
-N * ×÷Õß    £ºÀîÕñ
-N * ÃèÊö    £ºSTM8L151K4T6 FLASHÓ¦ÓÃº¯Êý
-N * ÄÚÈÝ    £º
-N * Ó²¼þÁ¬½Ó£º
-N * ÐÞ¸ÄÈÕÆÚ£º2014-12-22
+N * ¦Ó??  ¨²FLASH.C
+N * ??    ¨²n?
+N * ??    ¨²STM8L151K4T6 FLASH????
+N * ??    ¨²
+N * ??l?¨²
+N * ???¨·¨²2014-12-22
 N********************************************************************/
-N#include "my_register.h" //NOPÖ¸ÁîÔÚÕâ
+N#include "my_register.h" //NOP????
 L 1 "..\Include\my_register.h" 1
 N/******************** (C) COPYRIGHT 2014 KUNKIN********************
-N * ÎÄ¼þÃû  £ºmy_register
-N * ×÷Õß    £ºÀîÕñ
-N * ÃèÊö    £º¿âº¯Êý°æ
-N * ÄÚÈÝ    £ºDefine register¶¨ÒåÏµÍ³Ê¹ÓÃµÄ¼Ä´æÆ÷£¬È«¾Ö±äÁ¿
-N * ×¢Òâ		 £ºÍ·ÎÄ¼þÖÐÖ»ÄÜÓÐÉùÃ÷£¬²»ÄÜÓÐ¶¨Òå
-N * ÐÞ¸ÄÈÕÆÚ£º2014-12-9
+N * ¦Ó??  ¨²my_register
+N * ??    ¨²n?
+N * ??    ¨²????
+N * ??    ¨²Define register??????????¨¬???
+N * ??		 ¨²?¦Ó???????¨¬?????
+N * ???¨·¨²2014-12-9
 N*********************************************************************/
 N
 N#include "STM32F4xx.h"
@@ -34714,51 +34714,82 @@ L 11 "..\Include\my_register.h" 2
 N#ifndef __my_register_h__
 N#define __my_register_h__
 N//=============================================================================
-N
+Nvoid Write_Limits(void);
+Nvoid Wrtite_step(void);
+Nvoid OC_ADD(void);
+Nvoid Wrtite_S(void);
+Nvoid Write_oct(void);
+Nvoid Write_alarm(void);
+Nvoid Write_btype(void);
+Nvoid Write_LOAD(void);
+Nvoid Write_info(void);
+Nvoid OC_CHECK(void);
+Nvoid INPUT_POW(char* num);  
+Nvoid INPUT_NUM(char* num); 
+Nvoid INPUT_CDC(char* num); 
+Nvoid INPUT_C(char* num);  
+Nvoid INPUT_LOAD(char* num);  
+Nvoid INPUT_INFO(vu8 num);
+Nvoid SET_OP_DOWN(void);
+Nvoid SET_OP_UP(void);
+Nvoid SET_OP_RIGHT(void);
+Nvoid SET_OP_LEFT(void);
+Nvoid PARA_SET(void);
+Nvoid SYS_INFO_RIGHT(void);
+Nvoid SYS_INFO_LEFT(void);
+Nvoid SYS_INFO_UP(void);
+Nvoid SYS_INFO_DOWN(void);
+Nvoid INPUT_INFO(vu8 num);
+Nvoid CDC_OP_DOWN(void);
+Nvoid CDC_OP_UP(void);
+Nvoid CDC_OP_LEFT(void);
+Nvoid CDC_OP_RIGHT(void);
+Nvoid CDC_SET(void);
+Nvoid INPUT_CDC(char* num); 
 N//=============================================================================
-N#define NOP   __nop();	  //¿ÕÖ¸Áî
+N#define NOP   __nop();	  //???
 N
 N//============================================================================
 Nextern struct bitDefine flagA,flagB,flagC,flagD,flagE,flagF,flagG;
-N#define   Flag_ADC_Full             (flagA.bit1)//DMA´«ÊäÍê³É±êÖ¾Î» 
-N#define   Flag_BEEP						    	(flagA.bit2)//·äÃùÆ÷´¥·¢±êÖ¾
-N#define   Flag_Key_Scan							(flagA.bit3)//°´¼ü¶¨Ê±É¨Ãè±êÖ¾
-N#define   UART_SEND_flag						(flagA.bit4)//´®¿Ú·¢ËÍÍê³É±êÖ¾
-N#define   UART_Buffer_Rece_flag			(flagA.bit5)//´®¿Ú½ÓÊÕÍê³É±êÖ¾
-N#define   Flag_Swtich_ON      			(flagA.bit6)//Æô¶¯°´¼ü´¦ÓÚON±êÖ¾
-N#define   Flag_0_5S      		      	(flagA.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ÉÁË¸±êÖ¾
+N#define   Flag_ADC_Full             (flagA.bit1)//DMA??????¦Ë 
+N#define   Flag_BEEP						    	(flagA.bit2)//???????
+N#define   Flag_Key_Scan							(flagA.bit3)//§Õ???????
+N#define   UART_SEND_flag						(flagA.bit4)//????????
+N#define   UART_Buffer_Rece_flag			(flagA.bit5)//????????
+N#define   Flag_Swtich_ON      			(flagA.bit6)//??§Õ???ON??
+N#define   Flag_0_5S      		      	(flagA.bit7)//§¥?????????
 N
-N#define   Flag_1S      		         	(flagB.bit0)//ÏÔÊ¾ÉèÖÃµçÁ÷ÉÁË¸±êÖ¾
-N#define   Flag_5S      		        	(flagB.bit1)//ÍË³öÉèÖÃ×´Ì¬±êÖ¾
-N#define   Flag_Long                 (flagB.bit2)//°´¼ü³¤°´±êÖ¾
-N#define   Flag_DAC_OFF              (flagB.bit3)//æ˜¯å¦è½¬æ¢DACæŽ§åˆ¶å€¼æ ‡å¿—
-N#define   Flag_SetA                 (flagB.bit5)//½øÈëÉèÖÃµçÁ÷±êÖ¾Î»
-N#define   Flag_SetV                 (flagB.bit6)//½øÈëÉèÖÃµçÑ¹±êÖ¾Î» 
-N#define   Flag_DisSet               (flagB.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ºÍµçÁ÷±êÖ¾Î»
+N#define   Flag_1S      		         	(flagB.bit0)//§¥????¡¤????
+N#define   Flag_5S      		        	(flagB.bit1)//????????
+N#define   Flag_Long                 (flagB.bit2)//§Õ??§Õ??
+N#define   Flag_DAC_OFF              (flagB.bit3)//ÊÇ·ñ×ª»»DAC¿ØÖÆÖµ±êÖ¾
+N#define   Flag_SetA                 (flagB.bit5)//?????¡¤??¦Ë
+N#define   Flag_SetV                 (flagB.bit6)//????????¦Ë 
+N#define   Flag_DisSet               (flagB.bit7)//§¥???????¡¤??¦Ë
 N
-N#define   Flag_GE                   (flagC.bit0)//¸öÎ»ÉÁË¸±êÖ¾
-N#define   Flag_SHI                  (flagC.bit1)//Ê®Î»ÉÁË¸±êÖ¾
-N#define   Flag_BAI                  (flagC.bit2)//°ÙÎ»ÉÁË¸±êÖ¾
-N#define   Flag_QIAN                 (flagC.bit3)//Ç§Î»ÉÁË¸±êÖ¾
-N#define   Flag_Beep_OFF             (flagC.bit6)//·äÃùÆ÷¹Ø±Õ±êÖ¾
+N#define   Flag_GE                   (flagC.bit0)//?¦Ë????
+N#define   Flag_SHI                  (flagC.bit1)//?¦Ë????
+N#define   Flag_BAI                  (flagC.bit2)//?¦Ë????
+N#define   Flag_QIAN                 (flagC.bit3)//?¦Ë????
+N#define   Flag_Beep_OFF             (flagC.bit6)//???????
 N
-N#define   flag_Tim_USART            (flagD.bit0)//´®¿Ú¼ÆËãÇåÁã±êÖ¾
-N#define   flag_Test                 (flagD.bit1)//×Ô¶¯²âÊÔÆðÍ£±êÖ¾
-N#define   flag_Test_PASS            (flagD.bit2)//×Ô¶¯²âÊÔPASS±êÖ¾
-N#define   flag_Test_FAIL            (flagD.bit3)//×Ô¶¯²âÊÔFAIL±êÖ¾
-N#define   flag_Test_Time            (flagD.bit4)//×Ô¶¯²âÊÔµÈ´ýÊ±¼ä±êÖ¾
-N#define   flag_Test_Start           (flagD.bit5)//×Ô¶¯²âÊÔ±È½Ï¿ªÊ¼±êÖ¾
-N#define   flag_Test_Min             (flagD.bit6)//×Ô¶¯²âÊÔÏÂÏÞ±êÖ¾
-N#define   flag_Load_CC              (flagD.bit7)//¸ºÔØCC/CVÄ£Ê½±êÖ¾Î»
+N#define   flag_Tim_USART            (flagD.bit0)//?????¡ê??
+N#define   flag_Test                 (flagD.bit1)//????????
+N#define   flag_Test_PASS            (flagD.bit2)//????PASS??
+N#define   flag_Test_FAIL            (flagD.bit3)//????FAIL??
+N#define   flag_Test_Time            (flagD.bit4)//??????????
+N#define   flag_Test_Start           (flagD.bit5)//??????????
+N#define   flag_Test_Min             (flagD.bit6)//?????§°??
+N#define   flag_Load_CC              (flagD.bit7)//??CC/CV????¦Ë
 N
-N#define   flag_Test_Door             (flagE.bit0)//×Ô¶¯²âÊÔÃÅ¼÷±êÖ¾
-N#define   flag_Test_SetTime          (flagE.bit1)//×Ô¶¯²âÊÔÊ±¼ä±êÖ¾ 
-N#define   flag_OVP                   (flagE.bit2)//OVP±êÖ¾
-N#define   flag_OCP                   (flagE.bit3)//OCP±êÖ¾
-N#define   flag_Doub                  (flagE.bit4)//°´¼üË«»÷
-N#define   flag_t_Doub                (flagE.bit5)//°´¼üË«»÷¼ÆÊ±±êÖ¾
-N#define   flag_Time_SW               (flagE.bit6)//¶¨Ê±¹¦ÄÜ¿ªÆô±êÖ¾
-N#define   flag_CC_MODE               (flagE.bit7)//¹¤×÷Ä£Ê½±êÖ¾
+N#define   flag_Test_Door             (flagE.bit0)//????????
+N#define   flag_Test_SetTime          (flagE.bit1)//???????? 
+N#define   flag_OVP                   (flagE.bit2)//OVP??
+N#define   flag_OCP                   (flagE.bit3)//OCP??
+N#define   flag_Doub                  (flagE.bit4)//§Õ???
+N#define   flag_t_Doub                (flagE.bit5)//§Õ???????
+N#define   flag_Time_SW               (flagE.bit6)//????????
+N#define   flag_CC_MODE               (flagE.bit7)//??????
 N
 N#define   flag_Adjust                (flagF.bit0)//
 N#define   flag_ADJ_ON                (flagF.bit1)//
@@ -34781,7 +34812,7 @@ N//=============================================================================
 Nextern vu32 GE_V;
 Nextern vu32 SHI_V;
 Nextern vu32 BAI_V;
-Nextern vu32 QIAN_V;  //ÊýÂë¹ÜÉ¨Ãè¶ÎÂë
+Nextern vu32 QIAN_V;  //???????
 Nextern vu32 GE_A;
 Nextern vu32 SHI_A;
 Nextern vu32 BAI_A;
@@ -34792,7 +34823,7 @@ Nextern vu8 DAC_Flag;
 Nextern vu8 Beep_Flag;
 Nextern vu8 t_beep;
 Nextern vu8 t_KeyScan;
-Nextern vu8 t_LEDScan;  //¶¨Ê±¼ÆÊýÆ÷
+Nextern vu8 t_LEDScan;  //?????
 Nextern vu8 t_KEYON;
 Nextern vu16 t_0_5S;
 Nextern vu16 t_1S;
@@ -34805,8 +34836,8 @@ Nextern vu16 t_ON_V;
 Nextern vu16 t_OFF_A;
 Nextern vu16 t_ON_A;
 Nextern vu8 t_USART;
-Nextern vu16 ADJ_Write;//Ð£×¼Ê±ÐèÐ´ÈëµÄÊµ¼ÊÖµ
-Nextern vu8 OFFSET_Zore;//ÁãµãÖµ
+Nextern vu16 ADJ_Write;//§µ???§Õ?????
+Nextern vu8 OFFSET_Zore;//¡ê??
 Nextern vu8 ADDR;
 Nextern vu8 t_lock;
 Nextern vu8 t_onoff;
@@ -34817,12 +34848,12 @@ Nextern vu16 Test_Time1;
 Nextern vu16 Time_sw;
 Nextern vu16 Test_Daley;
 Nextern vu16 Test_C_Door;
-Nextern vu16 TEMP_OFFSET;//ÎÂ¶È²¹³¥Öµ
+Nextern vu16 TEMP_OFFSET;//?????
 N//--------------------------
-Nextern vu8 UART_Buffer_Size;//´®¿Ú½ÓÊÕÊý¾Ý³¤¶È
+Nextern vu8 UART_Buffer_Size;//????????
 Nextern vu8 Transmit_BUFFERsize;
 N//---------------------------
-Nextern vu16 NTC_value;   //ADÖµ
+Nextern vu16 NTC_value;   //AD?
 Nextern vu16 Imon_value;
 Nextern vu32 Imon1_value;
 Nextern vu16 Vmon_value;
@@ -34834,69 +34865,271 @@ Nextern  float DISS_POW_Voltage;
 Nextern float DISS_Current;
 Nextern float DISS_POW_Current;
 Nextern float DISS_R;
+Nextern vu16 steptime;
+Nextern vu8 r_stable;
+Nextern char set_limit[5];
+Nextern vu8 bit;
+Nextern vu8 bit1;
+Nextern vu8 dot_flag;
+Nextern vu8 page_sw;
+Nextern vu8 para_set1;
+Nextern vu8 para_set2;
+Nextern vu8 para_set3;
+Nextern vu8 para_set4;
+Nextern vu8 oct_sw;
+Nextern vu8 set_sw;
+Nextern vu8 charge_step;
+Nextern vu8 cutoff_flag;
+Nextern vu8 lang;
+Nextern vu8 r_raly;
+Nextern vu16 steptime;
+Nextern vu8 alert_flag;
+Nextern vu8 t_onoff;
+Nextern vu8 ocstop;
+Nextern float temp;
+Nextern vu8 mode_sw;
+Nextern vu16 stepcount;
+Nextern vu16 battery_c;
+Nextern float bc_raw;
+Nextern vu8 track;
+Nextern vu8 clear_flag1;
+Nextern vu8 clear_flag2;
+Nextern vu8 clear_flag3;
+Nextern vu8 pass;
+Nextern vu8 b_type;
+Nextern vu8 buffer;
+Nextern float clear_v;
+Nextern float clear_pv;
+Nextern float clear_lv;
+Nextern float temp;
+Nextern vu8 set_loop_count;
 N
-Nextern vu32 Run_Control[14];	
+Nextern vu32 Run_Control[41];	
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
-N#define SET_Voltage 	    	        Run_Control[1]  //µçÔ´Éè¶¨µçÑ¹
-N#define SET_Current	    	    		  Run_Control[2]  //µçÔ´Éè¶¨µçÁ÷
-N#define SET_Voltage_Laod 					  Run_Control[3]  //¸ºÔØÉè¶¨µçÑ¹
-N#define SET_Current_Laod					  Run_Control[4]  //¸ºÔØÉè¶¨µçÁ÷
+N#define SET_Voltage 	    	        Run_Control[1]  //??????
+N#define SET_Current	    	    		  Run_Control[2]  //?????¡¤
+N#define SET_Voltage_Laod 					  Run_Control[3]  //??????
+N#define SET_Current_Laod					  Run_Control[4]  //?????¡¤
 N#define LOCK_KEY								    Run_Control[5]  //
 N#define BEEP_KEY								    Run_Control[6]  //
 N#define STRONG_KEY							    Run_Control[7]  //
 N
 N#define MODE_Woke							   	  Run_Control[8]  //
-N#define POW_Voltage	    	          Run_Control[9]  //µçÔ´²âÁ¿µçÑ¹
-N#define Voltage	    	              Run_Control[10]  //¸ºÔØ²âÁ¿µçÑ¹
-N#define Current	    	    		      Run_Control[11]  //µçÔ´²âÁ¿µçÁ÷
-N#define Laod_Current	    		      Run_Control[12]  //¸ºÔØ²âÁ¿µçÁ÷
-N#define R_VLUE											Run_Control[13]  //ÄÚ×èÖµ
+N#define POW_Voltage	    	            Run_Control[9]  //?????
+N#define Voltage	    	                Run_Control[10]  //?????
+N#define Current	    	    		    Run_Control[11]  //????¡¤
+N#define Laod_Current	    		    Run_Control[12]  //????¡¤
+N#define R_VLUE							Run_Control[13]  //???
+N#define set_max_v						Run_Control[14]  //ÉèÖÃ²âÁ¿µçÑ¹ÉÏÏÞ
+N#define set_min_v						Run_Control[15]  //ÉèÖÃ²âÁ¿µçÑ¹ÏÂÏÞ
+N#define set_max_r						Run_Control[16]  //ÉèÖÃ²âÁ¿ÄÚ×èÉÏÏÞ
+N#define set_min_r						Run_Control[17]  //ÉèÖÃ²âÁ¿ÄÚ×èÏÂÏÞ
+N#define set_max_c						Run_Control[18]  //ÉèÖÃ²âÁ¿µçÁ÷ÉÏÏÞ
+N#define set_min_c						Run_Control[19]  //ÉèÖÃ²âÁ¿µçÁ÷Î÷Ïß
+N#define set_output_v					Run_Control[20]  //ÉèÖÃ²âÁ¿Êä³öµçÑ¹
+N#define set_output_c					Run_Control[21]  //ÉèÖÃ²âÁ¿Êä³öµçÁ÷
+N#define set_init_c					    Run_Control[22]  //ÉèÖÃ²âÁ¿Êä³öµçÑ¹
+N#define set_sbs_c					    Run_Control[23]  //ÉèÖÃ²âÁ¿Êä³öµçÁ÷
+N#define set_add_c					    Run_Control[24]
+N#define set_c_cutoff_v					Run_Control[25]
+N#define set_c_cutoff_c					Run_Control[26]
+N#define set_dc_cutoff_v					Run_Control[27]
+N#define set_dc_cutoff_c					Run_Control[28]
+N#define start_time					    Run_Control[29]
+N#define end_time					    Run_Control[30]
+N#define opv1    					    Run_Control[31]
+N#define opv2    					    Run_Control[32]
+N#define opv3    					    Run_Control[33]
+N#define opc1    					    Run_Control[34]
+N#define opc2    					    Run_Control[35]
+N#define opc3    					    Run_Control[36]
+N#define load_c    					    Run_Control[37]
+N#define pow_v    					    Run_Control[38]
+N#define cdc_dc    					    Run_Control[39]
+N#define pow_c    					    Run_Control[40]
+N
+N
+Nextern vu16 coff[6];
+N#define cov1    					    coff[0]
+N#define cov2    					    coff[1]
+N#define cov3    					    coff[2]
+N#define coc1    					    coff[3]
+N#define coc2    					    coff[4]
+N#define coc3    					    coff[5]										 //???
+N
+N/*
+N************************************************************************
+N*						Ò³ÃæÊ¶±ð·û
+N************************************************************************
+N*/
+N
+N#define face_graph      0
+N#define face_cdc        1
+N#define face_menu       2
+N#define face_r          3
+N#define face_load       4
+N#define face_set        5
+N#define face_starter    6
+N#define face_sys_info   7
+N/*
+N************************************************************************
+N*						ÉèÖÃÑ¡ÏîÊ¶±ð·û
+N************************************************************************
+N*/
+N
+N#define set_1           0
+N#define set_2           1
+N#define set_3           2
+N#define set_4           3
+N#define set_5           4
+N#define set_6           5
+N#define set_7           6
+N#define set_8           7
+N#define set_9           8
+N#define set_10          9
+N#define set_11          10
+N#define set_12          11
+N#define set_13          12
+N#define set_14          13
+N#define set_15          14
+N#define set_16          15
+N#define set_17          16
+N#define set_18          17
+N#define set_19          18
+N#define set_20          19
+N#define set_21          20
+N#define set_22          21
+N#define set_23          22
+N#define set_24          23
+N#define set_25          24
+N#define set_26          25
+N#define set_27          26
+N#define set_28          27
+N#define set_29          28
+N#define set_30          29
+N#define set_31          30
+N#define set_32          31
+N#define set_33          32
+N#define set_34          33
+N#define set_35          34
+N#define set_36          35
+N#define set_37          36
+N#define set_38          37
+N#define set_39          38
+N#define set_40          39
+N#define set_41          40
+N#define set_42          41
+N#define set_43          42
+N#define set_44          43
+N#define set_45          44
+N#define set_46          45
+N#define set_47          46
+N#define set_48          47
+N#define set_49          48
+N#define set_50          49
+N#define set_51          50
+N#define set_52          51
+N#define set_53          52
+N#define set_54          53
+N#define set_55          54
+N#define set_56          55
+N#define set_57          56
+N#define set_58          57
+N#define set_59          58
+N#define set_60          59
+N#define set_61          60
+N#define set_62          61
+N#define set_63          62
+N#define set_64          63
+N#define set_65          64
+N#define set_66          65
+N#define set_67          66
+N#define set_68          67
+N#define set_69          68
+N#define set_70          69
+N#define set_71          70
+N/*
+N************************************************************************
+N*						²ÎÊýÉèÖÃÊ¶±ð·û
+N************************************************************************
+N*/
+N
+N#define set_1_on            0xff
+N#define set_1_off           0
+N#define set_2_on            0xff
+N#define set_2_off           0
+N#define set_3_on            1
+N#define set_3_off           0
+N#define set_4_on            0xff
+N#define set_4_off           0
+N#define cdc_on              1
+N#define cdc_off             0
+N#define oct_on              1
+N#define oct_off             0
+N#define c_on                1
+N#define c_off               0
+N#define mode_r              1
+N#define mode_load           2
+N#define mode_pow            3
+N#define load_on             1
+N#define load_off            0
+N#define pow_on              1
+N#define pow_off             0
+N#define Lion                1
+N#define NiMH                2
+N#define NiCd                3
+N#define SLA                 4
+N#define LiMH                5
+N#define step1               0
+N#define step2               1
+N#define step3               2
+N
 N
 N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
 Nextern vu32 Correct_Parametet[12];
-N#define  REG_CorrectionV   Correct_Parametet[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊý
-N#define  REG_Load_A			   Correct_Parametet[1]//¸ºÔØCCÄ£Ê½µçÁ÷²âÁ¿²ÎÊý
-N#define  SET_LoadA			   Correct_Parametet[2]//¸ºÔØCCÄ£Ê½¿ØÖÆµçÁ÷²ÎÊý
-N#define  REG_LoadV			   Correct_Parametet[3]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹²ÎÊý
-N#define  SET_LoadV			   Correct_Parametet[4]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹¿ØÖÆ²ÎÊý
+N#define  REG_CorrectionV   Correct_Parametet[0]//???????
+N#define  REG_Load_A			   Correct_Parametet[1]//??CC???¡¤???
+N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????¡¤??
+N#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
+N#define  SET_LoadV			   Correct_Parametet[4]//??CV??????????
 N
-N#define  REG_CorrectionR   Correct_Parametet[5]//ÄÚ×è²âÁ¿²ÎÊý
-N#define  REG_CorrectionR1   Correct_Parametet[11]//ÄÚ×è²âÁ¿²ÎÊý
+N#define  REG_CorrectionR   Correct_Parametet[5]//?????
 N
-N#define  REG_POWERA			   Correct_Parametet[6]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿²ÎÊý
-N#define  SET_POWERA			   Correct_Parametet[7]//µçÔ´CCÄ£Ê½µçÁ÷¿ØÖÆ²âÁ¿²ÎÊý
-N#define  REG_POWERV			   Correct_Parametet[8]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿²ÎÊý
-N#define  SET_POWERV				 Correct_Parametet[9]//µçÔ´CVÄ£Ê½µçÑ¹¿ØÖÆ²ÎÊý
-N#define  CON_POWERA				 Correct_Parametet[10]//µçÔ´CVÄ£Ê½µçÁ÷²âÁ¿²ÎÊý
+N#define  REG_POWERA			   Correct_Parametet[6]//??CC???¡¤???
+N#define  SET_POWERA			   Correct_Parametet[7]//??CC???¡¤?????
+N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
+N#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+N#define  CON_POWERA				 Correct_Parametet[10]//??CV???¡¤???
+N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 N
 N
 N
 Nextern vu8  correct_por[6];
-N#define  Polar             correct_por[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊý
-N#define  Polar1            correct_por[1]//¸ºÔØµçÁ÷²âÁ¿ºÍ¿ØÖÆ
-N#define  Polar2						 correct_por[2]//¸ºÔØCVÄ£Ê½µçÑ¹²âÁ¿ºÍ¿ØÖÆ
-N#define  Polar3						 correct_por[3]//ÄÚ×è²âÁ¿ºÍµçÔ´CVÄ£Ê½µçÁ÷²âÁ¿
-N#define  Polar4						 correct_por[4]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿ºÍ¿ØÖÆ
-N#define  Polar5						 correct_por[5]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿ºÍ¿ØÖÆ
+N#define  Polar             correct_por[0]//???????
+N#define  Polar1            correct_por[1]//???¡¤????
+N#define  Polar2						 correct_por[2]//??CV????????
+N#define  Polar3						 correct_por[3]//??????CV???¡¤?
+N#define  Polar4						 correct_por[4]//??CC???¡¤????
+N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[12];//Ð£×¼ÏµÊý
-N#define  REG_ReadV_Offset   Correct_Strong[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊý
-N#define  REG_LoadA_Offset   Correct_Strong[1]//¸ºÔØCCÄ£Ê½µçÁ÷²âÁ¿²ÎÊý
-N#define  SET_LoadA_Offset   Correct_Strong[2]//¸ºÔØCCÄ£Ê½¿ØÖÆµçÁ÷²ÎÊý
-N#define  REG_LoadV_Offset   Correct_Strong[3]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹²ÎÊý
-N#define  SET_LoadV_Offset   Correct_Strong[4]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹¿ØÖÆ²ÎÊý
+Nextern vu32 Correct_Strong[12];//§µ???
+N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???¡¤???
+N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????¡¤??
+N#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
+N#define  SET_LoadV_Offset   Correct_Strong[4]//??CV??????????
 N
-N#define  REG_ReadR_Offset   Correct_Strong[5]//ÄÚ×è²âÁ¿²ÎÊý
-N#define  REG_ReadR1_Offset   Correct_Strong[11]//ÄÚ×è²âÁ¿²ÎÊý
+N#define  REG_ReadR_Offset   Correct_Strong[5]//?????
 N
-N#define  REG_POWERA_Offset  Correct_Strong[6]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿²ÎÊý
-N#define  SET_POWERA_Offset  Correct_Strong[7]//µçÔ´CCÄ£Ê½µçÁ÷¿ØÖÆ²âÁ¿²ÎÊý
-N#define  REG_POWERV_Offset  Correct_Strong[8]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿²ÎÊý
-N#define  SET_POWERV_Offset	Correct_Strong[9]//µçÔ´CVÄ£Ê½µçÑ¹¿ØÖÆ²ÎÊý
-N#define  CON_POWERA_Offset	Correct_Strong[10]//µçÔ´CVÄ£Ê½µçÁ÷²âÁ¿²ÎÊý
+N#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???¡¤???
+N#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???¡¤?????
+N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
+N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???¡¤???
+N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
 N
 N//---------------------------
 Nextern vu16 ADC_NTC_Filt[50];
@@ -34909,20 +35142,6 @@ N#define Receive_BUFFERSIZE   10
 N//=============================================================================
 N#endif
 N/******************* (C) COPYRIGHT 2015 KUNKIN *****END OF FILE*************************/
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
 L 10 "..\drive\flash.c" 2
 N#include "AT24C01.h"
 L 1 "..\Include\AT24C01.h" 1
@@ -34931,63 +35150,94 @@ N#define	__AT24C01_H
 N#include "my_register.h"
 L 1 "..\Include\my_register.h" 1
 N/******************** (C) COPYRIGHT 2014 KUNKIN********************
-N * ÎÄ¼þÃû  £ºmy_register
-N * ×÷Õß    £ºÀîÕñ
-N * ÃèÊö    £º¿âº¯Êý°æ
-N * ÄÚÈÝ    £ºDefine register¶¨ÒåÏµÍ³Ê¹ÓÃµÄ¼Ä´æÆ÷£¬È«¾Ö±äÁ¿
-N * ×¢Òâ		 £ºÍ·ÎÄ¼þÖÐÖ»ÄÜÓÐÉùÃ÷£¬²»ÄÜÓÐ¶¨Òå
-N * ÐÞ¸ÄÈÕÆÚ£º2014-12-9
+N * ¦Ó??  ¨²my_register
+N * ??    ¨²n?
+N * ??    ¨²????
+N * ??    ¨²Define register??????????¨¬???
+N * ??		 ¨²?¦Ó???????¨¬?????
+N * ???¨·¨²2014-12-9
 N*********************************************************************/
 N
 N#include "STM32F4xx.h"
 N#ifndef __my_register_h__
 S#define __my_register_h__
 S//=============================================================================
-S
+Svoid Write_Limits(void);
+Svoid Wrtite_step(void);
+Svoid OC_ADD(void);
+Svoid Wrtite_S(void);
+Svoid Write_oct(void);
+Svoid Write_alarm(void);
+Svoid Write_btype(void);
+Svoid Write_LOAD(void);
+Svoid Write_info(void);
+Svoid OC_CHECK(void);
+Svoid INPUT_POW(char* num);  
+Svoid INPUT_NUM(char* num); 
+Svoid INPUT_CDC(char* num); 
+Svoid INPUT_C(char* num);  
+Svoid INPUT_LOAD(char* num);  
+Svoid INPUT_INFO(vu8 num);
+Svoid SET_OP_DOWN(void);
+Svoid SET_OP_UP(void);
+Svoid SET_OP_RIGHT(void);
+Svoid SET_OP_LEFT(void);
+Svoid PARA_SET(void);
+Svoid SYS_INFO_RIGHT(void);
+Svoid SYS_INFO_LEFT(void);
+Svoid SYS_INFO_UP(void);
+Svoid SYS_INFO_DOWN(void);
+Svoid INPUT_INFO(vu8 num);
+Svoid CDC_OP_DOWN(void);
+Svoid CDC_OP_UP(void);
+Svoid CDC_OP_LEFT(void);
+Svoid CDC_OP_RIGHT(void);
+Svoid CDC_SET(void);
+Svoid INPUT_CDC(char* num); 
 S//=============================================================================
-S#define NOP   __nop();	  //¿ÕÖ¸Áî
+S#define NOP   __nop();	  //???
 S
 S//============================================================================
 Sextern struct bitDefine flagA,flagB,flagC,flagD,flagE,flagF,flagG;
-S#define   Flag_ADC_Full             (flagA.bit1)//DMA´«ÊäÍê³É±êÖ¾Î» 
-S#define   Flag_BEEP						    	(flagA.bit2)//·äÃùÆ÷´¥·¢±êÖ¾
-S#define   Flag_Key_Scan							(flagA.bit3)//°´¼ü¶¨Ê±É¨Ãè±êÖ¾
-S#define   UART_SEND_flag						(flagA.bit4)//´®¿Ú·¢ËÍÍê³É±êÖ¾
-S#define   UART_Buffer_Rece_flag			(flagA.bit5)//´®¿Ú½ÓÊÕÍê³É±êÖ¾
-S#define   Flag_Swtich_ON      			(flagA.bit6)//Æô¶¯°´¼ü´¦ÓÚON±êÖ¾
-S#define   Flag_0_5S      		      	(flagA.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ÉÁË¸±êÖ¾
+S#define   Flag_ADC_Full             (flagA.bit1)//DMA??????¦Ë 
+S#define   Flag_BEEP						    	(flagA.bit2)//???????
+S#define   Flag_Key_Scan							(flagA.bit3)//§Õ???????
+S#define   UART_SEND_flag						(flagA.bit4)//????????
+S#define   UART_Buffer_Rece_flag			(flagA.bit5)//????????
+S#define   Flag_Swtich_ON      			(flagA.bit6)//??§Õ???ON??
+S#define   Flag_0_5S      		      	(flagA.bit7)//§¥?????????
 S
-S#define   Flag_1S      		         	(flagB.bit0)//ÏÔÊ¾ÉèÖÃµçÁ÷ÉÁË¸±êÖ¾
-S#define   Flag_5S      		        	(flagB.bit1)//ÍË³öÉèÖÃ×´Ì¬±êÖ¾
-S#define   Flag_Long                 (flagB.bit2)//°´¼ü³¤°´±êÖ¾
-S#define   Flag_DAC_OFF              (flagB.bit3)//æ˜¯å¦è½¬æ¢DACæŽ§åˆ¶å€¼æ ‡å¿—
-S#define   Flag_SetA                 (flagB.bit5)//½øÈëÉèÖÃµçÁ÷±êÖ¾Î»
-S#define   Flag_SetV                 (flagB.bit6)//½øÈëÉèÖÃµçÑ¹±êÖ¾Î» 
-S#define   Flag_DisSet               (flagB.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ºÍµçÁ÷±êÖ¾Î»
+S#define   Flag_1S      		         	(flagB.bit0)//§¥????¡¤????
+S#define   Flag_5S      		        	(flagB.bit1)//????????
+S#define   Flag_Long                 (flagB.bit2)//§Õ??§Õ??
+S#define   Flag_DAC_OFF              (flagB.bit3)//ÊÇ·ñ×ª»»DAC¿ØÖÆÖµ±êÖ¾
+S#define   Flag_SetA                 (flagB.bit5)//?????¡¤??¦Ë
+S#define   Flag_SetV                 (flagB.bit6)//????????¦Ë 
+S#define   Flag_DisSet               (flagB.bit7)//§¥???????¡¤??¦Ë
 S
-S#define   Flag_GE                   (flagC.bit0)//¸öÎ»ÉÁË¸±êÖ¾
-S#define   Flag_SHI                  (flagC.bit1)//Ê®Î»ÉÁË¸±êÖ¾
-S#define   Flag_BAI                  (flagC.bit2)//°ÙÎ»ÉÁË¸±êÖ¾
-S#define   Flag_QIAN                 (flagC.bit3)//Ç§Î»ÉÁË¸±êÖ¾
-S#define   Flag_Beep_OFF             (flagC.bit6)//·äÃùÆ÷¹Ø±Õ±êÖ¾
+S#define   Flag_GE                   (flagC.bit0)//?¦Ë????
+S#define   Flag_SHI                  (flagC.bit1)//?¦Ë????
+S#define   Flag_BAI                  (flagC.bit2)//?¦Ë????
+S#define   Flag_QIAN                 (flagC.bit3)//?¦Ë????
+S#define   Flag_Beep_OFF             (flagC.bit6)//???????
 S
-S#define   flag_Tim_USART            (flagD.bit0)//´®¿Ú¼ÆËãÇåÁã±êÖ¾
-S#define   flag_Test                 (flagD.bit1)//×Ô¶¯²âÊÔÆðÍ£±êÖ¾
-S#define   flag_Test_PASS            (flagD.bit2)//×Ô¶¯²âÊÔPASS±êÖ¾
-S#define   flag_Test_FAIL            (flagD.bit3)//×Ô¶¯²âÊÔFAIL±êÖ¾
-S#define   flag_Test_Time            (flagD.bit4)//×Ô¶¯²âÊÔµÈ´ýÊ±¼ä±êÖ¾
-S#define   flag_Test_Start           (flagD.bit5)//×Ô¶¯²âÊÔ±È½Ï¿ªÊ¼±êÖ¾
-S#define   flag_Test_Min             (flagD.bit6)//×Ô¶¯²âÊÔÏÂÏÞ±êÖ¾
-S#define   flag_Load_CC              (flagD.bit7)//¸ºÔØCC/CVÄ£Ê½±êÖ¾Î»
+S#define   flag_Tim_USART            (flagD.bit0)//?????¡ê??
+S#define   flag_Test                 (flagD.bit1)//????????
+S#define   flag_Test_PASS            (flagD.bit2)//????PASS??
+S#define   flag_Test_FAIL            (flagD.bit3)//????FAIL??
+S#define   flag_Test_Time            (flagD.bit4)//??????????
+S#define   flag_Test_Start           (flagD.bit5)//??????????
+S#define   flag_Test_Min             (flagD.bit6)//?????§°??
+S#define   flag_Load_CC              (flagD.bit7)//??CC/CV????¦Ë
 S
-S#define   flag_Test_Door             (flagE.bit0)//×Ô¶¯²âÊÔÃÅ¼÷±êÖ¾
-S#define   flag_Test_SetTime          (flagE.bit1)//×Ô¶¯²âÊÔÊ±¼ä±êÖ¾ 
-S#define   flag_OVP                   (flagE.bit2)//OVP±êÖ¾
-S#define   flag_OCP                   (flagE.bit3)//OCP±êÖ¾
-S#define   flag_Doub                  (flagE.bit4)//°´¼üË«»÷
-S#define   flag_t_Doub                (flagE.bit5)//°´¼üË«»÷¼ÆÊ±±êÖ¾
-S#define   flag_Time_SW               (flagE.bit6)//¶¨Ê±¹¦ÄÜ¿ªÆô±êÖ¾
-S#define   flag_CC_MODE               (flagE.bit7)//¹¤×÷Ä£Ê½±êÖ¾
+S#define   flag_Test_Door             (flagE.bit0)//????????
+S#define   flag_Test_SetTime          (flagE.bit1)//???????? 
+S#define   flag_OVP                   (flagE.bit2)//OVP??
+S#define   flag_OCP                   (flagE.bit3)//OCP??
+S#define   flag_Doub                  (flagE.bit4)//§Õ???
+S#define   flag_t_Doub                (flagE.bit5)//§Õ???????
+S#define   flag_Time_SW               (flagE.bit6)//????????
+S#define   flag_CC_MODE               (flagE.bit7)//??????
 S
 S#define   flag_Adjust                (flagF.bit0)//
 S#define   flag_ADJ_ON                (flagF.bit1)//
@@ -35010,7 +35260,7 @@ S//=============================================================================
 Sextern vu32 GE_V;
 Sextern vu32 SHI_V;
 Sextern vu32 BAI_V;
-Sextern vu32 QIAN_V;  //ÊýÂë¹ÜÉ¨Ãè¶ÎÂë
+Sextern vu32 QIAN_V;  //???????
 Sextern vu32 GE_A;
 Sextern vu32 SHI_A;
 Sextern vu32 BAI_A;
@@ -35021,7 +35271,7 @@ Sextern vu8 DAC_Flag;
 Sextern vu8 Beep_Flag;
 Sextern vu8 t_beep;
 Sextern vu8 t_KeyScan;
-Sextern vu8 t_LEDScan;  //¶¨Ê±¼ÆÊýÆ÷
+Sextern vu8 t_LEDScan;  //?????
 Sextern vu8 t_KEYON;
 Sextern vu16 t_0_5S;
 Sextern vu16 t_1S;
@@ -35034,8 +35284,8 @@ Sextern vu16 t_ON_V;
 Sextern vu16 t_OFF_A;
 Sextern vu16 t_ON_A;
 Sextern vu8 t_USART;
-Sextern vu16 ADJ_Write;//Ð£×¼Ê±ÐèÐ´ÈëµÄÊµ¼ÊÖµ
-Sextern vu8 OFFSET_Zore;//ÁãµãÖµ
+Sextern vu16 ADJ_Write;//§µ???§Õ?????
+Sextern vu8 OFFSET_Zore;//¡ê??
 Sextern vu8 ADDR;
 Sextern vu8 t_lock;
 Sextern vu8 t_onoff;
@@ -35046,12 +35296,12 @@ Sextern vu16 Test_Time1;
 Sextern vu16 Time_sw;
 Sextern vu16 Test_Daley;
 Sextern vu16 Test_C_Door;
-Sextern vu16 TEMP_OFFSET;//ÎÂ¶È²¹³¥Öµ
+Sextern vu16 TEMP_OFFSET;//?????
 S//--------------------------
-Sextern vu8 UART_Buffer_Size;//´®¿Ú½ÓÊÕÊý¾Ý³¤¶È
+Sextern vu8 UART_Buffer_Size;//????????
 Sextern vu8 Transmit_BUFFERsize;
 S//---------------------------
-Sextern vu16 NTC_value;   //ADÖµ
+Sextern vu16 NTC_value;   //AD?
 Sextern vu16 Imon_value;
 Sextern vu32 Imon1_value;
 Sextern vu16 Vmon_value;
@@ -35063,69 +35313,271 @@ Sextern  float DISS_POW_Voltage;
 Sextern float DISS_Current;
 Sextern float DISS_POW_Current;
 Sextern float DISS_R;
+Sextern vu16 steptime;
+Sextern vu8 r_stable;
+Sextern char set_limit[5];
+Sextern vu8 bit;
+Sextern vu8 bit1;
+Sextern vu8 dot_flag;
+Sextern vu8 page_sw;
+Sextern vu8 para_set1;
+Sextern vu8 para_set2;
+Sextern vu8 para_set3;
+Sextern vu8 para_set4;
+Sextern vu8 oct_sw;
+Sextern vu8 set_sw;
+Sextern vu8 charge_step;
+Sextern vu8 cutoff_flag;
+Sextern vu8 lang;
+Sextern vu8 r_raly;
+Sextern vu16 steptime;
+Sextern vu8 alert_flag;
+Sextern vu8 t_onoff;
+Sextern vu8 ocstop;
+Sextern float temp;
+Sextern vu8 mode_sw;
+Sextern vu16 stepcount;
+Sextern vu16 battery_c;
+Sextern float bc_raw;
+Sextern vu8 track;
+Sextern vu8 clear_flag1;
+Sextern vu8 clear_flag2;
+Sextern vu8 clear_flag3;
+Sextern vu8 pass;
+Sextern vu8 b_type;
+Sextern vu8 buffer;
+Sextern float clear_v;
+Sextern float clear_pv;
+Sextern float clear_lv;
+Sextern float temp;
+Sextern vu8 set_loop_count;
 S
-Sextern vu32 Run_Control[14];	
+Sextern vu32 Run_Control[41];	
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
-S#define SET_Voltage 	    	        Run_Control[1]  //µçÔ´Éè¶¨µçÑ¹
-S#define SET_Current	    	    		  Run_Control[2]  //µçÔ´Éè¶¨µçÁ÷
-S#define SET_Voltage_Laod 					  Run_Control[3]  //¸ºÔØÉè¶¨µçÑ¹
-S#define SET_Current_Laod					  Run_Control[4]  //¸ºÔØÉè¶¨µçÁ÷
+S#define SET_Voltage 	    	        Run_Control[1]  //??????
+S#define SET_Current	    	    		  Run_Control[2]  //?????¡¤
+S#define SET_Voltage_Laod 					  Run_Control[3]  //??????
+S#define SET_Current_Laod					  Run_Control[4]  //?????¡¤
 S#define LOCK_KEY								    Run_Control[5]  //
 S#define BEEP_KEY								    Run_Control[6]  //
 S#define STRONG_KEY							    Run_Control[7]  //
 S
 S#define MODE_Woke							   	  Run_Control[8]  //
-S#define POW_Voltage	    	          Run_Control[9]  //µçÔ´²âÁ¿µçÑ¹
-S#define Voltage	    	              Run_Control[10]  //¸ºÔØ²âÁ¿µçÑ¹
-S#define Current	    	    		      Run_Control[11]  //µçÔ´²âÁ¿µçÁ÷
-S#define Laod_Current	    		      Run_Control[12]  //¸ºÔØ²âÁ¿µçÁ÷
-S#define R_VLUE											Run_Control[13]  //ÄÚ×èÖµ
+S#define POW_Voltage	    	            Run_Control[9]  //?????
+S#define Voltage	    	                Run_Control[10]  //?????
+S#define Current	    	    		    Run_Control[11]  //????¡¤
+S#define Laod_Current	    		    Run_Control[12]  //????¡¤
+S#define R_VLUE							Run_Control[13]  //???
+S#define set_max_v						Run_Control[14]  //ÉèÖÃ²âÁ¿µçÑ¹ÉÏÏÞ
+S#define set_min_v						Run_Control[15]  //ÉèÖÃ²âÁ¿µçÑ¹ÏÂÏÞ
+S#define set_max_r						Run_Control[16]  //ÉèÖÃ²âÁ¿ÄÚ×èÉÏÏÞ
+S#define set_min_r						Run_Control[17]  //ÉèÖÃ²âÁ¿ÄÚ×èÏÂÏÞ
+S#define set_max_c						Run_Control[18]  //ÉèÖÃ²âÁ¿µçÁ÷ÉÏÏÞ
+S#define set_min_c						Run_Control[19]  //ÉèÖÃ²âÁ¿µçÁ÷Î÷Ïß
+S#define set_output_v					Run_Control[20]  //ÉèÖÃ²âÁ¿Êä³öµçÑ¹
+S#define set_output_c					Run_Control[21]  //ÉèÖÃ²âÁ¿Êä³öµçÁ÷
+S#define set_init_c					    Run_Control[22]  //ÉèÖÃ²âÁ¿Êä³öµçÑ¹
+S#define set_sbs_c					    Run_Control[23]  //ÉèÖÃ²âÁ¿Êä³öµçÁ÷
+S#define set_add_c					    Run_Control[24]
+S#define set_c_cutoff_v					Run_Control[25]
+S#define set_c_cutoff_c					Run_Control[26]
+S#define set_dc_cutoff_v					Run_Control[27]
+S#define set_dc_cutoff_c					Run_Control[28]
+S#define start_time					    Run_Control[29]
+S#define end_time					    Run_Control[30]
+S#define opv1    					    Run_Control[31]
+S#define opv2    					    Run_Control[32]
+S#define opv3    					    Run_Control[33]
+S#define opc1    					    Run_Control[34]
+S#define opc2    					    Run_Control[35]
+S#define opc3    					    Run_Control[36]
+S#define load_c    					    Run_Control[37]
+S#define pow_v    					    Run_Control[38]
+S#define cdc_dc    					    Run_Control[39]
+S#define pow_c    					    Run_Control[40]
+S
+S
+Sextern vu16 coff[6];
+S#define cov1    					    coff[0]
+S#define cov2    					    coff[1]
+S#define cov3    					    coff[2]
+S#define coc1    					    coff[3]
+S#define coc2    					    coff[4]
+S#define coc3    					    coff[5]										 //???
+S
+S/*
+S************************************************************************
+S*						Ò³ÃæÊ¶±ð·û
+S************************************************************************
+S*/
+S
+S#define face_graph      0
+S#define face_cdc        1
+S#define face_menu       2
+S#define face_r          3
+S#define face_load       4
+S#define face_set        5
+S#define face_starter    6
+S#define face_sys_info   7
+S/*
+S************************************************************************
+S*						ÉèÖÃÑ¡ÏîÊ¶±ð·û
+S************************************************************************
+S*/
+S
+S#define set_1           0
+S#define set_2           1
+S#define set_3           2
+S#define set_4           3
+S#define set_5           4
+S#define set_6           5
+S#define set_7           6
+S#define set_8           7
+S#define set_9           8
+S#define set_10          9
+S#define set_11          10
+S#define set_12          11
+S#define set_13          12
+S#define set_14          13
+S#define set_15          14
+S#define set_16          15
+S#define set_17          16
+S#define set_18          17
+S#define set_19          18
+S#define set_20          19
+S#define set_21          20
+S#define set_22          21
+S#define set_23          22
+S#define set_24          23
+S#define set_25          24
+S#define set_26          25
+S#define set_27          26
+S#define set_28          27
+S#define set_29          28
+S#define set_30          29
+S#define set_31          30
+S#define set_32          31
+S#define set_33          32
+S#define set_34          33
+S#define set_35          34
+S#define set_36          35
+S#define set_37          36
+S#define set_38          37
+S#define set_39          38
+S#define set_40          39
+S#define set_41          40
+S#define set_42          41
+S#define set_43          42
+S#define set_44          43
+S#define set_45          44
+S#define set_46          45
+S#define set_47          46
+S#define set_48          47
+S#define set_49          48
+S#define set_50          49
+S#define set_51          50
+S#define set_52          51
+S#define set_53          52
+S#define set_54          53
+S#define set_55          54
+S#define set_56          55
+S#define set_57          56
+S#define set_58          57
+S#define set_59          58
+S#define set_60          59
+S#define set_61          60
+S#define set_62          61
+S#define set_63          62
+S#define set_64          63
+S#define set_65          64
+S#define set_66          65
+S#define set_67          66
+S#define set_68          67
+S#define set_69          68
+S#define set_70          69
+S#define set_71          70
+S/*
+S************************************************************************
+S*						²ÎÊýÉèÖÃÊ¶±ð·û
+S************************************************************************
+S*/
+S
+S#define set_1_on            0xff
+S#define set_1_off           0
+S#define set_2_on            0xff
+S#define set_2_off           0
+S#define set_3_on            1
+S#define set_3_off           0
+S#define set_4_on            0xff
+S#define set_4_off           0
+S#define cdc_on              1
+S#define cdc_off             0
+S#define oct_on              1
+S#define oct_off             0
+S#define c_on                1
+S#define c_off               0
+S#define mode_r              1
+S#define mode_load           2
+S#define mode_pow            3
+S#define load_on             1
+S#define load_off            0
+S#define pow_on              1
+S#define pow_off             0
+S#define Lion                1
+S#define NiMH                2
+S#define NiCd                3
+S#define SLA                 4
+S#define LiMH                5
+S#define step1               0
+S#define step2               1
+S#define step3               2
+S
 S
 S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
 Sextern vu32 Correct_Parametet[12];
-S#define  REG_CorrectionV   Correct_Parametet[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊý
-S#define  REG_Load_A			   Correct_Parametet[1]//¸ºÔØCCÄ£Ê½µçÁ÷²âÁ¿²ÎÊý
-S#define  SET_LoadA			   Correct_Parametet[2]//¸ºÔØCCÄ£Ê½¿ØÖÆµçÁ÷²ÎÊý
-S#define  REG_LoadV			   Correct_Parametet[3]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹²ÎÊý
-S#define  SET_LoadV			   Correct_Parametet[4]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹¿ØÖÆ²ÎÊý
+S#define  REG_CorrectionV   Correct_Parametet[0]//???????
+S#define  REG_Load_A			   Correct_Parametet[1]//??CC???¡¤???
+S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????¡¤??
+S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
+S#define  SET_LoadV			   Correct_Parametet[4]//??CV??????????
 S
-S#define  REG_CorrectionR   Correct_Parametet[5]//ÄÚ×è²âÁ¿²ÎÊý
-S#define  REG_CorrectionR1   Correct_Parametet[11]//ÄÚ×è²âÁ¿²ÎÊý
+S#define  REG_CorrectionR   Correct_Parametet[5]//?????
 S
-S#define  REG_POWERA			   Correct_Parametet[6]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿²ÎÊý
-S#define  SET_POWERA			   Correct_Parametet[7]//µçÔ´CCÄ£Ê½µçÁ÷¿ØÖÆ²âÁ¿²ÎÊý
-S#define  REG_POWERV			   Correct_Parametet[8]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿²ÎÊý
-S#define  SET_POWERV				 Correct_Parametet[9]//µçÔ´CVÄ£Ê½µçÑ¹¿ØÖÆ²ÎÊý
-S#define  CON_POWERA				 Correct_Parametet[10]//µçÔ´CVÄ£Ê½µçÁ÷²âÁ¿²ÎÊý
+S#define  REG_POWERA			   Correct_Parametet[6]//??CC???¡¤???
+S#define  SET_POWERA			   Correct_Parametet[7]//??CC???¡¤?????
+S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
+S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+S#define  CON_POWERA				 Correct_Parametet[10]//??CV???¡¤???
+S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S
 S
 S
 Sextern vu8  correct_por[6];
-S#define  Polar             correct_por[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊý
-S#define  Polar1            correct_por[1]//¸ºÔØµçÁ÷²âÁ¿ºÍ¿ØÖÆ
-S#define  Polar2						 correct_por[2]//¸ºÔØCVÄ£Ê½µçÑ¹²âÁ¿ºÍ¿ØÖÆ
-S#define  Polar3						 correct_por[3]//ÄÚ×è²âÁ¿ºÍµçÔ´CVÄ£Ê½µçÁ÷²âÁ¿
-S#define  Polar4						 correct_por[4]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿ºÍ¿ØÖÆ
-S#define  Polar5						 correct_por[5]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿ºÍ¿ØÖÆ
+S#define  Polar             correct_por[0]//???????
+S#define  Polar1            correct_por[1]//???¡¤????
+S#define  Polar2						 correct_por[2]//??CV????????
+S#define  Polar3						 correct_por[3]//??????CV???¡¤?
+S#define  Polar4						 correct_por[4]//??CC???¡¤????
+S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[12];//Ð£×¼ÏµÊý
-S#define  REG_ReadV_Offset   Correct_Strong[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊý
-S#define  REG_LoadA_Offset   Correct_Strong[1]//¸ºÔØCCÄ£Ê½µçÁ÷²âÁ¿²ÎÊý
-S#define  SET_LoadA_Offset   Correct_Strong[2]//¸ºÔØCCÄ£Ê½¿ØÖÆµçÁ÷²ÎÊý
-S#define  REG_LoadV_Offset   Correct_Strong[3]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹²ÎÊý
-S#define  SET_LoadV_Offset   Correct_Strong[4]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹¿ØÖÆ²ÎÊý
+Sextern vu32 Correct_Strong[12];//§µ???
+S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???¡¤???
+S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????¡¤??
+S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
+S#define  SET_LoadV_Offset   Correct_Strong[4]//??CV??????????
 S
-S#define  REG_ReadR_Offset   Correct_Strong[5]//ÄÚ×è²âÁ¿²ÎÊý
-S#define  REG_ReadR1_Offset   Correct_Strong[11]//ÄÚ×è²âÁ¿²ÎÊý
+S#define  REG_ReadR_Offset   Correct_Strong[5]//?????
 S
-S#define  REG_POWERA_Offset  Correct_Strong[6]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿²ÎÊý
-S#define  SET_POWERA_Offset  Correct_Strong[7]//µçÔ´CCÄ£Ê½µçÁ÷¿ØÖÆ²âÁ¿²ÎÊý
-S#define  REG_POWERV_Offset  Correct_Strong[8]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿²ÎÊý
-S#define  SET_POWERV_Offset	Correct_Strong[9]//µçÔ´CVÄ£Ê½µçÑ¹¿ØÖÆ²ÎÊý
-S#define  CON_POWERA_Offset	Correct_Strong[10]//µçÔ´CVÄ£Ê½µçÁ÷²âÁ¿²ÎÊý
+S#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???¡¤???
+S#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???¡¤?????
+S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
+S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???¡¤???
+S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
 S
 S//---------------------------
 Sextern vu16 ADC_NTC_Filt[50];
@@ -35138,20 +35590,6 @@ S#define Receive_BUFFERSIZE   10
 S//=============================================================================
 N#endif
 N/******************* (C) COPYRIGHT 2015 KUNKIN *****END OF FILE*************************/
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
 L 4 "..\Include\AT24C01.h" 2
 N/* 
 N * AT24C02 2kb = 2048bit = 2048/8 B = 256 B
@@ -35182,6 +35620,27 @@ Nvu8 EEPROM_READ_Byte(vu8 ReadAddr);
 N
 N#endif /* __I2C_EE_H */
 L 11 "..\drive\flash.c" 2
+N
+Nextern vu8 b_type;
+Nextern vu8 buffer;
+Nextern vu16 year1;
+Nextern vu16 year2;
+Nextern vu16 year3;
+Nextern vu16 year4;
+Nextern vu8 month1;
+Nextern vu8 month2;
+Nextern vu8 day1;
+Nextern vu8 day2;
+Nextern vu8 code1;
+Nextern vu8 code2;
+Nextern vu8 code3;
+Nextern vu8 code4;
+Nextern vu8 code5;
+Nextern vu8 code6;
+Nextern vu8 code7;
+Nextern vu8 code8;
+N
+N
 N//================================================================//
 Nextern struct bitDefine
 N{
@@ -35198,7 +35657,7 @@ N//==================================================================//
 Nvoid Flash_Write_all (void)
 N{
 N	vu8 data_8bit;
-N/***********************²âÁ¿Êý¾Ý´æ´¢****************************/
+N/***********************?????****************************/
 N  data_8bit = REG_CorrectionV >> 24;
 X  data_8bit = Correct_Parametet[0] >> 24;
 N	EEPROM_WriteByte(0x01, data_8bit);
@@ -35208,7 +35667,7 @@ N	EEPROM_WriteByte(0x02, data_8bit);
 N	data_8bit = REG_CorrectionV >> 8;
 X	data_8bit = Correct_Parametet[0] >> 8;
 N	EEPROM_WriteByte(0x03, data_8bit);
-N	EEPROM_WriteByte(0x04, REG_CorrectionV);//²âÁ¿µçÑ¹
+N	EEPROM_WriteByte(0x04, REG_CorrectionV);//???
 X	EEPROM_WriteByte(0x04, Correct_Parametet[0]);
 N	
 N	data_8bit = REG_ReadV_Offset >> 24;
@@ -35220,7 +35679,7 @@ N	EEPROM_WriteByte(0x06, data_8bit);
 N	data_8bit = REG_ReadV_Offset >> 8;
 X	data_8bit = Correct_Strong[0] >> 8;
 N	EEPROM_WriteByte(0x07, data_8bit);
-N	EEPROM_WriteByte(0x08, REG_ReadV_Offset);//²âÁ¿µçÑ¹
+N	EEPROM_WriteByte(0x08, REG_ReadV_Offset);//???
 X	EEPROM_WriteByte(0x08, Correct_Strong[0]);
 N	
 N	data_8bit = REG_Load_A >> 24;
@@ -35232,7 +35691,7 @@ N	EEPROM_WriteByte(0x0A, data_8bit);
 N	data_8bit = REG_Load_A >> 8;
 X	data_8bit = Correct_Parametet[1] >> 8;
 N	EEPROM_WriteByte(0x0B, data_8bit);
-N	EEPROM_WriteByte(0x0C, REG_Load_A);//¸ºÔØµçÁ÷
+N	EEPROM_WriteByte(0x0C, REG_Load_A);//???¡¤
 X	EEPROM_WriteByte(0x0C, Correct_Parametet[1]);
 N	
 N	data_8bit = REG_LoadA_Offset >> 24;
@@ -35244,7 +35703,7 @@ N	EEPROM_WriteByte(0x0E, data_8bit);
 N	data_8bit = REG_LoadA_Offset >> 8;
 X	data_8bit = Correct_Strong[1] >> 8;
 N	EEPROM_WriteByte(0x0F, data_8bit);
-N	EEPROM_WriteByte(0x10, REG_LoadA_Offset);//¸ºÔØµçÁ÷
+N	EEPROM_WriteByte(0x10, REG_LoadA_Offset);//???¡¤
 X	EEPROM_WriteByte(0x10, Correct_Strong[1]);
 N	
 N	data_8bit = SET_LoadA >> 24;
@@ -35256,7 +35715,7 @@ N	EEPROM_WriteByte(0x12, data_8bit);
 N	data_8bit = SET_LoadA >> 8;
 X	data_8bit = Correct_Parametet[2] >> 8;
 N	EEPROM_WriteByte(0x13, data_8bit);
-N	EEPROM_WriteByte(0x14, SET_LoadA);//¸ºÔØÉè¶¨µçÁ÷
+N	EEPROM_WriteByte(0x14, SET_LoadA);//?????¡¤
 X	EEPROM_WriteByte(0x14, Correct_Parametet[2]);
 N	
 N	data_8bit = SET_LoadA_Offset >> 24;
@@ -35268,7 +35727,7 @@ N	EEPROM_WriteByte(0x16, data_8bit);
 N	data_8bit = SET_LoadA_Offset >> 8;
 X	data_8bit = Correct_Strong[2] >> 8;
 N	EEPROM_WriteByte(0x17, data_8bit);
-N	EEPROM_WriteByte(0x18, SET_LoadA_Offset);//¸ºÔØÉè¶¨µçÁ÷
+N	EEPROM_WriteByte(0x18, SET_LoadA_Offset);//?????¡¤
 X	EEPROM_WriteByte(0x18, Correct_Strong[2]);
 N	
 N	data_8bit = REG_LoadV >> 24;
@@ -35280,7 +35739,7 @@ N	EEPROM_WriteByte(0x1A, data_8bit);
 N	data_8bit = REG_LoadV >> 8;
 X	data_8bit = Correct_Parametet[3] >> 8;
 N	EEPROM_WriteByte(0x1B, data_8bit);
-N	EEPROM_WriteByte(0x1C, REG_LoadV);//¸ºÔØ²âÁ¿µçÑ¹
+N	EEPROM_WriteByte(0x1C, REG_LoadV);//?????
 X	EEPROM_WriteByte(0x1C, Correct_Parametet[3]);
 N	
 N	data_8bit = REG_LoadV_Offset >> 24;
@@ -35292,7 +35751,7 @@ N	EEPROM_WriteByte(0x1E, data_8bit);
 N	data_8bit = REG_LoadV_Offset >> 8;
 X	data_8bit = Correct_Strong[3] >> 8;
 N	EEPROM_WriteByte(0x1F, data_8bit);
-N	EEPROM_WriteByte(0x20, REG_LoadV_Offset);//¸ºÔØ²âÁ¿µçÑ¹
+N	EEPROM_WriteByte(0x20, REG_LoadV_Offset);//?????
 X	EEPROM_WriteByte(0x20, Correct_Strong[3]);
 N	
 N	data_8bit = SET_LoadV >> 24;
@@ -35304,7 +35763,7 @@ N	EEPROM_WriteByte(0x22, data_8bit);
 N	data_8bit = SET_LoadV >> 8;
 X	data_8bit = Correct_Parametet[4] >> 8;
 N	EEPROM_WriteByte(0x23, data_8bit);
-N	EEPROM_WriteByte(0x24, SET_LoadV);//¸ºÔØÉè¶¨µçÑ¹
+N	EEPROM_WriteByte(0x24, SET_LoadV);//??????
 X	EEPROM_WriteByte(0x24, Correct_Parametet[4]);
 N	
 N	data_8bit = SET_LoadV_Offset >> 24;
@@ -35316,7 +35775,7 @@ N	EEPROM_WriteByte(0x26, data_8bit);
 N	data_8bit = SET_LoadV_Offset >> 8;
 X	data_8bit = Correct_Strong[4] >> 8;
 N	EEPROM_WriteByte(0x27, data_8bit);
-N	EEPROM_WriteByte(0x28, SET_LoadV_Offset);//¸ºÔØÉè¶¨µçÑ¹
+N	EEPROM_WriteByte(0x28, SET_LoadV_Offset);//??????
 X	EEPROM_WriteByte(0x28, Correct_Strong[4]);
 N	
 N	
@@ -35329,7 +35788,7 @@ N	EEPROM_WriteByte(0x2A, data_8bit);
 N	data_8bit = REG_CorrectionR >> 8;
 X	data_8bit = Correct_Parametet[5] >> 8;
 N	EEPROM_WriteByte(0x2B, data_8bit);
-N	EEPROM_WriteByte(0x2C, REG_CorrectionR);//ÄÚ×è
+N	EEPROM_WriteByte(0x2C, REG_CorrectionR);//??
 X	EEPROM_WriteByte(0x2C, Correct_Parametet[5]);
 N	
 N	data_8bit = REG_ReadR_Offset >> 24;
@@ -35341,35 +35800,35 @@ N	EEPROM_WriteByte(0x2E, data_8bit);
 N	data_8bit = REG_ReadR_Offset >> 8;
 X	data_8bit = Correct_Strong[5] >> 8;
 N	EEPROM_WriteByte(0x2F, data_8bit);
-N	EEPROM_WriteByte(0x30, REG_ReadR_Offset);//ÄÚ×è
+N	EEPROM_WriteByte(0x30, REG_ReadR_Offset);//??
 X	EEPROM_WriteByte(0x30, Correct_Strong[5]);
-N	
-N	
-N	data_8bit = REG_CorrectionR1 >> 24;
-X	data_8bit = Correct_Parametet[11] >> 24;
-N	EEPROM_WriteByte(0x5F, data_8bit);
-N	data_8bit = REG_CorrectionR1 >> 16;
+N    
+N    data_8bit = REG_CorrectionRL >> 24;
+X    data_8bit = Correct_Parametet[11] >> 24;
+N	EEPROM_WriteByte(0xAB, data_8bit);
+N	data_8bit = REG_CorrectionRL >> 16;
 X	data_8bit = Correct_Parametet[11] >> 16;
-N	EEPROM_WriteByte(0x60, data_8bit);
-N	data_8bit = REG_CorrectionR1 >> 8;
+N	EEPROM_WriteByte(0xAC, data_8bit);
+N	data_8bit = REG_CorrectionRL >> 8;
 X	data_8bit = Correct_Parametet[11] >> 8;
-N	EEPROM_WriteByte(0x61, data_8bit);
-N	EEPROM_WriteByte(0x62, REG_CorrectionR1);//ÄÚ×èµÍµµ
-X	EEPROM_WriteByte(0x62, Correct_Parametet[11]);
+N	EEPROM_WriteByte(0xAD, data_8bit);
+N	EEPROM_WriteByte(0xAE, REG_CorrectionRL);//??
+X	EEPROM_WriteByte(0xAE, Correct_Parametet[11]);
 N	
-N	data_8bit = REG_ReadR1_Offset >> 24;
-X	data_8bit = Correct_Strong[11] >> 24;
-N	EEPROM_WriteByte(0x63, data_8bit);
-N	data_8bit = REG_ReadR1_Offset >> 16;
+N    
+N    data_8bit = REG_ReadRL_Offset >> 24;
+X    data_8bit = Correct_Strong[11] >> 24;
+N	EEPROM_WriteByte(0xAF, data_8bit);
+N	data_8bit = REG_ReadRL_Offset >> 16;
 X	data_8bit = Correct_Strong[11] >> 16;
-N	EEPROM_WriteByte(0x64, data_8bit);
-N	data_8bit = REG_ReadR1_Offset >> 8;
+N	EEPROM_WriteByte(0xB0, data_8bit);
+N	data_8bit = REG_ReadRL_Offset >> 8;
 X	data_8bit = Correct_Strong[11] >> 8;
-N	EEPROM_WriteByte(0x65, data_8bit);
-N	EEPROM_WriteByte(0x66, REG_ReadR1_Offset);//ÄÚ×èµÍµµ
-X	EEPROM_WriteByte(0x66, Correct_Strong[11]);
+N	EEPROM_WriteByte(0xB1, data_8bit);
+N	EEPROM_WriteByte(0xB2, REG_ReadRL_Offset);//??
+X	EEPROM_WriteByte(0xB2, Correct_Strong[11]);
 N	
-N/************ÎÈÑ¹µçÔ´*****************************/
+N/************¦×???*****************************/
 N	data_8bit = REG_POWERA >> 24;
 X	data_8bit = Correct_Parametet[6] >> 24;
 N	EEPROM_WriteByte(0x31, data_8bit);
@@ -35379,7 +35838,7 @@ N	EEPROM_WriteByte(0x32, data_8bit);
 N	data_8bit = REG_POWERA >> 8;
 X	data_8bit = Correct_Parametet[6] >> 8;
 N	EEPROM_WriteByte(0x33, data_8bit);
-N	EEPROM_WriteByte(0x34, REG_POWERA);//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿
+N	EEPROM_WriteByte(0x34, REG_POWERA);//??CC???¡¤?
 X	EEPROM_WriteByte(0x34, Correct_Parametet[6]);
 N	
 N	data_8bit = REG_POWERA_Offset >> 24;
@@ -35391,7 +35850,7 @@ N	EEPROM_WriteByte(0x36, data_8bit);
 N	data_8bit = REG_POWERA_Offset >> 8;
 X	data_8bit = Correct_Strong[6] >> 8;
 N	EEPROM_WriteByte(0x37, data_8bit);
-N	EEPROM_WriteByte(0x38, REG_POWERA_Offset);//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿
+N	EEPROM_WriteByte(0x38, REG_POWERA_Offset);//??CC???¡¤?
 X	EEPROM_WriteByte(0x38, Correct_Strong[6]);
 N	
 N	data_8bit = SET_POWERA >> 24;
@@ -35403,7 +35862,7 @@ N	EEPROM_WriteByte(0x3A, data_8bit);
 N	data_8bit = SET_POWERA >> 8;
 X	data_8bit = Correct_Parametet[7] >> 8;
 N	EEPROM_WriteByte(0x3B, data_8bit);
-N	EEPROM_WriteByte(0x3C, SET_POWERA);//µçÔ´CCÄ£Ê½Éè¶¨µçÁ÷
+N	EEPROM_WriteByte(0x3C, SET_POWERA);//??CC?????¡¤
 X	EEPROM_WriteByte(0x3C, Correct_Parametet[7]);
 N	
 N	
@@ -35416,7 +35875,7 @@ N	EEPROM_WriteByte(0x3E, data_8bit);
 N	data_8bit = SET_POWERA_Offset >> 8;
 X	data_8bit = Correct_Strong[7] >> 8;
 N	EEPROM_WriteByte(0x3F, data_8bit);
-N	EEPROM_WriteByte(0x40, SET_POWERA_Offset);//µçÔ´CCÄ£Ê½Éè¶¨µçÁ÷
+N	EEPROM_WriteByte(0x40, SET_POWERA_Offset);//??CC?????¡¤
 X	EEPROM_WriteByte(0x40, Correct_Strong[7]);
 N	
 N	
@@ -35429,7 +35888,7 @@ N	EEPROM_WriteByte(0x42, data_8bit);
 N	data_8bit = REG_POWERV >> 8;
 X	data_8bit = Correct_Parametet[8] >> 8;
 N	EEPROM_WriteByte(0x43, data_8bit);
-N	EEPROM_WriteByte(0x44, REG_POWERV);//µçÔ´µçÑ¹²âÁ¿
+N	EEPROM_WriteByte(0x44, REG_POWERV);//?????
 X	EEPROM_WriteByte(0x44, Correct_Parametet[8]);
 N	
 N	
@@ -35442,7 +35901,7 @@ N	EEPROM_WriteByte(0x46, data_8bit);
 N	data_8bit = REG_POWERV_Offset >> 8;
 X	data_8bit = Correct_Strong[8] >> 8;
 N	EEPROM_WriteByte(0x47, data_8bit);
-N	EEPROM_WriteByte(0x48, REG_POWERV_Offset);//µçÔ´µçÑ¹²âÁ¿
+N	EEPROM_WriteByte(0x48, REG_POWERV_Offset);//?????
 X	EEPROM_WriteByte(0x48, Correct_Strong[8]);
 N	
 N	data_8bit = SET_POWERV >> 24;
@@ -35454,7 +35913,7 @@ N	EEPROM_WriteByte(0x4A, data_8bit);
 N	data_8bit = SET_POWERV >> 8;
 X	data_8bit = Correct_Parametet[9] >> 8;
 N	EEPROM_WriteByte(0x4B, data_8bit);
-N	EEPROM_WriteByte(0x4C, SET_POWERV);//µçÔ´µçÑ¹¿ØÖÆ
+N	EEPROM_WriteByte(0x4C, SET_POWERV);//??????
 X	EEPROM_WriteByte(0x4C, Correct_Parametet[9]);
 N	
 N	data_8bit = SET_POWERV_Offset >> 24;
@@ -35466,7 +35925,7 @@ N	EEPROM_WriteByte(0x4E, data_8bit);
 N	data_8bit = SET_POWERV_Offset >> 8;
 X	data_8bit = Correct_Strong[9] >> 8;
 N	EEPROM_WriteByte(0x4F, data_8bit);
-N	EEPROM_WriteByte(0x50, SET_POWERV_Offset);//µçÔ´µçÑ¹¿ØÖÆ
+N	EEPROM_WriteByte(0x50, SET_POWERV_Offset);//??????
 X	EEPROM_WriteByte(0x50, Correct_Strong[9]);
 N	
 N	data_8bit = CON_POWERA >> 24;
@@ -35478,7 +35937,7 @@ N	EEPROM_WriteByte(0x52, data_8bit);
 N	data_8bit = CON_POWERA >> 8;
 X	data_8bit = Correct_Parametet[10] >> 8;
 N	EEPROM_WriteByte(0x53, data_8bit);
-N	EEPROM_WriteByte(0x54, CON_POWERA);//µçÔ´CVµçÁ÷²âÁ¿
+N	EEPROM_WriteByte(0x54, CON_POWERA);//??CV?¡¤?
 X	EEPROM_WriteByte(0x54, Correct_Parametet[10]);
 N	
 N	data_8bit = CON_POWERA_Offset >> 24;
@@ -35490,7 +35949,7 @@ N	EEPROM_WriteByte(0x56, data_8bit);
 N	data_8bit = CON_POWERA_Offset >> 8;
 X	data_8bit = Correct_Strong[10] >> 8;
 N	EEPROM_WriteByte(0x57, data_8bit);
-N	EEPROM_WriteByte(0x58, CON_POWERA_Offset);//µçÔ´CVµçÁ÷²âÁ¿
+N	EEPROM_WriteByte(0x58, CON_POWERA_Offset);//??CV?¡¤?
 X	EEPROM_WriteByte(0x58, Correct_Strong[10]);
 N	
 N	
@@ -35510,7 +35969,7 @@ N}
 N//===========================================================================//
 Nvoid EEPROM_READ_Coeff(void)
 N{
-N/****************µç×Ó¸ºÔØ*********************/
+N/****************????*********************/
 N	REG_CorrectionV=EEPROM_READ_Byte(0x01);
 X	Correct_Parametet[0]=EEPROM_READ_Byte(0x01);
 N	REG_CorrectionV=EEPROM_READ_Byte(0x01);
@@ -35663,7 +36122,7 @@ N	SET_LoadV_Offset=SET_LoadV_Offset<<8;
 X	Correct_Strong[4]=Correct_Strong[4]<<8;
 N	SET_LoadV_Offset=SET_LoadV_Offset+EEPROM_READ_Byte(0x28);
 X	Correct_Strong[4]=Correct_Strong[4]+EEPROM_READ_Byte(0x28);
-N	/*****************ÄÚ×è********************************/
+N	/*****************??********************************/
 N	REG_CorrectionR=EEPROM_READ_Byte(0x29);
 X	Correct_Parametet[5]=EEPROM_READ_Byte(0x29);
 N	REG_CorrectionR=REG_CorrectionR<<8;
@@ -35693,42 +36152,39 @@ N	REG_ReadR_Offset=REG_ReadR_Offset<<8;
 X	Correct_Strong[5]=Correct_Strong[5]<<8;
 N	REG_ReadR_Offset=REG_ReadR_Offset+EEPROM_READ_Byte(0x30);
 X	Correct_Strong[5]=Correct_Strong[5]+EEPROM_READ_Byte(0x30);
-N	
-N	
-N	/*****************ÄÚ×èµÍµµ********************************/
-N	REG_CorrectionR1=EEPROM_READ_Byte(0x5F);
-X	Correct_Parametet[11]=EEPROM_READ_Byte(0x5F);
-N	REG_CorrectionR1=REG_CorrectionR1<<8;
+N    
+N    REG_CorrectionRL=EEPROM_READ_Byte(0xAB);
+X    Correct_Parametet[11]=EEPROM_READ_Byte(0xAB);
+N	REG_CorrectionRL=REG_CorrectionRL<<8;
 X	Correct_Parametet[11]=Correct_Parametet[11]<<8;
-N	REG_CorrectionR1=REG_CorrectionR1+EEPROM_READ_Byte(0x60);
-X	Correct_Parametet[11]=Correct_Parametet[11]+EEPROM_READ_Byte(0x60);
-N	REG_CorrectionR1=REG_CorrectionR1<<8;
+N	REG_CorrectionRL=REG_CorrectionRL+EEPROM_READ_Byte(0xAC);
+X	Correct_Parametet[11]=Correct_Parametet[11]+EEPROM_READ_Byte(0xAC);
+N	REG_CorrectionRL=REG_CorrectionRL<<8;
 X	Correct_Parametet[11]=Correct_Parametet[11]<<8;
-N	REG_CorrectionR1=REG_CorrectionR1+EEPROM_READ_Byte(0x61);
-X	Correct_Parametet[11]=Correct_Parametet[11]+EEPROM_READ_Byte(0x61);
-N	REG_CorrectionR1=REG_CorrectionR1<<8;
+N	REG_CorrectionRL=REG_CorrectionRL+EEPROM_READ_Byte(0xAD);
+X	Correct_Parametet[11]=Correct_Parametet[11]+EEPROM_READ_Byte(0xAD);
+N	REG_CorrectionRL=REG_CorrectionRL<<8;
 X	Correct_Parametet[11]=Correct_Parametet[11]<<8;
-N	REG_CorrectionR1=REG_CorrectionR1+EEPROM_READ_Byte(0x62);
-X	Correct_Parametet[11]=Correct_Parametet[11]+EEPROM_READ_Byte(0x62);
+N	REG_CorrectionRL=REG_CorrectionRL+EEPROM_READ_Byte(0xAE);
+X	Correct_Parametet[11]=Correct_Parametet[11]+EEPROM_READ_Byte(0xAE);
 N	
-N	REG_ReadR1_Offset=EEPROM_READ_Byte(0x63);
-X	Correct_Strong[11]=EEPROM_READ_Byte(0x63);
-N	REG_ReadR1_Offset=REG_ReadR1_Offset<<8;
+N	REG_ReadRL_Offset=EEPROM_READ_Byte(0xAF);
+X	Correct_Strong[11]=EEPROM_READ_Byte(0xAF);
+N	REG_ReadRL_Offset=REG_ReadRL_Offset<<8;
 X	Correct_Strong[11]=Correct_Strong[11]<<8;
-N	REG_ReadR1_Offset=REG_ReadR1_Offset+EEPROM_READ_Byte(0x64);
-X	Correct_Strong[11]=Correct_Strong[11]+EEPROM_READ_Byte(0x64);
-N	REG_ReadR1_Offset=REG_ReadR1_Offset<<8;
+N	REG_ReadRL_Offset=REG_ReadRL_Offset+EEPROM_READ_Byte(0xB0);
+X	Correct_Strong[11]=Correct_Strong[11]+EEPROM_READ_Byte(0xB0);
+N	REG_ReadRL_Offset=REG_ReadRL_Offset<<8;
 X	Correct_Strong[11]=Correct_Strong[11]<<8;
-N	REG_ReadR1_Offset=REG_ReadR1_Offset+EEPROM_READ_Byte(0x65);
-X	Correct_Strong[11]=Correct_Strong[11]+EEPROM_READ_Byte(0x65);
-N	REG_ReadR1_Offset=REG_ReadR1_Offset<<8;
+N	REG_ReadRL_Offset=REG_ReadRL_Offset+EEPROM_READ_Byte(0xB1);
+X	Correct_Strong[11]=Correct_Strong[11]+EEPROM_READ_Byte(0xB1);
+N	REG_ReadRL_Offset=REG_ReadRL_Offset<<8;
 X	Correct_Strong[11]=Correct_Strong[11]<<8;
-N	REG_ReadR1_Offset=REG_ReadR1_Offset+EEPROM_READ_Byte(0x66);
-X	Correct_Strong[11]=Correct_Strong[11]+EEPROM_READ_Byte(0x66);
+N	REG_ReadRL_Offset=REG_ReadRL_Offset+EEPROM_READ_Byte(0xB2);
+X	Correct_Strong[11]=Correct_Strong[11]+EEPROM_READ_Byte(0xB2);
 N	
 N	
-N	
-N/*******************ÎÈÑ¹µçÔ´****************************/
+N/*******************¦×???****************************/
 N	REG_POWERA=EEPROM_READ_Byte(0x31);
 X	Correct_Parametet[6]=EEPROM_READ_Byte(0x31);
 N	REG_POWERA=REG_POWERA<<8;
@@ -35893,5 +36349,429 @@ N	Polar4=EEPROM_READ_Byte(0x5D);
 X	correct_por[4]=EEPROM_READ_Byte(0x5D);
 N	Polar5=EEPROM_READ_Byte(0x5E);
 X	correct_por[5]=EEPROM_READ_Byte(0x5E);
+N    
+N    t_beep=EEPROM_READ_Byte(0x60);
+N    para_set4 = EEPROM_READ_Byte(0x7A);
+N    para_set2 = EEPROM_READ_Byte(0x7B);
+N    b_type = EEPROM_READ_Byte(0x78);
+N    buffer = EEPROM_READ_Byte(0x79);
+N    para_set1 = EEPROM_READ_Byte(0x61);
+N    year1 = EEPROM_READ_Byte(0x7C);
+N    year2 = EEPROM_READ_Byte(0x7D);
+N    year3 = EEPROM_READ_Byte(0x7E);
+N    year4 = EEPROM_READ_Byte(0x7F);
+N    month1 = EEPROM_READ_Byte(0x80);
+N    month2 = EEPROM_READ_Byte(0x81);
+N    day1 = EEPROM_READ_Byte(0x82);
+N    day2 = EEPROM_READ_Byte(0x83);
+N    code1 = EEPROM_READ_Byte(0x84);
+N    code2 = EEPROM_READ_Byte(0x85);
+N    code3 = EEPROM_READ_Byte(0x86);
+N    code4 = EEPROM_READ_Byte(0x87);
+N    code5 = EEPROM_READ_Byte(0x88);
+N    code6 = EEPROM_READ_Byte(0x89);
+N    code7 = EEPROM_READ_Byte(0x8A);
+N    code8 = EEPROM_READ_Byte(0x8B);
+N    flag_Load_CC = EEPROM_READ_Byte(0x8C);
+X    (flagD . bit7) = EEPROM_READ_Byte(0x8C);
+N    steptime = EEPROM_READ_Byte(0x8D);
+N    
+N    set_max_v=EEPROM_READ_Byte(0x62);
+X    Run_Control[14]=EEPROM_READ_Byte(0x62);
+N	set_max_v=set_max_v<<8;
+X	Run_Control[14]=Run_Control[14]<<8;
+N	set_max_v=set_max_v+EEPROM_READ_Byte(0x63);
+X	Run_Control[14]=Run_Control[14]+EEPROM_READ_Byte(0x63);
+N	
+N	set_min_v=EEPROM_READ_Byte(0x64);
+X	Run_Control[15]=EEPROM_READ_Byte(0x64);
+N	set_min_v=set_min_v<<8;
+X	Run_Control[15]=Run_Control[15]<<8;
+N	set_min_v=set_min_v+EEPROM_READ_Byte(0x65);
+X	Run_Control[15]=Run_Control[15]+EEPROM_READ_Byte(0x65);
+N    
+N	set_max_r=EEPROM_READ_Byte(0x66);
+X	Run_Control[16]=EEPROM_READ_Byte(0x66);
+N	set_max_r=set_max_r<<8;
+X	Run_Control[16]=Run_Control[16]<<8;
+N	set_max_r=set_max_r+EEPROM_READ_Byte(0x67);
+X	Run_Control[16]=Run_Control[16]+EEPROM_READ_Byte(0x67);
+N	
+N	set_min_r=EEPROM_READ_Byte(0x68);
+X	Run_Control[17]=EEPROM_READ_Byte(0x68);
+N	set_min_r=set_min_r<<8;
+X	Run_Control[17]=Run_Control[17]<<8;
+N	set_min_r=set_min_r+EEPROM_READ_Byte(0x69);
+X	Run_Control[17]=Run_Control[17]+EEPROM_READ_Byte(0x69);
+N
+N    set_max_c=EEPROM_READ_Byte(0x6A);
+X    Run_Control[18]=EEPROM_READ_Byte(0x6A);
+N	set_max_c=set_max_c<<8;
+X	Run_Control[18]=Run_Control[18]<<8;
+N	set_max_c=set_max_c+EEPROM_READ_Byte(0x6B);
+X	Run_Control[18]=Run_Control[18]+EEPROM_READ_Byte(0x6B);
+N	
+N	set_min_c=EEPROM_READ_Byte(0x6C);
+X	Run_Control[19]=EEPROM_READ_Byte(0x6C);
+N	set_min_c=set_min_c<<8;
+X	Run_Control[19]=Run_Control[19]<<8;
+N	set_min_c=set_min_c+EEPROM_READ_Byte(0x6D);
+X	Run_Control[19]=Run_Control[19]+EEPROM_READ_Byte(0x6D);
+N    
+N    pow_v=EEPROM_READ_Byte(0x6E);
+X    Run_Control[38]=EEPROM_READ_Byte(0x6E);
+N	pow_v=pow_v<<8;
+X	Run_Control[38]=Run_Control[38]<<8;
+N	pow_v=pow_v+EEPROM_READ_Byte(0x6F);
+X	Run_Control[38]=Run_Control[38]+EEPROM_READ_Byte(0x6F);
+N	
+N	pow_c=EEPROM_READ_Byte(0x70);
+X	Run_Control[40]=EEPROM_READ_Byte(0x70);
+N	pow_c=pow_c<<8;
+X	Run_Control[40]=Run_Control[40]<<8;
+N	pow_c=pow_c+EEPROM_READ_Byte(0x71);
+X	Run_Control[40]=Run_Control[40]+EEPROM_READ_Byte(0x71);
+N
+N    load_c=EEPROM_READ_Byte(0x72);
+X    Run_Control[37]=EEPROM_READ_Byte(0x72);
+N	load_c=load_c<<8;
+X	Run_Control[37]=Run_Control[37]<<8;
+N	load_c=load_c+EEPROM_READ_Byte(0x73); 
+X	Run_Control[37]=Run_Control[37]+EEPROM_READ_Byte(0x73); 
+N    
+N    set_init_c=EEPROM_READ_Byte(0x74);
+X    Run_Control[22]=EEPROM_READ_Byte(0x74);
+N	set_init_c=set_init_c<<8;
+X	Run_Control[22]=Run_Control[22]<<8;
+N	set_init_c=set_init_c+EEPROM_READ_Byte(0x75);
+X	Run_Control[22]=Run_Control[22]+EEPROM_READ_Byte(0x75);
+N    
+N    set_sbs_c=EEPROM_READ_Byte(0x76);
+X    Run_Control[23]=EEPROM_READ_Byte(0x76);
+N	set_sbs_c=set_sbs_c<<8;
+X	Run_Control[23]=Run_Control[23]<<8;
+N	set_sbs_c=set_sbs_c+EEPROM_READ_Byte(0x77);
+X	Run_Control[23]=Run_Control[23]+EEPROM_READ_Byte(0x77);
+N    
+N    
+N    
+N    opv1=EEPROM_READ_Byte(0x8E);
+X    Run_Control[31]=EEPROM_READ_Byte(0x8E);
+N	opv1=opv1<<8;
+X	Run_Control[31]=Run_Control[31]<<8;
+N	opv1=opv1+EEPROM_READ_Byte(0x8F);
+X	Run_Control[31]=Run_Control[31]+EEPROM_READ_Byte(0x8F);
+N    
+N    opv2=EEPROM_READ_Byte(0x90);
+X    Run_Control[32]=EEPROM_READ_Byte(0x90);
+N	opv2=opv2<<8;
+X	Run_Control[32]=Run_Control[32]<<8;
+N	opv2=opv2+EEPROM_READ_Byte(0x91);
+X	Run_Control[32]=Run_Control[32]+EEPROM_READ_Byte(0x91);
+N    
+N    opv3=EEPROM_READ_Byte(0x92);
+X    Run_Control[33]=EEPROM_READ_Byte(0x92);
+N	opv3=opv3<<8;
+X	Run_Control[33]=Run_Control[33]<<8;
+N	opv3=opv3+EEPROM_READ_Byte(0x93);
+X	Run_Control[33]=Run_Control[33]+EEPROM_READ_Byte(0x93);
+N    
+N    cov1=EEPROM_READ_Byte(0x94);
+X    coff[0]=EEPROM_READ_Byte(0x94);
+N	cov1=cov1<<8;
+X	coff[0]=coff[0]<<8;
+N	cov1=cov1+EEPROM_READ_Byte(0x95);
+X	coff[0]=coff[0]+EEPROM_READ_Byte(0x95);
+N    
+N    cov2=EEPROM_READ_Byte(0x96);
+X    coff[1]=EEPROM_READ_Byte(0x96);
+N	cov2=cov2<<8;
+X	coff[1]=coff[1]<<8;
+N	cov2=cov2+EEPROM_READ_Byte(0x97);
+X	coff[1]=coff[1]+EEPROM_READ_Byte(0x97);
+N    
+N    cov3=EEPROM_READ_Byte(0x98);
+X    coff[2]=EEPROM_READ_Byte(0x98);
+N	cov3=cov3<<8;
+X	coff[2]=coff[2]<<8;
+N	cov3=cov3+EEPROM_READ_Byte(0x99);
+X	coff[2]=coff[2]+EEPROM_READ_Byte(0x99);
+N    
+N    opc1=EEPROM_READ_Byte(0x9A);
+X    Run_Control[34]=EEPROM_READ_Byte(0x9A);
+N	opc1=opc1<<8;
+X	Run_Control[34]=Run_Control[34]<<8;
+N	opc1=opc1+EEPROM_READ_Byte(0x9B);
+X	Run_Control[34]=Run_Control[34]+EEPROM_READ_Byte(0x9B);
+N    
+N    opc2=EEPROM_READ_Byte(0x9C);
+X    Run_Control[35]=EEPROM_READ_Byte(0x9C);
+N	opc2=opc2<<8;
+X	Run_Control[35]=Run_Control[35]<<8;
+N	opc2=opc2+EEPROM_READ_Byte(0x9D);
+X	Run_Control[35]=Run_Control[35]+EEPROM_READ_Byte(0x9D);
+N    
+N    opc3=EEPROM_READ_Byte(0x9E);
+X    Run_Control[36]=EEPROM_READ_Byte(0x9E);
+N	opc3=opc3<<8;
+X	Run_Control[36]=Run_Control[36]<<8;
+N	opc3=opc3+EEPROM_READ_Byte(0x9F);
+X	Run_Control[36]=Run_Control[36]+EEPROM_READ_Byte(0x9F);
+N    
+N    coc1=EEPROM_READ_Byte(0xA0);
+X    coff[3]=EEPROM_READ_Byte(0xA0);
+N	coc1=coc1<<8;
+X	coff[3]=coff[3]<<8;
+N	coc1=coc1+EEPROM_READ_Byte(0xA1);
+X	coff[3]=coff[3]+EEPROM_READ_Byte(0xA1);
+N    
+N    coc2=EEPROM_READ_Byte(0xA2);
+X    coff[4]=EEPROM_READ_Byte(0xA2);
+N	coc2=coc2<<8;
+X	coff[4]=coff[4]<<8;
+N	coc2=coc2+EEPROM_READ_Byte(0xA3);
+X	coff[4]=coff[4]+EEPROM_READ_Byte(0xA3);
+N    
+N    coc3=EEPROM_READ_Byte(0xA4);
+X    coff[5]=EEPROM_READ_Byte(0xA4);
+N	coc3=coc3<<8;
+X	coff[5]=coff[5]<<8;
+N	coc3=coc3+EEPROM_READ_Byte(0xA5);
+X	coff[5]=coff[5]+EEPROM_READ_Byte(0xA5);
+N    
+N    set_loop_count=EEPROM_READ_Byte(0xA6);
+N    
+N    cdc_dc=EEPROM_READ_Byte(0xA7);
+X    Run_Control[39]=EEPROM_READ_Byte(0xA7);
+N	cdc_dc=cdc_dc<<8;
+X	Run_Control[39]=Run_Control[39]<<8;
+N	cdc_dc=cdc_dc+EEPROM_READ_Byte(0xA8);
+X	Run_Control[39]=Run_Control[39]+EEPROM_READ_Byte(0xA8);
+N    
+N    set_dc_cutoff_v=EEPROM_READ_Byte(0xA9);
+X    Run_Control[27]=EEPROM_READ_Byte(0xA9);
+N	set_dc_cutoff_v=set_dc_cutoff_v<<8;
+X	Run_Control[27]=Run_Control[27]<<8;
+N	set_dc_cutoff_v=set_dc_cutoff_v+EEPROM_READ_Byte(0xAA);
+X	Run_Control[27]=Run_Control[27]+EEPROM_READ_Byte(0xAA);
+N}
+Nvoid Wrtite_Beep(void)//??BEEP???FLASH?
+N{
+N	EEPROM_WriteByte(0x5F, Beep_Flag);
+N	EEPROM_WriteByte(0x60, t_beep);
+N}
+N/*****************************************************************************/
+Nvoid Wrtite_S(void)//??BEEP???FLASH?
+N{
+N	EEPROM_WriteByte(0x61, para_set1);
+N}
+N
+N/******************************************************************************/
+Nvoid Wrtite_step(void)
+N{
+N	EEPROM_WriteByte(0x8D, steptime);
+N}
+N
+N
+Nvoid Write_Limits(void)
+N{
+N    vu8 data_8bit;
+N    
+N	data_8bit = set_max_v >> 8;
+X	data_8bit = Run_Control[14] >> 8;
+N	EEPROM_WriteByte(0x62, data_8bit);
+N	EEPROM_WriteByte(0x63, set_max_v);
+X	EEPROM_WriteByte(0x63, Run_Control[14]);
+N	
+N	data_8bit = set_min_v >> 8;
+X	data_8bit = Run_Control[15] >> 8;
+N	EEPROM_WriteByte(0x64, data_8bit);
+N	EEPROM_WriteByte(0x65, set_min_v);
+X	EEPROM_WriteByte(0x65, Run_Control[15]);
+N    
+N    data_8bit = set_max_r >> 8;
+X    data_8bit = Run_Control[16] >> 8;
+N	EEPROM_WriteByte(0x66, data_8bit);
+N	EEPROM_WriteByte(0x67, set_max_r);
+X	EEPROM_WriteByte(0x67, Run_Control[16]);
+N	
+N	data_8bit = set_min_r >> 8;
+X	data_8bit = Run_Control[17] >> 8;
+N	EEPROM_WriteByte(0x68, data_8bit);
+N	EEPROM_WriteByte(0x69, set_min_r);
+X	EEPROM_WriteByte(0x69, Run_Control[17]);
+N    
+N    data_8bit = set_max_c >> 8;
+X    data_8bit = Run_Control[18] >> 8;
+N	EEPROM_WriteByte(0x6A, data_8bit);
+N	EEPROM_WriteByte(0x6B, set_max_c);
+X	EEPROM_WriteByte(0x6B, Run_Control[18]);
+N	
+N	data_8bit = set_min_c >> 8;
+X	data_8bit = Run_Control[19] >> 8;
+N	EEPROM_WriteByte(0x6C, data_8bit);
+N	EEPROM_WriteByte(0x6D, set_min_c);
+X	EEPROM_WriteByte(0x6D, Run_Control[19]);
+N    
+N	data_8bit = pow_v >> 8;
+X	data_8bit = Run_Control[38] >> 8;
+N	EEPROM_WriteByte(0x6E, data_8bit);
+N	EEPROM_WriteByte(0x6F, pow_v);
+X	EEPROM_WriteByte(0x6F, Run_Control[38]);
+N	
+N	data_8bit = pow_c >> 8;
+X	data_8bit = Run_Control[40] >> 8;
+N	EEPROM_WriteByte(0x70, data_8bit);
+N	EEPROM_WriteByte(0x71, pow_c);
+X	EEPROM_WriteByte(0x71, Run_Control[40]);
+N    
+N    data_8bit = load_c >> 8;
+X    data_8bit = Run_Control[37] >> 8;
+N	EEPROM_WriteByte(0x72, data_8bit);
+N	EEPROM_WriteByte(0x73, load_c);
+X	EEPROM_WriteByte(0x73, Run_Control[37]);
+N    
+N    data_8bit = set_init_c >> 8;
+X    data_8bit = Run_Control[22] >> 8;
+N	EEPROM_WriteByte(0x74, data_8bit);
+N	EEPROM_WriteByte(0x75, set_init_c);
+X	EEPROM_WriteByte(0x75, Run_Control[22]);
+N    
+N    data_8bit = set_sbs_c >> 8;
+X    data_8bit = Run_Control[23] >> 8;
+N	EEPROM_WriteByte(0x76, data_8bit);
+N	EEPROM_WriteByte(0x77, set_sbs_c);
+X	EEPROM_WriteByte(0x77, Run_Control[23]);
+N
+N
+N
+N    data_8bit = opv1 >> 8;
+X    data_8bit = Run_Control[31] >> 8;
+N	EEPROM_WriteByte(0x8E, data_8bit);
+N	EEPROM_WriteByte(0x8F, opv1);
+X	EEPROM_WriteByte(0x8F, Run_Control[31]);
+N    
+N    data_8bit = opv2 >> 8;
+X    data_8bit = Run_Control[32] >> 8;
+N	EEPROM_WriteByte(0x90, data_8bit);
+N	EEPROM_WriteByte(0x91, opv2);
+X	EEPROM_WriteByte(0x91, Run_Control[32]);
+N    
+N    data_8bit = opv3 >> 8;
+X    data_8bit = Run_Control[33] >> 8;
+N	EEPROM_WriteByte(0x92, data_8bit);
+N	EEPROM_WriteByte(0x93, opv3);
+X	EEPROM_WriteByte(0x93, Run_Control[33]);
+N    
+N    data_8bit = cov1 >> 8;
+X    data_8bit = coff[0] >> 8;
+N	EEPROM_WriteByte(0x94, data_8bit);
+N	EEPROM_WriteByte(0x95, cov1);
+X	EEPROM_WriteByte(0x95, coff[0]);
+N    
+N    data_8bit = cov2 >> 8;
+X    data_8bit = coff[1] >> 8;
+N	EEPROM_WriteByte(0x96, data_8bit);
+N	EEPROM_WriteByte(0x97, cov2);
+X	EEPROM_WriteByte(0x97, coff[1]);
+N    
+N    data_8bit = cov3 >> 8;
+X    data_8bit = coff[2] >> 8;
+N	EEPROM_WriteByte(0x98, data_8bit);
+N	EEPROM_WriteByte(0x99, cov3);
+X	EEPROM_WriteByte(0x99, coff[2]);
+N    
+N    data_8bit = opc1 >> 8;
+X    data_8bit = Run_Control[34] >> 8;
+N	EEPROM_WriteByte(0x9A, data_8bit);
+N	EEPROM_WriteByte(0x9B, opc1);
+X	EEPROM_WriteByte(0x9B, Run_Control[34]);
+N    
+N    data_8bit = opc2 >> 8;
+X    data_8bit = Run_Control[35] >> 8;
+N	EEPROM_WriteByte(0x9C, data_8bit);
+N	EEPROM_WriteByte(0x9D, opc2);
+X	EEPROM_WriteByte(0x9D, Run_Control[35]);
+N    
+N    data_8bit = opc3 >> 8;
+X    data_8bit = Run_Control[36] >> 8;
+N	EEPROM_WriteByte(0x9E, data_8bit);
+N	EEPROM_WriteByte(0x9F, opc3);
+X	EEPROM_WriteByte(0x9F, Run_Control[36]);
+N    
+N    data_8bit = coc1 >> 8;
+X    data_8bit = coff[3] >> 8;
+N	EEPROM_WriteByte(0xA0, data_8bit);
+N	EEPROM_WriteByte(0xA1, coc1);
+X	EEPROM_WriteByte(0xA1, coff[3]);
+N    
+N    data_8bit = coc2 >> 8;
+X    data_8bit = coff[4] >> 8;
+N	EEPROM_WriteByte(0xA2, data_8bit);
+N	EEPROM_WriteByte(0xA3, coc2);
+X	EEPROM_WriteByte(0xA3, coff[4]);
+N    
+N    data_8bit = coc3 >> 8;
+X    data_8bit = coff[5] >> 8;
+N	EEPROM_WriteByte(0xA4, data_8bit);
+N	EEPROM_WriteByte(0xA5, coc3);
+X	EEPROM_WriteByte(0xA5, coff[5]);
+N    
+N	EEPROM_WriteByte(0xA6, set_loop_count);
+N    
+N    data_8bit = cdc_dc >> 8;
+X    data_8bit = Run_Control[39] >> 8;
+N	EEPROM_WriteByte(0xA7, data_8bit);
+N	EEPROM_WriteByte(0xA8, cdc_dc);
+X	EEPROM_WriteByte(0xA8, Run_Control[39]);
+N    
+N    data_8bit = set_dc_cutoff_v >> 8;
+X    data_8bit = Run_Control[27] >> 8;
+N	EEPROM_WriteByte(0xA9, data_8bit);
+N	EEPROM_WriteByte(0xAA, set_dc_cutoff_v);
+X	EEPROM_WriteByte(0xAA, Run_Control[27]);
+N}
+N
+Nvoid Write_btype(void)
+N{
+N	EEPROM_WriteByte(0x78,b_type);
+N    EEPROM_WriteByte(0x79,buffer);
+N}
+N/************************************************************************/
+Nvoid Write_alarm(void)
+N{
+N	EEPROM_WriteByte(0x7A,para_set4);
+N}
+N/************************************************************************/
+Nvoid Write_oct(void)
+N{
+N	EEPROM_WriteByte(0x7B,para_set2);
+N}
+N
+Nvoid Write_LOAD(void)
+N{
+N    EEPROM_WriteByte(0x8C,flag_Load_CC);
+X    EEPROM_WriteByte(0x8C,(flagD . bit7));
+N}
+N/************************************************************************/
+Nvoid Write_info(void)
+N{
+N	EEPROM_WriteByte(0x7C,year1);
+N    EEPROM_WriteByte(0x7D,year2);
+N    EEPROM_WriteByte(0x7E,year3);
+N    EEPROM_WriteByte(0x7F,year4);
+N    EEPROM_WriteByte(0x80,month1);
+N    EEPROM_WriteByte(0x81,month2);
+N    EEPROM_WriteByte(0x82,day1);
+N    EEPROM_WriteByte(0x83,day2);
+N    EEPROM_WriteByte(0x84,code1);
+N    EEPROM_WriteByte(0x85,code2);
+N    EEPROM_WriteByte(0x86,code3);
+N    EEPROM_WriteByte(0x87,code4);
+N    EEPROM_WriteByte(0x88,code5);
+N    EEPROM_WriteByte(0x89,code6);
+N    EEPROM_WriteByte(0x8A,code7);
+N    EEPROM_WriteByte(0x8B,code8); 
 N}
 N/******************* (C) COPYRIGHT 2015 AVER *****END OF FILE*************************/
+N

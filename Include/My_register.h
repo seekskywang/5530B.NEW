@@ -1,61 +1,92 @@
 /******************** (C) COPYRIGHT 2014 KUNKIN********************
- * ÎÄ¼şÃû  £ºmy_register
- * ×÷Õß    £ºÀîÕñ
- * ÃèÊö    £º¿âº¯Êı°æ
- * ÄÚÈİ    £ºDefine register¶¨ÒåÏµÍ³Ê¹ÓÃµÄ¼Ä´æÆ÷£¬È«¾Ö±äÁ¿
- * ×¢Òâ		 £ºÍ·ÎÄ¼şÖĞÖ»ÄÜÓĞÉùÃ÷£¬²»ÄÜÓĞ¶¨Òå
- * ĞŞ¸ÄÈÕÆÚ£º2014-12-9
+ * ¦Ó??  ¨²my_register
+ * ??    ¨²n?
+ * ??    ¨²????
+ * ??    ¨²Define register??????????¨¬???
+ * ??		 ¨²?¦Ó???????¨¬?????
+ * ???¨·¨²2014-12-9
 *********************************************************************/
 
 #include "STM32F4xx.h"
 #ifndef __my_register_h__
 #define __my_register_h__
 //=============================================================================
-
+void Write_Limits(void);
+void Wrtite_step(void);
+void OC_ADD(void);
+void Wrtite_S(void);
+void Write_oct(void);
+void Write_alarm(void);
+void Write_btype(void);
+void Write_LOAD(void);
+void Write_info(void);
+void OC_CHECK(void);
+void INPUT_POW(char* num);  
+void INPUT_NUM(char* num); 
+void INPUT_CDC(char* num); 
+void INPUT_C(char* num);  
+void INPUT_LOAD(char* num);  
+void INPUT_INFO(vu8 num);
+void SET_OP_DOWN(void);
+void SET_OP_UP(void);
+void SET_OP_RIGHT(void);
+void SET_OP_LEFT(void);
+void PARA_SET(void);
+void SYS_INFO_RIGHT(void);
+void SYS_INFO_LEFT(void);
+void SYS_INFO_UP(void);
+void SYS_INFO_DOWN(void);
+void INPUT_INFO(vu8 num);
+void CDC_OP_DOWN(void);
+void CDC_OP_UP(void);
+void CDC_OP_LEFT(void);
+void CDC_OP_RIGHT(void);
+void CDC_SET(void);
+void INPUT_CDC(char* num); 
 //=============================================================================
-#define NOP   __nop();	  //¿ÕÖ¸Áî
+#define NOP   __nop();	  //???
 
 //============================================================================
 extern struct bitDefine flagA,flagB,flagC,flagD,flagE,flagF,flagG;
-#define   Flag_ADC_Full             (flagA.bit1)//DMA´«ÊäÍê³É±êÖ¾Î» 
-#define   Flag_BEEP						    	(flagA.bit2)//·äÃùÆ÷´¥·¢±êÖ¾
-#define   Flag_Key_Scan							(flagA.bit3)//°´¼ü¶¨Ê±É¨Ãè±êÖ¾
-#define   UART_SEND_flag						(flagA.bit4)//´®¿Ú·¢ËÍÍê³É±êÖ¾
-#define   UART_Buffer_Rece_flag			(flagA.bit5)//´®¿Ú½ÓÊÕÍê³É±êÖ¾
-#define   Flag_Swtich_ON      			(flagA.bit6)//Æô¶¯°´¼ü´¦ÓÚON±êÖ¾
-#define   Flag_0_5S      		      	(flagA.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ÉÁË¸±êÖ¾
+#define   Flag_ADC_Full             (flagA.bit1)//DMA??????¦Ë 
+#define   Flag_BEEP						    	(flagA.bit2)//???????
+#define   Flag_Key_Scan							(flagA.bit3)//§Õ???????
+#define   UART_SEND_flag						(flagA.bit4)//????????
+#define   UART_Buffer_Rece_flag			(flagA.bit5)//????????
+#define   Flag_Swtich_ON      			(flagA.bit6)//??§Õ???ON??
+#define   Flag_0_5S      		      	(flagA.bit7)//§¥?????????
 
-#define   Flag_1S      		         	(flagB.bit0)//ÏÔÊ¾ÉèÖÃµçÁ÷ÉÁË¸±êÖ¾
-#define   Flag_5S      		        	(flagB.bit1)//ÍË³öÉèÖÃ×´Ì¬±êÖ¾
-#define   Flag_Long                 (flagB.bit2)//°´¼ü³¤°´±êÖ¾
-#define   Flag_DAC_OFF              (flagB.bit3)//æ˜¯å¦è½¬æ¢DACæ§åˆ¶å€¼æ ‡å¿—
-#define   Flag_SetA                 (flagB.bit5)//½øÈëÉèÖÃµçÁ÷±êÖ¾Î»
-#define   Flag_SetV                 (flagB.bit6)//½øÈëÉèÖÃµçÑ¹±êÖ¾Î» 
-#define   Flag_DisSet               (flagB.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ºÍµçÁ÷±êÖ¾Î»
+#define   Flag_1S      		         	(flagB.bit0)//§¥????¡¤????
+#define   Flag_5S      		        	(flagB.bit1)//????????
+#define   Flag_Long                 (flagB.bit2)//§Õ??§Õ??
+#define   Flag_DAC_OFF              (flagB.bit3)//ÊÇ·ñ×ª»»DAC¿ØÖÆÖµ±êÖ¾
+#define   Flag_SetA                 (flagB.bit5)//?????¡¤??¦Ë
+#define   Flag_SetV                 (flagB.bit6)//????????¦Ë 
+#define   Flag_DisSet               (flagB.bit7)//§¥???????¡¤??¦Ë
 
-#define   Flag_GE                   (flagC.bit0)//¸öÎ»ÉÁË¸±êÖ¾
-#define   Flag_SHI                  (flagC.bit1)//Ê®Î»ÉÁË¸±êÖ¾
-#define   Flag_BAI                  (flagC.bit2)//°ÙÎ»ÉÁË¸±êÖ¾
-#define   Flag_QIAN                 (flagC.bit3)//Ç§Î»ÉÁË¸±êÖ¾
-#define   Flag_Beep_OFF             (flagC.bit6)//·äÃùÆ÷¹Ø±Õ±êÖ¾
+#define   Flag_GE                   (flagC.bit0)//?¦Ë????
+#define   Flag_SHI                  (flagC.bit1)//?¦Ë????
+#define   Flag_BAI                  (flagC.bit2)//?¦Ë????
+#define   Flag_QIAN                 (flagC.bit3)//?¦Ë????
+#define   Flag_Beep_OFF             (flagC.bit6)//???????
 
-#define   flag_Tim_USART            (flagD.bit0)//´®¿Ú¼ÆËãÇåÁã±êÖ¾
-#define   flag_Test                 (flagD.bit1)//×Ô¶¯²âÊÔÆğÍ£±êÖ¾
-#define   flag_Test_PASS            (flagD.bit2)//×Ô¶¯²âÊÔPASS±êÖ¾
-#define   flag_Test_FAIL            (flagD.bit3)//×Ô¶¯²âÊÔFAIL±êÖ¾
-#define   flag_Test_Time            (flagD.bit4)//×Ô¶¯²âÊÔµÈ´ıÊ±¼ä±êÖ¾
-#define   flag_Test_Start           (flagD.bit5)//×Ô¶¯²âÊÔ±È½Ï¿ªÊ¼±êÖ¾
-#define   flag_Test_Min             (flagD.bit6)//×Ô¶¯²âÊÔÏÂÏŞ±êÖ¾
-#define   flag_Load_CC              (flagD.bit7)//¸ºÔØCC/CVÄ£Ê½±êÖ¾Î»
+#define   flag_Tim_USART            (flagD.bit0)//?????¡ê??
+#define   flag_Test                 (flagD.bit1)//????????
+#define   flag_Test_PASS            (flagD.bit2)//????PASS??
+#define   flag_Test_FAIL            (flagD.bit3)//????FAIL??
+#define   flag_Test_Time            (flagD.bit4)//??????????
+#define   flag_Test_Start           (flagD.bit5)//??????????
+#define   flag_Test_Min             (flagD.bit6)//?????§°??
+#define   flag_Load_CC              (flagD.bit7)//??CC/CV????¦Ë
 
-#define   flag_Test_Door             (flagE.bit0)//×Ô¶¯²âÊÔÃÅ¼÷±êÖ¾
-#define   flag_Test_SetTime          (flagE.bit1)//×Ô¶¯²âÊÔÊ±¼ä±êÖ¾ 
-#define   flag_OVP                   (flagE.bit2)//OVP±êÖ¾
-#define   flag_OCP                   (flagE.bit3)//OCP±êÖ¾
-#define   flag_Doub                  (flagE.bit4)//°´¼üË«»÷
-#define   flag_t_Doub                (flagE.bit5)//°´¼üË«»÷¼ÆÊ±±êÖ¾
-#define   flag_Time_SW               (flagE.bit6)//¶¨Ê±¹¦ÄÜ¿ªÆô±êÖ¾
-#define   flag_CC_MODE               (flagE.bit7)//¹¤×÷Ä£Ê½±êÖ¾
+#define   flag_Test_Door             (flagE.bit0)//????????
+#define   flag_Test_SetTime          (flagE.bit1)//???????? 
+#define   flag_OVP                   (flagE.bit2)//OVP??
+#define   flag_OCP                   (flagE.bit3)//OCP??
+#define   flag_Doub                  (flagE.bit4)//§Õ???
+#define   flag_t_Doub                (flagE.bit5)//§Õ???????
+#define   flag_Time_SW               (flagE.bit6)//????????
+#define   flag_CC_MODE               (flagE.bit7)//??????
 
 #define   flag_Adjust                (flagF.bit0)//
 #define   flag_ADJ_ON                (flagF.bit1)//
@@ -78,7 +109,7 @@ extern struct bitDefine flagA,flagB,flagC,flagD,flagE,flagF,flagG;
 extern vu32 GE_V;
 extern vu32 SHI_V;
 extern vu32 BAI_V;
-extern vu32 QIAN_V;  //ÊıÂë¹ÜÉ¨Ãè¶ÎÂë
+extern vu32 QIAN_V;  //???????
 extern vu32 GE_A;
 extern vu32 SHI_A;
 extern vu32 BAI_A;
@@ -89,7 +120,7 @@ extern vu8 DAC_Flag;
 extern vu8 Beep_Flag;
 extern vu8 t_beep;
 extern vu8 t_KeyScan;
-extern vu8 t_LEDScan;  //¶¨Ê±¼ÆÊıÆ÷
+extern vu8 t_LEDScan;  //?????
 extern vu8 t_KEYON;
 extern vu16 t_0_5S;
 extern vu16 t_1S;
@@ -102,8 +133,8 @@ extern vu16 t_ON_V;
 extern vu16 t_OFF_A;
 extern vu16 t_ON_A;
 extern vu8 t_USART;
-extern vu16 ADJ_Write;//Ğ£×¼Ê±ĞèĞ´ÈëµÄÊµ¼ÊÖµ
-extern vu8 OFFSET_Zore;//ÁãµãÖµ
+extern vu16 ADJ_Write;//§µ???§Õ?????
+extern vu8 OFFSET_Zore;//¡ê??
 extern vu8 ADDR;
 extern vu8 t_lock;
 extern vu8 t_onoff;
@@ -114,12 +145,12 @@ extern vu16 Test_Time1;
 extern vu16 Time_sw;
 extern vu16 Test_Daley;
 extern vu16 Test_C_Door;
-extern vu16 TEMP_OFFSET;//ÎÂ¶È²¹³¥Öµ
+extern vu16 TEMP_OFFSET;//?????
 //--------------------------
-extern vu8 UART_Buffer_Size;//´®¿Ú½ÓÊÕÊı¾İ³¤¶È
+extern vu8 UART_Buffer_Size;//????????
 extern vu8 Transmit_BUFFERsize;
 //---------------------------
-extern vu16 NTC_value;   //ADÖµ
+extern vu16 NTC_value;   //AD?
 extern vu16 Imon_value;
 extern vu32 Imon1_value;
 extern vu16 Vmon_value;
@@ -131,69 +162,271 @@ extern  float DISS_POW_Voltage;
 extern float DISS_Current;
 extern float DISS_POW_Current;
 extern float DISS_R;
+extern vu16 steptime;
+extern vu8 r_stable;
+extern char set_limit[5];
+extern vu8 bit;
+extern vu8 bit1;
+extern vu8 dot_flag;
+extern vu8 page_sw;
+extern vu8 para_set1;
+extern vu8 para_set2;
+extern vu8 para_set3;
+extern vu8 para_set4;
+extern vu8 oct_sw;
+extern vu8 set_sw;
+extern vu8 charge_step;
+extern vu8 cutoff_flag;
+extern vu8 lang;
+extern vu8 r_raly;
+extern vu16 steptime;
+extern vu8 alert_flag;
+extern vu8 t_onoff;
+extern vu8 ocstop;
+extern float temp;
+extern vu8 mode_sw;
+extern vu16 stepcount;
+extern vu16 battery_c;
+extern float bc_raw;
+extern vu8 track;
+extern vu8 clear_flag1;
+extern vu8 clear_flag2;
+extern vu8 clear_flag3;
+extern vu8 pass;
+extern vu8 b_type;
+extern vu8 buffer;
+extern float clear_v;
+extern float clear_pv;
+extern float clear_lv;
+extern float temp;
+extern vu8 set_loop_count;
 
-extern vu32 Run_Control[14];	
+extern vu32 Run_Control[41];	
 #define onoff_ch                    Run_Control[0]  //ON/OFF
-#define SET_Voltage 	    	        Run_Control[1]  //µçÔ´Éè¶¨µçÑ¹
-#define SET_Current	    	    		  Run_Control[2]  //µçÔ´Éè¶¨µçÁ÷
-#define SET_Voltage_Laod 					  Run_Control[3]  //¸ºÔØÉè¶¨µçÑ¹
-#define SET_Current_Laod					  Run_Control[4]  //¸ºÔØÉè¶¨µçÁ÷
+#define SET_Voltage 	    	        Run_Control[1]  //??????
+#define SET_Current	    	    		  Run_Control[2]  //?????¡¤
+#define SET_Voltage_Laod 					  Run_Control[3]  //??????
+#define SET_Current_Laod					  Run_Control[4]  //?????¡¤
 #define LOCK_KEY								    Run_Control[5]  //
 #define BEEP_KEY								    Run_Control[6]  //
 #define STRONG_KEY							    Run_Control[7]  //
 
 #define MODE_Woke							   	  Run_Control[8]  //
-#define POW_Voltage	    	          Run_Control[9]  //µçÔ´²âÁ¿µçÑ¹
-#define Voltage	    	              Run_Control[10]  //¸ºÔØ²âÁ¿µçÑ¹
-#define Current	    	    		      Run_Control[11]  //µçÔ´²âÁ¿µçÁ÷
-#define Laod_Current	    		      Run_Control[12]  //¸ºÔØ²âÁ¿µçÁ÷
-#define R_VLUE											Run_Control[13]  //ÄÚ×èÖµ
+#define POW_Voltage	    	            Run_Control[9]  //?????
+#define Voltage	    	                Run_Control[10]  //?????
+#define Current	    	    		    Run_Control[11]  //????¡¤
+#define Laod_Current	    		    Run_Control[12]  //????¡¤
+#define R_VLUE							Run_Control[13]  //???
+#define set_max_v						Run_Control[14]  //ÉèÖÃ²âÁ¿µçÑ¹ÉÏÏŞ
+#define set_min_v						Run_Control[15]  //ÉèÖÃ²âÁ¿µçÑ¹ÏÂÏŞ
+#define set_max_r						Run_Control[16]  //ÉèÖÃ²âÁ¿ÄÚ×èÉÏÏŞ
+#define set_min_r						Run_Control[17]  //ÉèÖÃ²âÁ¿ÄÚ×èÏÂÏŞ
+#define set_max_c						Run_Control[18]  //ÉèÖÃ²âÁ¿µçÁ÷ÉÏÏŞ
+#define set_min_c						Run_Control[19]  //ÉèÖÃ²âÁ¿µçÁ÷Î÷Ïß
+#define set_output_v					Run_Control[20]  //ÉèÖÃ²âÁ¿Êä³öµçÑ¹
+#define set_output_c					Run_Control[21]  //ÉèÖÃ²âÁ¿Êä³öµçÁ÷
+#define set_init_c					    Run_Control[22]  //ÉèÖÃ²âÁ¿Êä³öµçÑ¹
+#define set_sbs_c					    Run_Control[23]  //ÉèÖÃ²âÁ¿Êä³öµçÁ÷
+#define set_add_c					    Run_Control[24]
+#define set_c_cutoff_v					Run_Control[25]
+#define set_c_cutoff_c					Run_Control[26]
+#define set_dc_cutoff_v					Run_Control[27]
+#define set_dc_cutoff_c					Run_Control[28]
+#define start_time					    Run_Control[29]
+#define end_time					    Run_Control[30]
+#define opv1    					    Run_Control[31]
+#define opv2    					    Run_Control[32]
+#define opv3    					    Run_Control[33]
+#define opc1    					    Run_Control[34]
+#define opc2    					    Run_Control[35]
+#define opc3    					    Run_Control[36]
+#define load_c    					    Run_Control[37]
+#define pow_v    					    Run_Control[38]
+#define cdc_dc    					    Run_Control[39]
+#define pow_c    					    Run_Control[40]
+
+
+extern vu16 coff[6];
+#define cov1    					    coff[0]
+#define cov2    					    coff[1]
+#define cov3    					    coff[2]
+#define coc1    					    coff[3]
+#define coc2    					    coff[4]
+#define coc3    					    coff[5]										 //???
+
+/*
+************************************************************************
+*						Ò³ÃæÊ¶±ğ·û
+************************************************************************
+*/
+
+#define face_graph      0
+#define face_cdc        1
+#define face_menu       2
+#define face_r          3
+#define face_load       4
+#define face_set        5
+#define face_starter    6
+#define face_sys_info   7
+/*
+************************************************************************
+*						ÉèÖÃÑ¡ÏîÊ¶±ğ·û
+************************************************************************
+*/
+
+#define set_1           0
+#define set_2           1
+#define set_3           2
+#define set_4           3
+#define set_5           4
+#define set_6           5
+#define set_7           6
+#define set_8           7
+#define set_9           8
+#define set_10          9
+#define set_11          10
+#define set_12          11
+#define set_13          12
+#define set_14          13
+#define set_15          14
+#define set_16          15
+#define set_17          16
+#define set_18          17
+#define set_19          18
+#define set_20          19
+#define set_21          20
+#define set_22          21
+#define set_23          22
+#define set_24          23
+#define set_25          24
+#define set_26          25
+#define set_27          26
+#define set_28          27
+#define set_29          28
+#define set_30          29
+#define set_31          30
+#define set_32          31
+#define set_33          32
+#define set_34          33
+#define set_35          34
+#define set_36          35
+#define set_37          36
+#define set_38          37
+#define set_39          38
+#define set_40          39
+#define set_41          40
+#define set_42          41
+#define set_43          42
+#define set_44          43
+#define set_45          44
+#define set_46          45
+#define set_47          46
+#define set_48          47
+#define set_49          48
+#define set_50          49
+#define set_51          50
+#define set_52          51
+#define set_53          52
+#define set_54          53
+#define set_55          54
+#define set_56          55
+#define set_57          56
+#define set_58          57
+#define set_59          58
+#define set_60          59
+#define set_61          60
+#define set_62          61
+#define set_63          62
+#define set_64          63
+#define set_65          64
+#define set_66          65
+#define set_67          66
+#define set_68          67
+#define set_69          68
+#define set_70          69
+#define set_71          70
+/*
+************************************************************************
+*						²ÎÊıÉèÖÃÊ¶±ğ·û
+************************************************************************
+*/
+
+#define set_1_on            0xff
+#define set_1_off           0
+#define set_2_on            0xff
+#define set_2_off           0
+#define set_3_on            1
+#define set_3_off           0
+#define set_4_on            0xff
+#define set_4_off           0
+#define cdc_on              1
+#define cdc_off             0
+#define oct_on              1
+#define oct_off             0
+#define c_on                1
+#define c_off               0
+#define mode_r              1
+#define mode_load           2
+#define mode_pow            3
+#define load_on             1
+#define load_off            0
+#define pow_on              1
+#define pow_off             0
+#define Lion                1
+#define NiMH                2
+#define NiCd                3
+#define SLA                 4
+#define LiMH                5
+#define step1               0
+#define step2               1
+#define step3               2
+
 
 
 extern vu16 Contr_Voltage;//
 extern vu16 Contr_Current;//
 extern vu16 Contr_Laod;//
 extern vu32 Correct_Parametet[12];
-#define  REG_CorrectionV   Correct_Parametet[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊı
-#define  REG_Load_A			   Correct_Parametet[1]//¸ºÔØCCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-#define  SET_LoadA			   Correct_Parametet[2]//¸ºÔØCCÄ£Ê½¿ØÖÆµçÁ÷²ÎÊı
-#define  REG_LoadV			   Correct_Parametet[3]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹²ÎÊı
-#define  SET_LoadV			   Correct_Parametet[4]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹¿ØÖÆ²ÎÊı
+#define  REG_CorrectionV   Correct_Parametet[0]//???????
+#define  REG_Load_A			   Correct_Parametet[1]//??CC???¡¤???
+#define  SET_LoadA			   Correct_Parametet[2]//??CC?????¡¤??
+#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
+#define  SET_LoadV			   Correct_Parametet[4]//??CV??????????
 
-#define  REG_CorrectionR   Correct_Parametet[5]//ÄÚ×è²âÁ¿²ÎÊı
-#define  REG_CorrectionR1   Correct_Parametet[11]//ÄÚ×è²âÁ¿²ÎÊı
+#define  REG_CorrectionR   Correct_Parametet[5]//?????
 
-#define  REG_POWERA			   Correct_Parametet[6]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-#define  SET_POWERA			   Correct_Parametet[7]//µçÔ´CCÄ£Ê½µçÁ÷¿ØÖÆ²âÁ¿²ÎÊı
-#define  REG_POWERV			   Correct_Parametet[8]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿²ÎÊı
-#define  SET_POWERV				 Correct_Parametet[9]//µçÔ´CVÄ£Ê½µçÑ¹¿ØÖÆ²ÎÊı
-#define  CON_POWERA				 Correct_Parametet[10]//µçÔ´CVÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
+#define  REG_POWERA			   Correct_Parametet[6]//??CC???¡¤???
+#define  SET_POWERA			   Correct_Parametet[7]//??CC???¡¤?????
+#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
+#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+#define  CON_POWERA				 Correct_Parametet[10]//??CV???¡¤???
+#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 
 
 
 extern vu8  correct_por[6];
-#define  Polar             correct_por[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊı
-#define  Polar1            correct_por[1]//¸ºÔØµçÁ÷²âÁ¿ºÍ¿ØÖÆ
-#define  Polar2						 correct_por[2]//¸ºÔØCVÄ£Ê½µçÑ¹²âÁ¿ºÍ¿ØÖÆ
-#define  Polar3						 correct_por[3]//ÄÚ×è²âÁ¿ºÍµçÔ´CVÄ£Ê½µçÁ÷²âÁ¿
-#define  Polar4						 correct_por[4]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿ºÍ¿ØÖÆ
-#define  Polar5						 correct_por[5]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿ºÍ¿ØÖÆ
+#define  Polar             correct_por[0]//???????
+#define  Polar1            correct_por[1]//???¡¤????
+#define  Polar2						 correct_por[2]//??CV????????
+#define  Polar3						 correct_por[3]//??????CV???¡¤?
+#define  Polar4						 correct_por[4]//??CC???¡¤????
+#define  Polar5						 correct_por[5]//??CV????????
 
-extern vu32 Correct_Strong[12];//Ğ£×¼ÏµÊı
-#define  REG_ReadV_Offset   Correct_Strong[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊı
-#define  REG_LoadA_Offset   Correct_Strong[1]//¸ºÔØCCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-#define  SET_LoadA_Offset   Correct_Strong[2]//¸ºÔØCCÄ£Ê½¿ØÖÆµçÁ÷²ÎÊı
-#define  REG_LoadV_Offset   Correct_Strong[3]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹²ÎÊı
-#define  SET_LoadV_Offset   Correct_Strong[4]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹¿ØÖÆ²ÎÊı
+extern vu32 Correct_Strong[12];//§µ???
+#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???¡¤???
+#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????¡¤??
+#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
+#define  SET_LoadV_Offset   Correct_Strong[4]//??CV??????????
 
-#define  REG_ReadR_Offset   Correct_Strong[5]//ÄÚ×è²âÁ¿²ÎÊı
-#define  REG_ReadR1_Offset   Correct_Strong[11]//ÄÚ×è²âÁ¿²ÎÊı
+#define  REG_ReadR_Offset   Correct_Strong[5]//?????
 
-#define  REG_POWERA_Offset  Correct_Strong[6]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-#define  SET_POWERA_Offset  Correct_Strong[7]//µçÔ´CCÄ£Ê½µçÁ÷¿ØÖÆ²âÁ¿²ÎÊı
-#define  REG_POWERV_Offset  Correct_Strong[8]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿²ÎÊı
-#define  SET_POWERV_Offset	Correct_Strong[9]//µçÔ´CVÄ£Ê½µçÑ¹¿ØÖÆ²ÎÊı
-#define  CON_POWERA_Offset	Correct_Strong[10]//µçÔ´CVÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
+#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???¡¤???
+#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???¡¤?????
+#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
+#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???¡¤???
+#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
 
 //---------------------------
 extern vu16 ADC_NTC_Filt[50];
@@ -206,17 +439,3 @@ extern vu8 UART_Buffer_Send[20];
 //=============================================================================
 #endif
 /******************* (C) COPYRIGHT 2015 KUNKIN *****END OF FILE*************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -4013,6 +4013,22 @@ Nextern GUI_CONST_STORAGE GUI_FONT GUI_Font32_ASCII,       GUI_Font32_1;
 Xextern const GUI_FONT GUI_Font32_ASCII,       GUI_Font32_1;
 Nextern GUI_CONST_STORAGE GUI_FONT GUI_Font32B_ASCII,      GUI_Font32B_1;
 Xextern const GUI_FONT GUI_Font32B_ASCII,      GUI_Font32B_1;
+Nextern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ16;
+Xextern const GUI_FONT GUI_FontHZ16;
+Nextern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ20S;
+Xextern const GUI_FONT GUI_FontHZ20S;
+Nextern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ12;
+Xextern const GUI_FONT GUI_FontHZ12;
+Nextern GUI_CONST_STORAGE GUI_FONT GUI_FontEN40;
+Xextern const GUI_FONT GUI_FontEN40;
+Nextern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ32;
+Xextern const GUI_FONT GUI_FontHZ32;
+Nextern GUI_CONST_STORAGE GUI_FONT GUI_Fontsymbol;
+Xextern const GUI_FONT GUI_Fontsymbol;
+Nextern GUI_CONST_STORAGE GUI_FONT GUI_Fontset_font;
+Xextern const GUI_FONT GUI_Fontset_font;
+Nextern GUI_CONST_STORAGE GUI_FONT GUI_Fontunit;
+Xextern const GUI_FONT GUI_Fontunit;
 N
 N//
 N// Proportional fonts, framed

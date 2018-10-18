@@ -35,3 +35,4 @@
 ..\Output\usart.o: ..\Libraries\FWlib\inc\stm32f4xx_dac.h
 ..\Output\usart.o: ..\Libraries\FWlib\inc\stm32f4xx_dcmi.h
 ..\Output\usart.o: ..\Libraries\FWlib\inc\stm32f4xx_fsmc.h
+..\Output\usart.o: ..\Include\usart.h

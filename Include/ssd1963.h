@@ -11,6 +11,7 @@ void sLCD_FSMC_Config(void);
 void sLCD_WR_REG(unsigned int index);
 void sLCD_WR_Data(unsigned int val);
 vu16 sLCD_Read_Data(void);
+void sLCD_Init(void);
 
 void LCD_Initializtion(void);
 void LCD_SetPoint(vu16 x,vu16 y,vu16 c);

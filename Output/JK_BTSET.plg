@@ -4,11 +4,10 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 D:\5530bnew\5530B.NEW\Project\JK_BTSET.uvproj
-Project File Date:  10/16/2018
+Project File Date:  10/17/2018
 
 <h2>Output:</h2>
 Build target 'JK_BTSET'
-assembling startup_stm32f40_41xxx.s...
 compiling system_stm32f4xx.c...
 compiling misc.c...
 compiling stm32f4xx_adc.c...
@@ -46,95 +45,33 @@ compiling stm32f4xx_tim.c...
 compiling stm32f4xx_usart.c...
 compiling stm32f4xx_wwdg.c...
 compiling main.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\clock.h(17): warning:  #1-D: last line of file ends without a newline
-..\Include\tim6.h(16): warning:  #1-D: last line of file ends without a newline
-..\Include\tim1.h(15): warning:  #1-D: last line of file ends without a newline
-..\Include\tim2.h(17): warning:  #1-D: last line of file ends without a newline
-..\Include\adc.h(17): warning:  #1-D: last line of file ends without a newline
-..\Include\gpio.h(7): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\usart.h(18): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\iwdg.h(17): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\flash.h(37): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\dac8531.h(16): warning:  #1-D: last line of file ends without a newline
 compiling stm32f4xx_it.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
 compiling adc.c...
-..\Include\adc.h(17): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\drive\adc.c(199): warning:  #1-D: last line of file ends without a newline
 compiling AT24C01.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
 ..\drive\AT24C01.c(345): warning:  #177-D: function "ee_Delay" was declared but never referenced
 compiling BEEP.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\drive\BEEP.c(60): warning:  #1-D: last line of file ends without a newline
 compiling bsp_SysTick.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
 compiling flash.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\drive\flash.c(446): warning:  #1-D: last line of file ends without a newline
 compiling GPIO.c...
-..\Include\gpio.h(7): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\drive\GPIO.c(61): warning:  #1-D: last line of file ends without a newline
 compiling IIC_24C01.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
 compiling iwdg.c...
 compiling key.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\beep.h(15): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\flash.h(37): warning:  #1-D: last line of file ends without a newline
-..\Include\gpio.h(7): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\key.h(23): warning:  #1-D: last line of file ends without a newline
 compiling modbus.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\usart.h(18): warning:  #1-D: last line of file ends without a newline
-..\Include\modbus.h(17): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\flash.h(37): warning:  #1-D: last line of file ends without a newline
-..\drive\modbus.c(867): warning:  #1-D: last line of file ends without a newline
 compiling ssd1963.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
 ..\drive\ssd1963.c(168): warning:  #550-D: variable "FSMC_NORSRAMTimingInitStructure" was set but never used
 compiling TIM1.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\drive\TIM1.c(75): warning:  #1-D: last line of file ends without a newline
 compiling TIM2.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\drive\TIM2.c(103): warning:  #1-D: last line of file ends without a newline
 compiling TIM6.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\tim6.h(16): warning:  #1-D: last line of file ends without a newline
-..\drive\TIM6.c(52): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(98): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(83): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(83): warning:  #177-D: variable "crec2" was declared but never referenced
 compiling usart.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
 compiling TM1650.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
 ..\drive\TM1650.c(242): warning:  #1-D: last line of file ends without a newline
 compiling clock.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
 compiling DAC8531.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
 ..\drive\DAC8531.c(84): warning:  #1-D: last line of file ends without a newline
 compiling AD7689.c...
-..\Include\GPIO.h(7): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
 ..\drive\AD7689.c(107): warning: C3017W: AD7689_Data may be used before being set
 ..\drive\AD7689.c(184): warning: C3017W: var_chV1 may be used before being set
 ..\drive\AD7689.c(184): warning: C3017W: var_chV may be used before being set
@@ -142,33 +79,14 @@ compiling AD7689.c...
 compiling GUI_X.c...
 compiling GUIConf.c...
 compiling GUIDRV_Template.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
 ..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "xPhys" was declared but never referenced
 ..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "yPhys" was declared but never referenced
 ..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "lphys" was declared but never referenced
 compiling LCDConf_FlexColor_Template.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
 compiling MainTask.c...
-..\Include\adc.h(17): warning:  #1-D: last line of file ends without a newline
-..\Include\tim2.h(17): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\key.h(23): warning:  #1-D: last line of file ends without a newline
-..\Include\beep.h(15): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\modbus.h(17): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\Include\dac8531.h(16): warning:  #1-D: last line of file ends without a newline
-..\STemWinLibrary522\emWinTask\MainTask.c(45): warning:  #177-D: variable "ucKeyCode" was declared but never referenced
 compiling menu.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\APP\menu.c(262): warning:  #1-D: last line of file ends without a newline
 compiling R_Face.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
 compiling load_Face.c...
-..\Include\my_register.h(208): warning:  #1-D: last line of file ends without a newline
-..\APP\load_Face.c(265): warning:  #1-D: last line of file ends without a newline
 compiling HZ16.c...
 compiling HZ12.c...
 compiling usb_core.c...
@@ -185,9 +103,1371 @@ compiling usb_bsp.c...
 compiling usbh_usr.c...
 ..\USB\USB_APP\usbh_usr.c(19): warning:  #177-D: variable "AppState" was declared but never referenced
 linking...
-Program Size: Code=80480 RO-data=44972 RW-data=1956 ZI-data=33828  
+Program Size: Code=80660 RO-data=44972 RW-data=1960 ZI-data=34024  
 FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 96 Warning(s).
+"..\Output\JK_BTSET.axf" - 0 Error(s), 15 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.274V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling key.c...
+compiling TIM6.c...
+..\drive\TIM6.c(90): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(98): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(83): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(83): warning:  #177-D: variable "crec2" was declared but never referenced
+linking...
+Program Size: Code=80668 RO-data=44972 RW-data=1960 ZI-data=34024  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 4 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.280V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(90): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(98): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(83): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(83): warning:  #177-D: variable "crec2" was declared but never referenced
+linking...
+Program Size: Code=80668 RO-data=44972 RW-data=1960 ZI-data=34024  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 4 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.282V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(90): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(83): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(83): warning:  #177-D: variable "crec2" was declared but never referenced
+compiling MainTask.c...
+..\STemWinLibrary522\emWinTask\MainTask.c(95): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+linking...
+Program Size: Code=80660 RO-data=44972 RW-data=1960 ZI-data=34024  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 4 Warning(s).
+Build target 'JK_BTSET'
+compiling main.c...
+linking...
+Program Size: Code=80540 RO-data=44972 RW-data=1960 ZI-data=34024  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.280V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling main.c...
+compiling TIM6.c...
+..\drive\TIM6.c(91): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(103): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(83): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(83): warning:  #177-D: variable "crec2" was declared but never referenced
+compiling MainTask.c...
+linking...
+Program Size: Code=80684 RO-data=44972 RW-data=1960 ZI-data=34024  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 4 Warning(s).
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(91): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(103): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(83): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(83): warning:  #177-D: variable "crec2" was declared but never referenced
+linking...
+Program Size: Code=80684 RO-data=44972 RW-data=1960 ZI-data=34024  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 4 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.277V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=80684 RO-data=44972 RW-data=1960 ZI-data=34024  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Build target 'JK_BTSET'
+compiling main.c...
+compiling TIM6.c...
+..\drive\TIM6.c(107): error:  #20: identifier "i" is undefined
+..\drive\TIM6.c(107): error:  #20: identifier "AD7689_Buffer" is undefined
+..\drive\TIM6.c(122): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(86): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(86): warning:  #177-D: variable "crec2" was declared but never referenced
+compiling MainTask.c...
+..\STemWinLibrary522\emWinTask\MainTask.c(49): warning:  #177-D: variable "i" was declared but never referenced
+Target not created
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(108): error:  #20: identifier "AD7689_Buffer" is undefined
+..\drive\TIM6.c(123): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(86): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(86): warning:  #177-D: variable "crec2" was declared but never referenced
+Target not created
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(124): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec2" was declared but never referenced
+compiling MainTask.c...
+..\STemWinLibrary522\emWinTask\MainTask.c(49): warning:  #177-D: variable "i" was declared but never referenced
+linking...
+Program Size: Code=80612 RO-data=44972 RW-data=1956 ZI-data=34028  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 4 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.277V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(124): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec2" was declared but never referenced
+linking...
+Program Size: Code=80620 RO-data=44972 RW-data=1956 ZI-data=34028  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 3 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.280V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(124): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec2" was declared but never referenced
+linking...
+Program Size: Code=80612 RO-data=44972 RW-data=1956 ZI-data=34228  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 3 Warning(s).
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(96): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(121): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec2" was declared but never referenced
+..\drive\TIM6.c(88): warning:  #177-D: variable "i" was declared but never referenced
+linking...
+Program Size: Code=80612 RO-data=44972 RW-data=1956 ZI-data=33828  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 5 Warning(s).
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(122): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec2" was declared but never referenced
+linking...
+Program Size: Code=80628 RO-data=44972 RW-data=1960 ZI-data=34224  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 3 Warning(s).
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(127): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec2" was declared but never referenced
+linking...
+Program Size: Code=80644 RO-data=44972 RW-data=1960 ZI-data=34224  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 3 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.283V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling key.c...
+linking...
+Program Size: Code=80636 RO-data=44972 RW-data=1960 ZI-data=34224  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(127): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec2" was declared but never referenced
+linking...
+Program Size: Code=80636 RO-data=44972 RW-data=1960 ZI-data=34224  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 3 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.274V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(131): warning:  #1-D: last line of file ends without a newline
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec1" was declared but never referenced
+..\drive\TIM6.c(87): warning:  #177-D: variable "crec2" was declared but never referenced
+linking...
+Program Size: Code=80668 RO-data=44972 RW-data=1960 ZI-data=34224  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 3 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.285V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling system_stm32f4xx.c...
+compiling misc.c...
+compiling stm32f4xx_adc.c...
+compiling stm32f4xx_can.c...
+compiling stm32f4xx_crc.c...
+compiling stm32f4xx_cryp.c...
+compiling stm32f4xx_cryp_aes.c...
+compiling stm32f4xx_cryp_des.c...
+compiling stm32f4xx_cryp_tdes.c...
+compiling stm32f4xx_dac.c...
+compiling stm32f4xx_dbgmcu.c...
+compiling stm32f4xx_dcmi.c...
+compiling stm32f4xx_dma.c...
+compiling stm32f4xx_dma2d.c...
+compiling stm32f4xx_exti.c...
+compiling stm32f4xx_flash.c...
+compiling stm32f4xx_flash_ramfunc.c...
+compiling stm32f4xx_fsmc.c...
+compiling stm32f4xx_gpio.c...
+compiling stm32f4xx_hash.c...
+compiling stm32f4xx_hash_md5.c...
+compiling stm32f4xx_hash_sha1.c...
+compiling stm32f4xx_i2c.c...
+compiling stm32f4xx_iwdg.c...
+compiling stm32f4xx_ltdc.c...
+compiling stm32f4xx_pwr.c...
+compiling stm32f4xx_rcc.c...
+compiling stm32f4xx_rng.c...
+compiling stm32f4xx_rtc.c...
+compiling stm32f4xx_sai.c...
+compiling stm32f4xx_sdio.c...
+compiling stm32f4xx_spi.c...
+compiling stm32f4xx_syscfg.c...
+compiling stm32f4xx_tim.c...
+compiling stm32f4xx_usart.c...
+compiling stm32f4xx_wwdg.c...
+compiling main.c...
+compiling stm32f4xx_it.c...
+compiling adc.c...
+compiling AT24C01.c...
+..\drive\AT24C01.c(345): warning:  #177-D: function "ee_Delay" was declared but never referenced
+compiling BEEP.c...
+compiling bsp_SysTick.c...
+compiling flash.c...
+..\drive\flash.c(146): error:  #20: identifier "REG_CorrectionRL" is undefined
+..\drive\flash.c(155): error:  #20: identifier "REG_ReadRL_Offset" is undefined
+..\drive\flash.c(357): error:  #20: identifier "REG_CorrectionRL" is undefined
+..\drive\flash.c(365): error:  #20: identifier "REG_ReadRL_Offset" is undefined
+..\drive\flash.c(465): error:  #20: identifier "para_set4" is undefined
+..\drive\flash.c(466): error:  #20: identifier "para_set2" is undefined
+..\drive\flash.c(469): error:  #20: identifier "para_set1" is undefined
+..\drive\flash.c(487): error:  #20: identifier "steptime" is undefined
+..\drive\flash.c(489): error:  #20: identifier "set_max_v" is undefined
+..\drive\flash.c(493): error:  #20: identifier "set_min_v" is undefined
+..\drive\flash.c(497): error:  #20: identifier "set_max_r" is undefined
+..\drive\flash.c(501): error:  #20: identifier "set_min_r" is undefined
+..\drive\flash.c(505): error:  #20: identifier "set_max_c" is undefined
+..\drive\flash.c(509): error:  #20: identifier "set_min_c" is undefined
+..\drive\flash.c(513): error:  #20: identifier "pow_v" is undefined
+..\drive\flash.c(517): error:  #20: identifier "pow_c" is undefined
+..\drive\flash.c(521): error:  #20: identifier "load_c" is undefined
+..\drive\flash.c(525): error:  #20: identifier "set_init_c" is undefined
+..\drive\flash.c(529): error:  #20: identifier "set_sbs_c" is undefined
+..\drive\flash.c(535): error:  #20: identifier "opv1" is undefined
+..\drive\flash.c(539): error:  #20: identifier "opv2" is undefined
+..\drive\flash.c(543): error:  #20: identifier "opv3" is undefined
+..\drive\flash.c(547): error:  #20: identifier "cov1" is undefined
+..\drive\flash.c(551): error:  #20: identifier "cov2" is undefined
+..\drive\flash.c(555): error:  #20: identifier "cov3" is undefined
+..\drive\flash.c(559): error:  #20: identifier "opc1" is undefined
+..\drive\flash.c(563): error:  #20: identifier "opc2" is undefined
+..\drive\flash.c(567): error:  #20: identifier "opc3" is undefined
+..\drive\flash.c(571): error:  #20: identifier "coc1" is undefined
+..\drive\flash.c(575): error:  #20: identifier "coc2" is undefined
+compiling GPIO.c...
+compiling IIC_24C01.c...
+compiling iwdg.c...
+compiling key.c...
+compiling modbus.c...
+compiling ssd1963.c...
+..\drive\ssd1963.c(168): warning:  #550-D: variable "FSMC_NORSRAMTimingInitStructure" was set but never used
+compiling TIM1.c...
+compiling TIM2.c...
+compiling TIM6.c...
+compiling usart.c...
+compiling TM1650.c...
+..\drive\TM1650.c(242): warning:  #1-D: last line of file ends without a newline
+compiling clock.c...
+compiling DAC8531.c...
+..\drive\DAC8531.c(84): warning:  #1-D: last line of file ends without a newline
+compiling AD7689.c...
+..\drive\AD7689.c(107): warning: C3017W: AD7689_Data may be used before being set
+..\drive\AD7689.c(184): warning: C3017W: var_chV1 may be used before being set
+..\drive\AD7689.c(184): warning: C3017W: var_chV may be used before being set
+..\drive\AD7689.c(184): warning: C3017W: var_chI may be used before being set
+compiling GUI_X.c...
+compiling GUIConf.c...
+compiling GUIDRV_Template.c...
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "xPhys" was declared but never referenced
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "yPhys" was declared but never referenced
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "lphys" was declared but never referenced
+compiling LCDConf_FlexColor_Template.c...
+compiling MainTask.c...
+compiling menu.c...
+..\APP\menu.c(21): error:  #20: identifier "pow_off" is undefined
+..\APP\menu.c(96): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\menu.c(101): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\menu.c(115): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\menu.c(123): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\menu.c(132): error:  #20: identifier "clear_flag2" is undefined
+..\APP\menu.c(134): error:  #20: identifier "clear_pv" is undefined
+..\APP\menu.c(137): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\menu.c(156): error:  #20: identifier "pow_on" is undefined
+..\APP\menu.c(158): error:  #20: identifier "battery_c" is undefined
+..\APP\menu.c(158): error:  #20: identifier "bc_raw" is undefined
+..\APP\menu.c(165): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\menu.c(180): error:  #20: identifier "temp" is undefined
+..\APP\menu.c(206): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\menu.c(271): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\menu.c(296): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\menu.c(303): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\menu.c(319): error:  #20: identifier "temp" is undefined
+..\APP\menu.c(427): error:  #20: identifier "page_sw" is undefined
+..\APP\menu.c(427): error:  #20: identifier "face_menu" is undefined
+..\APP\menu.c(428): error:  #20: identifier "track" is undefined
+..\APP\menu.c(429): error:  #20: identifier "set_sw" is undefined
+..\APP\menu.c(429): error:  #20: identifier "set_10" is undefined
+..\APP\menu.c(430): error:  #20: identifier "pow_v" is undefined
+..\APP\menu.c(431): error:  #20: identifier "pow_c" is undefined
+..\APP\menu.c(432): error:  #20: identifier "pass" is undefined
+..\APP\menu.c(433): error:  #20: identifier "mode_sw" is undefined
+..\APP\menu.c(433): error:  #20: identifier "mode_pow" is undefined
+..\APP\menu.c(451): error:  #20: identifier "set_sw" is undefined
+..\APP\menu.c(453): error:  #20: identifier "set_10" is undefined
+..\APP\menu.c(464): error:  #20: identifier "set_11" is undefined
+..\APP\menu.c(467): error:  #20: identifier "set_11" is undefined
+..\APP\menu.c(489): error:  #20: identifier "set_sw" is undefined
+compiling R_Face.c...
+..\APP\R_Face.c(27): error:  #20: identifier "face_r" is undefined
+..\APP\R_Face.c(29): error:  #20: identifier "set_2_on" is undefined
+..\APP\R_Face.c(31): error:  #20: identifier "set_4_off" is undefined
+..\APP\R_Face.c(48): error:  #20: identifier "set_20" is undefined
+..\APP\R_Face.c(67): error:  #20: identifier "oct_off" is undefined
+..\APP\R_Face.c(195): error:  #20: identifier "set_init_c" is undefined
+..\APP\R_Face.c(196): error:  #20: identifier "set_sbs_c" is undefined
+..\APP\R_Face.c(212): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\R_Face.c(217): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\R_Face.c(223): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\R_Face.c(255): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\R_Face.c(268): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\R_Face.c(284): error:  #20: identifier "set_2_off" is undefined
+..\APP\R_Face.c(309): error:  #20: identifier "r_raly" is undefined
+..\APP\R_Face.c(312): error:  #20: identifier "r_raly" is undefined
+..\APP\R_Face.c(320): error:  #20: identifier "r_raly" is undefined
+..\APP\R_Face.c(347): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(351): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(355): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(364): error:  #20: identifier "r_raly" is undefined
+..\APP\R_Face.c(372): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(378): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(385): error:  #20: identifier "r_raly" is undefined
+..\APP\R_Face.c(396): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(401): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(405): error:  #20: identifier "oct_on" is undefined
+..\APP\R_Face.c(406): error:  #20: identifier "clear_flag1" is undefined
+..\APP\R_Face.c(413): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(417): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(421): error:  #20: identifier "oct_on" is undefined
+..\APP\R_Face.c(422): error:  #20: identifier "clear_flag1" is undefined
+..\APP\R_Face.c(432): error:  #20: identifier "oct_on" is undefined
+..\APP\R_Face.c(474): error:  #20: identifier "clear_flag1" is undefined
+..\APP\R_Face.c(474): error:  #20: identifier "clear_v" is undefined
+..\APP\R_Face.c(493): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\R_Face.c(505): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(507): error:  #20: identifier "set_1_on" is undefined
+..\APP\R_Face.c(644): error:  #20: identifier "r_raly" is undefined
+..\APP\R_Face.c(648): error:  #20: identifier "clear_flag1" is undefined
+..\APP\R_Face.c(648): error:  #20: identifier "clear_v" is undefined
+compiling load_Face.c...
+..\APP\load_Face.c(20): error:  #20: identifier "load_off" is undefined
+..\APP\load_Face.c(111): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\load_Face.c(116): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\load_Face.c(130): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\load_Face.c(138): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\load_Face.c(160): error:  #20: identifier "clear_lv" is undefined
+..\APP\load_Face.c(163): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(194): error:  #20: identifier "load_on" is undefined
+..\APP\load_Face.c(198): error:  #20: identifier "alert_flag" is undefined
+..\APP\load_Face.c(200): error:  #20: identifier "alert_flag" is undefined
+..\APP\load_Face.c(202): error:  #20: identifier "bc_raw" is undefined
+..\APP\load_Face.c(209): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\load_Face.c(225): error:  #20: identifier "temp" is undefined
+..\APP\load_Face.c(252): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\load_Face.c(317): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\load_Face.c(329): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(336): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(386): error:  #20: identifier "temp" is undefined
+..\APP\load_Face.c(495): error:  #20: identifier "page_sw" is undefined
+..\APP\load_Face.c(495): error:  #20: identifier "face_load" is undefined
+..\APP\load_Face.c(496): error:  #20: identifier "track" is undefined
+..\APP\load_Face.c(497): error:  #20: identifier "set_sw" is undefined
+..\APP\load_Face.c(497): error:  #20: identifier "set_24" is undefined
+..\APP\load_Face.c(498): error:  #20: identifier "load_c" is undefined
+..\APP\load_Face.c(499): error:  #20: identifier "pass" is undefined
+..\APP\load_Face.c(500): error:  #20: identifier "mode_load" is undefined
+..\APP\load_Face.c(517): error:  #20: identifier "set_sw" is undefined
+..\APP\load_Face.c(519): error:  #20: identifier "set_24" is undefined
+..\APP\load_Face.c(530): error:  #20: identifier "set_66" is undefined
+..\APP\load_Face.c(533): error:  #20: identifier "set_66" is undefined
+..\APP\load_Face.c(544): error:  #20: identifier "set_67" is undefined
+..\APP\load_Face.c(553): error:  #20: identifier "set_sw" is undefined
+..\APP\load_Face.c(555): error:  #20: identifier "set_66" is undefined
+compiling c_dc.c...
+..\APP\c_dc.c(29): error:  #20: identifier "cdc_off" is undefined
+..\APP\c_dc.c(30): error:  #20: identifier "c_on" is undefined
+..\APP\c_dc.c(189): error:  #20: identifier "cov1" is undefined
+..\APP\c_dc.c(190): error:  #20: identifier "coc1" is undefined
+..\APP\c_dc.c(191): error:  #20: identifier "set_dc_cutoff_v" is undefined
+..\APP\c_dc.c(192): error:  #20: identifier "set_dc_cutoff_c" is undefined
+..\APP\c_dc.c(205): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\c_dc.c(210): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\c_dc.c(218): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\c_dc.c(226): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\c_dc.c(236): error:  #20: identifier "mode_sw" is undefined
+..\APP\c_dc.c(236): error:  #20: identifier "mode_pow" is undefined
+..\APP\c_dc.c(236): error:  #20: identifier "cdc_on" is undefined
+..\APP\c_dc.c(302): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\c_dc.c(311): error:  #20: identifier "opv2" is undefined
+..\APP\c_dc.c(311): error:  #20: identifier "opv3" is undefined
+..\APP\c_dc.c(311): error:  #20: identifier "opc2" is undefined
+..\APP\c_dc.c(311): error:  #20: identifier "opc3" is undefined
+..\APP\c_dc.c(322): error:  #20: identifier "start_time" is undefined
+..\APP\c_dc.c(331): error:  #20: identifier "mode_load" is undefined
+..\APP\c_dc.c(341): error:  #20: identifier "start_time" is undefined
+..\APP\c_dc.c(350): error:  #20: identifier "mode_load" is undefined
+..\APP\c_dc.c(372): error:  #20: identifier "cov2" is undefined
+..\APP\c_dc.c(372): error:  #20: identifier "coc2" is undefined
+..\APP\c_dc.c(381): error:  #20: identifier "start_time" is undefined
+..\APP\c_dc.c(390): error:  #20: identifier "mode_load" is undefined
+..\APP\c_dc.c(400): error:  #20: identifier "start_time" is undefined
+..\APP\c_dc.c(409): error:  #20: identifier "mode_load" is undefined
+..\APP\c_dc.c(413): error:  #20: identifier "opv1" is undefined
+..\APP\c_dc.c(413): error:  #20: identifier "opc1" is undefined
+compiling graph.c...
+..\APP\graph.c(116): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\graph.c(121): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\graph.c(130): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\graph.c(143): error:  #20: identifier "temp" is undefined
+..\APP\graph.c(170): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\graph.c(202): error:  #20: identifier "temp" is undefined
+..\APP\graph.c(247): error:  #20: identifier "page_sw" is undefined
+..\APP\graph.c(247): error:  #20: identifier "face_graph" is undefined
+..\APP\graph.c(249): error:  #20: identifier "track" is undefined
+..\APP\graph.c(250): error:  #20: identifier "pass" is undefined
+..\APP\graph.c(267): error:  #20: identifier "mode_sw" is undefined
+..\APP\graph.c(267): error:  #20: identifier "mode_load" is undefined
+..\APP\graph.c(271): error:  #20: identifier "mode_pow" is undefined
+..\APP\graph.c(277): warning:  #940-D: missing return statement at end of non-void function "DrawGraph"
+compiling settings.c...
+..\APP\settings.c(138): error:  #20: identifier "set_max_v" is undefined
+..\APP\settings.c(139): error:  #20: identifier "set_min_v" is undefined
+..\APP\settings.c(140): error:  #20: identifier "set_max_r" is undefined
+..\APP\settings.c(141): error:  #20: identifier "set_min_r" is undefined
+..\APP\settings.c(142): error:  #20: identifier "set_max_c" is undefined
+..\APP\settings.c(143): error:  #20: identifier "set_min_c" is undefined
+..\APP\settings.c(157): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\settings.c(162): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\settings.c(174): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\settings.c(179): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\settings.c(190): error:  #20: identifier "temp" is undefined
+..\APP\settings.c(249): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\settings.c(290): error:  #20: identifier "para_set1" is undefined
+..\APP\settings.c(291): error:  #20: identifier "set_1_on" is undefined
+..\APP\settings.c(300): error:  #20: identifier "set_1_off" is undefined
+..\APP\settings.c(311): error:  #20: identifier "para_set2" is undefined
+..\APP\settings.c(312): error:  #20: identifier "set_2_on" is undefined
+..\APP\settings.c(321): error:  #20: identifier "set_2_off" is undefined
+..\APP\settings.c(332): error:  #20: identifier "para_set4" is undefined
+..\APP\settings.c(333): error:  #20: identifier "set_4_on" is undefined
+..\APP\settings.c(342): error:  #20: identifier "set_4_off" is undefined
+..\APP\settings.c(371): error:  #20: identifier "b_type" is undefined
+..\APP\settings.c(373): error:  #20: identifier "Lion" is undefined
+..\APP\settings.c(382): error:  #20: identifier "NiMH" is undefined
+..\APP\settings.c(391): error:  #20: identifier "NiCd" is undefined
+..\APP\settings.c(400): error:  #20: identifier "SLA" is undefined
+..\APP\settings.c(409): error:  #20: identifier "LiMH" is undefined
+..\APP\settings.c(469): error:  #20: identifier "temp" is undefined
+..\APP\settings.c(501): error:  #20: identifier "page_sw" is undefined
+..\APP\settings.c(501): error:  #20: identifier "face_set" is undefined
+compiling STARTER.c...
+..\APP\STARTER.c(95): warning:  #223-D: function "CreateR" declared implicitly
+..\APP\STARTER.c(1153): error:  #20: identifier "page_sw" is undefined
+..\APP\STARTER.c(1153): error:  #20: identifier "face_starter" is undefined
+compiling sysinfo.c...
+..\APP\sysinfo.c(21): error:  #20: identifier "set_48" is undefined
+..\APP\sysinfo.c(136): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\sysinfo.c(141): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\sysinfo.c(146): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\sysinfo.c(325): error:  #20: identifier "page_sw" is undefined
+..\APP\sysinfo.c(325): error:  #20: identifier "face_sys_info" is undefined
+..\APP\sysinfo.c(347): error:  #20: identifier "set_49" is undefined
+..\APP\sysinfo.c(350): error:  #20: identifier "set_49" is undefined
+..\APP\sysinfo.c(360): error:  #20: identifier "set_50" is undefined
+..\APP\sysinfo.c(363): error:  #20: identifier "set_50" is undefined
+..\APP\sysinfo.c(373): error:  #20: identifier "set_51" is undefined
+..\APP\sysinfo.c(376): error:  #20: identifier "set_51" is undefined
+..\APP\sysinfo.c(386): error:  #20: identifier "set_52" is undefined
+..\APP\sysinfo.c(389): error:  #20: identifier "set_52" is undefined
+..\APP\sysinfo.c(399): error:  #20: identifier "set_53" is undefined
+..\APP\sysinfo.c(402): error:  #20: identifier "set_53" is undefined
+..\APP\sysinfo.c(412): error:  #20: identifier "set_54" is undefined
+..\APP\sysinfo.c(415): error:  #20: identifier "set_54" is undefined
+..\APP\sysinfo.c(425): error:  #20: identifier "set_55" is undefined
+..\APP\sysinfo.c(428): error:  #20: identifier "set_55" is undefined
+..\APP\sysinfo.c(441): error:  #20: identifier "set_62" is undefined
+..\APP\sysinfo.c(451): error:  #20: identifier "set_63" is undefined
+..\APP\sysinfo.c(454): error:  #20: identifier "set_63" is undefined
+..\APP\sysinfo.c(464): error:  #20: identifier "set_56" is undefined
+..\APP\sysinfo.c(467): error:  #20: identifier "set_56" is undefined
+..\APP\sysinfo.c(477): error:  #20: identifier "set_57" is undefined
+..\APP\sysinfo.c(480): error:  #20: identifier "set_57" is undefined
+..\APP\sysinfo.c(490): error:  #20: identifier "set_58" is undefined
+..\APP\sysinfo.c(493): error:  #20: identifier "set_58" is undefined
+..\APP\sysinfo.c(503): error:  #20: identifier "set_59" is undefined
+compiling HZ16.c...
+compiling HZ12.c...
+compiling EN40.c...
+compiling HZ20S.c...
+compiling HZ32.c...
+compiling set_font.c...
+compiling symbol.c...
+compiling unit.c...
+compiling usb_core.c...
+compiling usb_hcd.c...
+compiling usb_hcd_int.c...
+compiling usbh_core.c...
+compiling usbh_hcs.c...
+compiling usbh_ioreq.c...
+compiling usbh_stdreq.c...
+compiling usbh_msc_bot.c...
+compiling usbh_msc_core.c...
+compiling usbh_msc_scsi.c...
+compiling usb_bsp.c...
+compiling usbh_usr.c...
+..\USB\USB_APP\usbh_usr.c(19): warning:  #177-D: variable "AppState" was declared but never referenced
+Target not created
+Build target 'JK_BTSET'
+compiling flash.c...
+..\drive\flash.c(146): error:  #20: identifier "REG_CorrectionRL" is undefined
+..\drive\flash.c(155): error:  #20: identifier "REG_ReadRL_Offset" is undefined
+..\drive\flash.c(357): error:  #20: identifier "REG_CorrectionRL" is undefined
+..\drive\flash.c(365): error:  #20: identifier "REG_ReadRL_Offset" is undefined
+..\drive\flash.c(465): error:  #20: identifier "para_set4" is undefined
+..\drive\flash.c(466): error:  #20: identifier "para_set2" is undefined
+..\drive\flash.c(469): error:  #20: identifier "para_set1" is undefined
+..\drive\flash.c(487): error:  #20: identifier "steptime" is undefined
+..\drive\flash.c(489): error:  #20: identifier "set_max_v" is undefined
+..\drive\flash.c(493): error:  #20: identifier "set_min_v" is undefined
+..\drive\flash.c(497): error:  #20: identifier "set_max_r" is undefined
+..\drive\flash.c(501): error:  #20: identifier "set_min_r" is undefined
+..\drive\flash.c(505): error:  #20: identifier "set_max_c" is undefined
+..\drive\flash.c(509): error:  #20: identifier "set_min_c" is undefined
+..\drive\flash.c(513): error:  #20: identifier "pow_v" is undefined
+..\drive\flash.c(517): error:  #20: identifier "pow_c" is undefined
+..\drive\flash.c(521): error:  #20: identifier "load_c" is undefined
+..\drive\flash.c(525): error:  #20: identifier "set_init_c" is undefined
+..\drive\flash.c(529): error:  #20: identifier "set_sbs_c" is undefined
+..\drive\flash.c(535): error:  #20: identifier "opv1" is undefined
+..\drive\flash.c(539): error:  #20: identifier "opv2" is undefined
+..\drive\flash.c(543): error:  #20: identifier "opv3" is undefined
+..\drive\flash.c(547): error:  #20: identifier "cov1" is undefined
+..\drive\flash.c(551): error:  #20: identifier "cov2" is undefined
+..\drive\flash.c(555): error:  #20: identifier "cov3" is undefined
+..\drive\flash.c(559): error:  #20: identifier "opc1" is undefined
+..\drive\flash.c(563): error:  #20: identifier "opc2" is undefined
+..\drive\flash.c(567): error:  #20: identifier "opc3" is undefined
+..\drive\flash.c(571): error:  #20: identifier "coc1" is undefined
+..\drive\flash.c(575): error:  #20: identifier "coc2" is undefined
+compiling key.c...
+..\drive\key.c(81): error:  #20: identifier "face_r" is undefined
+compiling menu.c...
+..\APP\menu.c(21): error:  #20: identifier "pow_off" is undefined
+..\APP\menu.c(96): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\menu.c(101): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\menu.c(115): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\menu.c(123): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\menu.c(132): error:  #20: identifier "clear_flag2" is undefined
+..\APP\menu.c(134): error:  #20: identifier "clear_pv" is undefined
+..\APP\menu.c(137): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\menu.c(156): error:  #20: identifier "pow_on" is undefined
+..\APP\menu.c(158): error:  #20: identifier "battery_c" is undefined
+..\APP\menu.c(158): error:  #20: identifier "bc_raw" is undefined
+..\APP\menu.c(165): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\menu.c(180): error:  #20: identifier "temp" is undefined
+..\APP\menu.c(206): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\menu.c(271): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\menu.c(296): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\menu.c(303): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\menu.c(319): error:  #20: identifier "temp" is undefined
+..\APP\menu.c(427): error:  #20: identifier "page_sw" is undefined
+..\APP\menu.c(427): error:  #20: identifier "face_menu" is undefined
+..\APP\menu.c(428): error:  #20: identifier "track" is undefined
+..\APP\menu.c(429): error:  #20: identifier "set_sw" is undefined
+..\APP\menu.c(429): error:  #20: identifier "set_10" is undefined
+..\APP\menu.c(430): error:  #20: identifier "pow_v" is undefined
+..\APP\menu.c(431): error:  #20: identifier "pow_c" is undefined
+..\APP\menu.c(432): error:  #20: identifier "pass" is undefined
+..\APP\menu.c(433): error:  #20: identifier "mode_sw" is undefined
+..\APP\menu.c(433): error:  #20: identifier "mode_pow" is undefined
+..\APP\menu.c(451): error:  #20: identifier "set_sw" is undefined
+..\APP\menu.c(453): error:  #20: identifier "set_10" is undefined
+..\APP\menu.c(464): error:  #20: identifier "set_11" is undefined
+..\APP\menu.c(467): error:  #20: identifier "set_11" is undefined
+..\APP\menu.c(489): error:  #20: identifier "set_sw" is undefined
+compiling R_Face.c...
+..\APP\R_Face.c(27): error:  #20: identifier "face_r" is undefined
+..\APP\R_Face.c(29): error:  #20: identifier "set_2_on" is undefined
+..\APP\R_Face.c(31): error:  #20: identifier "set_4_off" is undefined
+..\APP\R_Face.c(48): error:  #20: identifier "set_20" is undefined
+..\APP\R_Face.c(67): error:  #20: identifier "oct_off" is undefined
+..\APP\R_Face.c(195): error:  #20: identifier "set_init_c" is undefined
+..\APP\R_Face.c(196): error:  #20: identifier "set_sbs_c" is undefined
+..\APP\R_Face.c(212): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\R_Face.c(217): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\R_Face.c(223): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\R_Face.c(255): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\R_Face.c(268): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\R_Face.c(284): error:  #20: identifier "set_2_off" is undefined
+..\APP\R_Face.c(309): error:  #20: identifier "r_raly" is undefined
+..\APP\R_Face.c(312): error:  #20: identifier "r_raly" is undefined
+..\APP\R_Face.c(320): error:  #20: identifier "r_raly" is undefined
+..\APP\R_Face.c(347): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(351): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(355): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(364): error:  #20: identifier "r_raly" is undefined
+..\APP\R_Face.c(372): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(378): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(385): error:  #20: identifier "r_raly" is undefined
+..\APP\R_Face.c(396): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(401): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(405): error:  #20: identifier "oct_on" is undefined
+..\APP\R_Face.c(406): error:  #20: identifier "clear_flag1" is undefined
+..\APP\R_Face.c(413): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(417): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(421): error:  #20: identifier "oct_on" is undefined
+..\APP\R_Face.c(422): error:  #20: identifier "clear_flag1" is undefined
+..\APP\R_Face.c(432): error:  #20: identifier "oct_on" is undefined
+..\APP\R_Face.c(474): error:  #20: identifier "clear_flag1" is undefined
+..\APP\R_Face.c(474): error:  #20: identifier "clear_v" is undefined
+..\APP\R_Face.c(493): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\R_Face.c(505): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(507): error:  #20: identifier "set_1_on" is undefined
+..\APP\R_Face.c(644): error:  #20: identifier "r_raly" is undefined
+..\APP\R_Face.c(648): error:  #20: identifier "clear_flag1" is undefined
+..\APP\R_Face.c(648): error:  #20: identifier "clear_v" is undefined
+compiling load_Face.c...
+..\APP\load_Face.c(20): error:  #20: identifier "load_off" is undefined
+..\APP\load_Face.c(111): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\load_Face.c(116): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\load_Face.c(130): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\load_Face.c(138): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\load_Face.c(160): error:  #20: identifier "clear_lv" is undefined
+..\APP\load_Face.c(163): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(194): error:  #20: identifier "load_on" is undefined
+..\APP\load_Face.c(198): error:  #20: identifier "alert_flag" is undefined
+..\APP\load_Face.c(200): error:  #20: identifier "alert_flag" is undefined
+..\APP\load_Face.c(202): error:  #20: identifier "bc_raw" is undefined
+..\APP\load_Face.c(209): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\load_Face.c(225): error:  #20: identifier "temp" is undefined
+..\APP\load_Face.c(252): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\load_Face.c(317): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\load_Face.c(329): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(336): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(386): error:  #20: identifier "temp" is undefined
+..\APP\load_Face.c(495): error:  #20: identifier "page_sw" is undefined
+..\APP\load_Face.c(495): error:  #20: identifier "face_load" is undefined
+..\APP\load_Face.c(496): error:  #20: identifier "track" is undefined
+..\APP\load_Face.c(497): error:  #20: identifier "set_sw" is undefined
+..\APP\load_Face.c(497): error:  #20: identifier "set_24" is undefined
+..\APP\load_Face.c(498): error:  #20: identifier "load_c" is undefined
+..\APP\load_Face.c(499): error:  #20: identifier "pass" is undefined
+..\APP\load_Face.c(500): error:  #20: identifier "mode_load" is undefined
+..\APP\load_Face.c(517): error:  #20: identifier "set_sw" is undefined
+..\APP\load_Face.c(519): error:  #20: identifier "set_24" is undefined
+..\APP\load_Face.c(530): error:  #20: identifier "set_66" is undefined
+..\APP\load_Face.c(533): error:  #20: identifier "set_66" is undefined
+..\APP\load_Face.c(544): error:  #20: identifier "set_67" is undefined
+..\APP\load_Face.c(553): error:  #20: identifier "set_sw" is undefined
+..\APP\load_Face.c(555): error:  #20: identifier "set_66" is undefined
+compiling c_dc.c...
+..\APP\c_dc.c(29): error:  #20: identifier "cdc_off" is undefined
+..\APP\c_dc.c(30): error:  #20: identifier "c_on" is undefined
+..\APP\c_dc.c(189): error:  #20: identifier "cov1" is undefined
+..\APP\c_dc.c(190): error:  #20: identifier "coc1" is undefined
+..\APP\c_dc.c(191): error:  #20: identifier "set_dc_cutoff_v" is undefined
+..\APP\c_dc.c(192): error:  #20: identifier "set_dc_cutoff_c" is undefined
+..\APP\c_dc.c(205): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\c_dc.c(210): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\c_dc.c(218): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\c_dc.c(226): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\c_dc.c(236): error:  #20: identifier "mode_sw" is undefined
+..\APP\c_dc.c(236): error:  #20: identifier "mode_pow" is undefined
+..\APP\c_dc.c(236): error:  #20: identifier "cdc_on" is undefined
+..\APP\c_dc.c(302): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\c_dc.c(311): error:  #20: identifier "opv2" is undefined
+..\APP\c_dc.c(311): error:  #20: identifier "opv3" is undefined
+..\APP\c_dc.c(311): error:  #20: identifier "opc2" is undefined
+..\APP\c_dc.c(311): error:  #20: identifier "opc3" is undefined
+..\APP\c_dc.c(322): error:  #20: identifier "start_time" is undefined
+..\APP\c_dc.c(331): error:  #20: identifier "mode_load" is undefined
+..\APP\c_dc.c(341): error:  #20: identifier "start_time" is undefined
+..\APP\c_dc.c(350): error:  #20: identifier "mode_load" is undefined
+..\APP\c_dc.c(372): error:  #20: identifier "cov2" is undefined
+..\APP\c_dc.c(372): error:  #20: identifier "coc2" is undefined
+..\APP\c_dc.c(381): error:  #20: identifier "start_time" is undefined
+..\APP\c_dc.c(390): error:  #20: identifier "mode_load" is undefined
+..\APP\c_dc.c(400): error:  #20: identifier "start_time" is undefined
+..\APP\c_dc.c(409): error:  #20: identifier "mode_load" is undefined
+..\APP\c_dc.c(413): error:  #20: identifier "opv1" is undefined
+..\APP\c_dc.c(413): error:  #20: identifier "opc1" is undefined
+compiling graph.c...
+..\APP\graph.c(116): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\graph.c(121): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\graph.c(130): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\graph.c(143): error:  #20: identifier "temp" is undefined
+..\APP\graph.c(170): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\graph.c(202): error:  #20: identifier "temp" is undefined
+..\APP\graph.c(247): error:  #20: identifier "page_sw" is undefined
+..\APP\graph.c(247): error:  #20: identifier "face_graph" is undefined
+..\APP\graph.c(249): error:  #20: identifier "track" is undefined
+..\APP\graph.c(250): error:  #20: identifier "pass" is undefined
+..\APP\graph.c(267): error:  #20: identifier "mode_sw" is undefined
+..\APP\graph.c(267): error:  #20: identifier "mode_load" is undefined
+..\APP\graph.c(271): error:  #20: identifier "mode_pow" is undefined
+..\APP\graph.c(277): warning:  #940-D: missing return statement at end of non-void function "DrawGraph"
+compiling settings.c...
+..\APP\settings.c(138): error:  #20: identifier "set_max_v" is undefined
+..\APP\settings.c(139): error:  #20: identifier "set_min_v" is undefined
+..\APP\settings.c(140): error:  #20: identifier "set_max_r" is undefined
+..\APP\settings.c(141): error:  #20: identifier "set_min_r" is undefined
+..\APP\settings.c(142): error:  #20: identifier "set_max_c" is undefined
+..\APP\settings.c(143): error:  #20: identifier "set_min_c" is undefined
+..\APP\settings.c(157): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\settings.c(162): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\settings.c(174): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\settings.c(179): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\settings.c(190): error:  #20: identifier "temp" is undefined
+..\APP\settings.c(249): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\settings.c(290): error:  #20: identifier "para_set1" is undefined
+..\APP\settings.c(291): error:  #20: identifier "set_1_on" is undefined
+..\APP\settings.c(300): error:  #20: identifier "set_1_off" is undefined
+..\APP\settings.c(311): error:  #20: identifier "para_set2" is undefined
+..\APP\settings.c(312): error:  #20: identifier "set_2_on" is undefined
+..\APP\settings.c(321): error:  #20: identifier "set_2_off" is undefined
+..\APP\settings.c(332): error:  #20: identifier "para_set4" is undefined
+..\APP\settings.c(333): error:  #20: identifier "set_4_on" is undefined
+..\APP\settings.c(342): error:  #20: identifier "set_4_off" is undefined
+..\APP\settings.c(371): error:  #20: identifier "b_type" is undefined
+..\APP\settings.c(373): error:  #20: identifier "Lion" is undefined
+..\APP\settings.c(382): error:  #20: identifier "NiMH" is undefined
+..\APP\settings.c(391): error:  #20: identifier "NiCd" is undefined
+..\APP\settings.c(400): error:  #20: identifier "SLA" is undefined
+..\APP\settings.c(409): error:  #20: identifier "LiMH" is undefined
+..\APP\settings.c(469): error:  #20: identifier "temp" is undefined
+..\APP\settings.c(501): error:  #20: identifier "page_sw" is undefined
+..\APP\settings.c(501): error:  #20: identifier "face_set" is undefined
+compiling STARTER.c...
+..\APP\STARTER.c(95): warning:  #223-D: function "CreateR" declared implicitly
+..\APP\STARTER.c(1153): error:  #20: identifier "page_sw" is undefined
+..\APP\STARTER.c(1153): error:  #20: identifier "face_starter" is undefined
+compiling sysinfo.c...
+..\APP\sysinfo.c(21): error:  #20: identifier "set_48" is undefined
+..\APP\sysinfo.c(136): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\sysinfo.c(141): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\sysinfo.c(146): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\sysinfo.c(325): error:  #20: identifier "page_sw" is undefined
+..\APP\sysinfo.c(325): error:  #20: identifier "face_sys_info" is undefined
+..\APP\sysinfo.c(347): error:  #20: identifier "set_49" is undefined
+..\APP\sysinfo.c(350): error:  #20: identifier "set_49" is undefined
+..\APP\sysinfo.c(360): error:  #20: identifier "set_50" is undefined
+..\APP\sysinfo.c(363): error:  #20: identifier "set_50" is undefined
+..\APP\sysinfo.c(373): error:  #20: identifier "set_51" is undefined
+..\APP\sysinfo.c(376): error:  #20: identifier "set_51" is undefined
+..\APP\sysinfo.c(386): error:  #20: identifier "set_52" is undefined
+..\APP\sysinfo.c(389): error:  #20: identifier "set_52" is undefined
+..\APP\sysinfo.c(399): error:  #20: identifier "set_53" is undefined
+..\APP\sysinfo.c(402): error:  #20: identifier "set_53" is undefined
+..\APP\sysinfo.c(412): error:  #20: identifier "set_54" is undefined
+..\APP\sysinfo.c(415): error:  #20: identifier "set_54" is undefined
+..\APP\sysinfo.c(425): error:  #20: identifier "set_55" is undefined
+..\APP\sysinfo.c(428): error:  #20: identifier "set_55" is undefined
+..\APP\sysinfo.c(441): error:  #20: identifier "set_62" is undefined
+..\APP\sysinfo.c(451): error:  #20: identifier "set_63" is undefined
+..\APP\sysinfo.c(454): error:  #20: identifier "set_63" is undefined
+..\APP\sysinfo.c(464): error:  #20: identifier "set_56" is undefined
+..\APP\sysinfo.c(467): error:  #20: identifier "set_56" is undefined
+..\APP\sysinfo.c(477): error:  #20: identifier "set_57" is undefined
+..\APP\sysinfo.c(480): error:  #20: identifier "set_57" is undefined
+..\APP\sysinfo.c(490): error:  #20: identifier "set_58" is undefined
+..\APP\sysinfo.c(493): error:  #20: identifier "set_58" is undefined
+..\APP\sysinfo.c(503): error:  #20: identifier "set_59" is undefined
+Target not created
+Build target 'JK_BTSET'
+compiling main.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling stm32f4xx_it.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling adc.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling AT24C01.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\drive\AT24C01.c(345): warning:  #177-D: function "ee_Delay" was declared but never referenced
+compiling BEEP.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling bsp_SysTick.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling flash.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling GPIO.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling IIC_24C01.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling key.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling modbus.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\drive\modbus.c(40): error:  #147: declaration is incompatible with "vu32 Run_Control[41]" (declared at line 204 of "..\Include\my_register.h")
+..\drive\modbus.c(594): error:  #20: identifier "REG_CorrectionR1" is undefined
+..\drive\modbus.c(603): error:  #20: identifier "REG_ReadR1_Offset" is undefined
+..\drive\modbus.c(609): error:  #20: identifier "REG_ReadR1_Offset" is undefined
+compiling ssd1963.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\drive\ssd1963.c(168): warning:  #550-D: variable "FSMC_NORSRAMTimingInitStructure" was set but never used
+compiling TIM1.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling TIM2.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling TIM6.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling usart.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling TM1650.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\drive\TM1650.c(242): warning:  #1-D: last line of file ends without a newline
+compiling clock.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling DAC8531.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\drive\DAC8531.c(84): warning:  #1-D: last line of file ends without a newline
+compiling AD7689.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\drive\AD7689.c(107): warning: C3017W: AD7689_Data may be used before being set
+..\drive\AD7689.c(184): warning: C3017W: var_chV1 may be used before being set
+..\drive\AD7689.c(184): warning: C3017W: var_chV may be used before being set
+..\drive\AD7689.c(184): warning: C3017W: var_chI may be used before being set
+compiling GUIDRV_Template.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "xPhys" was declared but never referenced
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "yPhys" was declared but never referenced
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "lphys" was declared but never referenced
+compiling LCDConf_FlexColor_Template.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling MainTask.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+compiling menu.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\APP\menu.c(96): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\menu.c(101): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\menu.c(115): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\menu.c(123): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\menu.c(137): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\menu.c(165): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\menu.c(206): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\menu.c(271): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\menu.c(296): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\menu.c(303): warning:  #181-D: argument is incompatible with corresponding format string conversion
+compiling R_Face.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\APP\R_Face.c(212): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\R_Face.c(217): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\R_Face.c(223): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\R_Face.c(255): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\R_Face.c(268): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\R_Face.c(347): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(351): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(355): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(372): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(378): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(396): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(401): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(413): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(417): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(493): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\R_Face.c(505): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(667): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\R_Face.c(679): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(724): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(724): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(766): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(766): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(780): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(780): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(820): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\R_Face.c(854): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\R_Face.c(879): error:  #20: identifier "GUI_FontHZ32" is undefined
+..\APP\R_Face.c(905): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\R_Face.c(1148): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1841): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling load_Face.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\APP\load_Face.c(111): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\load_Face.c(116): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\load_Face.c(130): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\load_Face.c(138): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\load_Face.c(163): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(209): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\load_Face.c(252): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\load_Face.c(317): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\load_Face.c(329): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(336): warning:  #181-D: argument is incompatible with corresponding format string conversion
+compiling c_dc.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\APP\c_dc.c(205): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\c_dc.c(210): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\c_dc.c(218): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\c_dc.c(226): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\c_dc.c(302): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\c_dc.c(576): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\c_dc.c(719): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\c_dc.c(775): error:  #20: identifier "GUI_Fontset_font" is undefined
+compiling graph.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\APP\graph.c(116): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\graph.c(121): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\graph.c(130): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\graph.c(170): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\graph.c(277): warning:  #940-D: missing return statement at end of non-void function "DrawGraph"
+compiling settings.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\APP\settings.c(157): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\settings.c(162): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\settings.c(174): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\settings.c(179): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\settings.c(249): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\settings.c(1970): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\settings.c(1997): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\settings.c(2024): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\settings.c(2051): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\settings.c(2078): error:  #20: identifier "GUI_Fontset_font" is undefined
+compiling STARTER.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\APP\STARTER.c(95): warning:  #223-D: function "CreateR" declared implicitly
+compiling sysinfo.c...
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\Include\my_register.h(441): warning:  #1-D: last line of file ends without a newline
+..\APP\sysinfo.c(136): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\sysinfo.c(141): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\sysinfo.c(146): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\sysinfo.c(1376): warning:  #1-D: last line of file ends without a newline
+Target not created
 Build target 'JK_BTSET'
 compiling main.c...
 compiling stm32f4xx_it.c...
@@ -201,6 +1481,7 @@ compiling GPIO.c...
 compiling IIC_24C01.c...
 compiling key.c...
 compiling modbus.c...
+..\drive\modbus.c(40): error:  #147: declaration is incompatible with "vu32 Run_Control[41]" (declared at line 204 of "..\Include\my_register.h")
 compiling ssd1963.c...
 ..\drive\ssd1963.c(168): warning:  #550-D: variable "FSMC_NORSRAMTimingInitStructure" was set but never used
 compiling TIM1.c...
@@ -224,9 +1505,1241 @@ compiling GUIDRV_Template.c...
 compiling LCDConf_FlexColor_Template.c...
 compiling MainTask.c...
 compiling menu.c...
+..\APP\menu.c(96): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\menu.c(101): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\menu.c(115): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\menu.c(123): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\menu.c(137): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\menu.c(165): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\menu.c(206): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\menu.c(271): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\menu.c(296): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\menu.c(303): warning:  #181-D: argument is incompatible with corresponding format string conversion
 compiling R_Face.c...
+..\APP\R_Face.c(212): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\R_Face.c(217): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\R_Face.c(223): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\R_Face.c(255): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\R_Face.c(268): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\R_Face.c(347): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(351): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(355): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(372): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(378): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(396): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(401): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(413): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(417): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(493): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\R_Face.c(505): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(667): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\R_Face.c(679): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(724): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(724): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(766): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(766): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(780): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(780): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(820): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\R_Face.c(854): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\R_Face.c(879): error:  #20: identifier "GUI_FontHZ32" is undefined
+..\APP\R_Face.c(905): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\R_Face.c(1148): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1841): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 compiling load_Face.c...
+..\APP\load_Face.c(111): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\load_Face.c(116): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\load_Face.c(130): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\load_Face.c(138): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\load_Face.c(163): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(209): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\load_Face.c(252): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\load_Face.c(317): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\load_Face.c(329): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(336): warning:  #181-D: argument is incompatible with corresponding format string conversion
+compiling c_dc.c...
+..\APP\c_dc.c(205): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\c_dc.c(210): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\c_dc.c(218): error:  #20: identifier "GUI_FontEN40" is undefined
+..\APP\c_dc.c(226): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\c_dc.c(302): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\c_dc.c(576): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\c_dc.c(719): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\c_dc.c(775): error:  #20: identifier "GUI_Fontset_font" is undefined
+compiling graph.c...
+..\APP\graph.c(116): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\graph.c(121): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\graph.c(130): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\graph.c(170): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\graph.c(277): warning:  #940-D: missing return statement at end of non-void function "DrawGraph"
+compiling settings.c...
+..\APP\settings.c(157): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\settings.c(162): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\settings.c(174): error:  #20: identifier "GUI_FontHZ16" is undefined
+..\APP\settings.c(179): error:  #20: identifier "GUI_Fontunit" is undefined
+..\APP\settings.c(249): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\settings.c(1970): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\settings.c(1997): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\settings.c(2024): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\settings.c(2051): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\settings.c(2078): error:  #20: identifier "GUI_Fontset_font" is undefined
+compiling STARTER.c...
+..\APP\STARTER.c(95): warning:  #223-D: function "CreateR" declared implicitly
+compiling sysinfo.c...
+..\APP\sysinfo.c(136): error:  #20: identifier "GUI_Fontsymbol" is undefined
+..\APP\sysinfo.c(141): error:  #20: identifier "GUI_FontHZ20S" is undefined
+..\APP\sysinfo.c(146): error:  #20: identifier "GUI_Fontset_font" is undefined
+..\APP\sysinfo.c(1376): warning:  #1-D: last line of file ends without a newline
+Target not created
+Build target 'JK_BTSET'
+compiling main.c...
+compiling key.c...
+compiling modbus.c...
+..\drive\modbus.c(40): error:  #147: declaration is incompatible with "vu32 Run_Control[41]" (declared at line 204 of "..\Include\my_register.h")
+compiling GUI_X.c...
+compiling GUIConf.c...
+compiling GUIDRV_Template.c...
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "xPhys" was declared but never referenced
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "yPhys" was declared but never referenced
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "lphys" was declared but never referenced
+compiling LCDConf_FlexColor_Template.c...
+compiling MainTask.c...
+compiling menu.c...
+..\APP\menu.c(137): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\menu.c(296): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\menu.c(303): warning:  #181-D: argument is incompatible with corresponding format string conversion
+compiling R_Face.c...
+..\APP\R_Face.c(347): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(351): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(355): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(372): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(378): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(396): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(401): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(413): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(417): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(505): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(679): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(724): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(724): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(766): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(766): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(780): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(780): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1148): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1841): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling load_Face.c...
+..\APP\load_Face.c(163): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(329): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(336): warning:  #181-D: argument is incompatible with corresponding format string conversion
+compiling c_dc.c...
+compiling graph.c...
+..\APP\graph.c(277): warning:  #940-D: missing return statement at end of non-void function "DrawGraph"
+compiling settings.c...
+compiling STARTER.c...
+..\APP\STARTER.c(95): warning:  #223-D: function "CreateR" declared implicitly
+compiling sysinfo.c...
+..\APP\sysinfo.c(1376): warning:  #1-D: last line of file ends without a newline
+compiling HZ16.c...
+compiling HZ12.c...
+compiling EN40.c...
+compiling HZ20S.c...
+compiling HZ32.c...
+compiling set_font.c...
+compiling symbol.c...
+compiling unit.c...
+Target not created
+Build target 'JK_BTSET'
+compiling modbus.c...
 linking...
-Program Size: Code=80480 RO-data=44972 RW-data=1956 ZI-data=33828  
+..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol DISS_Current (referred from modbus.o).
+..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol DISS_POW_Current (referred from modbus.o).
+..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol DISS_POW_Voltage (referred from modbus.o).
+..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol DISS_Voltage (referred from modbus.o).
+..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol battery_c (referred from menu.o).
+..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol bc_raw (referred from menu.o).
+..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol temp (referred from menu.o).
+..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol setmode_r (referred from r_face.o).
+Target not created
+Build target 'JK_BTSET'
+compiling main.c...
+..\User\main.c(53): warning:  #223-D: function "TIM4_Int_Init" declared implicitly
+..\User\main.c(54): warning:  #223-D: function "TIM3_Int_Init" declared implicitly
+compiling TIM6.c...
+..\drive\TIM6.c(73): warning:  #223-D: function "sLCD_Init" declared implicitly
+..\drive\TIM6.c(78): warning:  #223-D: function "ResetPow" declared implicitly
+..\drive\TIM6.c(80): warning:  #223-D: function "ResetCDC" declared implicitly
+..\drive\TIM6.c(82): warning:  #223-D: function "ResetR" declared implicitly
+..\drive\TIM6.c(84): warning:  #223-D: function "ResetLoad" declared implicitly
+..\drive\TIM6.c(86): warning:  #223-D: function "ResetG" declared implicitly
+..\drive\TIM6.c(88): warning:  #223-D: function "ResetSET" declared implicitly
+linking...
+..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol sLCD_Init (referred from tim6.o).
+..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol temp (referred from menu.o).
+..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol setmode_r (referred from r_face.o).
+Target not created
+Build target 'JK_BTSET'
+compiling main.c...
+..\User\main.c(53): warning:  #223-D: function "TIM4_Int_Init" declared implicitly
+..\User\main.c(54): warning:  #223-D: function "TIM3_Int_Init" declared implicitly
+compiling stm32f4xx_it.c...
+..\User\stm32f4xx_it.c(263): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling key.c...
+compiling ssd1963.c...
+..\drive\ssd1963.c(168): warning:  #550-D: variable "FSMC_NORSRAMTimingInitStructure" was set but never used
+compiling TIM6.c...
+..\drive\TIM6.c(78): warning:  #223-D: function "ResetPow" declared implicitly
+..\drive\TIM6.c(80): warning:  #223-D: function "ResetCDC" declared implicitly
+..\drive\TIM6.c(82): warning:  #223-D: function "ResetR" declared implicitly
+..\drive\TIM6.c(84): warning:  #223-D: function "ResetLoad" declared implicitly
+..\drive\TIM6.c(86): warning:  #223-D: function "ResetG" declared implicitly
+..\drive\TIM6.c(88): warning:  #223-D: function "ResetSET" declared implicitly
+compiling usart.c...
+compiling GUIDRV_Template.c...
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "xPhys" was declared but never referenced
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "yPhys" was declared but never referenced
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "lphys" was declared but never referenced
+compiling LCDConf_FlexColor_Template.c...
+compiling MainTask.c...
+linking...
+..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol setmode_r (referred from r_face.o).
+Target not created
+Build target 'JK_BTSET'
+compiling key.c...
+linking...
+Program Size: Code=116104 RO-data=55956 RW-data=2244 ZI-data=33948  
 FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 11 Warning(s).
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Build target 'JK_BTSET'
+compiling key.c...
+..\drive\key.c(902): warning:  #223-D: function "MENU_OP_UP" declared implicitly
+..\drive\key.c(909): warning:  #223-D: function "LOAD_OP_UP" declared implicitly
+..\drive\key.c(923): warning:  #223-D: function "OC_OP_UP" declared implicitly
+..\drive\key.c(958): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
+..\drive\key.c(965): warning:  #223-D: function "LOAD_OP_DOWN" declared implicitly
+..\drive\key.c(979): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
+..\drive\key.c(1012): warning:  #223-D: function "MENU_SET" declared implicitly
+..\drive\key.c(1028): warning:  #223-D: function "OC_SET" declared implicitly
+..\drive\key.c(1036): warning:  #223-D: function "LOAD_SET" declared implicitly
+..\drive\key.c(1050): warning:  #223-D: function "CFM_PASS" declared implicitly
+..\drive\key.c(1127): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1384): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1412): warning:  #223-D: function "Createsysinfo" declared implicitly
+..\drive\key.c(1434): warning:  #1-D: last line of file ends without a newline
+..\drive\key.c(1434): error:  #79: expected a type specifier
+..\drive\key.c(1434): error:  #79: expected a type specifier
+..\drive\key.c(1434): warning:  #77-D: this declaration has no storage class or type specifier
+..\drive\key.c(1434): error:  #147: declaration is incompatible with "void GPIO_SetBits(GPIO_TypeDef *, uint16_t)" (declared at line 479 of "..\Libraries\FWlib\inc\stm32f4xx_gpio.h")
+Target not created
+Build target 'JK_BTSET'
+compiling key.c...
+..\drive\key.c(902): warning:  #223-D: function "MENU_OP_UP" declared implicitly
+..\drive\key.c(909): warning:  #223-D: function "LOAD_OP_UP" declared implicitly
+..\drive\key.c(923): warning:  #223-D: function "OC_OP_UP" declared implicitly
+..\drive\key.c(958): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
+..\drive\key.c(965): warning:  #223-D: function "LOAD_OP_DOWN" declared implicitly
+..\drive\key.c(979): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
+..\drive\key.c(1012): warning:  #223-D: function "MENU_SET" declared implicitly
+..\drive\key.c(1028): warning:  #223-D: function "OC_SET" declared implicitly
+..\drive\key.c(1036): warning:  #223-D: function "LOAD_SET" declared implicitly
+..\drive\key.c(1050): warning:  #223-D: function "CFM_PASS" declared implicitly
+..\drive\key.c(1127): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1386): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1414): warning:  #223-D: function "Createsysinfo" declared implicitly
+compiling R_Face.c...
+..\APP\R_Face.c(347): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(351): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(355): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(372): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(378): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(396): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(401): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(413): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(417): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(505): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(679): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(724): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(724): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(766): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(766): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(780): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(780): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1148): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1841): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling load_Face.c...
+..\APP\load_Face.c(163): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(329): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(336): warning:  #181-D: argument is incompatible with corresponding format string conversion
+compiling c_dc.c...
+linking...
+Program Size: Code=155332 RO-data=56712 RW-data=2244 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 40 Warning(s).
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(78): warning:  #223-D: function "ResetPow" declared implicitly
+..\drive\TIM6.c(80): warning:  #223-D: function "ResetCDC" declared implicitly
+..\drive\TIM6.c(82): warning:  #223-D: function "ResetR" declared implicitly
+..\drive\TIM6.c(84): warning:  #223-D: function "ResetLoad" declared implicitly
+..\drive\TIM6.c(86): warning:  #223-D: function "ResetG" declared implicitly
+..\drive\TIM6.c(88): warning:  #223-D: function "ResetSET" declared implicitly
+compiling R_Face.c...
+..\APP\R_Face.c(347): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(351): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(355): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(372): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(378): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(396): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(401): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(413): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(417): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(505): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(679): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(724): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(724): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(766): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(766): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(780): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(780): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1148): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1842): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+linking...
+Program Size: Code=155004 RO-data=56712 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 30 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.283V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling MainTask.c...
+linking...
+Program Size: Code=155012 RO-data=56712 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.280V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling settings.c...
+linking...
+Program Size: Code=155068 RO-data=56712 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=155068 RO-data=56712 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.283V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling R_Face.c...
+..\APP\R_Face.c(347): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(351): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(355): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(372): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(378): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(396): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(401): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(413): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(417): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(505): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(679): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(724): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(724): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(766): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(766): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(780): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(780): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1148): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1842): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+linking...
+Program Size: Code=155044 RO-data=56712 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 24 Warning(s).
+Build target 'JK_BTSET'
+compiling R_Face.c...
+..\APP\R_Face.c(347): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(351): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(355): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(372): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(378): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(396): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(401): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(413): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(417): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(505): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(679): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(724): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(724): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(752): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(766): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(766): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(780): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(780): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1148): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1842): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+linking...
+Program Size: Code=155036 RO-data=56712 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 24 Warning(s).
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=155036 RO-data=56712 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.285V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling MainTask.c...
+linking...
+Program Size: Code=155036 RO-data=56712 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.279V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling key.c...
+..\drive\key.c(902): warning:  #223-D: function "MENU_OP_UP" declared implicitly
+..\drive\key.c(909): warning:  #223-D: function "LOAD_OP_UP" declared implicitly
+..\drive\key.c(923): warning:  #223-D: function "OC_OP_UP" declared implicitly
+..\drive\key.c(958): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
+..\drive\key.c(965): warning:  #223-D: function "LOAD_OP_DOWN" declared implicitly
+..\drive\key.c(979): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
+..\drive\key.c(1012): warning:  #223-D: function "MENU_SET" declared implicitly
+..\drive\key.c(1028): warning:  #223-D: function "OC_SET" declared implicitly
+..\drive\key.c(1036): warning:  #223-D: function "LOAD_SET" declared implicitly
+..\drive\key.c(1050): warning:  #223-D: function "CFM_PASS" declared implicitly
+..\drive\key.c(1127): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1386): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1414): warning:  #223-D: function "Createsysinfo" declared implicitly
+compiling MainTask.c...
+linking...
+Program Size: Code=155044 RO-data=56712 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 13 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.280V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling R_Face.c...
+..\APP\R_Face.c(349): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(353): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(357): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(374): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(380): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(398): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(403): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(415): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(419): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(507): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(681): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(726): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(726): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(740): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(740): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(754): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(754): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(768): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(768): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(782): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(782): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1150): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1819): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1844): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+linking...
+Program Size: Code=155044 RO-data=56740 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 24 Warning(s).
+Build target 'JK_BTSET'
+compiling R_Face.c...
+..\APP\R_Face.c(344): error:  #70: incomplete type is not allowed
+..\APP\R_Face.c(352): error:  #70: incomplete type is not allowed
+..\APP\R_Face.c(369): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(373): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(377): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(394): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(400): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(418): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(423): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(435): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(439): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(527): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(701): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(746): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(746): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(760): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(760): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(774): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(774): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(788): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(788): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(802): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(802): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1188): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1857): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1882): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling load_Face.c...
+..\APP\load_Face.c(163): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(329): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(336): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Target not created
+Build target 'JK_BTSET'
+compiling R_Face.c...
+..\APP\R_Face.c(382): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(386): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(390): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(407): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(413): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(431): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(436): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(448): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(452): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(540): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(759): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(759): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(773): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(773): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(787): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(787): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(801): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(801): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(815): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(815): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1201): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1870): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1895): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+linking...
+Program Size: Code=155360 RO-data=56740 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 24 Warning(s).
+Build target 'JK_BTSET'
+compiling R_Face.c...
+..\APP\R_Face.c(382): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(386): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(390): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(407): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(413): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(431): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(436): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(448): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(452): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(540): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(759): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(759): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(773): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(773): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(787): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(787): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(801): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(801): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(815): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(815): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1201): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1870): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1895): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+linking...
+Program Size: Code=155460 RO-data=56740 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 24 Warning(s).
+Build target 'JK_BTSET'
+compiling key.c...
+..\drive\key.c(835): error:  #20: identifier "oc_sw" is undefined
+..\drive\key.c(913): warning:  #223-D: function "MENU_OP_UP" declared implicitly
+..\drive\key.c(920): warning:  #223-D: function "LOAD_OP_UP" declared implicitly
+..\drive\key.c(934): warning:  #223-D: function "OC_OP_UP" declared implicitly
+..\drive\key.c(969): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
+..\drive\key.c(976): warning:  #223-D: function "LOAD_OP_DOWN" declared implicitly
+..\drive\key.c(990): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
+..\drive\key.c(1023): warning:  #223-D: function "MENU_SET" declared implicitly
+..\drive\key.c(1039): warning:  #223-D: function "OC_SET" declared implicitly
+..\drive\key.c(1047): warning:  #223-D: function "LOAD_SET" declared implicitly
+..\drive\key.c(1061): warning:  #223-D: function "CFM_PASS" declared implicitly
+..\drive\key.c(1138): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1397): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1425): warning:  #223-D: function "Createsysinfo" declared implicitly
+Target not created
+Build target 'JK_BTSET'
+compiling key.c...
+..\drive\key.c(914): warning:  #223-D: function "MENU_OP_UP" declared implicitly
+..\drive\key.c(921): warning:  #223-D: function "LOAD_OP_UP" declared implicitly
+..\drive\key.c(935): warning:  #223-D: function "OC_OP_UP" declared implicitly
+..\drive\key.c(970): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
+..\drive\key.c(977): warning:  #223-D: function "LOAD_OP_DOWN" declared implicitly
+..\drive\key.c(991): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
+..\drive\key.c(1024): warning:  #223-D: function "MENU_SET" declared implicitly
+..\drive\key.c(1040): warning:  #223-D: function "OC_SET" declared implicitly
+..\drive\key.c(1048): warning:  #223-D: function "LOAD_SET" declared implicitly
+..\drive\key.c(1062): warning:  #223-D: function "CFM_PASS" declared implicitly
+..\drive\key.c(1139): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1398): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1426): warning:  #223-D: function "Createsysinfo" declared implicitly
+linking...
+Program Size: Code=155492 RO-data=56740 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 13 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.279V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Contents missmatch at: 0801079FH  (Flash=00H  Required=80H) !
+Verify Failed!
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.287V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling R_Face.c...
+..\APP\R_Face.c(382): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(386): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(390): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(407): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(413): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(431): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(436): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(448): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(452): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(540): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(759): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(759): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(773): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(773): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(787): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(787): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(801): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(801): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(815): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(815): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1201): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1870): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1895): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+linking...
+Program Size: Code=155492 RO-data=56740 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 24 Warning(s).
+Build target 'JK_BTSET'
+compiling R_Face.c...
+..\APP\R_Face.c(382): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(386): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(390): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(407): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(413): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(431): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(436): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(448): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(452): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(540): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(759): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(759): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(773): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(773): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(787): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(787): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(801): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(801): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(815): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(815): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1201): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1870): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1895): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+linking...
+Program Size: Code=155492 RO-data=56740 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 24 Warning(s).
+Build target 'JK_BTSET'
+compiling R_Face.c...
+..\APP\R_Face.c(382): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(386): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(390): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(407): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(413): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(431): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(436): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(448): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(452): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(540): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(759): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(759): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(773): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(773): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(787): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(787): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(801): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(801): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(815): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(815): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1201): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1870): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1895): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+linking...
+Program Size: Code=155496 RO-data=56740 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 24 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.280V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling R_Face.c...
+..\APP\R_Face.c(382): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(386): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(390): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(407): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(413): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(431): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(436): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(448): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(452): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(540): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(759): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(759): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(773): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(773): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(787): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(787): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(801): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(801): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(815): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(815): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1201): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1870): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1895): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+linking...
+Program Size: Code=155496 RO-data=56740 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 24 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.277V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=155496 RO-data=56740 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.270V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling MainTask.c...
+compiling R_Face.c...
+..\APP\R_Face.c(382): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(386): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(390): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(407): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(413): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(431): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(436): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(448): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(452): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(540): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(759): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(759): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(773): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(773): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(787): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(787): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(801): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(801): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(815): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(815): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1201): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1870): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1895): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling load_Face.c...
+..\APP\load_Face.c(163): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(329): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\load_Face.c(336): warning:  #181-D: argument is incompatible with corresponding format string conversion
+compiling c_dc.c...
+linking...
+Program Size: Code=155500 RO-data=56740 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 27 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.283V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling key.c...
+..\drive\key.c(916): warning:  #223-D: function "MENU_OP_UP" declared implicitly
+..\drive\key.c(923): warning:  #223-D: function "LOAD_OP_UP" declared implicitly
+..\drive\key.c(937): warning:  #223-D: function "OC_OP_UP" declared implicitly
+..\drive\key.c(972): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
+..\drive\key.c(979): warning:  #223-D: function "LOAD_OP_DOWN" declared implicitly
+..\drive\key.c(993): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
+..\drive\key.c(1026): warning:  #223-D: function "MENU_SET" declared implicitly
+..\drive\key.c(1042): warning:  #223-D: function "OC_SET" declared implicitly
+..\drive\key.c(1050): warning:  #223-D: function "LOAD_SET" declared implicitly
+..\drive\key.c(1064): warning:  #223-D: function "CFM_PASS" declared implicitly
+..\drive\key.c(1141): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1400): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1428): warning:  #223-D: function "Createsysinfo" declared implicitly
+linking...
+Program Size: Code=155516 RO-data=56740 RW-data=2252 ZI-data=33948  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 13 Warning(s).

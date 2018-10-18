@@ -41,6 +41,8 @@
 ..\Output\key.o: ..\Include\gpio.h
 ..\Output\key.o: ..\Include\key.h
 ..\Output\key.o: ..\Include\my_register.h
+..\Output\key.o: ..\Include\ssd1963.h
+..\Output\key.o: ..\Include\my_register.h
 ..\Output\key.o: ..\STemWinLibrary522\inc\gui.h
 ..\Output\key.o: ..\STemWinLibrary522\inc\GUI_ConfDefaults.h
 ..\Output\key.o: ..\STemWinLibrary522\Config\GUIConf.h

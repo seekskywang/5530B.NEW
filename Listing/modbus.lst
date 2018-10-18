@@ -10,12 +10,12 @@ N********************************************************************/
 N#include "my_register.h" 
 L 1 "..\Include\my_register.h" 1
 N/******************** (C) COPYRIGHT 2014 KUNKIN********************
-N * ÎÄ¼şÃû  £ºmy_register
-N * ×÷Õß    £ºÀîÕñ
-N * ÃèÊö    £º¿âº¯Êı°æ
-N * ÄÚÈİ    £ºDefine register¶¨ÒåÏµÍ³Ê¹ÓÃµÄ¼Ä´æÆ÷£¬È«¾Ö±äÁ¿
-N * ×¢Òâ		 £ºÍ·ÎÄ¼şÖĞÖ»ÄÜÓĞÉùÃ÷£¬²»ÄÜÓĞ¶¨Òå
-N * ĞŞ¸ÄÈÕÆÚ£º2014-12-9
+N * ¦Ó??  ¨²my_register
+N * ??    ¨²n?
+N * ??    ¨²????
+N * ??    ¨²Define register??????????¨¬???
+N * ??		 ¨²?¦Ó???????¨¬?????
+N * ???¨·¨²2014-12-9
 N*********************************************************************/
 N
 N#include "STM32F4xx.h"
@@ -34714,51 +34714,82 @@ L 11 "..\Include\my_register.h" 2
 N#ifndef __my_register_h__
 N#define __my_register_h__
 N//=============================================================================
-N
+Nvoid Write_Limits(void);
+Nvoid Wrtite_step(void);
+Nvoid OC_ADD(void);
+Nvoid Wrtite_S(void);
+Nvoid Write_oct(void);
+Nvoid Write_alarm(void);
+Nvoid Write_btype(void);
+Nvoid Write_LOAD(void);
+Nvoid Write_info(void);
+Nvoid OC_CHECK(void);
+Nvoid INPUT_POW(char* num);  
+Nvoid INPUT_NUM(char* num); 
+Nvoid INPUT_CDC(char* num); 
+Nvoid INPUT_C(char* num);  
+Nvoid INPUT_LOAD(char* num);  
+Nvoid INPUT_INFO(vu8 num);
+Nvoid SET_OP_DOWN(void);
+Nvoid SET_OP_UP(void);
+Nvoid SET_OP_RIGHT(void);
+Nvoid SET_OP_LEFT(void);
+Nvoid PARA_SET(void);
+Nvoid SYS_INFO_RIGHT(void);
+Nvoid SYS_INFO_LEFT(void);
+Nvoid SYS_INFO_UP(void);
+Nvoid SYS_INFO_DOWN(void);
+Nvoid INPUT_INFO(vu8 num);
+Nvoid CDC_OP_DOWN(void);
+Nvoid CDC_OP_UP(void);
+Nvoid CDC_OP_LEFT(void);
+Nvoid CDC_OP_RIGHT(void);
+Nvoid CDC_SET(void);
+Nvoid INPUT_CDC(char* num); 
 N//=============================================================================
-N#define NOP   __nop();	  //¿ÕÖ¸Áî
+N#define NOP   __nop();	  //???
 N
 N//============================================================================
 Nextern struct bitDefine flagA,flagB,flagC,flagD,flagE,flagF,flagG;
-N#define   Flag_ADC_Full             (flagA.bit1)//DMA´«ÊäÍê³É±êÖ¾Î» 
-N#define   Flag_BEEP						    	(flagA.bit2)//·äÃùÆ÷´¥·¢±êÖ¾
-N#define   Flag_Key_Scan							(flagA.bit3)//°´¼ü¶¨Ê±É¨Ãè±êÖ¾
-N#define   UART_SEND_flag						(flagA.bit4)//´®¿Ú·¢ËÍÍê³É±êÖ¾
-N#define   UART_Buffer_Rece_flag			(flagA.bit5)//´®¿Ú½ÓÊÕÍê³É±êÖ¾
-N#define   Flag_Swtich_ON      			(flagA.bit6)//Æô¶¯°´¼ü´¦ÓÚON±êÖ¾
-N#define   Flag_0_5S      		      	(flagA.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ÉÁË¸±êÖ¾
+N#define   Flag_ADC_Full             (flagA.bit1)//DMA??????¦Ë 
+N#define   Flag_BEEP						    	(flagA.bit2)//???????
+N#define   Flag_Key_Scan							(flagA.bit3)//§Õ???????
+N#define   UART_SEND_flag						(flagA.bit4)//????????
+N#define   UART_Buffer_Rece_flag			(flagA.bit5)//????????
+N#define   Flag_Swtich_ON      			(flagA.bit6)//??§Õ???ON??
+N#define   Flag_0_5S      		      	(flagA.bit7)//§¥?????????
 N
-N#define   Flag_1S      		         	(flagB.bit0)//ÏÔÊ¾ÉèÖÃµçÁ÷ÉÁË¸±êÖ¾
-N#define   Flag_5S      		        	(flagB.bit1)//ÍË³öÉèÖÃ×´Ì¬±êÖ¾
-N#define   Flag_Long                 (flagB.bit2)//°´¼ü³¤°´±êÖ¾
-N#define   Flag_DAC_OFF              (flagB.bit3)//æ˜¯å¦è½¬æ¢DACæ§åˆ¶å€¼æ ‡å¿—
-N#define   Flag_SetA                 (flagB.bit5)//½øÈëÉèÖÃµçÁ÷±êÖ¾Î»
-N#define   Flag_SetV                 (flagB.bit6)//½øÈëÉèÖÃµçÑ¹±êÖ¾Î» 
-N#define   Flag_DisSet               (flagB.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ºÍµçÁ÷±êÖ¾Î»
+N#define   Flag_1S      		         	(flagB.bit0)//§¥????¡¤????
+N#define   Flag_5S      		        	(flagB.bit1)//????????
+N#define   Flag_Long                 (flagB.bit2)//§Õ??§Õ??
+N#define   Flag_DAC_OFF              (flagB.bit3)//ÊÇ·ñ×ª»»DAC¿ØÖÆÖµ±êÖ¾
+N#define   Flag_SetA                 (flagB.bit5)//?????¡¤??¦Ë
+N#define   Flag_SetV                 (flagB.bit6)//????????¦Ë 
+N#define   Flag_DisSet               (flagB.bit7)//§¥???????¡¤??¦Ë
 N
-N#define   Flag_GE                   (flagC.bit0)//¸öÎ»ÉÁË¸±êÖ¾
-N#define   Flag_SHI                  (flagC.bit1)//Ê®Î»ÉÁË¸±êÖ¾
-N#define   Flag_BAI                  (flagC.bit2)//°ÙÎ»ÉÁË¸±êÖ¾
-N#define   Flag_QIAN                 (flagC.bit3)//Ç§Î»ÉÁË¸±êÖ¾
-N#define   Flag_Beep_OFF             (flagC.bit6)//·äÃùÆ÷¹Ø±Õ±êÖ¾
+N#define   Flag_GE                   (flagC.bit0)//?¦Ë????
+N#define   Flag_SHI                  (flagC.bit1)//?¦Ë????
+N#define   Flag_BAI                  (flagC.bit2)//?¦Ë????
+N#define   Flag_QIAN                 (flagC.bit3)//?¦Ë????
+N#define   Flag_Beep_OFF             (flagC.bit6)//???????
 N
-N#define   flag_Tim_USART            (flagD.bit0)//´®¿Ú¼ÆËãÇåÁã±êÖ¾
-N#define   flag_Test                 (flagD.bit1)//×Ô¶¯²âÊÔÆğÍ£±êÖ¾
-N#define   flag_Test_PASS            (flagD.bit2)//×Ô¶¯²âÊÔPASS±êÖ¾
-N#define   flag_Test_FAIL            (flagD.bit3)//×Ô¶¯²âÊÔFAIL±êÖ¾
-N#define   flag_Test_Time            (flagD.bit4)//×Ô¶¯²âÊÔµÈ´ıÊ±¼ä±êÖ¾
-N#define   flag_Test_Start           (flagD.bit5)//×Ô¶¯²âÊÔ±È½Ï¿ªÊ¼±êÖ¾
-N#define   flag_Test_Min             (flagD.bit6)//×Ô¶¯²âÊÔÏÂÏŞ±êÖ¾
-N#define   flag_Load_CC              (flagD.bit7)//¸ºÔØCC/CVÄ£Ê½±êÖ¾Î»
+N#define   flag_Tim_USART            (flagD.bit0)//?????¡ê??
+N#define   flag_Test                 (flagD.bit1)//????????
+N#define   flag_Test_PASS            (flagD.bit2)//????PASS??
+N#define   flag_Test_FAIL            (flagD.bit3)//????FAIL??
+N#define   flag_Test_Time            (flagD.bit4)//??????????
+N#define   flag_Test_Start           (flagD.bit5)//??????????
+N#define   flag_Test_Min             (flagD.bit6)//?????§°??
+N#define   flag_Load_CC              (flagD.bit7)//??CC/CV????¦Ë
 N
-N#define   flag_Test_Door             (flagE.bit0)//×Ô¶¯²âÊÔÃÅ¼÷±êÖ¾
-N#define   flag_Test_SetTime          (flagE.bit1)//×Ô¶¯²âÊÔÊ±¼ä±êÖ¾ 
-N#define   flag_OVP                   (flagE.bit2)//OVP±êÖ¾
-N#define   flag_OCP                   (flagE.bit3)//OCP±êÖ¾
-N#define   flag_Doub                  (flagE.bit4)//°´¼üË«»÷
-N#define   flag_t_Doub                (flagE.bit5)//°´¼üË«»÷¼ÆÊ±±êÖ¾
-N#define   flag_Time_SW               (flagE.bit6)//¶¨Ê±¹¦ÄÜ¿ªÆô±êÖ¾
-N#define   flag_CC_MODE               (flagE.bit7)//¹¤×÷Ä£Ê½±êÖ¾
+N#define   flag_Test_Door             (flagE.bit0)//????????
+N#define   flag_Test_SetTime          (flagE.bit1)//???????? 
+N#define   flag_OVP                   (flagE.bit2)//OVP??
+N#define   flag_OCP                   (flagE.bit3)//OCP??
+N#define   flag_Doub                  (flagE.bit4)//§Õ???
+N#define   flag_t_Doub                (flagE.bit5)//§Õ???????
+N#define   flag_Time_SW               (flagE.bit6)//????????
+N#define   flag_CC_MODE               (flagE.bit7)//??????
 N
 N#define   flag_Adjust                (flagF.bit0)//
 N#define   flag_ADJ_ON                (flagF.bit1)//
@@ -34781,7 +34812,7 @@ N//=============================================================================
 Nextern vu32 GE_V;
 Nextern vu32 SHI_V;
 Nextern vu32 BAI_V;
-Nextern vu32 QIAN_V;  //ÊıÂë¹ÜÉ¨Ãè¶ÎÂë
+Nextern vu32 QIAN_V;  //???????
 Nextern vu32 GE_A;
 Nextern vu32 SHI_A;
 Nextern vu32 BAI_A;
@@ -34792,7 +34823,7 @@ Nextern vu8 DAC_Flag;
 Nextern vu8 Beep_Flag;
 Nextern vu8 t_beep;
 Nextern vu8 t_KeyScan;
-Nextern vu8 t_LEDScan;  //¶¨Ê±¼ÆÊıÆ÷
+Nextern vu8 t_LEDScan;  //?????
 Nextern vu8 t_KEYON;
 Nextern vu16 t_0_5S;
 Nextern vu16 t_1S;
@@ -34805,8 +34836,8 @@ Nextern vu16 t_ON_V;
 Nextern vu16 t_OFF_A;
 Nextern vu16 t_ON_A;
 Nextern vu8 t_USART;
-Nextern vu16 ADJ_Write;//Ğ£×¼Ê±ĞèĞ´ÈëµÄÊµ¼ÊÖµ
-Nextern vu8 OFFSET_Zore;//ÁãµãÖµ
+Nextern vu16 ADJ_Write;//§µ???§Õ?????
+Nextern vu8 OFFSET_Zore;//¡ê??
 Nextern vu8 ADDR;
 Nextern vu8 t_lock;
 Nextern vu8 t_onoff;
@@ -34817,12 +34848,12 @@ Nextern vu16 Test_Time1;
 Nextern vu16 Time_sw;
 Nextern vu16 Test_Daley;
 Nextern vu16 Test_C_Door;
-Nextern vu16 TEMP_OFFSET;//ÎÂ¶È²¹³¥Öµ
+Nextern vu16 TEMP_OFFSET;//?????
 N//--------------------------
-Nextern vu8 UART_Buffer_Size;//´®¿Ú½ÓÊÕÊı¾İ³¤¶È
+Nextern vu8 UART_Buffer_Size;//????????
 Nextern vu8 Transmit_BUFFERsize;
 N//---------------------------
-Nextern vu16 NTC_value;   //ADÖµ
+Nextern vu16 NTC_value;   //AD?
 Nextern vu16 Imon_value;
 Nextern vu32 Imon1_value;
 Nextern vu16 Vmon_value;
@@ -34834,69 +34865,271 @@ Nextern  float DISS_POW_Voltage;
 Nextern float DISS_Current;
 Nextern float DISS_POW_Current;
 Nextern float DISS_R;
+Nextern vu16 steptime;
+Nextern vu8 r_stable;
+Nextern char set_limit[5];
+Nextern vu8 bit;
+Nextern vu8 bit1;
+Nextern vu8 dot_flag;
+Nextern vu8 page_sw;
+Nextern vu8 para_set1;
+Nextern vu8 para_set2;
+Nextern vu8 para_set3;
+Nextern vu8 para_set4;
+Nextern vu8 oct_sw;
+Nextern vu8 set_sw;
+Nextern vu8 charge_step;
+Nextern vu8 cutoff_flag;
+Nextern vu8 lang;
+Nextern vu8 r_raly;
+Nextern vu16 steptime;
+Nextern vu8 alert_flag;
+Nextern vu8 t_onoff;
+Nextern vu8 ocstop;
+Nextern float temp;
+Nextern vu8 mode_sw;
+Nextern vu16 stepcount;
+Nextern vu16 battery_c;
+Nextern float bc_raw;
+Nextern vu8 track;
+Nextern vu8 clear_flag1;
+Nextern vu8 clear_flag2;
+Nextern vu8 clear_flag3;
+Nextern vu8 pass;
+Nextern vu8 b_type;
+Nextern vu8 buffer;
+Nextern float clear_v;
+Nextern float clear_pv;
+Nextern float clear_lv;
+Nextern float temp;
+Nextern vu8 set_loop_count;
 N
-Nextern vu32 Run_Control[14];	
+Nextern vu32 Run_Control[41];	
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
-N#define SET_Voltage 	    	        Run_Control[1]  //µçÔ´Éè¶¨µçÑ¹
-N#define SET_Current	    	    		  Run_Control[2]  //µçÔ´Éè¶¨µçÁ÷
-N#define SET_Voltage_Laod 					  Run_Control[3]  //¸ºÔØÉè¶¨µçÑ¹
-N#define SET_Current_Laod					  Run_Control[4]  //¸ºÔØÉè¶¨µçÁ÷
+N#define SET_Voltage 	    	        Run_Control[1]  //??????
+N#define SET_Current	    	    		  Run_Control[2]  //?????¡¤
+N#define SET_Voltage_Laod 					  Run_Control[3]  //??????
+N#define SET_Current_Laod					  Run_Control[4]  //?????¡¤
 N#define LOCK_KEY								    Run_Control[5]  //
 N#define BEEP_KEY								    Run_Control[6]  //
 N#define STRONG_KEY							    Run_Control[7]  //
 N
 N#define MODE_Woke							   	  Run_Control[8]  //
-N#define POW_Voltage	    	          Run_Control[9]  //µçÔ´²âÁ¿µçÑ¹
-N#define Voltage	    	              Run_Control[10]  //¸ºÔØ²âÁ¿µçÑ¹
-N#define Current	    	    		      Run_Control[11]  //µçÔ´²âÁ¿µçÁ÷
-N#define Laod_Current	    		      Run_Control[12]  //¸ºÔØ²âÁ¿µçÁ÷
-N#define R_VLUE											Run_Control[13]  //ÄÚ×èÖµ
+N#define POW_Voltage	    	            Run_Control[9]  //?????
+N#define Voltage	    	                Run_Control[10]  //?????
+N#define Current	    	    		    Run_Control[11]  //????¡¤
+N#define Laod_Current	    		    Run_Control[12]  //????¡¤
+N#define R_VLUE							Run_Control[13]  //???
+N#define set_max_v						Run_Control[14]  //ÉèÖÃ²âÁ¿µçÑ¹ÉÏÏŞ
+N#define set_min_v						Run_Control[15]  //ÉèÖÃ²âÁ¿µçÑ¹ÏÂÏŞ
+N#define set_max_r						Run_Control[16]  //ÉèÖÃ²âÁ¿ÄÚ×èÉÏÏŞ
+N#define set_min_r						Run_Control[17]  //ÉèÖÃ²âÁ¿ÄÚ×èÏÂÏŞ
+N#define set_max_c						Run_Control[18]  //ÉèÖÃ²âÁ¿µçÁ÷ÉÏÏŞ
+N#define set_min_c						Run_Control[19]  //ÉèÖÃ²âÁ¿µçÁ÷Î÷Ïß
+N#define set_output_v					Run_Control[20]  //ÉèÖÃ²âÁ¿Êä³öµçÑ¹
+N#define set_output_c					Run_Control[21]  //ÉèÖÃ²âÁ¿Êä³öµçÁ÷
+N#define set_init_c					    Run_Control[22]  //ÉèÖÃ²âÁ¿Êä³öµçÑ¹
+N#define set_sbs_c					    Run_Control[23]  //ÉèÖÃ²âÁ¿Êä³öµçÁ÷
+N#define set_add_c					    Run_Control[24]
+N#define set_c_cutoff_v					Run_Control[25]
+N#define set_c_cutoff_c					Run_Control[26]
+N#define set_dc_cutoff_v					Run_Control[27]
+N#define set_dc_cutoff_c					Run_Control[28]
+N#define start_time					    Run_Control[29]
+N#define end_time					    Run_Control[30]
+N#define opv1    					    Run_Control[31]
+N#define opv2    					    Run_Control[32]
+N#define opv3    					    Run_Control[33]
+N#define opc1    					    Run_Control[34]
+N#define opc2    					    Run_Control[35]
+N#define opc3    					    Run_Control[36]
+N#define load_c    					    Run_Control[37]
+N#define pow_v    					    Run_Control[38]
+N#define cdc_dc    					    Run_Control[39]
+N#define pow_c    					    Run_Control[40]
+N
+N
+Nextern vu16 coff[6];
+N#define cov1    					    coff[0]
+N#define cov2    					    coff[1]
+N#define cov3    					    coff[2]
+N#define coc1    					    coff[3]
+N#define coc2    					    coff[4]
+N#define coc3    					    coff[5]										 //???
+N
+N/*
+N************************************************************************
+N*						Ò³ÃæÊ¶±ğ·û
+N************************************************************************
+N*/
+N
+N#define face_graph      0
+N#define face_cdc        1
+N#define face_menu       2
+N#define face_r          3
+N#define face_load       4
+N#define face_set        5
+N#define face_starter    6
+N#define face_sys_info   7
+N/*
+N************************************************************************
+N*						ÉèÖÃÑ¡ÏîÊ¶±ğ·û
+N************************************************************************
+N*/
+N
+N#define set_1           0
+N#define set_2           1
+N#define set_3           2
+N#define set_4           3
+N#define set_5           4
+N#define set_6           5
+N#define set_7           6
+N#define set_8           7
+N#define set_9           8
+N#define set_10          9
+N#define set_11          10
+N#define set_12          11
+N#define set_13          12
+N#define set_14          13
+N#define set_15          14
+N#define set_16          15
+N#define set_17          16
+N#define set_18          17
+N#define set_19          18
+N#define set_20          19
+N#define set_21          20
+N#define set_22          21
+N#define set_23          22
+N#define set_24          23
+N#define set_25          24
+N#define set_26          25
+N#define set_27          26
+N#define set_28          27
+N#define set_29          28
+N#define set_30          29
+N#define set_31          30
+N#define set_32          31
+N#define set_33          32
+N#define set_34          33
+N#define set_35          34
+N#define set_36          35
+N#define set_37          36
+N#define set_38          37
+N#define set_39          38
+N#define set_40          39
+N#define set_41          40
+N#define set_42          41
+N#define set_43          42
+N#define set_44          43
+N#define set_45          44
+N#define set_46          45
+N#define set_47          46
+N#define set_48          47
+N#define set_49          48
+N#define set_50          49
+N#define set_51          50
+N#define set_52          51
+N#define set_53          52
+N#define set_54          53
+N#define set_55          54
+N#define set_56          55
+N#define set_57          56
+N#define set_58          57
+N#define set_59          58
+N#define set_60          59
+N#define set_61          60
+N#define set_62          61
+N#define set_63          62
+N#define set_64          63
+N#define set_65          64
+N#define set_66          65
+N#define set_67          66
+N#define set_68          67
+N#define set_69          68
+N#define set_70          69
+N#define set_71          70
+N/*
+N************************************************************************
+N*						²ÎÊıÉèÖÃÊ¶±ğ·û
+N************************************************************************
+N*/
+N
+N#define set_1_on            0xff
+N#define set_1_off           0
+N#define set_2_on            0xff
+N#define set_2_off           0
+N#define set_3_on            1
+N#define set_3_off           0
+N#define set_4_on            0xff
+N#define set_4_off           0
+N#define cdc_on              1
+N#define cdc_off             0
+N#define oct_on              1
+N#define oct_off             0
+N#define c_on                1
+N#define c_off               0
+N#define mode_r              1
+N#define mode_load           2
+N#define mode_pow            3
+N#define load_on             1
+N#define load_off            0
+N#define pow_on              1
+N#define pow_off             0
+N#define Lion                1
+N#define NiMH                2
+N#define NiCd                3
+N#define SLA                 4
+N#define LiMH                5
+N#define step1               0
+N#define step2               1
+N#define step3               2
+N
 N
 N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
 Nextern vu32 Correct_Parametet[12];
-N#define  REG_CorrectionV   Correct_Parametet[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊı
-N#define  REG_Load_A			   Correct_Parametet[1]//¸ºÔØCCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-N#define  SET_LoadA			   Correct_Parametet[2]//¸ºÔØCCÄ£Ê½¿ØÖÆµçÁ÷²ÎÊı
-N#define  REG_LoadV			   Correct_Parametet[3]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹²ÎÊı
-N#define  SET_LoadV			   Correct_Parametet[4]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹¿ØÖÆ²ÎÊı
+N#define  REG_CorrectionV   Correct_Parametet[0]//???????
+N#define  REG_Load_A			   Correct_Parametet[1]//??CC???¡¤???
+N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????¡¤??
+N#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
+N#define  SET_LoadV			   Correct_Parametet[4]//??CV??????????
 N
-N#define  REG_CorrectionR   Correct_Parametet[5]//ÄÚ×è²âÁ¿²ÎÊı
-N#define  REG_CorrectionR1   Correct_Parametet[11]//ÄÚ×è²âÁ¿²ÎÊı
+N#define  REG_CorrectionR   Correct_Parametet[5]//?????
 N
-N#define  REG_POWERA			   Correct_Parametet[6]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-N#define  SET_POWERA			   Correct_Parametet[7]//µçÔ´CCÄ£Ê½µçÁ÷¿ØÖÆ²âÁ¿²ÎÊı
-N#define  REG_POWERV			   Correct_Parametet[8]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿²ÎÊı
-N#define  SET_POWERV				 Correct_Parametet[9]//µçÔ´CVÄ£Ê½µçÑ¹¿ØÖÆ²ÎÊı
-N#define  CON_POWERA				 Correct_Parametet[10]//µçÔ´CVÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
+N#define  REG_POWERA			   Correct_Parametet[6]//??CC???¡¤???
+N#define  SET_POWERA			   Correct_Parametet[7]//??CC???¡¤?????
+N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
+N#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+N#define  CON_POWERA				 Correct_Parametet[10]//??CV???¡¤???
+N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 N
 N
 N
 Nextern vu8  correct_por[6];
-N#define  Polar             correct_por[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊı
-N#define  Polar1            correct_por[1]//¸ºÔØµçÁ÷²âÁ¿ºÍ¿ØÖÆ
-N#define  Polar2						 correct_por[2]//¸ºÔØCVÄ£Ê½µçÑ¹²âÁ¿ºÍ¿ØÖÆ
-N#define  Polar3						 correct_por[3]//ÄÚ×è²âÁ¿ºÍµçÔ´CVÄ£Ê½µçÁ÷²âÁ¿
-N#define  Polar4						 correct_por[4]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿ºÍ¿ØÖÆ
-N#define  Polar5						 correct_por[5]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿ºÍ¿ØÖÆ
+N#define  Polar             correct_por[0]//???????
+N#define  Polar1            correct_por[1]//???¡¤????
+N#define  Polar2						 correct_por[2]//??CV????????
+N#define  Polar3						 correct_por[3]//??????CV???¡¤?
+N#define  Polar4						 correct_por[4]//??CC???¡¤????
+N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[12];//Ğ£×¼ÏµÊı
-N#define  REG_ReadV_Offset   Correct_Strong[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊı
-N#define  REG_LoadA_Offset   Correct_Strong[1]//¸ºÔØCCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-N#define  SET_LoadA_Offset   Correct_Strong[2]//¸ºÔØCCÄ£Ê½¿ØÖÆµçÁ÷²ÎÊı
-N#define  REG_LoadV_Offset   Correct_Strong[3]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹²ÎÊı
-N#define  SET_LoadV_Offset   Correct_Strong[4]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹¿ØÖÆ²ÎÊı
+Nextern vu32 Correct_Strong[12];//§µ???
+N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???¡¤???
+N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????¡¤??
+N#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
+N#define  SET_LoadV_Offset   Correct_Strong[4]//??CV??????????
 N
-N#define  REG_ReadR_Offset   Correct_Strong[5]//ÄÚ×è²âÁ¿²ÎÊı
-N#define  REG_ReadR1_Offset   Correct_Strong[11]//ÄÚ×è²âÁ¿²ÎÊı
+N#define  REG_ReadR_Offset   Correct_Strong[5]//?????
 N
-N#define  REG_POWERA_Offset  Correct_Strong[6]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-N#define  SET_POWERA_Offset  Correct_Strong[7]//µçÔ´CCÄ£Ê½µçÁ÷¿ØÖÆ²âÁ¿²ÎÊı
-N#define  REG_POWERV_Offset  Correct_Strong[8]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿²ÎÊı
-N#define  SET_POWERV_Offset	Correct_Strong[9]//µçÔ´CVÄ£Ê½µçÑ¹¿ØÖÆ²ÎÊı
-N#define  CON_POWERA_Offset	Correct_Strong[10]//µçÔ´CVÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
+N#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???¡¤???
+N#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???¡¤?????
+N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
+N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???¡¤???
+N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
 N
 N//---------------------------
 Nextern vu16 ADC_NTC_Filt[50];
@@ -34909,20 +35142,6 @@ N#define Receive_BUFFERSIZE   10
 N//=============================================================================
 N#endif
 N/******************* (C) COPYRIGHT 2015 KUNKIN *****END OF FILE*************************/
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
 L 10 "..\drive\modbus.c" 2
 N#include "usart.h" 
 L 1 "..\Include\usart.h" 1
@@ -34977,63 +35196,94 @@ N*********************************************************************/
 N#include "my_register.h"
 L 1 "..\Include\my_register.h" 1
 N/******************** (C) COPYRIGHT 2014 KUNKIN********************
-N * ÎÄ¼şÃû  £ºmy_register
-N * ×÷Õß    £ºÀîÕñ
-N * ÃèÊö    £º¿âº¯Êı°æ
-N * ÄÚÈİ    £ºDefine register¶¨ÒåÏµÍ³Ê¹ÓÃµÄ¼Ä´æÆ÷£¬È«¾Ö±äÁ¿
-N * ×¢Òâ		 £ºÍ·ÎÄ¼şÖĞÖ»ÄÜÓĞÉùÃ÷£¬²»ÄÜÓĞ¶¨Òå
-N * ĞŞ¸ÄÈÕÆÚ£º2014-12-9
+N * ¦Ó??  ¨²my_register
+N * ??    ¨²n?
+N * ??    ¨²????
+N * ??    ¨²Define register??????????¨¬???
+N * ??		 ¨²?¦Ó???????¨¬?????
+N * ???¨·¨²2014-12-9
 N*********************************************************************/
 N
 N#include "STM32F4xx.h"
 N#ifndef __my_register_h__
 S#define __my_register_h__
 S//=============================================================================
-S
+Svoid Write_Limits(void);
+Svoid Wrtite_step(void);
+Svoid OC_ADD(void);
+Svoid Wrtite_S(void);
+Svoid Write_oct(void);
+Svoid Write_alarm(void);
+Svoid Write_btype(void);
+Svoid Write_LOAD(void);
+Svoid Write_info(void);
+Svoid OC_CHECK(void);
+Svoid INPUT_POW(char* num);  
+Svoid INPUT_NUM(char* num); 
+Svoid INPUT_CDC(char* num); 
+Svoid INPUT_C(char* num);  
+Svoid INPUT_LOAD(char* num);  
+Svoid INPUT_INFO(vu8 num);
+Svoid SET_OP_DOWN(void);
+Svoid SET_OP_UP(void);
+Svoid SET_OP_RIGHT(void);
+Svoid SET_OP_LEFT(void);
+Svoid PARA_SET(void);
+Svoid SYS_INFO_RIGHT(void);
+Svoid SYS_INFO_LEFT(void);
+Svoid SYS_INFO_UP(void);
+Svoid SYS_INFO_DOWN(void);
+Svoid INPUT_INFO(vu8 num);
+Svoid CDC_OP_DOWN(void);
+Svoid CDC_OP_UP(void);
+Svoid CDC_OP_LEFT(void);
+Svoid CDC_OP_RIGHT(void);
+Svoid CDC_SET(void);
+Svoid INPUT_CDC(char* num); 
 S//=============================================================================
-S#define NOP   __nop();	  //¿ÕÖ¸Áî
+S#define NOP   __nop();	  //???
 S
 S//============================================================================
 Sextern struct bitDefine flagA,flagB,flagC,flagD,flagE,flagF,flagG;
-S#define   Flag_ADC_Full             (flagA.bit1)//DMA´«ÊäÍê³É±êÖ¾Î» 
-S#define   Flag_BEEP						    	(flagA.bit2)//·äÃùÆ÷´¥·¢±êÖ¾
-S#define   Flag_Key_Scan							(flagA.bit3)//°´¼ü¶¨Ê±É¨Ãè±êÖ¾
-S#define   UART_SEND_flag						(flagA.bit4)//´®¿Ú·¢ËÍÍê³É±êÖ¾
-S#define   UART_Buffer_Rece_flag			(flagA.bit5)//´®¿Ú½ÓÊÕÍê³É±êÖ¾
-S#define   Flag_Swtich_ON      			(flagA.bit6)//Æô¶¯°´¼ü´¦ÓÚON±êÖ¾
-S#define   Flag_0_5S      		      	(flagA.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ÉÁË¸±êÖ¾
+S#define   Flag_ADC_Full             (flagA.bit1)//DMA??????¦Ë 
+S#define   Flag_BEEP						    	(flagA.bit2)//???????
+S#define   Flag_Key_Scan							(flagA.bit3)//§Õ???????
+S#define   UART_SEND_flag						(flagA.bit4)//????????
+S#define   UART_Buffer_Rece_flag			(flagA.bit5)//????????
+S#define   Flag_Swtich_ON      			(flagA.bit6)//??§Õ???ON??
+S#define   Flag_0_5S      		      	(flagA.bit7)//§¥?????????
 S
-S#define   Flag_1S      		         	(flagB.bit0)//ÏÔÊ¾ÉèÖÃµçÁ÷ÉÁË¸±êÖ¾
-S#define   Flag_5S      		        	(flagB.bit1)//ÍË³öÉèÖÃ×´Ì¬±êÖ¾
-S#define   Flag_Long                 (flagB.bit2)//°´¼ü³¤°´±êÖ¾
-S#define   Flag_DAC_OFF              (flagB.bit3)//æ˜¯å¦è½¬æ¢DACæ§åˆ¶å€¼æ ‡å¿—
-S#define   Flag_SetA                 (flagB.bit5)//½øÈëÉèÖÃµçÁ÷±êÖ¾Î»
-S#define   Flag_SetV                 (flagB.bit6)//½øÈëÉèÖÃµçÑ¹±êÖ¾Î» 
-S#define   Flag_DisSet               (flagB.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ºÍµçÁ÷±êÖ¾Î»
+S#define   Flag_1S      		         	(flagB.bit0)//§¥????¡¤????
+S#define   Flag_5S      		        	(flagB.bit1)//????????
+S#define   Flag_Long                 (flagB.bit2)//§Õ??§Õ??
+S#define   Flag_DAC_OFF              (flagB.bit3)//ÊÇ·ñ×ª»»DAC¿ØÖÆÖµ±êÖ¾
+S#define   Flag_SetA                 (flagB.bit5)//?????¡¤??¦Ë
+S#define   Flag_SetV                 (flagB.bit6)//????????¦Ë 
+S#define   Flag_DisSet               (flagB.bit7)//§¥???????¡¤??¦Ë
 S
-S#define   Flag_GE                   (flagC.bit0)//¸öÎ»ÉÁË¸±êÖ¾
-S#define   Flag_SHI                  (flagC.bit1)//Ê®Î»ÉÁË¸±êÖ¾
-S#define   Flag_BAI                  (flagC.bit2)//°ÙÎ»ÉÁË¸±êÖ¾
-S#define   Flag_QIAN                 (flagC.bit3)//Ç§Î»ÉÁË¸±êÖ¾
-S#define   Flag_Beep_OFF             (flagC.bit6)//·äÃùÆ÷¹Ø±Õ±êÖ¾
+S#define   Flag_GE                   (flagC.bit0)//?¦Ë????
+S#define   Flag_SHI                  (flagC.bit1)//?¦Ë????
+S#define   Flag_BAI                  (flagC.bit2)//?¦Ë????
+S#define   Flag_QIAN                 (flagC.bit3)//?¦Ë????
+S#define   Flag_Beep_OFF             (flagC.bit6)//???????
 S
-S#define   flag_Tim_USART            (flagD.bit0)//´®¿Ú¼ÆËãÇåÁã±êÖ¾
-S#define   flag_Test                 (flagD.bit1)//×Ô¶¯²âÊÔÆğÍ£±êÖ¾
-S#define   flag_Test_PASS            (flagD.bit2)//×Ô¶¯²âÊÔPASS±êÖ¾
-S#define   flag_Test_FAIL            (flagD.bit3)//×Ô¶¯²âÊÔFAIL±êÖ¾
-S#define   flag_Test_Time            (flagD.bit4)//×Ô¶¯²âÊÔµÈ´ıÊ±¼ä±êÖ¾
-S#define   flag_Test_Start           (flagD.bit5)//×Ô¶¯²âÊÔ±È½Ï¿ªÊ¼±êÖ¾
-S#define   flag_Test_Min             (flagD.bit6)//×Ô¶¯²âÊÔÏÂÏŞ±êÖ¾
-S#define   flag_Load_CC              (flagD.bit7)//¸ºÔØCC/CVÄ£Ê½±êÖ¾Î»
+S#define   flag_Tim_USART            (flagD.bit0)//?????¡ê??
+S#define   flag_Test                 (flagD.bit1)//????????
+S#define   flag_Test_PASS            (flagD.bit2)//????PASS??
+S#define   flag_Test_FAIL            (flagD.bit3)//????FAIL??
+S#define   flag_Test_Time            (flagD.bit4)//??????????
+S#define   flag_Test_Start           (flagD.bit5)//??????????
+S#define   flag_Test_Min             (flagD.bit6)//?????§°??
+S#define   flag_Load_CC              (flagD.bit7)//??CC/CV????¦Ë
 S
-S#define   flag_Test_Door             (flagE.bit0)//×Ô¶¯²âÊÔÃÅ¼÷±êÖ¾
-S#define   flag_Test_SetTime          (flagE.bit1)//×Ô¶¯²âÊÔÊ±¼ä±êÖ¾ 
-S#define   flag_OVP                   (flagE.bit2)//OVP±êÖ¾
-S#define   flag_OCP                   (flagE.bit3)//OCP±êÖ¾
-S#define   flag_Doub                  (flagE.bit4)//°´¼üË«»÷
-S#define   flag_t_Doub                (flagE.bit5)//°´¼üË«»÷¼ÆÊ±±êÖ¾
-S#define   flag_Time_SW               (flagE.bit6)//¶¨Ê±¹¦ÄÜ¿ªÆô±êÖ¾
-S#define   flag_CC_MODE               (flagE.bit7)//¹¤×÷Ä£Ê½±êÖ¾
+S#define   flag_Test_Door             (flagE.bit0)//????????
+S#define   flag_Test_SetTime          (flagE.bit1)//???????? 
+S#define   flag_OVP                   (flagE.bit2)//OVP??
+S#define   flag_OCP                   (flagE.bit3)//OCP??
+S#define   flag_Doub                  (flagE.bit4)//§Õ???
+S#define   flag_t_Doub                (flagE.bit5)//§Õ???????
+S#define   flag_Time_SW               (flagE.bit6)//????????
+S#define   flag_CC_MODE               (flagE.bit7)//??????
 S
 S#define   flag_Adjust                (flagF.bit0)//
 S#define   flag_ADJ_ON                (flagF.bit1)//
@@ -35056,7 +35306,7 @@ S//=============================================================================
 Sextern vu32 GE_V;
 Sextern vu32 SHI_V;
 Sextern vu32 BAI_V;
-Sextern vu32 QIAN_V;  //ÊıÂë¹ÜÉ¨Ãè¶ÎÂë
+Sextern vu32 QIAN_V;  //???????
 Sextern vu32 GE_A;
 Sextern vu32 SHI_A;
 Sextern vu32 BAI_A;
@@ -35067,7 +35317,7 @@ Sextern vu8 DAC_Flag;
 Sextern vu8 Beep_Flag;
 Sextern vu8 t_beep;
 Sextern vu8 t_KeyScan;
-Sextern vu8 t_LEDScan;  //¶¨Ê±¼ÆÊıÆ÷
+Sextern vu8 t_LEDScan;  //?????
 Sextern vu8 t_KEYON;
 Sextern vu16 t_0_5S;
 Sextern vu16 t_1S;
@@ -35080,8 +35330,8 @@ Sextern vu16 t_ON_V;
 Sextern vu16 t_OFF_A;
 Sextern vu16 t_ON_A;
 Sextern vu8 t_USART;
-Sextern vu16 ADJ_Write;//Ğ£×¼Ê±ĞèĞ´ÈëµÄÊµ¼ÊÖµ
-Sextern vu8 OFFSET_Zore;//ÁãµãÖµ
+Sextern vu16 ADJ_Write;//§µ???§Õ?????
+Sextern vu8 OFFSET_Zore;//¡ê??
 Sextern vu8 ADDR;
 Sextern vu8 t_lock;
 Sextern vu8 t_onoff;
@@ -35092,12 +35342,12 @@ Sextern vu16 Test_Time1;
 Sextern vu16 Time_sw;
 Sextern vu16 Test_Daley;
 Sextern vu16 Test_C_Door;
-Sextern vu16 TEMP_OFFSET;//ÎÂ¶È²¹³¥Öµ
+Sextern vu16 TEMP_OFFSET;//?????
 S//--------------------------
-Sextern vu8 UART_Buffer_Size;//´®¿Ú½ÓÊÕÊı¾İ³¤¶È
+Sextern vu8 UART_Buffer_Size;//????????
 Sextern vu8 Transmit_BUFFERsize;
 S//---------------------------
-Sextern vu16 NTC_value;   //ADÖµ
+Sextern vu16 NTC_value;   //AD?
 Sextern vu16 Imon_value;
 Sextern vu32 Imon1_value;
 Sextern vu16 Vmon_value;
@@ -35109,69 +35359,271 @@ Sextern  float DISS_POW_Voltage;
 Sextern float DISS_Current;
 Sextern float DISS_POW_Current;
 Sextern float DISS_R;
+Sextern vu16 steptime;
+Sextern vu8 r_stable;
+Sextern char set_limit[5];
+Sextern vu8 bit;
+Sextern vu8 bit1;
+Sextern vu8 dot_flag;
+Sextern vu8 page_sw;
+Sextern vu8 para_set1;
+Sextern vu8 para_set2;
+Sextern vu8 para_set3;
+Sextern vu8 para_set4;
+Sextern vu8 oct_sw;
+Sextern vu8 set_sw;
+Sextern vu8 charge_step;
+Sextern vu8 cutoff_flag;
+Sextern vu8 lang;
+Sextern vu8 r_raly;
+Sextern vu16 steptime;
+Sextern vu8 alert_flag;
+Sextern vu8 t_onoff;
+Sextern vu8 ocstop;
+Sextern float temp;
+Sextern vu8 mode_sw;
+Sextern vu16 stepcount;
+Sextern vu16 battery_c;
+Sextern float bc_raw;
+Sextern vu8 track;
+Sextern vu8 clear_flag1;
+Sextern vu8 clear_flag2;
+Sextern vu8 clear_flag3;
+Sextern vu8 pass;
+Sextern vu8 b_type;
+Sextern vu8 buffer;
+Sextern float clear_v;
+Sextern float clear_pv;
+Sextern float clear_lv;
+Sextern float temp;
+Sextern vu8 set_loop_count;
 S
-Sextern vu32 Run_Control[14];	
+Sextern vu32 Run_Control[41];	
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
-S#define SET_Voltage 	    	        Run_Control[1]  //µçÔ´Éè¶¨µçÑ¹
-S#define SET_Current	    	    		  Run_Control[2]  //µçÔ´Éè¶¨µçÁ÷
-S#define SET_Voltage_Laod 					  Run_Control[3]  //¸ºÔØÉè¶¨µçÑ¹
-S#define SET_Current_Laod					  Run_Control[4]  //¸ºÔØÉè¶¨µçÁ÷
+S#define SET_Voltage 	    	        Run_Control[1]  //??????
+S#define SET_Current	    	    		  Run_Control[2]  //?????¡¤
+S#define SET_Voltage_Laod 					  Run_Control[3]  //??????
+S#define SET_Current_Laod					  Run_Control[4]  //?????¡¤
 S#define LOCK_KEY								    Run_Control[5]  //
 S#define BEEP_KEY								    Run_Control[6]  //
 S#define STRONG_KEY							    Run_Control[7]  //
 S
 S#define MODE_Woke							   	  Run_Control[8]  //
-S#define POW_Voltage	    	          Run_Control[9]  //µçÔ´²âÁ¿µçÑ¹
-S#define Voltage	    	              Run_Control[10]  //¸ºÔØ²âÁ¿µçÑ¹
-S#define Current	    	    		      Run_Control[11]  //µçÔ´²âÁ¿µçÁ÷
-S#define Laod_Current	    		      Run_Control[12]  //¸ºÔØ²âÁ¿µçÁ÷
-S#define R_VLUE											Run_Control[13]  //ÄÚ×èÖµ
+S#define POW_Voltage	    	            Run_Control[9]  //?????
+S#define Voltage	    	                Run_Control[10]  //?????
+S#define Current	    	    		    Run_Control[11]  //????¡¤
+S#define Laod_Current	    		    Run_Control[12]  //????¡¤
+S#define R_VLUE							Run_Control[13]  //???
+S#define set_max_v						Run_Control[14]  //ÉèÖÃ²âÁ¿µçÑ¹ÉÏÏŞ
+S#define set_min_v						Run_Control[15]  //ÉèÖÃ²âÁ¿µçÑ¹ÏÂÏŞ
+S#define set_max_r						Run_Control[16]  //ÉèÖÃ²âÁ¿ÄÚ×èÉÏÏŞ
+S#define set_min_r						Run_Control[17]  //ÉèÖÃ²âÁ¿ÄÚ×èÏÂÏŞ
+S#define set_max_c						Run_Control[18]  //ÉèÖÃ²âÁ¿µçÁ÷ÉÏÏŞ
+S#define set_min_c						Run_Control[19]  //ÉèÖÃ²âÁ¿µçÁ÷Î÷Ïß
+S#define set_output_v					Run_Control[20]  //ÉèÖÃ²âÁ¿Êä³öµçÑ¹
+S#define set_output_c					Run_Control[21]  //ÉèÖÃ²âÁ¿Êä³öµçÁ÷
+S#define set_init_c					    Run_Control[22]  //ÉèÖÃ²âÁ¿Êä³öµçÑ¹
+S#define set_sbs_c					    Run_Control[23]  //ÉèÖÃ²âÁ¿Êä³öµçÁ÷
+S#define set_add_c					    Run_Control[24]
+S#define set_c_cutoff_v					Run_Control[25]
+S#define set_c_cutoff_c					Run_Control[26]
+S#define set_dc_cutoff_v					Run_Control[27]
+S#define set_dc_cutoff_c					Run_Control[28]
+S#define start_time					    Run_Control[29]
+S#define end_time					    Run_Control[30]
+S#define opv1    					    Run_Control[31]
+S#define opv2    					    Run_Control[32]
+S#define opv3    					    Run_Control[33]
+S#define opc1    					    Run_Control[34]
+S#define opc2    					    Run_Control[35]
+S#define opc3    					    Run_Control[36]
+S#define load_c    					    Run_Control[37]
+S#define pow_v    					    Run_Control[38]
+S#define cdc_dc    					    Run_Control[39]
+S#define pow_c    					    Run_Control[40]
+S
+S
+Sextern vu16 coff[6];
+S#define cov1    					    coff[0]
+S#define cov2    					    coff[1]
+S#define cov3    					    coff[2]
+S#define coc1    					    coff[3]
+S#define coc2    					    coff[4]
+S#define coc3    					    coff[5]										 //???
+S
+S/*
+S************************************************************************
+S*						Ò³ÃæÊ¶±ğ·û
+S************************************************************************
+S*/
+S
+S#define face_graph      0
+S#define face_cdc        1
+S#define face_menu       2
+S#define face_r          3
+S#define face_load       4
+S#define face_set        5
+S#define face_starter    6
+S#define face_sys_info   7
+S/*
+S************************************************************************
+S*						ÉèÖÃÑ¡ÏîÊ¶±ğ·û
+S************************************************************************
+S*/
+S
+S#define set_1           0
+S#define set_2           1
+S#define set_3           2
+S#define set_4           3
+S#define set_5           4
+S#define set_6           5
+S#define set_7           6
+S#define set_8           7
+S#define set_9           8
+S#define set_10          9
+S#define set_11          10
+S#define set_12          11
+S#define set_13          12
+S#define set_14          13
+S#define set_15          14
+S#define set_16          15
+S#define set_17          16
+S#define set_18          17
+S#define set_19          18
+S#define set_20          19
+S#define set_21          20
+S#define set_22          21
+S#define set_23          22
+S#define set_24          23
+S#define set_25          24
+S#define set_26          25
+S#define set_27          26
+S#define set_28          27
+S#define set_29          28
+S#define set_30          29
+S#define set_31          30
+S#define set_32          31
+S#define set_33          32
+S#define set_34          33
+S#define set_35          34
+S#define set_36          35
+S#define set_37          36
+S#define set_38          37
+S#define set_39          38
+S#define set_40          39
+S#define set_41          40
+S#define set_42          41
+S#define set_43          42
+S#define set_44          43
+S#define set_45          44
+S#define set_46          45
+S#define set_47          46
+S#define set_48          47
+S#define set_49          48
+S#define set_50          49
+S#define set_51          50
+S#define set_52          51
+S#define set_53          52
+S#define set_54          53
+S#define set_55          54
+S#define set_56          55
+S#define set_57          56
+S#define set_58          57
+S#define set_59          58
+S#define set_60          59
+S#define set_61          60
+S#define set_62          61
+S#define set_63          62
+S#define set_64          63
+S#define set_65          64
+S#define set_66          65
+S#define set_67          66
+S#define set_68          67
+S#define set_69          68
+S#define set_70          69
+S#define set_71          70
+S/*
+S************************************************************************
+S*						²ÎÊıÉèÖÃÊ¶±ğ·û
+S************************************************************************
+S*/
+S
+S#define set_1_on            0xff
+S#define set_1_off           0
+S#define set_2_on            0xff
+S#define set_2_off           0
+S#define set_3_on            1
+S#define set_3_off           0
+S#define set_4_on            0xff
+S#define set_4_off           0
+S#define cdc_on              1
+S#define cdc_off             0
+S#define oct_on              1
+S#define oct_off             0
+S#define c_on                1
+S#define c_off               0
+S#define mode_r              1
+S#define mode_load           2
+S#define mode_pow            3
+S#define load_on             1
+S#define load_off            0
+S#define pow_on              1
+S#define pow_off             0
+S#define Lion                1
+S#define NiMH                2
+S#define NiCd                3
+S#define SLA                 4
+S#define LiMH                5
+S#define step1               0
+S#define step2               1
+S#define step3               2
+S
 S
 S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
 Sextern vu32 Correct_Parametet[12];
-S#define  REG_CorrectionV   Correct_Parametet[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊı
-S#define  REG_Load_A			   Correct_Parametet[1]//¸ºÔØCCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-S#define  SET_LoadA			   Correct_Parametet[2]//¸ºÔØCCÄ£Ê½¿ØÖÆµçÁ÷²ÎÊı
-S#define  REG_LoadV			   Correct_Parametet[3]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹²ÎÊı
-S#define  SET_LoadV			   Correct_Parametet[4]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹¿ØÖÆ²ÎÊı
+S#define  REG_CorrectionV   Correct_Parametet[0]//???????
+S#define  REG_Load_A			   Correct_Parametet[1]//??CC???¡¤???
+S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????¡¤??
+S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
+S#define  SET_LoadV			   Correct_Parametet[4]//??CV??????????
 S
-S#define  REG_CorrectionR   Correct_Parametet[5]//ÄÚ×è²âÁ¿²ÎÊı
-S#define  REG_CorrectionR1   Correct_Parametet[11]//ÄÚ×è²âÁ¿²ÎÊı
+S#define  REG_CorrectionR   Correct_Parametet[5]//?????
 S
-S#define  REG_POWERA			   Correct_Parametet[6]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-S#define  SET_POWERA			   Correct_Parametet[7]//µçÔ´CCÄ£Ê½µçÁ÷¿ØÖÆ²âÁ¿²ÎÊı
-S#define  REG_POWERV			   Correct_Parametet[8]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿²ÎÊı
-S#define  SET_POWERV				 Correct_Parametet[9]//µçÔ´CVÄ£Ê½µçÑ¹¿ØÖÆ²ÎÊı
-S#define  CON_POWERA				 Correct_Parametet[10]//µçÔ´CVÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
+S#define  REG_POWERA			   Correct_Parametet[6]//??CC???¡¤???
+S#define  SET_POWERA			   Correct_Parametet[7]//??CC???¡¤?????
+S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
+S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+S#define  CON_POWERA				 Correct_Parametet[10]//??CV???¡¤???
+S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S
 S
 S
 Sextern vu8  correct_por[6];
-S#define  Polar             correct_por[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊı
-S#define  Polar1            correct_por[1]//¸ºÔØµçÁ÷²âÁ¿ºÍ¿ØÖÆ
-S#define  Polar2						 correct_por[2]//¸ºÔØCVÄ£Ê½µçÑ¹²âÁ¿ºÍ¿ØÖÆ
-S#define  Polar3						 correct_por[3]//ÄÚ×è²âÁ¿ºÍµçÔ´CVÄ£Ê½µçÁ÷²âÁ¿
-S#define  Polar4						 correct_por[4]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿ºÍ¿ØÖÆ
-S#define  Polar5						 correct_por[5]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿ºÍ¿ØÖÆ
+S#define  Polar             correct_por[0]//???????
+S#define  Polar1            correct_por[1]//???¡¤????
+S#define  Polar2						 correct_por[2]//??CV????????
+S#define  Polar3						 correct_por[3]//??????CV???¡¤?
+S#define  Polar4						 correct_por[4]//??CC???¡¤????
+S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[12];//Ğ£×¼ÏµÊı
-S#define  REG_ReadV_Offset   Correct_Strong[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊı
-S#define  REG_LoadA_Offset   Correct_Strong[1]//¸ºÔØCCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-S#define  SET_LoadA_Offset   Correct_Strong[2]//¸ºÔØCCÄ£Ê½¿ØÖÆµçÁ÷²ÎÊı
-S#define  REG_LoadV_Offset   Correct_Strong[3]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹²ÎÊı
-S#define  SET_LoadV_Offset   Correct_Strong[4]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹¿ØÖÆ²ÎÊı
+Sextern vu32 Correct_Strong[12];//§µ???
+S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???¡¤???
+S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????¡¤??
+S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
+S#define  SET_LoadV_Offset   Correct_Strong[4]//??CV??????????
 S
-S#define  REG_ReadR_Offset   Correct_Strong[5]//ÄÚ×è²âÁ¿²ÎÊı
-S#define  REG_ReadR1_Offset   Correct_Strong[11]//ÄÚ×è²âÁ¿²ÎÊı
+S#define  REG_ReadR_Offset   Correct_Strong[5]//?????
 S
-S#define  REG_POWERA_Offset  Correct_Strong[6]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-S#define  SET_POWERA_Offset  Correct_Strong[7]//µçÔ´CCÄ£Ê½µçÁ÷¿ØÖÆ²âÁ¿²ÎÊı
-S#define  REG_POWERV_Offset  Correct_Strong[8]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿²ÎÊı
-S#define  SET_POWERV_Offset	Correct_Strong[9]//µçÔ´CVÄ£Ê½µçÑ¹¿ØÖÆ²ÎÊı
-S#define  CON_POWERA_Offset	Correct_Strong[10]//µçÔ´CVÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
+S#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???¡¤???
+S#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???¡¤?????
+S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
+S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???¡¤???
+S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
 S
 S//---------------------------
 Sextern vu16 ADC_NTC_Filt[50];
@@ -35184,20 +35636,6 @@ S#define Receive_BUFFERSIZE   10
 S//=============================================================================
 N#endif
 N/******************* (C) COPYRIGHT 2015 KUNKIN *****END OF FILE*************************/
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
 L 9 "..\Include\flash.h" 2
 N#ifndef _flash_h_
 N#define _flash_h_
@@ -35257,27 +35695,27 @@ Nvu32 Correct_Parametet[12];//Ğ£×¼²ÎÊı
 Nvu32 Correct_Strong[12];//Ğ£×¼ÏµÊı
 Nvu8  correct_por[6];
 N/*************************±äÁ¿¶¨Òå***********************************/
-Nvu32 Run_Control[14];
+Nvu32 Run_Control[41];
 Nvu8 ADDR;
 N//============================º¯ÊıÉùÃ÷===============================//
 Nvu16 Hardware_CRC(vu8 *p_buffer,vu8 count);
 N//===========================MODBUSĞ­Òé=============================//
 Nvoid UART_Action(void)
-N{//RUT¸ñÊ½£º
-N	//ADDR  ÃüÁîÂë  ¶Á¼Ä´æÆ÷µÄÆğÊ¼µØÖ·¸ß   ¶Á¼Ä´æÆ÷µÄÆğÊ¼µØÖ·µÍ  ¶ÁÊı¾İ×Ö¸öÊı¸ß×Ö½Ú   ¶ÁÊı¾İ¸öÊıµÍ×Ö½Ú  CRC¸ß CRCµÍ
-N	//·µ»Ø¸ñÊ½£ºADDR ÃüÁîÂë ·µ»ØÊı¾İ×Ö½ÚÊı  Êı¾İ¸ß  Êı¾İµÍ ..... CRC¸ß  CRCµÍ
+N{//RUT??¨²
+N	//ADDR  ???  ??????????   ??????????  ?????????   ????????  CRC? CRC?
+N	//????¨²ADDR ??? ???????  ???  ??? ..... CRC?  CRC?
 N	if (UART_Buffer_Rece[0] == ADDR)
 N	{
-N		if (UART_Buffer_Rece[1] == (0x03))	//ÃüÁî3 ¶ÁÊı¾İ   
+N		if (UART_Buffer_Rece[1] == (0x03))	//??3 ???   
 N		{																		 
 N			vu8 i;
 N			vu16 crc_result;
 N			crc_result = (UART_Buffer_Rece[6] << 8) + UART_Buffer_Rece[7];
 N			if ((crc_result == Hardware_CRC(UART_Buffer_Rece,6)) ||(crc_result == 0) )
 N			{
-N				if (UART_Buffer_Rece[3] < 0x07)    								//Èç¹û¼Ä´æÆ÷ÔÚ¿É¶Á·¶Î§ÄÚ
+N				if (UART_Buffer_Rece[3] < 0x07)    								//?????????¦¶?
 N				{
-N					if ((UART_Buffer_Rece[3] + UART_Buffer_Rece[5]) < 0x0F)		//Èç¹û×îºóÒ»¸ö¶ÁÈ¡µÄ¼Ä´æÆ÷µØÖ·ÔÚ¿É¶Á·¶Î§ÄÚ
+N					if ((UART_Buffer_Rece[3] + UART_Buffer_Rece[5]) < 0x0F)		//??????????????????¦¶?
 N					{							
 N						UART_Buffer_Send[0] = ADDR;
 N						UART_Buffer_Send[1] = 0x03;
@@ -35298,51 +35736,54 @@ N				}
 N			}	
 N		}
 N	} 
-N//===============================Ğ´¼Ä´æÆ÷=================================
+N//===============================§Õ???=================================
+X
 N	if ((UART_Buffer_Rece[0] == 0) || (UART_Buffer_Rece[0] == ADDR) || (UART_Buffer_Rece[0] == ((ADDR-1)/4+100)))	 
 N	{
 N		vu8 var8;
 N		vu8 a=0;
 N		vu16 var16;
 N		vu16 crc_result;
-N//=========================ÒÔÏÂÃüÁî6 Ğ´µ¥¸ö¼Ä´æÆ÷===========================
-N		if (UART_Buffer_Rece[1] == 6)                                 //ÅĞ¶ÏµÚ¶ş¸ö×Ö½ÚÊÇ·ñÎªÃüÁî6
+N//=========================????6 §Õ?????===========================
+X
+N		if (UART_Buffer_Rece[1] == 6)                                 //???????¡¦????6
 N		{
-N			if (UART_Buffer_Rece[3] < 0x05)							  //ÅĞ¶ÏĞèÒªĞ´µÄµØÖ·ÊÇ·ñÔÚ¿ÉĞ´·¶Î§ÄÚ
+N			if (UART_Buffer_Rece[3] < 0x05)							  //????§Õ???¡¦???§Õ?¦¶?
 N			{
 N				crc_result = (UART_Buffer_Rece[6] << 8) + UART_Buffer_Rece[7];
-N				if ((crc_result == Hardware_CRC(UART_Buffer_Rece,6)) ||(crc_result == 0) )		  //¼ì²éCRC
+N				if ((crc_result == Hardware_CRC(UART_Buffer_Rece,6)) ||(crc_result == 0) )		  //??CRC
 N				{
-N					var16 = (UART_Buffer_Rece[4] << 8) + UART_Buffer_Rece[5];	//µÚ5 6¸ö×Ö½ÚÎªÒªĞ´ÈëµÄÊı¾İ
-N					var8 = UART_Buffer_Rece[3];	        						//µÚ3 4¸ö×Ö½ÚÎªÒªĞ´ÈëµÄµØÖ·
-N					Run_Control[var8] = var16;			    //½«Êı¾İĞ´ÈëÖ¸¶¨µÄµØÖ·
+N					var16 = (UART_Buffer_Rece[4] << 8) + UART_Buffer_Rece[5];	//?5 6?????§Õ????
+N					var8 = UART_Buffer_Rece[3];	        						//?3 4?????§Õ????
+N					Run_Control[var8] = var16;			    //???§Õ??????
 N
-N					if (UART_Buffer_Rece[0] == ADDR)							//¹ã²¥Ä£Ê½ÏÂ²»·µ»ØÊı¾İ
+N					if (UART_Buffer_Rece[0] == ADDR)							//??????????
 N					{
 N						for (a=0;a<8;a++)
 N						{UART_Buffer_Send[a] = UART_Buffer_Rece[a];}
-N						Transmit_BUFFERsize = 8;						//Ô­ÑùÊı¾İ·µ»Ø£¬²»¼ÆËãCRC
+N						Transmit_BUFFERsize = 8;						//??????¨¬???CRC
 N						UART_SEND_flag=1;
 X						(flagA . bit4)=1;
 N					}
 N				}
 N			}
 N		}
-N//=======================================ÒÔÏÂÊÇÃüÁî16£¬Á¬Ğ´¼Ä´æÆ÷===========================================
-N//¹¦ÄÜÂë16¸ñÊ½:
-N//     µØÖ· ÃüÁî Ğ´ÈëÆğÊ¼µØÖ·¸ß  Ğ´ÈëÆğÊ¼µØÖ·µÍ Ğ´Èë×ÖÊı¸ß  Ğ´Èë×ÖÊıµÍ Ğ´Èë×Ö½ÚÊı  Êı¾İ¸ß Êı¾İµÍ ......CRC¸ß CRCµÍ
-N//·µ»ØÊı¾İ¸ñÊ½:
-N//     µØÖ· ÃüÁî Ğ´ÈëÆğÊ¼µØÖ·¸ß  Ğ´ÈëÆğÊ¼µØÖ·µÍ  Ğ´Èë×Ö½ÚÊı¸ß Ğ´Èë×Ö½ÚÊıµÍ  CRC¸ß  CRCµÍ 
+N//=======================================??¡¦??16¨¬l§Õ???===========================================
+X
+N//???16??:
+N//     ?? ?? §Õ??????  §Õ?????? §Õ????  §Õ???? §Õ????  ??? ??? ......CRC? CRC?
+N//??????:
+N//     ?? ?? §Õ??????  §Õ??????  §Õ????? §Õ?????  CRC?  CRC? 
 N		if (UART_Buffer_Rece[1] == 16)										  
 N		{	
-N			if ((UART_Buffer_Rece[6] == 6) && (UART_Buffer_Rece[3] == 0x00))	//¹æ¶¨Á¬Ğ´¼Ä´æÆ÷µÄ¸öÊı
+N			if ((UART_Buffer_Rece[6] == 6) && (UART_Buffer_Rece[3] == 0x00))	//??l§Õ??????
 N			{
 N				crc_result = (UART_Buffer_Rece[13] << 8) + UART_Buffer_Rece[14];
-N				if ((crc_result == Hardware_CRC(UART_Buffer_Rece,13)) ||(crc_result == 0) )	   //¼ì²éCRC
+N				if ((crc_result == Hardware_CRC(UART_Buffer_Rece,13)) ||(crc_result == 0) )	   //??CRC
 N				{												
 N					for (var8=0;var8<3;var8++) Run_Control[var8] = (UART_Buffer_Rece[var8*2+7] << 8) + UART_Buffer_Rece[var8*2+8];
 N
-N					if (UART_Buffer_Rece[0] == ADDR)					  //¹ã²¥Ä£Ê½²»·µ»ØÊı¾İ
+N					if (UART_Buffer_Rece[0] == ADDR)					  //?????????
 N					{
 N						UART_Buffer_Send[0] = ADDR;
 N						UART_Buffer_Send[1] = 16;
@@ -35350,10 +35791,10 @@ N						UART_Buffer_Send[2] = UART_Buffer_Rece[2];
 N						UART_Buffer_Send[3] = UART_Buffer_Rece[3];
 N						UART_Buffer_Send[4] = UART_Buffer_Rece[4];
 N						UART_Buffer_Send[5] = UART_Buffer_Rece[5];
-N						crc_result = Hardware_CRC(UART_Buffer_Send,6);	 //¼ÆËãCRCÂë
+N						crc_result = Hardware_CRC(UART_Buffer_Send,6);	 //??CRC?
 N						UART_Buffer_Send[6] = crc_result>>8;
 N						UART_Buffer_Send[7] = crc_result;				 
-N						Transmit_BUFFERsize = 8;					     //ÉèÖÃ·¢ËÍ×Ö½ÚÊı³¤¶È
+N						Transmit_BUFFERsize = 8;					     //?????????
 N						UART_SEND_flag=1;
 X						(flagA . bit4)=1;
 N					}
@@ -35361,602 +35802,563 @@ N				}
 N			}			 
 N		}
 N	}
-N/*************************************ÒÔÏÂÎªĞ£×¼²¿·Ö**************************************************************************/
-N	if (((UART_Buffer_Rece[0] == 0x01)&&(UART_Buffer_Rece[2] == 0xA5))||(flag_ADJ_ON==1))			   //µçÑ¹Ğ£×¼
+N/*************************************???§µ???**************************************************************************/
+N	if (((UART_Buffer_Rece[0] == 0x01)&&(UART_Buffer_Rece[2] == 0xA5))||(flag_ADJ_ON==1))			   //??§µ?
 X	if (((UART_Buffer_Rece[0] == 0x01)&&(UART_Buffer_Rece[2] == 0xA5))||((flagF . bit1)==1))			   
 N	{ 
-N		vu16 crc_result;
-N		crc_result = (UART_Buffer_Rece[6] << 8) + UART_Buffer_Rece[7];
-N		if (crc_result == Hardware_CRC(UART_Buffer_Rece,6) )
+N		if(UART_Buffer_Rece[1] == 0x01)
 N		{
-N			if(UART_Buffer_Rece[1] == 0x01)
-N			{
-N				flag_ADJ_VL=0;
-X				(flagF . bit2)=0;
-N				Modify_A_READ = Vmon1_value;//²âÁ¿µçÑ¹Öµ
-N				Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//¶ÁÈ¡µÍ¶Î
-N			}
-N			if (UART_Buffer_Rece[1] == 0x02)			   //µçÑ¹²âÁ¿Ğ£×¼Íê³É
-N			{
-N				vu32 var16;
-N				vu32 var32a;
-N				vu32 var32b;
-N				
-N				vu32 var16a;
-N				vu32 var32c;
-N				vu32 var32d;
-N				Modify_B_READ =Vmon1_value;//²âÁ¿µçÑ¹Öµ
-N				Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//¶ÁÈ¡¸ß¶Î
-N				var32a = Modify_B_ACT;
-N				var32a = var32a - Modify_A_ACT;
-N				var32a = var32a << 12;
-N				var16 = Modify_B_READ - Modify_A_READ;
-N				var32a = var32a / var16;
-N				REG_CorrectionV = var32a;
-X				Correct_Parametet[0] = var32a;
-N				var32a=0;
-N				var32a = Modify_B_ACT;
-N				var32a = var32a << 12;
-N				var32b = Modify_B_READ;
-N				var32b = var32b * REG_CorrectionV;
-X				var32b = var32b * Correct_Parametet[0];
-N				if (var32a < var32b)
-N				{
-N					var32b = var32b - var32a;
-N					REG_ReadV_Offset = var32b;
-X					Correct_Strong[0] = var32b;
-N					Polar |= 0x01;
-X					correct_por[0] |= 0x01;
-N				}
-N				else 
-N				{
-N					var32a = var32a - var32b;
-N					REG_ReadV_Offset = var32a;
-X					Correct_Strong[0] = var32a;
-N					Polar &= ~0x01;
-X					correct_por[0] &= ~0x01;
-N				}			
-N				Flash_Write_all();	//²ÎÊıĞ´½øFLASH
-N				Flag_DAC_OFF=0;
-X				(flagB . bit3)=0;
-N			}
-N			
-N			
-N	/************************************¸ºÔØµçÁ÷²âÁ¿ºÍ¿ØÖÆĞ£×¼*****************************************************************/
-N			if (UART_Buffer_Rece[1] == 0x03)			   //CCÄ£Ê½Ğ£×¼
-N			{
-N				Modify_A_READ = Imon1_value;//
-N				Modify_C_READ = Contr_Laod;//
-N				Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
-N				Flag_DAC_OFF=1;//
-X				(flagB . bit3)=1;
-N			}
-N
-N			if (UART_Buffer_Rece[1] == 0x04)			   //
-N			{
-N				vu32 var16;
-N				vu32 var32a;
-N				vu32 var32b;
-N				
-N				vu32 var16a;
-N				vu32 var32c;
-N				vu32 var32d;
-N				
-N				Modify_B_READ = Imon1_value;
-N				Modify_D_READ = Contr_Laod;
-N				Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
-N				
-N				var32a = Modify_B_ACT;
-N				var32a = var32a - Modify_A_ACT;
-N				var32a = var32a << 12;
-N				var16 = Modify_B_READ - Modify_A_READ;
-N				var32a = var32a / var16;
-N				REG_Load_A = var32a;
-X				Correct_Parametet[1] = var32a;
-N				var32a = Modify_B_ACT;
-N				var32a = var32a << 12;
-N				var32b = Modify_B_READ;
-N				var32b = var32b * REG_Load_A;
-X				var32b = var32b * Correct_Parametet[1];
-N				if (var32a < var32b)
-N				{
-N					var32b = var32b - var32a;
-N					REG_LoadA_Offset = var32b;
-X					Correct_Strong[1] = var32b;
-N					Polar1 |= 0x01;
-X					correct_por[1] |= 0x01;
-N				}
-N				else 
-N				{
-N					var32a = var32a - var32b;
-N					REG_LoadA_Offset = var32a;
-X					Correct_Strong[1] = var32a;
-N					Polar1 &= ~0x01;					
-X					correct_por[1] &= ~0x01;					
-N				}
-N	//---------------------------------------------------------------------------------//
-N				var32c = Modify_B_ACT; 
-N				var32c = var32c - Modify_A_ACT;
-N				var32c = var32c << 12;
-N				var16a=Modify_D_READ-Modify_C_READ;
-N				var16a=var16a*2;
-N				var32c=var32c/var16a;
-N				SET_LoadA = var32c;
-X				Correct_Parametet[2] = var32c;
-N				var32c = Modify_B_ACT;
-N				var32c = var32c << 12;
-N				var32d = SET_LoadA;
-X				var32d = Correct_Parametet[2];
-N				var32d = var32d * (Modify_D_READ*2);
-N				if (var32c < var32d)
-N				{
-N					var32d = var32d - var32c;
-N					SET_LoadA_Offset = var32d;
-X					Correct_Strong[2] = var32d;
-N					Polar1 |= 0x04;
-X					correct_por[1] |= 0x04;
-N				}
-N				else 
-N				{
-N					var32c = var32c - var32d;
-N					SET_LoadA_Offset = var32c;
-X					Correct_Strong[2] = var32c;
-N					Polar1 &= ~0x04;
-X					correct_por[1] &= ~0x04;
-N				}
-N				Flash_Write_all ();	
-N				Flag_DAC_OFF =0;
-X				(flagB . bit3) =0;
-N			}
-N	/*************************************¸ºÔØCVÄ£Ê½µçÑ¹¿ØÖÆĞ£×¼**************************************************************/
-N			if(UART_Buffer_Rece[1] == 0x05)
-N			{
-N				Modify_A_READ = Vmon1_value;//²âÁ¿µçÑ¹Öµ
-N				Modify_C_READ = Contr_Laod;//ÉèÖÃµçÑ¹Öµ
-N				Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//¶ÁÈ¡µÍ¶Î
-N			}
-N			if (UART_Buffer_Rece[1] == 0x06)			   //µçÑ¹²âÁ¿Ğ£×¼Íê³É
-N			{
-N				vu32 var16;
-N				vu32 var32a;
-N				vu32 var32b;
-N				
-N				vu32 var16a;
-N				vu32 var32c;
-N				vu32 var32d;
-N				
-N				Modify_B_READ =Vmon1_value;//²âÁ¿µçÑ¹Öµ
-N				Modify_D_READ =Contr_Laod;//ÉèÖÃµçÑ¹Öµ
-N				Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//¶ÁÈ¡¸ß¶Î
-N				var32a = Modify_B_ACT;
-N				var32a = var32a - Modify_A_ACT;
-N				var32a = var32a << 12;
-N				var16 = Modify_B_READ - Modify_A_READ;
-N				var32a = var32a / var16;
-N				REG_LoadV = var32a;
-X				Correct_Parametet[3] = var32a;
-N				var32a=0;
-N				var32a = Modify_B_ACT;
-N				var32a = var32a << 12;
-N				var32b = Modify_B_READ;
-N				var32b = var32b * REG_LoadV;
-X				var32b = var32b * Correct_Parametet[3];
-N				if (var32a < var32b)
-N				{
-N					var32b = var32b - var32a;
-N					REG_LoadV_Offset = var32b;
-X					Correct_Strong[3] = var32b;
-N					Polar2 |= 0x01;
-X					correct_por[2] |= 0x01;
-N				}
-N				else 
-N				{
-N					var32a = var32a - var32b;
-N					REG_LoadV_Offset = var32a;
-X					Correct_Strong[3] = var32a;
-N					Polar2 &= ~0x01;
-X					correct_por[2] &= ~0x01;
-N				}
-N	//---------------------------------------------------------------------------------------//			
-N				var32c = Modify_B_ACT; //CVÄ£Ê½µçÑ¹¿ØÖÆĞ£×¼
-N				var32c = var32c - Modify_A_ACT;
-N				var32c = var32c << 12;
-N				var16a=Modify_D_READ-Modify_C_READ;
-N				var16a=(var16a*2);
-N				var32c=var32c/var16a;
-N				SET_LoadV = var32c;
-X				Correct_Parametet[4] = var32c;
-N				var32c = Modify_B_ACT;
-N				var32c = var32c << 12;
-N				var32d = SET_LoadV;
-X				var32d = Correct_Parametet[4];
-N				var32d = var32d * (Modify_D_READ*2);
-N				if (var32c < var32d)
-N				{
-N					var32d = var32d - var32c;
-N					SET_LoadV_Offset = var32d;
-X					Correct_Strong[4] = var32d;
-N					Polar2 |= 0x04;
-X					correct_por[2] |= 0x04;
-N				}
-N				else 
-N				{
-N					var32c = var32c - var32d;
-N					SET_LoadV_Offset = var32c;
-X					Correct_Strong[4] = var32c;
-N					Polar2 &= ~0x04;
-X					correct_por[2] &= ~0x04;
-N				}
-N	//---------------------------------------------------------------------------------------//
-N				Flash_Write_all();	//²ÎÊıĞ´½øFLASH
-N				DAC_Flag=0;
-N			}
-N	/*************************************ÄÚ×èĞ£×¼**************************************************************************/
-N			if(UART_Buffer_Rece[1] == 0x07||flag_ADJ_VL==1)
-X			if(UART_Buffer_Rece[1] == 0x07||(flagF . bit2)==1)
-N			{
-N				Modify_A_READ = Rmon_value;//²âÁ¿µçÑ¹Öµ
-N				Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//¶ÁÈ¡µÍ¶Î
-N			}
-N			if (UART_Buffer_Rece[1] == 0x08||flag_ADJ_VH==1)			   //µçÑ¹²âÁ¿Ğ£×¼Íê³É
-X			if (UART_Buffer_Rece[1] == 0x08||(flagF . bit3)==1)			   
-N			{
-N				vu16 var16;
-N				vu32 var32a;
-N				vu32 var32b;		
-N				vu16 var16a;
-N				vu32 var32c;
-N				vu32 var32d;
-N				Modify_B_READ =Rmon_value;//²âÁ¿µçÑ¹Öµ
-N				flag_OverV=1;
-X				(flagG . bit1)=1;
-N				Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//¶ÁÈ¡¸ß¶Î
-N				if(flag_OverV==1)//Ö»ÓĞµ±ÓĞÊı¾İĞ´ÈëÊ±²ÅÄÜ½«Ğ£×¼Êı¾İĞ´ÈëFLASH
-X				if((flagG . bit1)==1)
-N				{
-N					var32a = Modify_B_ACT;
-N					var32a = var32a - Modify_A_ACT;
-N					var32a = var32a << 12;
-N					var16 = Modify_B_READ - Modify_A_READ;
-N					var32a = var32a / var16;
-N					REG_CorrectionR = var32a;
-X					Correct_Parametet[5] = var32a;
-N					var32a=0;
-N					var32a = Modify_B_ACT;
-N					var32a = var32a << 12;
-N					var32b = Modify_B_READ;
-N					var32b = var32b * REG_CorrectionR;
-X					var32b = var32b * Correct_Parametet[5];
-N					if (var32a < var32b)
-N					{
-N						var32b = var32b - var32a;
-N						REG_ReadR_Offset = var32b;
-X						Correct_Strong[5] = var32b;
-N						Polar3 |= 0x01;
-X						correct_por[3] |= 0x01;
-N					}
-N					else 
-N					{
-N						var32a = var32a - var32b;
-N						REG_ReadR_Offset = var32a;
-X						Correct_Strong[5] = var32a;
-N						Polar3 &= ~0x01;
-X						correct_por[3] &= ~0x01;
-N					}
-N		//---------------------------------------------------------------------------------------//
-N					Flash_Write_all();	//²ÎÊıĞ´½øFLASH
-N					flag_OverV=0;
-X					(flagG . bit1)=0;
-N					Flag_DAC_OFF=0;
-X					(flagB . bit3)=0;
-N				}
-N				flag_ADJ_VH=0;//Çåµô±êÖ¾Î»·ÀÖ¹Ò»Ö±½øÈë
-X				(flagF . bit3)=0;
-N			}		
-N	/*******************************µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿ºÍ¿ØÖÆĞ£×¼******************************************/	
-N			if (UART_Buffer_Rece[1] == 0x09||flag_ADJ_ALCC==1)			   //µçÁ÷²âÁ¿Ğ£×¼
-X			if (UART_Buffer_Rece[1] == 0x09||(flagF . bit4)==1)			   
-N			{
-N				Modify_A_READ = Imon_value;//²âÁ¿µçÁ÷
-N				Modify_C_READ = Contr_Current;//ÉèÖÃµçÁ÷
-N				Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
-N			}
-N
-N			if (UART_Buffer_Rece[1] == 0x0A||flag_ADJ_AHCC==1)			   //µçÁ÷²âÁ¿Ğ£×¼Íê³É
-X			if (UART_Buffer_Rece[1] == 0x0A||(flagF . bit5)==1)			   
-N			{
-N				vu16 var16;
-N				vu32 var32a;
-N				vu32 var32b;
-N				
-N				vu16 var16a;
-N				vu32 var32c;
-N				vu32 var32d;
-N				
-N				Modify_D_READ = Contr_Current;
-N				Modify_B_READ = Imon_value;
-N				Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
-N				var32a = Modify_B_ACT;
-N				var32a = var32a - Modify_A_ACT;
-N				var32a = var32a << 14;
-N				var16 = Modify_B_READ - Modify_A_READ;
-N				var32a = var32a / var16;
-N				REG_POWERA = var32a;
-X				Correct_Parametet[6] = var32a;
-N				var32a = Modify_B_ACT;
-N				var32a = var32a << 14;
-N				var32b = Modify_B_READ;
-N				var32b = var32b * REG_POWERA;
-X				var32b = var32b * Correct_Parametet[6];
-N				if (var32a < var32b)
-N				{
-N					var32b = var32b - var32a;
-N					REG_POWERA_Offset = var32b;
-X					Correct_Strong[6] = var32b;
-N					Polar4 |= 0x01;
-X					correct_por[4] |= 0x01;
-N				}
-N				else 
-N				{
-N					var32a = var32a - var32b;
-N					REG_POWERA_Offset = var32a;
-X					Correct_Strong[6] = var32a;
-N					Polar4 &= ~0x01;					//µçÁ÷²âÁ¿ÏµÊıºÍÁãµãĞ£×¼Íê³É
-X					correct_por[4] &= ~0x01;					
-N				}
-N		//---------------------------------------------------------------------------------//
-N				var32c = Modify_B_ACT; //ÉèÖÃµçÁ÷Ğ£×¼
-N				var32c = var32c - Modify_A_ACT;
-N				var32c = var32c << 14;
-N				var16a=Modify_D_READ-Modify_C_READ;
-N				var16a=var16a*2;
-N				var32c=var32c/var16a;
-N				SET_POWERA = var32c;
-X				Correct_Parametet[7] = var32c;
-N				var32c = Modify_B_ACT;
-N				var32c = var32c << 14;
-N				var32d = SET_POWERA;
-X				var32d = Correct_Parametet[7];
-N				var32d = var32d * (Modify_D_READ*2);
-N				if (var32c < var32d)
-N				{
-N					var32d = var32d - var32c;
-N					SET_POWERA_Offset = var32d;
-X					Correct_Strong[7] = var32d;
-N					Polar4 |= 0x04;
-X					correct_por[4] |= 0x04;
-N				}
-N				else 
-N				{
-N					var32c = var32c - var32d;
-N					SET_POWERA_Offset = var32c;
-X					Correct_Strong[7] = var32c;
-N					Polar4 &= ~0x04;
-X					correct_por[4] &= ~0x04;
-N				}
-N				Flash_Write_all ();	
-N				Flag_DAC_OFF=0;
-X				(flagB . bit3)=0;
-N			}
-N	/*******************************µçÔ´µçÑ¹¿ØÖÆºÍ²âÁ¿Ğ£×¼******************************************/	
-N			if (UART_Buffer_Rece[1] == 0x0B)			   //µçÁ÷²âÁ¿Ğ£×¼
-N			{
-N				Modify_A_READ = Vmon_value;//²âÁ¿µçÁ÷
-N				Modify_C_READ = Contr_Voltage;//ÉèÖÃµçÁ÷
-N				Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
-N			}
-N
-N			if (UART_Buffer_Rece[1] == 0x0C)			   //µçÁ÷²âÁ¿Ğ£×¼Íê³É
-N			{
-N				vu16 var16;
-N				vu32 var32a;
-N				vu32 var32b;
-N				
-N				vu16 var16a;
-N				vu32 var32c;
-N				vu32 var32d;
-N				
-N				Modify_D_READ = Contr_Voltage;
-N				Modify_B_READ = Vmon_value;
-N				Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
-N				var32a = Modify_B_ACT;
-N				var32a = var32a - Modify_A_ACT;
-N				var32a = var32a << 14;
-N				var16 = Modify_B_READ - Modify_A_READ;
-N				var32a = var32a / var16;
-N				REG_POWERV = var32a;
-X				Correct_Parametet[8] = var32a;
-N				var32a = Modify_B_ACT;
-N				var32a = var32a << 14;
-N				var32b = Modify_B_READ;
-N				var32b = var32b * REG_POWERV;
-X				var32b = var32b * Correct_Parametet[8];
-N				if (var32a < var32b)
-N				{
-N					var32b = var32b - var32a;
-N					REG_POWERV_Offset = var32b;
-X					Correct_Strong[8] = var32b;
-N					Polar5 |= 0x01;
-X					correct_por[5] |= 0x01;
-N				}
-N				else 
-N				{
-N					var32a = var32a - var32b;
-N					REG_POWERV_Offset = var32a;
-X					Correct_Strong[8] = var32a;
-N					Polar5 &= ~0x01;					
-X					correct_por[5] &= ~0x01;					
-N				}
-N		//---------------------------------------------------------------------------------//
-N				var32c = Modify_B_ACT; //ÉèÖÃµçÑ¹Ğ£×¼
-N				var32c = var32c - Modify_A_ACT;
-N				var32c = var32c << 14;
-N				var16a=Modify_D_READ-Modify_C_READ;
-N				var16a=var16a*2;
-N				var32c=var32c/var16a;
-N				SET_POWERV = var32c;
-X				Correct_Parametet[9] = var32c;
-N				var32c = Modify_B_ACT;
-N				var32c = var32c << 14;
-N				var32d = SET_POWERV;
-X				var32d = Correct_Parametet[9];
-N				var32d = var32d * (Modify_D_READ*2);
-N				if (var32c < var32d)
-N				{
-N					var32d = var32d - var32c;
-N					SET_POWERV_Offset = var32d;
-X					Correct_Strong[9] = var32d;
-N					Polar5 |= 0x04;
-X					correct_por[5] |= 0x04;
-N				}
-N				else 
-N				{
-N					var32c = var32c - var32d;
-N					SET_POWERV_Offset = var32c;
-X					Correct_Strong[9] = var32c;
-N					Polar5 &= ~0x04;
-X					correct_por[5] &= ~0x04;
-N				}
-N				Flash_Write_all ();	
-N				Flag_DAC_OFF=0;
-X				(flagB . bit3)=0;
-N			}
-N	/****************µçÔ´µçÁ÷²âÁ¿Ğ£×¼**********************************/
-N			if (UART_Buffer_Rece[1] == 0x0D)			  
-N			{ 
-N				Modify_A_READ = Imon_value;
-N				Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
-N			}
-N
-N			if (UART_Buffer_Rece[1] == 0x0E)			   
-N			{
-N				vu16 var16;
-N				vu32 var32a;
-N				vu32 var32b;
-N				
-N				vu16 var16a;
-N				vu32 var32c;
-N				vu32 var32d;
-N				
-N				Modify_B_READ = Imon_value;
-N				Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
-N				var32a = Modify_B_ACT;
-N				var32a = var32a - Modify_A_ACT;
-N				var32a = var32a << 14;
-N				var16 = Modify_B_READ - Modify_A_READ;
-N				var32a = var32a / var16;
-N				CON_POWERA = var32a;
-X				Correct_Parametet[10] = var32a;
-N				var32a = Modify_B_ACT;
-N				var32a = var32a << 14;
-N				var32b = Modify_B_READ;
-N				var32b = var32b * CON_POWERA;
-X				var32b = var32b * Correct_Parametet[10];
-N				if (var32a < var32b)
-N				{
-N					var32b = var32b - var32a;
-N					CON_POWERA_Offset = var32b;
-X					Correct_Strong[10] = var32b;
-N					Polar3 |= 0x04;
-X					correct_por[3] |= 0x04;
-N				}
-N				else 
-N				{
-N					var32a = var32a - var32b;
-N					CON_POWERA_Offset = var32a;
-X					Correct_Strong[10] = var32a;
-N					Polar3 &= ~0x04;					
-X					correct_por[3] &= ~0x04;					
-N				}
-N				Flash_Write_all ();	
-N				Flag_DAC_OFF=0;
-X				(flagB . bit3)=0;
-N			}
-N	/*******************************ÄÚ×èµÍ¶ËĞ£×¼**********************************************/
-N			if(UART_Buffer_Rece[1] == 0x0F||flag_ADJ_VL==1)
-X			if(UART_Buffer_Rece[1] == 0x0F||(flagF . bit2)==1)
-N			{
-N				Modify_A_READ = Rmon_value;//²âÁ¿µçÑ¹Öµ
-N				Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//¶ÁÈ¡µÍ¶Î
-N			}
-N			if (UART_Buffer_Rece[1] == 0x20||flag_ADJ_VH==1)			   //µçÑ¹²âÁ¿Ğ£×¼Íê³É
-X			if (UART_Buffer_Rece[1] == 0x20||(flagF . bit3)==1)			   
-N			{
-N				vu16 var16;
-N				vu32 var32a;
-N				vu32 var32b;
-N				
-N				vu16 var16a;
-N				vu32 var32c;
-N				vu32 var32d;
-N				Modify_B_READ =Rmon_value;//²âÁ¿µçÑ¹Öµ
-N				flag_OverV=1;
-X				(flagG . bit1)=1;
-N				Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//¶ÁÈ¡¸ß¶Î
-N				if(flag_OverV==1)//Ö»ÓĞµ±ÓĞÊı¾İĞ´ÈëÊ±²ÅÄÜ½«Ğ£×¼Êı¾İĞ´ÈëFLASH
-X				if((flagG . bit1)==1)
-N				{
-N					var32a = Modify_B_ACT;
-N					var32a = var32a - Modify_A_ACT;
-N					var32a = var32a << 12;
-N					var16 = Modify_B_READ - Modify_A_READ;
-N					var32a = var32a / var16;
-N					REG_CorrectionR1 = var32a;
-X					Correct_Parametet[11] = var32a;
-N					var32a=0;
-N					var32a = Modify_B_ACT;
-N					var32a = var32a << 12;
-N					var32b = Modify_B_READ;
-N					var32b = var32b * REG_CorrectionR1;
-X					var32b = var32b * Correct_Parametet[11];
-N					if (var32a < var32b)
-N					{
-N						var32b = var32b - var32a;
-N						REG_ReadR1_Offset = var32b;
-X						Correct_Strong[11] = var32b;
-N						Polar3 |= 0x08;
-X						correct_por[3] |= 0x08;
-N					}
-N					else 
-N					{
-N						var32a = var32a - var32b;
-N						REG_ReadR1_Offset = var32a;
-X						Correct_Strong[11] = var32a;
-N						Polar3 &= ~0x08;
-X						correct_por[3] &= ~0x08;
-N					}
-N		//---------------------------------------------------------------------------------------//
-N					Flash_Write_all();	//²ÎÊıĞ´½øFLASH
-N					flag_OverV=0;
-X					(flagG . bit1)=0;
-N					Flag_DAC_OFF=0;
-X					(flagB . bit3)=0;
-N				}
-N				flag_ADJ_VH=0;//Çåµô±êÖ¾Î»·ÀÖ¹Ò»Ö±½øÈë
-X				(flagF . bit3)=0;
-N			}	
-N	/***********½ÓÊÜDAC*******************************************/
-N			if (UART_Buffer_Rece[1] == 0x21)			   
-N			{
-N				Contr_Laod = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
-N				Flag_DAC_OFF=1;
-X				(flagB . bit3)=1;
-N			}
-N			if (UART_Buffer_Rece[1] == 0x22)			   
-N			{
-N				Contr_Voltage = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
-N				Flag_DAC_OFF=1;
-X				(flagB . bit3)=1;
-N			}
-N			if (UART_Buffer_Rece[1] == 0x23)			   
-N			{
-N				Contr_Current = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
-N				Flag_DAC_OFF=1;
-X				(flagB . bit3)=1;
-N			}
+N			flag_ADJ_VL=0;
+X			(flagF . bit2)=0;
+N			Modify_A_READ = Vmon1_value;//????
+N			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//????
 N		}
-N//===================================================================================
+N		if (UART_Buffer_Rece[1] == 0x02)			   //???§µ???
+N		{
+N			vu32 var16;
+N			vu32 var32a;
+N			vu32 var32b;
+N			
+N			vu32 var16a;
+N			vu32 var32c;
+N			vu32 var32d;
+N			Modify_B_READ =Vmon1_value;//????
+N			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//????
+N			var32a = Modify_B_ACT;
+N			var32a = var32a - Modify_A_ACT;
+N			var32a = var32a << 12;
+N			var16 = Modify_B_READ - Modify_A_READ;
+N			var32a = var32a / var16;
+N			REG_CorrectionV = var32a;
+X			Correct_Parametet[0] = var32a;
+N			var32a=0;
+N			var32a = Modify_B_ACT;
+N			var32a = var32a << 12;
+N			var32b = Modify_B_READ;
+N			var32b = var32b * REG_CorrectionV;
+X			var32b = var32b * Correct_Parametet[0];
+N			if (var32a < var32b)
+N			{
+N				var32b = var32b - var32a;
+N				REG_ReadV_Offset = var32b;
+X				Correct_Strong[0] = var32b;
+N				Polar |= 0x01;
+X				correct_por[0] |= 0x01;
+N			}
+N			else 
+N			{
+N				var32a = var32a - var32b;
+N				REG_ReadV_Offset = var32a;
+X				Correct_Strong[0] = var32a;
+N				Polar &= ~0x01;
+X				correct_por[0] &= ~0x01;
+N			}			
+N			Flash_Write_all();	//??§Õ?FLASH
+N			Flag_DAC_OFF=0;
+X			(flagB . bit3)=0;
+N		}
+N		
+N		
+N/************************************???¡¤????§µ?*****************************************************************/
+N		if (UART_Buffer_Rece[1] == 0x03)			   //CC??§µ?
+N		{
+N			Modify_A_READ = Imon1_value;//
+N			Modify_C_READ = Contr_Laod;//
+N			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+N			Flag_DAC_OFF=1;//
+X			(flagB . bit3)=1;
+N		}
+N
+N		if (UART_Buffer_Rece[1] == 0x04)			   //
+N		{
+N			vu32 var16;
+N			vu32 var32a;
+N			vu32 var32b;
+N			
+N			vu32 var16a;
+N			vu32 var32c;
+N			vu32 var32d;
+N			
+N			Modify_B_READ = Imon1_value;
+N			Modify_D_READ = Contr_Laod;
+N			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+N			
+N			var32a = Modify_B_ACT;
+N			var32a = var32a - Modify_A_ACT;
+N			var32a = var32a << 12;
+N			var16 = Modify_B_READ - Modify_A_READ;
+N			var32a = var32a / var16;
+N			REG_Load_A = var32a;
+X			Correct_Parametet[1] = var32a;
+N			var32a = Modify_B_ACT;
+N			var32a = var32a << 12;
+N			var32b = Modify_B_READ;
+N			var32b = var32b * REG_Load_A;
+X			var32b = var32b * Correct_Parametet[1];
+N			if (var32a < var32b)
+N			{
+N				var32b = var32b - var32a;
+N				REG_LoadA_Offset = var32b;
+X				Correct_Strong[1] = var32b;
+N				Polar1 |= 0x01;
+X				correct_por[1] |= 0x01;
+N			}
+N			else 
+N			{
+N				var32a = var32a - var32b;
+N				REG_LoadA_Offset = var32a;
+X				Correct_Strong[1] = var32a;
+N				Polar1 &= ~0x01;					
+X				correct_por[1] &= ~0x01;					
+N			}
+N//---------------------------------------------------------------------------------//
+N			var32c = Modify_B_ACT; 
+N			var32c = var32c - Modify_A_ACT;
+N			var32c = var32c << 12;
+N			var16a=Modify_D_READ-Modify_C_READ;
+N			var16a=var16a*2;
+N			var32c=var32c/var16a;
+N			SET_LoadA = var32c;
+X			Correct_Parametet[2] = var32c;
+N			var32c = Modify_B_ACT;
+N			var32c = var32c << 12;
+N			var32d = SET_LoadA;
+X			var32d = Correct_Parametet[2];
+N			var32d = var32d * (Modify_D_READ*2);
+N			if (var32c < var32d)
+N			{
+N				var32d = var32d - var32c;
+N				SET_LoadA_Offset = var32d;
+X				Correct_Strong[2] = var32d;
+N				Polar1 |= 0x04;
+X				correct_por[1] |= 0x04;
+N			}
+N			else 
+N			{
+N				var32c = var32c - var32d;
+N				SET_LoadA_Offset = var32c;
+X				Correct_Strong[2] = var32c;
+N				Polar1 &= ~0x04;
+X				correct_por[1] &= ~0x04;
+N			}
+N			Flash_Write_all ();	
+N			Flag_DAC_OFF =0;
+X			(flagB . bit3) =0;
+N		}
+N/*************************************??CV??????§µ?**************************************************************/
+N		if(UART_Buffer_Rece[1] == 0x05)
+N		{
+N			Modify_A_READ = Vmon1_value;//????
+N			Modify_C_READ = Contr_Laod;//?????
+N			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//????
+N		}
+N		if (UART_Buffer_Rece[1] == 0x06)			   //???§µ???
+N		{
+N			vu32 var16;
+N			vu32 var32a;
+N			vu32 var32b;
+N			
+N			vu32 var16a;
+N			vu32 var32c;
+N			vu32 var32d;
+N			
+N			Modify_B_READ =Vmon1_value;//????
+N			Modify_D_READ =Contr_Laod;//?????
+N			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//????
+N			var32a = Modify_B_ACT;
+N			var32a = var32a - Modify_A_ACT;
+N			var32a = var32a << 12;
+N			var16 = Modify_B_READ - Modify_A_READ;
+N			var32a = var32a / var16;
+N			REG_LoadV = var32a;
+X			Correct_Parametet[3] = var32a;
+N			var32a=0;
+N			var32a = Modify_B_ACT;
+N			var32a = var32a << 12;
+N			var32b = Modify_B_READ;
+N			var32b = var32b * REG_LoadV;
+X			var32b = var32b * Correct_Parametet[3];
+N			if (var32a < var32b)
+N			{
+N				var32b = var32b - var32a;
+N				REG_LoadV_Offset = var32b;
+X				Correct_Strong[3] = var32b;
+N				Polar2 |= 0x01;
+X				correct_por[2] |= 0x01;
+N			}
+N			else 
+N			{
+N				var32a = var32a - var32b;
+N				REG_LoadV_Offset = var32a;
+X				Correct_Strong[3] = var32a;
+N				Polar2 &= ~0x01;
+X				correct_por[2] &= ~0x01;
+N			}
+N//---------------------------------------------------------------------------------------//			
+N			var32c = Modify_B_ACT; //CV??????§µ?
+N			var32c = var32c - Modify_A_ACT;
+N			var32c = var32c << 12;
+N			var16a=Modify_D_READ-Modify_C_READ;
+N			var16a=(var16a*2);
+N			var32c=var32c/var16a;
+N			SET_LoadV = var32c;
+X			Correct_Parametet[4] = var32c;
+N			var32c = Modify_B_ACT;
+N			var32c = var32c << 12;
+N			var32d = SET_LoadV;
+X			var32d = Correct_Parametet[4];
+N			var32d = var32d * (Modify_D_READ*2);
+N			if (var32c < var32d)
+N			{
+N				var32d = var32d - var32c;
+N				SET_LoadV_Offset = var32d;
+X				Correct_Strong[4] = var32d;
+N				Polar2 |= 0x04;
+X				correct_por[2] |= 0x04;
+N			}
+N			else 
+N			{
+N				var32c = var32c - var32d;
+N				SET_LoadV_Offset = var32c;
+X				Correct_Strong[4] = var32c;
+N				Polar2 &= ~0x04;
+X				correct_por[2] &= ~0x04;
+N			}
+N//---------------------------------------------------------------------------------------//
+N		  Flash_Write_all();	//??§Õ?FLASH
+N			DAC_Flag=0;
+N		}
+N/*************************************??§µ?**************************************************************************/
+N		if(UART_Buffer_Rece[1] == 0x07||flag_ADJ_VL==1)
+X		if(UART_Buffer_Rece[1] == 0x07||(flagF . bit2)==1)
+N		{
+N			Modify_A_READ = Rmon_value;//????
+N			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//????
+N		}
+N		if (UART_Buffer_Rece[1] == 0x08||flag_ADJ_VH==1)			   //???§µ???
+X		if (UART_Buffer_Rece[1] == 0x08||(flagF . bit3)==1)			   
+N		{
+N			vu16 var16;
+N			vu32 var32a;
+N			vu32 var32b;
+N			
+N			vu16 var16a;
+N			vu32 var32c;
+N			vu32 var32d;
+N			Modify_B_READ =Rmon_value;//????
+N			flag_OverV=1;
+X			(flagG . bit1)=1;
+N			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//????
+N			if(flag_OverV==1)//??????§Õ?????§µ???§Õ?FLASH
+X			if((flagG . bit1)==1)
+N			{
+N				var32a = Modify_B_ACT;
+N				var32a = var32a - Modify_A_ACT;
+N				var32a = var32a << 12;
+N				var16 = Modify_B_READ - Modify_A_READ;
+N				var32a = var32a / var16;
+N                if(r_raly == 1)
+N                {
+N                    REG_CorrectionR = var32a;
+X                    Correct_Parametet[5] = var32a;
+N                    var32a=0;
+N                    var32a = Modify_B_ACT;
+N                    var32a = var32a << 12;
+N                    var32b = Modify_B_READ;
+N                    var32b = var32b * REG_CorrectionR;
+X                    var32b = var32b * Correct_Parametet[5];
+N                    if (var32a < var32b)
+N                    {
+N                        var32b = var32b - var32a;
+N                        REG_ReadR_Offset = var32b;
+X                        Correct_Strong[5] = var32b;
+N                        Polar3 |= 0x01;
+X                        correct_por[3] |= 0x01;
+N                    }
+N                    else 
+N                    {
+N                        var32a = var32a - var32b;
+N                        REG_ReadR_Offset = var32a;
+X                        Correct_Strong[5] = var32a;
+N                        Polar3 &= ~0x01;
+X                        correct_por[3] &= ~0x01;
+N                    }
+N                }else{
+N                    REG_CorrectionRL = var32a;
+X                    Correct_Parametet[11] = var32a;
+N                    var32a=0;
+N                    var32a = Modify_B_ACT;
+N                    var32a = var32a << 12;
+N                    var32b = Modify_B_READ;
+N                    var32b = var32b * REG_CorrectionRL;
+X                    var32b = var32b * Correct_Parametet[11];
+N                    if (var32a < var32b)
+N                    {
+N                        var32b = var32b - var32a;
+N                        REG_ReadRL_Offset = var32b;
+X                        Correct_Strong[11] = var32b;
+N                        Polar3 |= 0x01;
+X                        correct_por[3] |= 0x01;
+N                    }
+N                    else 
+N                    {
+N                        var32a = var32a - var32b;
+N                        REG_ReadR_Offset = var32a;
+X                        Correct_Strong[5] = var32a;
+N                        Polar3 &= ~0x01;
+X                        correct_por[3] &= ~0x01;
+N                    }
+N                }
+N	//---------------------------------------------------------------------------------------//
+N				Flash_Write_all();	//??§Õ?FLASH
+N				flag_OverV=0;
+X				(flagG . bit1)=0;
+N				Flag_DAC_OFF=0;
+X				(flagB . bit3)=0;
+N			}
+N			flag_ADJ_VH=0;//????¦Ë??????
+X			(flagF . bit3)=0;
+N		}		
+N/*******************************??CC???¡¤????§µ?******************************************/	
+N		if (UART_Buffer_Rece[1] == 0x09||flag_ADJ_ALCC==1)			   //?¡¤?§µ?
+X		if (UART_Buffer_Rece[1] == 0x09||(flagF . bit4)==1)			   
+N		{
+N			Modify_A_READ = Imon_value;//??¡¤
+N			Modify_C_READ = Contr_Current;//???¡¤
+N			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+N		}
+N
+N		if (UART_Buffer_Rece[1] == 0x0A||flag_ADJ_AHCC==1)			   //?¡¤?§µ???
+X		if (UART_Buffer_Rece[1] == 0x0A||(flagF . bit5)==1)			   
+N		{
+N			vu16 var16;
+N			vu32 var32a;
+N			vu32 var32b;
+N			
+N			vu16 var16a;
+N			vu32 var32c;
+N			vu32 var32d;
+N			
+N			Modify_D_READ = Contr_Current;
+N			Modify_B_READ = Imon_value;
+N			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+N			var32a = Modify_B_ACT;
+N			var32a = var32a - Modify_A_ACT;
+N			var32a = var32a << 14;
+N			var16 = Modify_B_READ - Modify_A_READ;
+N			var32a = var32a / var16;
+N			REG_POWERA = var32a;
+X			Correct_Parametet[6] = var32a;
+N			var32a = Modify_B_ACT;
+N			var32a = var32a << 14;
+N			var32b = Modify_B_READ;
+N			var32b = var32b * REG_POWERA;
+X			var32b = var32b * Correct_Parametet[6];
+N			if (var32a < var32b)
+N			{
+N				var32b = var32b - var32a;
+N				REG_POWERA_Offset = var32b;
+X				Correct_Strong[6] = var32b;
+N				Polar4 |= 0x01;
+X				correct_por[4] |= 0x01;
+N			}
+N			else 
+N			{
+N				var32a = var32a - var32b;
+N				REG_POWERA_Offset = var32a;
+X				Correct_Strong[6] = var32a;
+N				Polar4 &= ~0x01;					//?¡¤????¡ê?§µ???
+X				correct_por[4] &= ~0x01;					
+N			}
+N	//---------------------------------------------------------------------------------//
+N			var32c = Modify_B_ACT; //???¡¤§µ?
+N			var32c = var32c - Modify_A_ACT;
+N			var32c = var32c << 14;
+N			var16a=Modify_D_READ-Modify_C_READ;
+N			var16a=var16a*2;
+N			var32c=var32c/var16a;
+N			SET_POWERA = var32c;
+X			Correct_Parametet[7] = var32c;
+N			var32c = Modify_B_ACT;
+N			var32c = var32c << 14;
+N			var32d = SET_POWERA;
+X			var32d = Correct_Parametet[7];
+N			var32d = var32d * (Modify_D_READ*2);
+N			if (var32c < var32d)
+N			{
+N				var32d = var32d - var32c;
+N				SET_POWERA_Offset = var32d;
+X				Correct_Strong[7] = var32d;
+N				Polar4 |= 0x04;
+X				correct_por[4] |= 0x04;
+N			}
+N			else 
+N			{
+N				var32c = var32c - var32d;
+N				SET_POWERA_Offset = var32c;
+X				Correct_Strong[7] = var32c;
+N				Polar4 &= ~0x04;
+X				correct_por[4] &= ~0x04;
+N			}
+N			Flash_Write_all ();	
+N			Flag_DAC_OFF=0;
+X			(flagB . bit3)=0;
+N		}
+N/*******************************????????§µ?******************************************/	
+N		if (UART_Buffer_Rece[1] == 0x0B)			   //?¡¤?§µ?
+N		{
+N			Modify_A_READ = Vmon_value;//??¡¤
+N			Modify_C_READ = Contr_Voltage;//???¡¤
+N			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+N		}
+N
+N		if (UART_Buffer_Rece[1] == 0x0C)			   //?¡¤?§µ???
+N		{
+N			vu16 var16;
+N			vu32 var32a;
+N			vu32 var32b;
+N			
+N			vu16 var16a;
+N			vu32 var32c;
+N			vu32 var32d;
+N			
+N			Modify_D_READ = Contr_Voltage;
+N			Modify_B_READ = Vmon_value;
+N			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+N			var32a = Modify_B_ACT;
+N			var32a = var32a - Modify_A_ACT;
+N			var32a = var32a << 14;
+N			var16 = Modify_B_READ - Modify_A_READ;
+N			var32a = var32a / var16;
+N			REG_POWERV = var32a;
+X			Correct_Parametet[8] = var32a;
+N			var32a = Modify_B_ACT;
+N			var32a = var32a << 14;
+N			var32b = Modify_B_READ;
+N			var32b = var32b * REG_POWERV;
+X			var32b = var32b * Correct_Parametet[8];
+N			if (var32a < var32b)
+N			{
+N				var32b = var32b - var32a;
+N				REG_POWERV_Offset = var32b;
+X				Correct_Strong[8] = var32b;
+N				Polar5 |= 0x01;
+X				correct_por[5] |= 0x01;
+N			}
+N			else 
+N			{
+N				var32a = var32a - var32b;
+N				REG_POWERV_Offset = var32a;
+X				Correct_Strong[8] = var32a;
+N				Polar5 &= ~0x01;					
+X				correct_por[5] &= ~0x01;					
+N			}
+N	//---------------------------------------------------------------------------------//
+N			var32c = Modify_B_ACT; //????§µ?
+N			var32c = var32c - Modify_A_ACT;
+N			var32c = var32c << 14;
+N			var16a=Modify_D_READ-Modify_C_READ;
+N			var16a=var16a*2;
+N			var32c=var32c/var16a;
+N			SET_POWERV = var32c;
+X			Correct_Parametet[9] = var32c;
+N			var32c = Modify_B_ACT;
+N			var32c = var32c << 14;
+N			var32d = SET_POWERV;
+X			var32d = Correct_Parametet[9];
+N			var32d = var32d * (Modify_D_READ*2);
+N			if (var32c < var32d)
+N			{
+N				var32d = var32d - var32c;
+N				SET_POWERV_Offset = var32d;
+X				Correct_Strong[9] = var32d;
+N				Polar5 |= 0x04;
+X				correct_por[5] |= 0x04;
+N			}
+N			else 
+N			{
+N				var32c = var32c - var32d;
+N				SET_POWERV_Offset = var32c;
+X				Correct_Strong[9] = var32c;
+N				Polar5 &= ~0x04;
+X				correct_por[5] &= ~0x04;
+N			}
+N			Flash_Write_all ();	
+N			Flag_DAC_OFF=0;
+X			(flagB . bit3)=0;
+N		}
+N/****************???¡¤?§µ?**********************************/
+N		if (UART_Buffer_Rece[1] == 0x0D)			  
+N		{ 
+N			Modify_A_READ = Imon_value;
+N			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+N		}
+N
+N		if (UART_Buffer_Rece[1] == 0x0E)			   
+N		{
+N			vu16 var16;
+N			vu32 var32a;
+N			vu32 var32b;
+N			
+N			vu16 var16a;
+N			vu32 var32c;
+N			vu32 var32d;
+N			
+N			Modify_B_READ = Imon_value;
+N			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+N			var32a = Modify_B_ACT;
+N			var32a = var32a - Modify_A_ACT;
+N			var32a = var32a << 14;
+N			var16 = Modify_B_READ - Modify_A_READ;
+N			var32a = var32a / var16;
+N			CON_POWERA = var32a;
+X			Correct_Parametet[10] = var32a;
+N			var32a = Modify_B_ACT;
+N			var32a = var32a << 14;
+N			var32b = Modify_B_READ;
+N			var32b = var32b * CON_POWERA;
+X			var32b = var32b * Correct_Parametet[10];
+N			if (var32a < var32b)
+N			{
+N				var32b = var32b - var32a;
+N				CON_POWERA_Offset = var32b;
+X				Correct_Strong[10] = var32b;
+N				Polar3 |= 0x04;
+X				correct_por[3] |= 0x04;
+N			}
+N			else 
+N			{
+N				var32a = var32a - var32b;
+N				CON_POWERA_Offset = var32a;
+X				Correct_Strong[10] = var32a;
+N				Polar3 &= ~0x04;					
+X				correct_por[3] &= ~0x04;					
+N			}
+N			Flash_Write_all ();	
+N			Flag_DAC_OFF=0;
+X			(flagB . bit3)=0;
+N		}
+N/***********??DAC*******************************************/
+N		if (UART_Buffer_Rece[1] == 0x0F)			   
+N		{
+N			Contr_Laod = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+N			Flag_DAC_OFF=1;
+X			(flagB . bit3)=1;
+N		}
+N		if (UART_Buffer_Rece[1] == 0x20)			   
+N		{
+N			Contr_Voltage = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+N			Flag_DAC_OFF=1;
+X			(flagB . bit3)=1;
+N		}
+N		if (UART_Buffer_Rece[1] == 0x21)			   
+N		{
+N			Contr_Current = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+N			Flag_DAC_OFF=1;
+X			(flagB . bit3)=1;
+N		}
 N	}
+N//===================================================================================
 N}
 N//===============================ADÖµ×ª»»³É²âÁ¿Öµ============================================//
 Nvoid Transformation_ADC(void)  

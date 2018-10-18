@@ -9,12 +9,12 @@ N/******************************************************************/
 N#include "my_register.h"
 L 1 "..\Include\my_register.h" 1
 N/******************** (C) COPYRIGHT 2014 KUNKIN********************
-N * ÎÄ¼şÃû  £ºmy_register
-N * ×÷Õß    £ºÀîÕñ
-N * ÃèÊö    £º¿âº¯Êı°æ
-N * ÄÚÈİ    £ºDefine register¶¨ÒåÏµÍ³Ê¹ÓÃµÄ¼Ä´æÆ÷£¬È«¾Ö±äÁ¿
-N * ×¢Òâ		 £ºÍ·ÎÄ¼şÖĞÖ»ÄÜÓĞÉùÃ÷£¬²»ÄÜÓĞ¶¨Òå
-N * ĞŞ¸ÄÈÕÆÚ£º2014-12-9
+N * ¦Ó??  ¨²my_register
+N * ??    ¨²n?
+N * ??    ¨²????
+N * ??    ¨²Define register??????????¨¬???
+N * ??		 ¨²?¦Ó???????¨¬?????
+N * ???¨·¨²2014-12-9
 N*********************************************************************/
 N
 N#include "STM32F4xx.h"
@@ -34713,51 +34713,82 @@ L 11 "..\Include\my_register.h" 2
 N#ifndef __my_register_h__
 N#define __my_register_h__
 N//=============================================================================
-N
+Nvoid Write_Limits(void);
+Nvoid Wrtite_step(void);
+Nvoid OC_ADD(void);
+Nvoid Wrtite_S(void);
+Nvoid Write_oct(void);
+Nvoid Write_alarm(void);
+Nvoid Write_btype(void);
+Nvoid Write_LOAD(void);
+Nvoid Write_info(void);
+Nvoid OC_CHECK(void);
+Nvoid INPUT_POW(char* num);  
+Nvoid INPUT_NUM(char* num); 
+Nvoid INPUT_CDC(char* num); 
+Nvoid INPUT_C(char* num);  
+Nvoid INPUT_LOAD(char* num);  
+Nvoid INPUT_INFO(vu8 num);
+Nvoid SET_OP_DOWN(void);
+Nvoid SET_OP_UP(void);
+Nvoid SET_OP_RIGHT(void);
+Nvoid SET_OP_LEFT(void);
+Nvoid PARA_SET(void);
+Nvoid SYS_INFO_RIGHT(void);
+Nvoid SYS_INFO_LEFT(void);
+Nvoid SYS_INFO_UP(void);
+Nvoid SYS_INFO_DOWN(void);
+Nvoid INPUT_INFO(vu8 num);
+Nvoid CDC_OP_DOWN(void);
+Nvoid CDC_OP_UP(void);
+Nvoid CDC_OP_LEFT(void);
+Nvoid CDC_OP_RIGHT(void);
+Nvoid CDC_SET(void);
+Nvoid INPUT_CDC(char* num); 
 N//=============================================================================
-N#define NOP   __nop();	  //¿ÕÖ¸Áî
+N#define NOP   __nop();	  //???
 N
 N//============================================================================
 Nextern struct bitDefine flagA,flagB,flagC,flagD,flagE,flagF,flagG;
-N#define   Flag_ADC_Full             (flagA.bit1)//DMA´«ÊäÍê³É±êÖ¾Î» 
-N#define   Flag_BEEP						    	(flagA.bit2)//·äÃùÆ÷´¥·¢±êÖ¾
-N#define   Flag_Key_Scan							(flagA.bit3)//°´¼ü¶¨Ê±É¨Ãè±êÖ¾
-N#define   UART_SEND_flag						(flagA.bit4)//´®¿Ú·¢ËÍÍê³É±êÖ¾
-N#define   UART_Buffer_Rece_flag			(flagA.bit5)//´®¿Ú½ÓÊÕÍê³É±êÖ¾
-N#define   Flag_Swtich_ON      			(flagA.bit6)//Æô¶¯°´¼ü´¦ÓÚON±êÖ¾
-N#define   Flag_0_5S      		      	(flagA.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ÉÁË¸±êÖ¾
+N#define   Flag_ADC_Full             (flagA.bit1)//DMA??????¦Ë 
+N#define   Flag_BEEP						    	(flagA.bit2)//???????
+N#define   Flag_Key_Scan							(flagA.bit3)//§Õ???????
+N#define   UART_SEND_flag						(flagA.bit4)//????????
+N#define   UART_Buffer_Rece_flag			(flagA.bit5)//????????
+N#define   Flag_Swtich_ON      			(flagA.bit6)//??§Õ???ON??
+N#define   Flag_0_5S      		      	(flagA.bit7)//§¥?????????
 N
-N#define   Flag_1S      		         	(flagB.bit0)//ÏÔÊ¾ÉèÖÃµçÁ÷ÉÁË¸±êÖ¾
-N#define   Flag_5S      		        	(flagB.bit1)//ÍË³öÉèÖÃ×´Ì¬±êÖ¾
-N#define   Flag_Long                 (flagB.bit2)//°´¼ü³¤°´±êÖ¾
-N#define   Flag_DAC_OFF              (flagB.bit3)//æ˜¯å¦è½¬æ¢DACæ§åˆ¶å€¼æ ‡å¿—
-N#define   Flag_SetA                 (flagB.bit5)//½øÈëÉèÖÃµçÁ÷±êÖ¾Î»
-N#define   Flag_SetV                 (flagB.bit6)//½øÈëÉèÖÃµçÑ¹±êÖ¾Î» 
-N#define   Flag_DisSet               (flagB.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ºÍµçÁ÷±êÖ¾Î»
+N#define   Flag_1S      		         	(flagB.bit0)//§¥????¡¤????
+N#define   Flag_5S      		        	(flagB.bit1)//????????
+N#define   Flag_Long                 (flagB.bit2)//§Õ??§Õ??
+N#define   Flag_DAC_OFF              (flagB.bit3)//ÊÇ·ñ×ª»»DAC¿ØÖÆÖµ±êÖ¾
+N#define   Flag_SetA                 (flagB.bit5)//?????¡¤??¦Ë
+N#define   Flag_SetV                 (flagB.bit6)//????????¦Ë 
+N#define   Flag_DisSet               (flagB.bit7)//§¥???????¡¤??¦Ë
 N
-N#define   Flag_GE                   (flagC.bit0)//¸öÎ»ÉÁË¸±êÖ¾
-N#define   Flag_SHI                  (flagC.bit1)//Ê®Î»ÉÁË¸±êÖ¾
-N#define   Flag_BAI                  (flagC.bit2)//°ÙÎ»ÉÁË¸±êÖ¾
-N#define   Flag_QIAN                 (flagC.bit3)//Ç§Î»ÉÁË¸±êÖ¾
-N#define   Flag_Beep_OFF             (flagC.bit6)//·äÃùÆ÷¹Ø±Õ±êÖ¾
+N#define   Flag_GE                   (flagC.bit0)//?¦Ë????
+N#define   Flag_SHI                  (flagC.bit1)//?¦Ë????
+N#define   Flag_BAI                  (flagC.bit2)//?¦Ë????
+N#define   Flag_QIAN                 (flagC.bit3)//?¦Ë????
+N#define   Flag_Beep_OFF             (flagC.bit6)//???????
 N
-N#define   flag_Tim_USART            (flagD.bit0)//´®¿Ú¼ÆËãÇåÁã±êÖ¾
-N#define   flag_Test                 (flagD.bit1)//×Ô¶¯²âÊÔÆğÍ£±êÖ¾
-N#define   flag_Test_PASS            (flagD.bit2)//×Ô¶¯²âÊÔPASS±êÖ¾
-N#define   flag_Test_FAIL            (flagD.bit3)//×Ô¶¯²âÊÔFAIL±êÖ¾
-N#define   flag_Test_Time            (flagD.bit4)//×Ô¶¯²âÊÔµÈ´ıÊ±¼ä±êÖ¾
-N#define   flag_Test_Start           (flagD.bit5)//×Ô¶¯²âÊÔ±È½Ï¿ªÊ¼±êÖ¾
-N#define   flag_Test_Min             (flagD.bit6)//×Ô¶¯²âÊÔÏÂÏŞ±êÖ¾
-N#define   flag_Load_CC              (flagD.bit7)//¸ºÔØCC/CVÄ£Ê½±êÖ¾Î»
+N#define   flag_Tim_USART            (flagD.bit0)//?????¡ê??
+N#define   flag_Test                 (flagD.bit1)//????????
+N#define   flag_Test_PASS            (flagD.bit2)//????PASS??
+N#define   flag_Test_FAIL            (flagD.bit3)//????FAIL??
+N#define   flag_Test_Time            (flagD.bit4)//??????????
+N#define   flag_Test_Start           (flagD.bit5)//??????????
+N#define   flag_Test_Min             (flagD.bit6)//?????§°??
+N#define   flag_Load_CC              (flagD.bit7)//??CC/CV????¦Ë
 N
-N#define   flag_Test_Door             (flagE.bit0)//×Ô¶¯²âÊÔÃÅ¼÷±êÖ¾
-N#define   flag_Test_SetTime          (flagE.bit1)//×Ô¶¯²âÊÔÊ±¼ä±êÖ¾ 
-N#define   flag_OVP                   (flagE.bit2)//OVP±êÖ¾
-N#define   flag_OCP                   (flagE.bit3)//OCP±êÖ¾
-N#define   flag_Doub                  (flagE.bit4)//°´¼üË«»÷
-N#define   flag_t_Doub                (flagE.bit5)//°´¼üË«»÷¼ÆÊ±±êÖ¾
-N#define   flag_Time_SW               (flagE.bit6)//¶¨Ê±¹¦ÄÜ¿ªÆô±êÖ¾
-N#define   flag_CC_MODE               (flagE.bit7)//¹¤×÷Ä£Ê½±êÖ¾
+N#define   flag_Test_Door             (flagE.bit0)//????????
+N#define   flag_Test_SetTime          (flagE.bit1)//???????? 
+N#define   flag_OVP                   (flagE.bit2)//OVP??
+N#define   flag_OCP                   (flagE.bit3)//OCP??
+N#define   flag_Doub                  (flagE.bit4)//§Õ???
+N#define   flag_t_Doub                (flagE.bit5)//§Õ???????
+N#define   flag_Time_SW               (flagE.bit6)//????????
+N#define   flag_CC_MODE               (flagE.bit7)//??????
 N
 N#define   flag_Adjust                (flagF.bit0)//
 N#define   flag_ADJ_ON                (flagF.bit1)//
@@ -34780,7 +34811,7 @@ N//=============================================================================
 Nextern vu32 GE_V;
 Nextern vu32 SHI_V;
 Nextern vu32 BAI_V;
-Nextern vu32 QIAN_V;  //ÊıÂë¹ÜÉ¨Ãè¶ÎÂë
+Nextern vu32 QIAN_V;  //???????
 Nextern vu32 GE_A;
 Nextern vu32 SHI_A;
 Nextern vu32 BAI_A;
@@ -34791,7 +34822,7 @@ Nextern vu8 DAC_Flag;
 Nextern vu8 Beep_Flag;
 Nextern vu8 t_beep;
 Nextern vu8 t_KeyScan;
-Nextern vu8 t_LEDScan;  //¶¨Ê±¼ÆÊıÆ÷
+Nextern vu8 t_LEDScan;  //?????
 Nextern vu8 t_KEYON;
 Nextern vu16 t_0_5S;
 Nextern vu16 t_1S;
@@ -34804,8 +34835,8 @@ Nextern vu16 t_ON_V;
 Nextern vu16 t_OFF_A;
 Nextern vu16 t_ON_A;
 Nextern vu8 t_USART;
-Nextern vu16 ADJ_Write;//Ğ£×¼Ê±ĞèĞ´ÈëµÄÊµ¼ÊÖµ
-Nextern vu8 OFFSET_Zore;//ÁãµãÖµ
+Nextern vu16 ADJ_Write;//§µ???§Õ?????
+Nextern vu8 OFFSET_Zore;//¡ê??
 Nextern vu8 ADDR;
 Nextern vu8 t_lock;
 Nextern vu8 t_onoff;
@@ -34816,12 +34847,12 @@ Nextern vu16 Test_Time1;
 Nextern vu16 Time_sw;
 Nextern vu16 Test_Daley;
 Nextern vu16 Test_C_Door;
-Nextern vu16 TEMP_OFFSET;//ÎÂ¶È²¹³¥Öµ
+Nextern vu16 TEMP_OFFSET;//?????
 N//--------------------------
-Nextern vu8 UART_Buffer_Size;//´®¿Ú½ÓÊÕÊı¾İ³¤¶È
+Nextern vu8 UART_Buffer_Size;//????????
 Nextern vu8 Transmit_BUFFERsize;
 N//---------------------------
-Nextern vu16 NTC_value;   //ADÖµ
+Nextern vu16 NTC_value;   //AD?
 Nextern vu16 Imon_value;
 Nextern vu32 Imon1_value;
 Nextern vu16 Vmon_value;
@@ -34833,69 +34864,271 @@ Nextern  float DISS_POW_Voltage;
 Nextern float DISS_Current;
 Nextern float DISS_POW_Current;
 Nextern float DISS_R;
+Nextern vu16 steptime;
+Nextern vu8 r_stable;
+Nextern char set_limit[5];
+Nextern vu8 bit;
+Nextern vu8 bit1;
+Nextern vu8 dot_flag;
+Nextern vu8 page_sw;
+Nextern vu8 para_set1;
+Nextern vu8 para_set2;
+Nextern vu8 para_set3;
+Nextern vu8 para_set4;
+Nextern vu8 oct_sw;
+Nextern vu8 set_sw;
+Nextern vu8 charge_step;
+Nextern vu8 cutoff_flag;
+Nextern vu8 lang;
+Nextern vu8 r_raly;
+Nextern vu16 steptime;
+Nextern vu8 alert_flag;
+Nextern vu8 t_onoff;
+Nextern vu8 ocstop;
+Nextern float temp;
+Nextern vu8 mode_sw;
+Nextern vu16 stepcount;
+Nextern vu16 battery_c;
+Nextern float bc_raw;
+Nextern vu8 track;
+Nextern vu8 clear_flag1;
+Nextern vu8 clear_flag2;
+Nextern vu8 clear_flag3;
+Nextern vu8 pass;
+Nextern vu8 b_type;
+Nextern vu8 buffer;
+Nextern float clear_v;
+Nextern float clear_pv;
+Nextern float clear_lv;
+Nextern float temp;
+Nextern vu8 set_loop_count;
 N
-Nextern vu32 Run_Control[14];	
+Nextern vu32 Run_Control[41];	
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
-N#define SET_Voltage 	    	        Run_Control[1]  //µçÔ´Éè¶¨µçÑ¹
-N#define SET_Current	    	    		  Run_Control[2]  //µçÔ´Éè¶¨µçÁ÷
-N#define SET_Voltage_Laod 					  Run_Control[3]  //¸ºÔØÉè¶¨µçÑ¹
-N#define SET_Current_Laod					  Run_Control[4]  //¸ºÔØÉè¶¨µçÁ÷
+N#define SET_Voltage 	    	        Run_Control[1]  //??????
+N#define SET_Current	    	    		  Run_Control[2]  //?????¡¤
+N#define SET_Voltage_Laod 					  Run_Control[3]  //??????
+N#define SET_Current_Laod					  Run_Control[4]  //?????¡¤
 N#define LOCK_KEY								    Run_Control[5]  //
 N#define BEEP_KEY								    Run_Control[6]  //
 N#define STRONG_KEY							    Run_Control[7]  //
 N
 N#define MODE_Woke							   	  Run_Control[8]  //
-N#define POW_Voltage	    	          Run_Control[9]  //µçÔ´²âÁ¿µçÑ¹
-N#define Voltage	    	              Run_Control[10]  //¸ºÔØ²âÁ¿µçÑ¹
-N#define Current	    	    		      Run_Control[11]  //µçÔ´²âÁ¿µçÁ÷
-N#define Laod_Current	    		      Run_Control[12]  //¸ºÔØ²âÁ¿µçÁ÷
-N#define R_VLUE											Run_Control[13]  //ÄÚ×èÖµ
+N#define POW_Voltage	    	            Run_Control[9]  //?????
+N#define Voltage	    	                Run_Control[10]  //?????
+N#define Current	    	    		    Run_Control[11]  //????¡¤
+N#define Laod_Current	    		    Run_Control[12]  //????¡¤
+N#define R_VLUE							Run_Control[13]  //???
+N#define set_max_v						Run_Control[14]  //ÉèÖÃ²âÁ¿µçÑ¹ÉÏÏŞ
+N#define set_min_v						Run_Control[15]  //ÉèÖÃ²âÁ¿µçÑ¹ÏÂÏŞ
+N#define set_max_r						Run_Control[16]  //ÉèÖÃ²âÁ¿ÄÚ×èÉÏÏŞ
+N#define set_min_r						Run_Control[17]  //ÉèÖÃ²âÁ¿ÄÚ×èÏÂÏŞ
+N#define set_max_c						Run_Control[18]  //ÉèÖÃ²âÁ¿µçÁ÷ÉÏÏŞ
+N#define set_min_c						Run_Control[19]  //ÉèÖÃ²âÁ¿µçÁ÷Î÷Ïß
+N#define set_output_v					Run_Control[20]  //ÉèÖÃ²âÁ¿Êä³öµçÑ¹
+N#define set_output_c					Run_Control[21]  //ÉèÖÃ²âÁ¿Êä³öµçÁ÷
+N#define set_init_c					    Run_Control[22]  //ÉèÖÃ²âÁ¿Êä³öµçÑ¹
+N#define set_sbs_c					    Run_Control[23]  //ÉèÖÃ²âÁ¿Êä³öµçÁ÷
+N#define set_add_c					    Run_Control[24]
+N#define set_c_cutoff_v					Run_Control[25]
+N#define set_c_cutoff_c					Run_Control[26]
+N#define set_dc_cutoff_v					Run_Control[27]
+N#define set_dc_cutoff_c					Run_Control[28]
+N#define start_time					    Run_Control[29]
+N#define end_time					    Run_Control[30]
+N#define opv1    					    Run_Control[31]
+N#define opv2    					    Run_Control[32]
+N#define opv3    					    Run_Control[33]
+N#define opc1    					    Run_Control[34]
+N#define opc2    					    Run_Control[35]
+N#define opc3    					    Run_Control[36]
+N#define load_c    					    Run_Control[37]
+N#define pow_v    					    Run_Control[38]
+N#define cdc_dc    					    Run_Control[39]
+N#define pow_c    					    Run_Control[40]
+N
+N
+Nextern vu16 coff[6];
+N#define cov1    					    coff[0]
+N#define cov2    					    coff[1]
+N#define cov3    					    coff[2]
+N#define coc1    					    coff[3]
+N#define coc2    					    coff[4]
+N#define coc3    					    coff[5]										 //???
+N
+N/*
+N************************************************************************
+N*						Ò³ÃæÊ¶±ğ·û
+N************************************************************************
+N*/
+N
+N#define face_graph      0
+N#define face_cdc        1
+N#define face_menu       2
+N#define face_r          3
+N#define face_load       4
+N#define face_set        5
+N#define face_starter    6
+N#define face_sys_info   7
+N/*
+N************************************************************************
+N*						ÉèÖÃÑ¡ÏîÊ¶±ğ·û
+N************************************************************************
+N*/
+N
+N#define set_1           0
+N#define set_2           1
+N#define set_3           2
+N#define set_4           3
+N#define set_5           4
+N#define set_6           5
+N#define set_7           6
+N#define set_8           7
+N#define set_9           8
+N#define set_10          9
+N#define set_11          10
+N#define set_12          11
+N#define set_13          12
+N#define set_14          13
+N#define set_15          14
+N#define set_16          15
+N#define set_17          16
+N#define set_18          17
+N#define set_19          18
+N#define set_20          19
+N#define set_21          20
+N#define set_22          21
+N#define set_23          22
+N#define set_24          23
+N#define set_25          24
+N#define set_26          25
+N#define set_27          26
+N#define set_28          27
+N#define set_29          28
+N#define set_30          29
+N#define set_31          30
+N#define set_32          31
+N#define set_33          32
+N#define set_34          33
+N#define set_35          34
+N#define set_36          35
+N#define set_37          36
+N#define set_38          37
+N#define set_39          38
+N#define set_40          39
+N#define set_41          40
+N#define set_42          41
+N#define set_43          42
+N#define set_44          43
+N#define set_45          44
+N#define set_46          45
+N#define set_47          46
+N#define set_48          47
+N#define set_49          48
+N#define set_50          49
+N#define set_51          50
+N#define set_52          51
+N#define set_53          52
+N#define set_54          53
+N#define set_55          54
+N#define set_56          55
+N#define set_57          56
+N#define set_58          57
+N#define set_59          58
+N#define set_60          59
+N#define set_61          60
+N#define set_62          61
+N#define set_63          62
+N#define set_64          63
+N#define set_65          64
+N#define set_66          65
+N#define set_67          66
+N#define set_68          67
+N#define set_69          68
+N#define set_70          69
+N#define set_71          70
+N/*
+N************************************************************************
+N*						²ÎÊıÉèÖÃÊ¶±ğ·û
+N************************************************************************
+N*/
+N
+N#define set_1_on            0xff
+N#define set_1_off           0
+N#define set_2_on            0xff
+N#define set_2_off           0
+N#define set_3_on            1
+N#define set_3_off           0
+N#define set_4_on            0xff
+N#define set_4_off           0
+N#define cdc_on              1
+N#define cdc_off             0
+N#define oct_on              1
+N#define oct_off             0
+N#define c_on                1
+N#define c_off               0
+N#define mode_r              1
+N#define mode_load           2
+N#define mode_pow            3
+N#define load_on             1
+N#define load_off            0
+N#define pow_on              1
+N#define pow_off             0
+N#define Lion                1
+N#define NiMH                2
+N#define NiCd                3
+N#define SLA                 4
+N#define LiMH                5
+N#define step1               0
+N#define step2               1
+N#define step3               2
+N
 N
 N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
 Nextern vu32 Correct_Parametet[12];
-N#define  REG_CorrectionV   Correct_Parametet[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊı
-N#define  REG_Load_A			   Correct_Parametet[1]//¸ºÔØCCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-N#define  SET_LoadA			   Correct_Parametet[2]//¸ºÔØCCÄ£Ê½¿ØÖÆµçÁ÷²ÎÊı
-N#define  REG_LoadV			   Correct_Parametet[3]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹²ÎÊı
-N#define  SET_LoadV			   Correct_Parametet[4]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹¿ØÖÆ²ÎÊı
+N#define  REG_CorrectionV   Correct_Parametet[0]//???????
+N#define  REG_Load_A			   Correct_Parametet[1]//??CC???¡¤???
+N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????¡¤??
+N#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
+N#define  SET_LoadV			   Correct_Parametet[4]//??CV??????????
 N
-N#define  REG_CorrectionR   Correct_Parametet[5]//ÄÚ×è²âÁ¿²ÎÊı
-N#define  REG_CorrectionR1   Correct_Parametet[11]//ÄÚ×è²âÁ¿²ÎÊı
+N#define  REG_CorrectionR   Correct_Parametet[5]//?????
 N
-N#define  REG_POWERA			   Correct_Parametet[6]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-N#define  SET_POWERA			   Correct_Parametet[7]//µçÔ´CCÄ£Ê½µçÁ÷¿ØÖÆ²âÁ¿²ÎÊı
-N#define  REG_POWERV			   Correct_Parametet[8]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿²ÎÊı
-N#define  SET_POWERV				 Correct_Parametet[9]//µçÔ´CVÄ£Ê½µçÑ¹¿ØÖÆ²ÎÊı
-N#define  CON_POWERA				 Correct_Parametet[10]//µçÔ´CVÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
+N#define  REG_POWERA			   Correct_Parametet[6]//??CC???¡¤???
+N#define  SET_POWERA			   Correct_Parametet[7]//??CC???¡¤?????
+N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
+N#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+N#define  CON_POWERA				 Correct_Parametet[10]//??CV???¡¤???
+N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 N
 N
 N
 Nextern vu8  correct_por[6];
-N#define  Polar             correct_por[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊı
-N#define  Polar1            correct_por[1]//¸ºÔØµçÁ÷²âÁ¿ºÍ¿ØÖÆ
-N#define  Polar2						 correct_por[2]//¸ºÔØCVÄ£Ê½µçÑ¹²âÁ¿ºÍ¿ØÖÆ
-N#define  Polar3						 correct_por[3]//ÄÚ×è²âÁ¿ºÍµçÔ´CVÄ£Ê½µçÁ÷²âÁ¿
-N#define  Polar4						 correct_por[4]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿ºÍ¿ØÖÆ
-N#define  Polar5						 correct_por[5]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿ºÍ¿ØÖÆ
+N#define  Polar             correct_por[0]//???????
+N#define  Polar1            correct_por[1]//???¡¤????
+N#define  Polar2						 correct_por[2]//??CV????????
+N#define  Polar3						 correct_por[3]//??????CV???¡¤?
+N#define  Polar4						 correct_por[4]//??CC???¡¤????
+N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[12];//Ğ£×¼ÏµÊı
-N#define  REG_ReadV_Offset   Correct_Strong[0]//ÄÚ×èµçÑ¹²âÁ¿²ÎÊı
-N#define  REG_LoadA_Offset   Correct_Strong[1]//¸ºÔØCCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-N#define  SET_LoadA_Offset   Correct_Strong[2]//¸ºÔØCCÄ£Ê½¿ØÖÆµçÁ÷²ÎÊı
-N#define  REG_LoadV_Offset   Correct_Strong[3]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹²ÎÊı
-N#define  SET_LoadV_Offset   Correct_Strong[4]//¸ºÔØCVÄ£Ê½¿ØÖÆµçÑ¹¿ØÖÆ²ÎÊı
+Nextern vu32 Correct_Strong[12];//§µ???
+N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???¡¤???
+N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????¡¤??
+N#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
+N#define  SET_LoadV_Offset   Correct_Strong[4]//??CV??????????
 N
-N#define  REG_ReadR_Offset   Correct_Strong[5]//ÄÚ×è²âÁ¿²ÎÊı
-N#define  REG_ReadR1_Offset   Correct_Strong[11]//ÄÚ×è²âÁ¿²ÎÊı
+N#define  REG_ReadR_Offset   Correct_Strong[5]//?????
 N
-N#define  REG_POWERA_Offset  Correct_Strong[6]//µçÔ´CCÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
-N#define  SET_POWERA_Offset  Correct_Strong[7]//µçÔ´CCÄ£Ê½µçÁ÷¿ØÖÆ²âÁ¿²ÎÊı
-N#define  REG_POWERV_Offset  Correct_Strong[8]//µçÔ´CVÄ£Ê½µçÑ¹²âÁ¿²ÎÊı
-N#define  SET_POWERV_Offset	Correct_Strong[9]//µçÔ´CVÄ£Ê½µçÑ¹¿ØÖÆ²ÎÊı
-N#define  CON_POWERA_Offset	Correct_Strong[10]//µçÔ´CVÄ£Ê½µçÁ÷²âÁ¿²ÎÊı
+N#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???¡¤???
+N#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???¡¤?????
+N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
+N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???¡¤???
+N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
 N
 N//---------------------------
 Nextern vu16 ADC_NTC_Filt[50];
@@ -34908,20 +35141,6 @@ N#define Receive_BUFFERSIZE   10
 N//=============================================================================
 N#endif
 N/******************* (C) COPYRIGHT 2015 KUNKIN *****END OF FILE*************************/
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
 L 9 "..\drive\clock.c" 2
 N#include "stm32f4xx_rcc.h"
 N/*****************************************************************/

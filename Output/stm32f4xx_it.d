@@ -37,3 +37,4 @@
 ..\Output\stm32f4xx_it.o: ..\Libraries\FWlib\inc\stm32f4xx_fsmc.h
 ..\Output\stm32f4xx_it.o: ..\Include\bsp_SysTick.h
 ..\Output\stm32f4xx_it.o: ..\Include\my_register.h
+..\Output\stm32f4xx_it.o: ..\Include\my_register.h
