@@ -48934,6 +48934,7 @@ N#define set_68          67
 N#define set_69          68
 N#define set_70          69
 N#define set_71          70
+N#define set_72          71
 N/*
 N************************************************************************
 N*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -49412,6 +49413,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -49879,6 +49881,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -50349,6 +50352,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -50819,6 +50823,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -51135,12 +51140,19 @@ N    unsigned bit6: 1;
 N    unsigned bit7: 1;
 N} flagA, flagB,flagC,flagD,flagE,flagF,flagG;
 N
+Nextern vu8 resetflag;
+Nextern vu8 resdone;
 Nextern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ16;
 Xextern const GUI_FONT GUI_FontHZ16;
 Nextern WM_HWIN CreateWindow(void);
 Xextern GUI_HWIN CreateWindow(void);
 Nextern WM_HWIN CreateR(void);
 Xextern GUI_HWIN CreateR(void);
+N
+Nstatic void ee_Delay( vu32 nCount)	 //İ²Õ¥Ö„Ò“Ê±Ú¯Ë½
+N{
+N	for(; nCount != 0; nCount--);
+N}
 N/**********************************************************************************************************
 N*	º¯ Êı Ãû: MainTask
 N*	¹¦ÄÜËµÃ÷: GUIÖ÷º¯Êı
@@ -51151,6 +51163,8 @@ N*/
 Nvoid MainTask(void) 
 N{ 
 N//	unsigned char  ucKeyCode;
+N    static int read1963;
+N    static int scancount;
 N	GUI_Init();
 N	WM_SetDesktopColor(GUI_BLUE);  
 X	WM_SetDesktopColor(0x00FF0000);  
@@ -51177,11 +51191,9 @@ N	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
 X	HEADER_SetDefaultSkin(HEADER_DrawSkinFlex);
 N	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
 X	RADIO_SetDefaultSkin(RADIO_DrawSkinFlex);
-N    GPIO_ResetBits(GPIOC,GPIO_Pin_13);
-X    GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
-N    GPIO_SetBits(GPIOC,GPIO_Pin_13);//å…³é—­ç”µæºè¾“å‡ºç»§ç”µå™¨
-X    GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
-N	CreateR();//¿ª»ú½øÈëÄÚ×è²âÊÔ½çÃæ
+W "..\STemWinLibrary522\emWinTask\MainTask.c" 69 5 function "CreateSTARTER" declared implicitly
+N    CreateSTARTER();
+N//	CreateR();//¿ª»ú½øÈëÄÚ×è²âÊÔ½çÃæ
 N	flag_Load_CC=1;//¿ª»ú¸ºÔØÄ¬ÈÏ½øÈëCCÄ£Ê½
 X	(flagD . bit7)=1;
 N	GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
@@ -51198,6 +51210,32 @@ X		TIM_SetCompare1(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)),Contr_Cur
 N		TIM_SetCompare2(TIM2,Contr_Voltage);//ÎÈÑ¹µçÔ´µçÑ¹DAC
 X		TIM_SetCompare2(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0000)),Contr_Voltage);
 N		DAC8531_Send(Contr_Laod);//¼ÓÔØDACÖµ
+N        if(page_sw != face_starter)
+X        if(page_sw != 6)
+N        {
+N            if(scancount == 9)
+N            {
+N                sLCD_WR_REG(0xf1);
+N                ee_Delay(30);
+N                read1963 =sLCD_Read_Data();
+N                scancount = 0;
+N            }else{
+N                scancount++;
+N            }
+N//                 if(resdone == 1)
+N//                 {
+N//                     sLCD_WR_REG(0xf1);
+N//                     ee_Delay(30);
+N//                     read1963 =sLCD_Read_Data();
+N//                 }
+N             if(read1963 != 0x03)
+N             {
+N                 resetflag = 1;               
+N             }else{
+N                 resdone = 0;
+N                 resetflag = 0; 
+N             }
+N        }
 N		if(Flag_DAC_OFF==0)
 X		if((flagB . bit3)==0)
 N		{

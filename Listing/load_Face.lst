@@ -48884,6 +48884,7 @@ N#define set_68          67
 N#define set_69          68
 N#define set_70          69
 N#define set_71          70
+N#define set_72          71
 N/*
 N************************************************************************
 N*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -49333,6 +49334,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -51768,6 +51770,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -53049,6 +53052,8 @@ X  Run_Control[4] = Run_Control[37];
 N  pass = 0;
 N  mode_sw = mode_load;
 X  mode_sw = 2;
+N  GPIO_SetBits(GPIOA,GPIO_Pin_15);//ç”µå­è´Ÿè½½OFF
+X  GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
 N  GPIO_ResetBits(GPIOC,GPIO_Pin_1);//å…³é—­ç”µæºè¾“å‡º
 X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
 N  GPIO_SetBits(GPIOC,GPIO_Pin_13);//å…³é—­ç”µæºè¾“å‡ºç»§ç”µå™¨

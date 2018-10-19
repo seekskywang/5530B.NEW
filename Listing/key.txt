@@ -629,24 +629,24 @@
 ;;;825    			
 ;;;826    			case KEY_ESC :
 ;;;827    			{
-;;;828                    
+;;;828                  sLCD_WR_REG(0x01);
 ;;;829    //                main();
 ;;;830    //				timer_sw = 0;
 ;;;831    				KeyCounter = 0;
 ;;;832    			   BEEP_Tiggr();//瑙﹀彂铚傞福鍣
-;;;833                   switch(page_sw){
-;;;834                       case face_r:
-;;;835                       {
-;;;836                            if(oc_mode == 0)
-;;;837                            {
-;;;838                                oc_mode = 1;
-;;;839                            }else{
-;;;840                                oc_mode = 0;
-;;;841                            }
-;;;842                       }break;
-;;;843                       default:sLCD_WR_REG(0x01);
-;;;844                       break;
-;;;845                   }
+;;;833    //                switch(page_sw){
+;;;834    //                    case face_r:
+;;;835    //                    {
+;;;836    //                         if(oc_mode == 0)
+;;;837    //                         {
+;;;838    //                             oc_mode = 1;
+;;;839    //                         }else{
+;;;840    //                             oc_mode = 0;
+;;;841    //                         }
+;;;842    //                    }break;
+;;;843    //                    default:sLCD_WR_REG(0x01);
+;;;844    //                    break;
+;;;845    //                }
 ;;;846    			}
 ;;;847    			break;
 ;;;848    			
@@ -1062,29 +1062,29 @@
 0001ee  e7f6              B        |L1.478|
 0001f0  e17c              B        |L1.1260|
 0001f2  e098              B        |L1.806|
-0001f4  e3fd              B        |L1.2546|
-0001f6  e2bf              B        |L1.1912|
+0001f4  e3fb              B        |L1.2542|
+0001f6  e2b3              B        |L1.1888|
 0001f8  e138              B        |L1.1132|
-0001fa  e3fb              B        |L1.2548|
+0001fa  e3fd              B        |L1.2552|
 0001fc  e22a              B        |L1.1620|
-0001fe  e3fa              B        |L1.2550|
+0001fe  e3fc              B        |L1.2554|
 000200  e0cf              B        |L1.930|
-000202  e3f9              B        |L1.2552|
+000202  e3fb              B        |L1.2556|
 000204  e1f2              B        |L1.1516|
-000206  e3f8              B        |L1.2554|
+000206  e3fa              B        |L1.2558|
 000208  e04b              B        |L1.674|
 00020a  e1ad              B        |L1.1384|
-00020c  e3f6              B        |L1.2556|
+00020c  e3f8              B        |L1.2560|
 00020e  e008              B        |L1.546|
-000210  e256              B        |L1.1728|
-000212  e3f4              B        |L1.2558|
-000214  e3d9              B        |L1.2506|
-000216  e2ea              B        |L1.2030|
-000218  e3f2              B        |L1.2560|
-00021a  e320              B        |L1.2142|
-00021c  e271              B        |L1.1794|
-00021e  e22e              B        |L1.1662|
-000220  e3ef              B        |L1.2562|
+000210  e249              B        |L1.1702|
+000212  e3f6              B        |L1.2562|
+000214  e3cb              B        |L1.2478|
+000216  e2dd              B        |L1.2004|
+000218  e3f4              B        |L1.2564|
+00021a  e312              B        |L1.2114|
+00021c  e264              B        |L1.1768|
+00021e  e221              B        |L1.1636|
+000220  e3f1              B        |L1.2566|
                   |L1.546|
 000222  4882              LDR      r0,|L1.1068|
 000224  7800              LDRB     r0,[r0,#0]            ;401  ; page_sw
@@ -1343,8 +1343,8 @@
                   |L1.1138|
 000472  d299              BCS      |L1.936|
 000474  e8dff000          TBB      [pc,r0]               ;619
-000478  fe270412          DCB      0xfe,0x27,0x04,0x12
-00047c  150afe2f          DCB      0x15,0x0a,0xfe,0x2f
+000478  17270412          DCB      0x17,0x27,0x04,0x12
+00047c  150a172f          DCB      0x15,0x0a,0x17,0x2f
 000480  a0fa              ADR      r0,|L1.2156|
 000482  f7fffffe          BL       INPUT_POW
 000486  81ac              STRH     r4,[r5,#0xc]          ;623
@@ -1360,7 +1360,7 @@
 0004a2  a0f2              ADR      r0,|L1.2156|
 0004a4  e000              B        |L1.1192|
                   |L1.1190|
-0004a6  e0e5              B        |L1.1652|
+0004a6  e124              B        |L1.1778|
                   |L1.1192|
 0004a8  f7fffffe          BL       INPUT_LOAD
 0004ac  81ac              STRH     r4,[r5,#0xc]          ;646
@@ -1393,8 +1393,8 @@
                   |L1.1266|
 0004f2  d2be              BCS      |L1.1138|
 0004f4  e8dff000          TBB      [pc,r0]               ;673
-0004f8  be250412          DCB      0xbe,0x25,0x04,0x12
-0004fc  150abe2d          DCB      0x15,0x0a,0xbe,0x2d
+0004f8  fd250412          DCB      0xfd,0x25,0x04,0x12
+0004fc  150afd2d          DCB      0x15,0x0a,0xfd,0x2d
 000500  a0db              ADR      r0,|L1.2160|
 000502  f7fffffe          BL       INPUT_POW
 000506  81ac              STRH     r4,[r5,#0xc]          ;677
@@ -1436,10 +1436,11 @@
 000568  48bf              LDR      r0,|L1.2152|
 00056a  7800              LDRB     r0,[r0,#0]            ;727  ; page_sw
 00056c  2808              CMP      r0,#8                 ;727
+                  |L1.1390|
 00056e  d2c0              BCS      |L1.1266|
 000570  e8dff000          TBB      [pc,r0]               ;727
-000574  80250412          DCB      0x80,0x25,0x04,0x12
-000578  150a802d          DCB      0x15,0x0a,0x80,0x2d
+000574  bf250412          DCB      0xbf,0x25,0x04,0x12
+000578  150abf2d          DCB      0x15,0x0a,0xbf,0x2d
 00057c  a0bd              ADR      r0,|L1.2164|
 00057e  f7fffffe          BL       INPUT_POW
 000582  81ac              STRH     r4,[r5,#0xc]          ;731
@@ -1486,9 +1487,9 @@
 0005ec  489e              LDR      r0,|L1.2152|
 0005ee  7800              LDRB     r0,[r0,#0]            ;783  ; page_sw
 0005f0  2806              CMP      r0,#6                 ;783
-0005f2  d23f              BCS      |L1.1652|
+0005f2  d2bc              BCS      |L1.1390|
 0005f4  e8dff000          TBB      [pc,r0]               ;783
-0005f8  3e1e031b          DCB      0x3e,0x1e,0x03,0x1b
+0005f8  7d1e031b          DCB      0x7d,0x1e,0x03,0x1b
 0005fc  130b              DCB      0x13,0x0b
 0005fe  a09e              ADR      r0,|L1.2168|
 000600  f7fffffe          BL       INPUT_POW
@@ -1520,80 +1521,374 @@
 00064c  e8bd5ff0          POP      {r4-r12,lr}           ;811
 000650  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1620|
-000654  81ac              STRH     r4,[r5,#0xc]          ;831
-000656  f7fffffe          BL       BEEP_Tiggr
-00065a  4883              LDR      r0,|L1.2152|
-00065c  7800              LDRB     r0,[r0,#0]            ;833  ; page_sw
-00065e  2803              CMP      r0,#3                 ;833
-000660  d004              BEQ      |L1.1644|
-000662  e8bd5ff0          POP      {r4-r12,lr}           ;843
-000666  2001              MOVS     r0,#1                 ;843
-000668  f7ffbffe          B.W      sLCD_WR_REG
-                  |L1.1644|
-00066c  4883              LDR      r0,|L1.2172|
-00066e  7801              LDRB     r1,[r0,#0]            ;836  ; oc_mode
-000670  b111              CBZ      r1,|L1.1656|
-000672  7004              STRB     r4,[r0,#0]            ;840
-                  |L1.1652|
+000654  2001              MOVS     r0,#1                 ;828
+000656  f7fffffe          BL       sLCD_WR_REG
+00065a  81ac              STRH     r4,[r5,#0xc]          ;831
+00065c  e8bd5ff0          POP      {r4-r12,lr}           ;832
+000660  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.1636|
+000664  4880              LDR      r0,|L1.2152|
+000666  7800              LDRB     r0,[r0,#0]            ;851  ; page_sw
+000668  2801              CMP      r0,#1                 ;851
+00066a  d015              BEQ      |L1.1688|
+00066c  2805              CMP      r0,#5                 ;851
+00066e  d005              BEQ      |L1.1660|
+000670  2807              CMP      r0,#7                 ;851
+                  |L1.1650|
+000672  d13e              BNE      |L1.1778|
+000674  7810              LDRB     r0,[r2,#0]            ;861  ; admin
+000676  2801              CMP      r0,#1                 ;861
+000678  d007              BEQ      |L1.1674|
+00067a  e008              B        |L1.1678|
+                  |L1.1660|
+00067c  f7fffffe          BL       SET_OP_LEFT
+000680  81ac              STRH     r4,[r5,#0xc]          ;855
+000682  e8bd5ff0          POP      {r4-r12,lr}           ;856
+000686  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.1674|
+00068a  f7fffffe          BL       SYS_INFO_LEFT
+                  |L1.1678|
+00068e  81ac              STRH     r4,[r5,#0xc]          ;865
+000690  e8bd5ff0          POP      {r4-r12,lr}           ;866
+000694  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.1688|
+000698  f7fffffe          BL       CDC_OP_LEFT
+00069c  81ac              STRH     r4,[r5,#0xc]          ;872
+00069e  e8bd5ff0          POP      {r4-r12,lr}           ;873
+0006a2  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.1702|
+0006a6  4870              LDR      r0,|L1.2152|
+0006a8  7800              LDRB     r0,[r0,#0]            ;881  ; page_sw
+0006aa  2801              CMP      r0,#1                 ;881
+0006ac  d015              BEQ      |L1.1754|
+0006ae  2805              CMP      r0,#5                 ;881
+0006b0  d005              BEQ      |L1.1726|
+0006b2  2807              CMP      r0,#7                 ;881
+0006b4  d1dd              BNE      |L1.1650|
+0006b6  7810              LDRB     r0,[r2,#0]            ;891  ; admin
+0006b8  2801              CMP      r0,#1                 ;891
+0006ba  d007              BEQ      |L1.1740|
+0006bc  e008              B        |L1.1744|
+                  |L1.1726|
+0006be  f7fffffe          BL       SET_OP_RIGHT
+0006c2  81ac              STRH     r4,[r5,#0xc]          ;885
+0006c4  e8bd5ff0          POP      {r4-r12,lr}           ;886
+0006c8  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.1740|
+0006cc  f7fffffe          BL       SYS_INFO_RIGHT
+                  |L1.1744|
+0006d0  81ac              STRH     r4,[r5,#0xc]          ;895
+0006d2  e8bd5ff0          POP      {r4-r12,lr}           ;896
+0006d6  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.1754|
+0006da  f7fffffe          BL       CDC_OP_RIGHT
+0006de  81ac              STRH     r4,[r5,#0xc]          ;902
+0006e0  e8bd5ff0          POP      {r4-r12,lr}           ;903
+0006e4  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.1768|
+0006e8  485f              LDR      r0,|L1.2152|
+0006ea  7800              LDRB     r0,[r0,#0]            ;911  ; page_sw
+0006ec  2808              CMP      r0,#8                 ;911
+                  |L1.1774|
+0006ee  d200              BCS      |L1.1778|
+0006f0  e000              B        |L1.1780|
+                  |L1.1778|
+0006f2  e0ff              B        |L1.2292|
+                  |L1.1780|
+0006f4  e8dff000          TBB      [pc,r0]               ;911
+0006f8  fe1c0419          DCB      0xfe,0x1c,0x04,0x19
+0006fc  0b12fe2a          DCB      0x0b,0x12,0xfe,0x2a
+000700  81ac              STRH     r4,[r5,#0xc]          ;914
+000702  f7fffffe          BL       BEEP_Tiggr
+000706  e8bd5ff0          POP      {r4-r12,lr}           ;916
+00070a  f7ffbffe          B.W      MENU_OP_UP
+00070e  81ac              STRH     r4,[r5,#0xc]          ;921
+000710  f7fffffe          BL       BEEP_Tiggr
+000714  e8bd5ff0          POP      {r4-r12,lr}           ;923
+000718  f7ffbffe          B.W      LOAD_OP_UP
+00071c  f7fffffe          BL       SET_OP_UP
+000720  81ac              STRH     r4,[r5,#0xc]          ;929
+000722  e8bd5ff0          POP      {r4-r12,lr}           ;930
+000726  f7ffbffe          B.W      BEEP_Tiggr
+00072a  7808              LDRB     r0,[r1,#0]            ;935  ; para_set2
+00072c  28ff              CMP      r0,#0xff              ;935
+00072e  d006              BEQ      |L1.1854|
+000730  f7fffffe          BL       CDC_OP_UP
+000734  81ac              STRH     r4,[r5,#0xc]          ;947
+000736  e8bd5ff0          POP      {r4-r12,lr}           ;948
+00073a  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.1854|
+00073e  f7fffffe          BL       OC_OP_UP
+000742  81ac              STRH     r4,[r5,#0xc]          ;938
+000744  e8bd5ff0          POP      {r4-r12,lr}           ;939
+000748  f7ffbffe          B.W      BEEP_Tiggr
+00074c  7810              LDRB     r0,[r2,#0]            ;953  ; admin
+00074e  2801              CMP      r0,#1                 ;953
+000750  d101              BNE      |L1.1878|
+000752  f7fffffe          BL       SYS_INFO_UP
+                  |L1.1878|
+000756  81ac              STRH     r4,[r5,#0xc]          ;957
+000758  e8bd5ff0          POP      {r4-r12,lr}           ;958
+00075c  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.1888|
+000760  4841              LDR      r0,|L1.2152|
+000762  7800              LDRB     r0,[r0,#0]            ;967  ; page_sw
+000764  2808              CMP      r0,#8                 ;967
+                  |L1.1894|
+000766  d2c2              BCS      |L1.1774|
+000768  e8dff000          TBB      [pc,r0]               ;967
+00076c  c41c0419          DCB      0xc4,0x1c,0x04,0x19
+000770  0b12c42a          DCB      0x0b,0x12,0xc4,0x2a
+000774  81ac              STRH     r4,[r5,#0xc]          ;970
+000776  f7fffffe          BL       BEEP_Tiggr
+00077a  e8bd5ff0          POP      {r4-r12,lr}           ;972
+00077e  f7ffbffe          B.W      MENU_OP_DOWN
+000782  81ac              STRH     r4,[r5,#0xc]          ;977
+000784  f7fffffe          BL       BEEP_Tiggr
+000788  e8bd5ff0          POP      {r4-r12,lr}           ;979
+00078c  f7ffbffe          B.W      LOAD_OP_DOWN
+000790  f7fffffe          BL       SET_OP_DOWN
+000794  81ac              STRH     r4,[r5,#0xc]          ;985
+000796  e8bd5ff0          POP      {r4-r12,lr}           ;986
+00079a  f7ffbffe          B.W      BEEP_Tiggr
+00079e  7808              LDRB     r0,[r1,#0]            ;991  ; para_set2
+0007a0  28ff              CMP      r0,#0xff              ;991
+0007a2  d006              BEQ      |L1.1970|
+0007a4  f7fffffe          BL       CDC_OP_DOWN
+0007a8  81ac              STRH     r4,[r5,#0xc]          ;1002
+0007aa  e8bd5ff0          POP      {r4-r12,lr}           ;1003
+0007ae  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.1970|
+0007b2  f7fffffe          BL       OC_OP_DOWN
+0007b6  81ac              STRH     r4,[r5,#0xc]          ;994
+0007b8  e8bd5ff0          POP      {r4-r12,lr}           ;995
+0007bc  f7ffbffe          B.W      BEEP_Tiggr
+0007c0  7810              LDRB     r0,[r2,#0]            ;1008  ; admin
+0007c2  2801              CMP      r0,#1                 ;1008
+0007c4  d101              BNE      |L1.1994|
+0007c6  f7fffffe          BL       SYS_INFO_DOWN
+                  |L1.1994|
+0007ca  81ac              STRH     r4,[r5,#0xc]          ;1012
+0007cc  e8bd5ff0          POP      {r4-r12,lr}           ;1013
+0007d0  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2004|
+0007d4  4824              LDR      r0,|L1.2152|
+0007d6  7800              LDRB     r0,[r0,#0]            ;1023  ; page_sw
+0007d8  2808              CMP      r0,#8                 ;1023
+0007da  d288              BCS      |L1.1774|
+0007dc  e8dff000          TBB      [pc,r0]               ;1023
+0007e0  8a230412          DCB      0x8a,0x23,0x04,0x12
+0007e4  150b8a2a          DCB      0x15,0x0b,0x8a,0x2a
+0007e8  f7fffffe          BL       MENU_SET
+0007ec  81ac              STRH     r4,[r5,#0xc]          ;1027
+0007ee  e8bd5ff0          POP      {r4-r12,lr}           ;1028
+0007f2  f7ffbffe          B.W      BEEP_Tiggr
+0007f6  f7fffffe          BL       PARA_SET
+0007fa  81ac              STRH     r4,[r5,#0xc]          ;1034
+0007fc  e8bd5ff0          POP      {r4-r12,lr}           ;1035
+000800  f7ffbffe          B.W      BEEP_Tiggr
+000804  7808              LDRB     r0,[r1,#0]            ;1040  ; para_set2
+000806  28ff              CMP      r0,#0xff              ;1040
+000808  d006              BEQ      |L1.2072|
+00080a  f7fffffe          BL       LOAD_SET
+00080e  81ac              STRH     r4,[r5,#0xc]          ;1051
+000810  e8bd5ff0          POP      {r4-r12,lr}           ;1052
+000814  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2072|
+000818  f7fffffe          BL       OC_SET
+00081c  81ac              STRH     r4,[r5,#0xc]          ;1043
+00081e  e8bd5ff0          POP      {r4-r12,lr}           ;1044
+000822  f7ffbffe          B.W      BEEP_Tiggr
+000826  f7fffffe          BL       CDC_SET
+00082a  81ac              STRH     r4,[r5,#0xc]          ;1058
+00082c  e8bd5ff0          POP      {r4-r12,lr}           ;1059
+000830  f7ffbffe          B.W      BEEP_Tiggr
+000834  f7fffffe          BL       CFM_PASS
+000838  81ac              STRH     r4,[r5,#0xc]          ;1065
+00083a  e8bd5ff0          POP      {r4-r12,lr}           ;1066
+00083e  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2114|
+000842  7868              LDRB     r0,[r5,#1]            ;1074  ; track
+000844  2805              CMP      r0,#5                 ;1074
+000846  d28e              BCS      |L1.1894|
+000848  e8dff000          TBB      [pc,r0]               ;1074
+00084c  71914f03          DCB      0x71,0x91,0x4f,0x03
+000850  2f00              DCB      0x2f,0x00
+000852  6818              LDR      r0,[r3,#0]            ;1078  ; hWinR
+000854  f7fffffe          BL       WM_DeleteWindow
+000858  6830              LDR      r0,[r6,#0]            ;1079  ; hWinWind
+00085a  f7fffffe          BL       WM_DeleteWindow
+00085e  6838              LDR      r0,[r7,#0]            ;1080  ; hWinG
+000860  f7fffffe          BL       WM_DeleteWindow
+000864  e00a              B        |L1.2172|
+000866  0000              DCW      0x0000
+                  |L1.2152|
+                          DCD      page_sw
+                  |L1.2156|
+00086c  3800              DCB      "8",0
+00086e  00                DCB      0
+00086f  00                DCB      0
+                  |L1.2160|
+000870  3900              DCB      "9",0
+000872  00                DCB      0
+000873  00                DCB      0
+                  |L1.2164|
+000874  3000              DCB      "0",0
+000876  00                DCB      0
+000877  00                DCB      0
+                  |L1.2168|
+000878  2e00              DCB      ".",0
+00087a  00                DCB      0
+00087b  00                DCB      0
+                  |L1.2172|
+00087c  f8d80000          LDR      r0,[r8,#0]            ;1081  ; load_wind
+000880  f7fffffe          BL       WM_DeleteWindow
+000884  f8d90000          LDR      r0,[r9,#0]            ;1082  ; hWinsysinfo
+000888  f7fffffe          BL       WM_DeleteWindow
+00088c  f8da0000          LDR      r0,[r10,#0]           ;1083  ; hWincdc
+000890  f7fffffe          BL       WM_DeleteWindow
+000894  f8db0000          LDR      r0,[r11,#0]  ; hWinset
+000898  f7fffffe          BL       WM_DeleteWindow
 ;;;1085                           CreateR();
+00089c  f7fffffe          BL       CreateR
 ;;;1086                           KeyCounter = 0;
+0008a0  81ac              STRH     r4,[r5,#0xc]
 ;;;1087                           BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
+0008a2  e8bd5ff0          POP      {r4-r12,lr}
+0008a6  f7ffbffe          B.W      BEEP_Tiggr
 ;;;1088                           break;
 ;;;1089                       }
 ;;;1090                       case face_load:
 ;;;1091                       {
 ;;;1092                           WM_DeleteWindow(hWinR);
+0008aa  6818              LDR      r0,[r3,#0]  ; hWinR
+0008ac  f7fffffe          BL       WM_DeleteWindow
 ;;;1093                           WM_DeleteWindow(hWinWind);
+0008b0  6830              LDR      r0,[r6,#0]  ; hWinWind
+0008b2  f7fffffe          BL       WM_DeleteWindow
 ;;;1094                           WM_DeleteWindow(hWinG);
+0008b6  6838              LDR      r0,[r7,#0]  ; hWinG
+0008b8  f7fffffe          BL       WM_DeleteWindow
 ;;;1095                           WM_DeleteWindow(load_wind);
+0008bc  f8d80000          LDR      r0,[r8,#0]  ; load_wind
+0008c0  f7fffffe          BL       WM_DeleteWindow
 ;;;1096                           WM_DeleteWindow(hWinsysinfo);
+0008c4  f8d90000          LDR      r0,[r9,#0]  ; hWinsysinfo
+0008c8  f7fffffe          BL       WM_DeleteWindow
 ;;;1097                           WM_DeleteWindow(hWincdc);
+0008cc  f8da0000          LDR      r0,[r10,#0]  ; hWincdc
+0008d0  f7fffffe          BL       WM_DeleteWindow
 ;;;1098                           WM_DeleteWindow(hWinset);
+0008d4  f8db0000          LDR      r0,[r11,#0]  ; hWinset
+0008d8  f7fffffe          BL       WM_DeleteWindow
 ;;;1099                           CreateWindow2();
+0008dc  f7fffffe          BL       CreateWindow2
 ;;;1100                           KeyCounter = 0;
+0008e0  81ac              STRH     r4,[r5,#0xc]
 ;;;1101                           BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
+0008e2  e8bd5ff0          POP      {r4-r12,lr}
+0008e6  f7ffbffe          B.W      BEEP_Tiggr
 ;;;1102                           break;
 ;;;1103                       }
 ;;;1104                       case face_menu:
 ;;;1105                       {
 ;;;1106                           WM_DeleteWindow(hWinR);
+0008ea  6818              LDR      r0,[r3,#0]  ; hWinR
+0008ec  f7fffffe          BL       WM_DeleteWindow
 ;;;1107                           WM_DeleteWindow(hWinWind);
+0008f0  6830              LDR      r0,[r6,#0]  ; hWinWind
+0008f2  e000              B        |L1.2294|
+                  |L1.2292|
+0008f4  e109              B        |L1.2826|
+                  |L1.2294|
+0008f6  f7fffffe          BL       WM_DeleteWindow
 ;;;1108                           WM_DeleteWindow(hWinG);
+0008fa  6838              LDR      r0,[r7,#0]  ; hWinG
+0008fc  f7fffffe          BL       WM_DeleteWindow
 ;;;1109                           WM_DeleteWindow(load_wind);
+000900  f8d80000          LDR      r0,[r8,#0]  ; load_wind
+000904  f7fffffe          BL       WM_DeleteWindow
 ;;;1110                           WM_DeleteWindow(hWinsysinfo);
+000908  f8d90000          LDR      r0,[r9,#0]  ; hWinsysinfo
+00090c  f7fffffe          BL       WM_DeleteWindow
 ;;;1111                           WM_DeleteWindow(hWincdc);
+000910  f8da0000          LDR      r0,[r10,#0]  ; hWincdc
+000914  f7fffffe          BL       WM_DeleteWindow
 ;;;1112                           WM_DeleteWindow(hWinset); 
+000918  f8db0000          LDR      r0,[r11,#0]  ; hWinset
+00091c  f7fffffe          BL       WM_DeleteWindow
 ;;;1113                           CreateWindow();
+000920  f7fffffe          BL       CreateWindow
 ;;;1114                           KeyCounter = 0;
+000924  81ac              STRH     r4,[r5,#0xc]
 ;;;1115                           BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
+000926  e8bd5ff0          POP      {r4-r12,lr}
+00092a  f7ffbffe          B.W      BEEP_Tiggr
 ;;;1116                           break;
 ;;;1117                       }
 ;;;1118                       case face_graph:
 ;;;1119                       {
 ;;;1120                           WM_DeleteWindow(hWinR);
+00092e  6818              LDR      r0,[r3,#0]  ; hWinR
+000930  f7fffffe          BL       WM_DeleteWindow
 ;;;1121                           WM_DeleteWindow(hWinWind);
+000934  6830              LDR      r0,[r6,#0]  ; hWinWind
+000936  f7fffffe          BL       WM_DeleteWindow
 ;;;1122                           WM_DeleteWindow(hWinG);
+00093a  6838              LDR      r0,[r7,#0]  ; hWinG
+00093c  f7fffffe          BL       WM_DeleteWindow
 ;;;1123                           WM_DeleteWindow(load_wind);
+000940  f8d80000          LDR      r0,[r8,#0]  ; load_wind
+000944  f7fffffe          BL       WM_DeleteWindow
 ;;;1124                           WM_DeleteWindow(hWinsysinfo);
+000948  f8d90000          LDR      r0,[r9,#0]  ; hWinsysinfo
+00094c  f7fffffe          BL       WM_DeleteWindow
 ;;;1125                           WM_DeleteWindow(hWincdc);
+000950  f8da0000          LDR      r0,[r10,#0]  ; hWincdc
+000954  f7fffffe          BL       WM_DeleteWindow
 ;;;1126                           WM_DeleteWindow(hWinset); 
+000958  f8db0000          LDR      r0,[r11,#0]  ; hWinset
+00095c  f7fffffe          BL       WM_DeleteWindow
 ;;;1127                           CreateG();
+000960  f7fffffe          BL       CreateG
 ;;;1128                           KeyCounter = 0;
+000964  81ac              STRH     r4,[r5,#0xc]
 ;;;1129                           BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
+000966  e8bd5ff0          POP      {r4-r12,lr}
+00096a  f7ffbffe          B.W      BEEP_Tiggr
 ;;;1130                           break;
 ;;;1131                       }
 ;;;1132                       case face_cdc:
 ;;;1133                       {
 ;;;1134                           WM_DeleteWindow(hWinR);
+00096e  6818              LDR      r0,[r3,#0]  ; hWinR
+000970  f7fffffe          BL       WM_DeleteWindow
 ;;;1135                           WM_DeleteWindow(hWinWind);
+000974  6830              LDR      r0,[r6,#0]  ; hWinWind
+000976  f7fffffe          BL       WM_DeleteWindow
 ;;;1136                           WM_DeleteWindow(hWinG);
+00097a  6838              LDR      r0,[r7,#0]  ; hWinG
+00097c  f7fffffe          BL       WM_DeleteWindow
 ;;;1137                           WM_DeleteWindow(load_wind);
+000980  f8d80000          LDR      r0,[r8,#0]  ; load_wind
+000984  f7fffffe          BL       WM_DeleteWindow
 ;;;1138                           WM_DeleteWindow(hWinsysinfo);
+000988  f8d90000          LDR      r0,[r9,#0]  ; hWinsysinfo
+00098c  f7fffffe          BL       WM_DeleteWindow
 ;;;1139                           WM_DeleteWindow(hWincdc);
+000990  f8da0000          LDR      r0,[r10,#0]  ; hWincdc
+000994  f7fffffe          BL       WM_DeleteWindow
 ;;;1140                           WM_DeleteWindow(hWinset);
+000998  f8db0000          LDR      r0,[r11,#0]  ; hWinset
+00099c  f7fffffe          BL       WM_DeleteWindow
 ;;;1141                           CreateCDC();
+0009a0  f7fffffe          BL       CreateCDC
 ;;;1142                           KeyCounter = 0;
+0009a4  81ac              STRH     r4,[r5,#0xc]
 ;;;1143                           BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
+0009a6  e8bd5ff0          POP      {r4-r12,lr}
+0009aa  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2478|
 ;;;1144                           break;
 ;;;1145                       }
 ;;;1146                   }
@@ -1620,20 +1915,42 @@
 ;;;1167   // 					GPIO_SetBits(GPIOC,GPIO_Pin_12);//CV
 ;;;1168   // 				}
 ;;;1169                   WM_DeleteWindow(hWinR);
+0009ae  6818              LDR      r0,[r3,#0]  ; hWinR
+0009b0  f7fffffe          BL       WM_DeleteWindow
 ;;;1170                   WM_DeleteWindow(hWinWind);
+0009b4  6830              LDR      r0,[r6,#0]  ; hWinWind
+0009b6  f7fffffe          BL       WM_DeleteWindow
 ;;;1171                   WM_DeleteWindow(hWinG);
+0009ba  6838              LDR      r0,[r7,#0]  ; hWinG
+0009bc  f7fffffe          BL       WM_DeleteWindow
 ;;;1172                   WM_DeleteWindow(load_wind);
+0009c0  f8d80000          LDR      r0,[r8,#0]  ; load_wind
+0009c4  f7fffffe          BL       WM_DeleteWindow
 ;;;1173                   WM_DeleteWindow(hWinsysinfo);
+0009c8  f8d90000          LDR      r0,[r9,#0]  ; hWinsysinfo
+0009cc  f7fffffe          BL       WM_DeleteWindow
 ;;;1174                   WM_DeleteWindow(hWincdc);
+0009d0  f8da0000          LDR      r0,[r10,#0]  ; hWincdc
+0009d4  f7fffffe          BL       WM_DeleteWindow
 ;;;1175                   WM_DeleteWindow(hWinset); 
+0009d8  f8db0000          LDR      r0,[r11,#0]  ; hWinset
+0009dc  f7fffffe          BL       WM_DeleteWindow
 ;;;1176                   CreateSET();
+0009e0  f7fffffe          BL       CreateSET
 ;;;1177                   KeyCounter = 0;
+0009e4  81ac              STRH     r4,[r5,#0xc]
 ;;;1178                   BEEP_Tiggr();//瑙﹀彂铚傞福鍣
+0009e6  e8bd5ff0          POP      {r4-r12,lr}
+0009ea  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2542|
 ;;;1179   			}
 ;;;1180   			break;
 ;;;1181   			case KEY_TRIG://电子负载/电源ON/OFF
 ;;;1182   			{
 ;;;1183                   switch(page_sw)
+0009ee  48f3              LDR      r0,|L1.3516|
+0009f0  7800              LDRB     r0,[r0,#0]  ; page_sw
+0009f2  2703              MOVS     r7,#3                 ;387
 ;;;1184                   {
 ;;;1185                       case face_r:
 ;;;1186                       {
@@ -1684,50 +2001,198 @@
 ;;;1231                               GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
 ;;;1232                               c_rec = 0;
 ;;;1233                               mode_sw = 0;
+0009f4  4ef2              LDR      r6,|L1.3520|
+0009f6  e007              B        |L1.2568|
+                  |L1.2552|
+0009f8  e1be              B        |L1.3448|
+                  |L1.2554|
+0009fa  e0f9              B        |L1.3056|
+                  |L1.2556|
+0009fc  e0c0              B        |L1.2944|
+                  |L1.2558|
+0009fe  e0fc              B        |L1.3066|
+                  |L1.2560|
+000a00  e12a              B        |L1.3160|
+                  |L1.2562|
+000a02  e154              B        |L1.3246|
+                  |L1.2564|
+000a04  e178              B        |L1.3320|
+                  |L1.2566|
+000a06  e197              B        |L1.3384|
+                  |L1.2568|
+000a08  2801              CMP      r0,#1                 ;1183
+000a0a  d07d              BEQ      |L1.2824|
+000a0c  2802              CMP      r0,#2                 ;1183
+000a0e  d04e              BEQ      |L1.2734|
+000a10  2803              CMP      r0,#3                 ;1183
+000a12  d00f              BEQ      |L1.2612|
+000a14  2804              CMP      r0,#4                 ;1183
+000a16  d178              BNE      |L1.2826|
+000a18  7ae8              LDRB     r0,[r5,#0xb]          ;1223  ; t_onoff
+000a1a  1c40              ADDS     r0,r0,#1              ;1223
+000a1c  72e8              STRB     r0,[r5,#0xb]          ;1223
+000a1e  7ae8              LDRB     r0,[r5,#0xb]          ;1224  ; t_onoff
+000a20  2801              CMP      r0,#1                 ;1224
+000a22  d900              BLS      |L1.2598|
+000a24  72ec              STRB     r4,[r5,#0xb]          ;1226
+                  |L1.2598|
+000a26  7ae8              LDRB     r0,[r5,#0xb]          ;1228  ; t_onoff
 ;;;1234                               load_sw = load_off;
+000a28  4fe6              LDR      r7,|L1.3524|
+000a2a  b1c8              CBZ      r0,|L1.2656|
 ;;;1235                           }
 ;;;1236                           else if(t_onoff==1)
+000a2c  7ae8              LDRB     r0,[r5,#0xb]  ; t_onoff
+000a2e  2801              CMP      r0,#1
+000a30  d024              BEQ      |L1.2684|
+000a32  e037              B        |L1.2724|
+                  |L1.2612|
+000a34  78a8              LDRB     r0,[r5,#2]            ;1211  ; r_test
+000a36  b968              CBNZ     r0,|L1.2644|
+000a38  48e3              LDR      r0,|L1.3528|
+000a3a  ed900a00          VLDR     s0,[r0,#0]            ;1211
+000a3e  48e3              LDR      r0,|L1.3532|
+000a40  edd00a00          VLDR     s1,[r0,#0]            ;1211
+000a44  eeb40ae0          VCMPE.F32 s0,s1                 ;1211
+000a48  eef1fa10          VMRS     APSR_nzcv,FPSCR       ;1211
+000a4c  dd02              BLE      |L1.2644|
+000a4e  2001              MOVS     r0,#1                 ;1213
+000a50  70a8              STRB     r0,[r5,#2]            ;1213
+000a52  e000              B        |L1.2646|
+                  |L1.2644|
+000a54  70ac              STRB     r4,[r5,#2]            ;1215
+                  |L1.2646|
+000a56  81ac              STRH     r4,[r5,#0xc]          ;1217
+000a58  e8bd5ff0          POP      {r4-r12,lr}           ;1218
+000a5c  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2656|
+000a60  48db              LDR      r0,|L1.3536|
+000a62  6801              LDR      r1,[r0,#0]            ;1230  ; flagA
+000a64  f0210140          BIC      r1,r1,#0x40           ;1230
+000a68  6001              STR      r1,[r0,#0]            ;1230  ; flagA
+000a6a  f44f4100          MOV      r1,#0x8000            ;1231
+000a6e  48d9              LDR      r0,|L1.3540|
+000a70  f7fffffe          BL       GPIO_SetBits
+000a74  726c              STRB     r4,[r5,#9]            ;1232
+000a76  7034              STRB     r4,[r6,#0]            ;1233
+000a78  703c              STRB     r4,[r7,#0]            ;1234
+000a7a  e013              B        |L1.2724|
+                  |L1.2684|
 ;;;1237                           {
 ;;;1238                               Flag_Swtich_ON=1;
+000a7c  48d4              LDR      r0,|L1.3536|
+000a7e  6801              LDR      r1,[r0,#0]  ; flagA
+000a80  f0410140          ORR      r1,r1,#0x40
+000a84  6001              STR      r1,[r0,#0]  ; flagA
 ;;;1239                               GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+000a86  f44f4100          MOV      r1,#0x8000
+000a8a  48d2              LDR      r0,|L1.3540|
+000a8c  f7fffffe          BL       GPIO_ResetBits
 ;;;1240                               if(flag_Load_CC == 0)
+000a90  48d1              LDR      r0,|L1.3544|
+000a92  6800              LDR      r0,[r0,#0]  ; flagD
+000a94  0600              LSLS     r0,r0,#24
+000a96  d401              BMI      |L1.2716|
 ;;;1241                               {
 ;;;1242                                   c_rec = 1;
+000a98  2001              MOVS     r0,#1
+000a9a  7268              STRB     r0,[r5,#9]
+                  |L1.2716|
 ;;;1243                               }
 ;;;1244                               mode_sw = mode_load;
+000a9c  2002              MOVS     r0,#2
+000a9e  7030              STRB     r0,[r6,#0]
 ;;;1245                               load_sw = load_on;
+000aa0  2001              MOVS     r0,#1
+000aa2  7038              STRB     r0,[r7,#0]
+                  |L1.2724|
 ;;;1246                           }
 ;;;1247                           KeyCounter = 0;
+000aa4  81ac              STRH     r4,[r5,#0xc]
 ;;;1248                           BEEP_Tiggr();//
+000aa6  e8bd5ff0          POP      {r4-r12,lr}
+000aaa  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2734|
 ;;;1249                       }break;
 ;;;1250                       case face_menu:
 ;;;1251                       {
 ;;;1252                           static vu8 POW_t;
 ;;;1253                           POW_t++;
+000aae  79e8              LDRB     r0,[r5,#7]  ; POW_t
+000ab0  1c40              ADDS     r0,r0,#1
+000ab2  71e8              STRB     r0,[r5,#7]
 ;;;1254                           if(POW_t>1)
+000ab4  79e8              LDRB     r0,[r5,#7]  ; POW_t
+000ab6  2801              CMP      r0,#1
+000ab8  d900              BLS      |L1.2748|
 ;;;1255                           {
 ;;;1256                               POW_t=0;
+000aba  71ec              STRB     r4,[r5,#7]
+                  |L1.2748|
 ;;;1257                           }
 ;;;1258                           if(POW_t==0)
+000abc  79e8              LDRB     r0,[r5,#7]  ; POW_t
 ;;;1259                           {
 ;;;1260                               GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
 ;;;1261                               GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
 ;;;1262                               mode_sw = 0;
 ;;;1263                               pow_sw = pow_off;
+000abe  f8df831c          LDR      r8,|L1.3548|
+000ac2  b118              CBZ      r0,|L1.2764|
 ;;;1264                           }
 ;;;1265                           else if(POW_t==1)
+000ac4  79e8              LDRB     r0,[r5,#7]  ; POW_t
+000ac6  2801              CMP      r0,#1
+000ac8  d00e              BEQ      |L1.2792|
+000aca  e01c              B        |L1.2822|
+                  |L1.2764|
+000acc  4fc4              LDR      r7,|L1.3552|
+000ace  2102              MOVS     r1,#2                 ;1260
+000ad0  4638              MOV      r0,r7                 ;1260
+000ad2  f7fffffe          BL       GPIO_ResetBits
+000ad6  f44f5100          MOV      r1,#0x2000            ;1261
+000ada  4638              MOV      r0,r7                 ;1261
+000adc  f7fffffe          BL       GPIO_SetBits
+000ae0  7034              STRB     r4,[r6,#0]            ;1262
+000ae2  f8884000          STRB     r4,[r8,#0]            ;1263
+000ae6  e00e              B        |L1.2822|
+                  |L1.2792|
 ;;;1266                           {
 ;;;1267                              GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
+000ae8  f8df92f4          LDR      r9,|L1.3552|
+000aec  f44f5100          MOV      r1,#0x2000
+000af0  4648              MOV      r0,r9
+000af2  f7fffffe          BL       GPIO_ResetBits
 ;;;1268                               GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出                           
+000af6  2102              MOVS     r1,#2
+000af8  4648              MOV      r0,r9
+000afa  f7fffffe          BL       GPIO_SetBits
 ;;;1269                               mode_sw = mode_pow;
+000afe  7037              STRB     r7,[r6,#0]
 ;;;1270                               pow_sw = pow_on;
+000b00  2001              MOVS     r0,#1
+000b02  f8880000          STRB     r0,[r8,#0]
+                  |L1.2822|
 ;;;1271                           }
 ;;;1272                           KeyCounter = 0;
+000b06  e001              B        |L1.2828|
+                  |L1.2824|
+000b08  e005              B        |L1.2838|
+                  |L1.2826|
+000b0a  e155              B        |L1.3512|
+                  |L1.2828|
+000b0c  81ac              STRH     r4,[r5,#0xc]
 ;;;1273                           BEEP_Tiggr();//
+000b0e  e8bd5ff0          POP      {r4-r12,lr}
+000b12  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2838|
 ;;;1274                       }break;
 ;;;1275                        case face_cdc:
 ;;;1276                       {
 ;;;1277                           if(cdc_sw == cdc_off)
+000b16  f8df82cc          LDR      r8,|L1.3556|
+000b1a  f8980000          LDRB     r0,[r8,#0]  ; cdc_sw
+000b1e  b198              CBZ      r0,|L1.2888|
 ;;;1278                           {
 ;;;1279                              SET_Voltage = opv1;
 ;;;1280                              SET_Current = opc1;
@@ -1742,13 +2207,50 @@
 ;;;1289                           }else{
 ;;;1290                              
 ;;;1291                              GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+000b20  4faf              LDR      r7,|L1.3552|
+000b22  2102              MOVS     r1,#2
+000b24  4638              MOV      r0,r7
+000b26  f7fffffe          BL       GPIO_ResetBits
 ;;;1292                              GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+000b2a  f44f5100          MOV      r1,#0x2000
+000b2e  4638              MOV      r0,r7
+000b30  f7fffffe          BL       GPIO_SetBits
 ;;;1293                              cdc_sw = cdc_off;
+000b34  f8884000          STRB     r4,[r8,#0]
 ;;;1294                              paused = 0;
+000b38  48ab              LDR      r0,|L1.3560|
+000b3a  7004              STRB     r4,[r0,#0]
 ;;;1295                              mode_sw = 0;
+000b3c  7034              STRB     r4,[r6,#0]
+                  |L1.2878|
 ;;;1296                           }
 ;;;1297                           KeyCounter = 0;
+000b3e  81ac              STRH     r4,[r5,#0xc]
 ;;;1298                           BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
+000b40  e8bd5ff0          POP      {r4-r12,lr}
+000b44  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2888|
+000b48  48a8              LDR      r0,|L1.3564|
+000b4a  6fc1              LDR      r1,[r0,#0x7c]         ;1279  ; Run_Control
+000b4c  6041              STR      r1,[r0,#4]            ;1279  ; Run_Control
+000b4e  f8d01088          LDR      r1,[r0,#0x88]         ;1280  ; Run_Control
+000b52  6081              STR      r1,[r0,#8]            ;1280  ; Run_Control
+000b54  48a6              LDR      r0,|L1.3568|
+000b56  7004              STRB     r4,[r0,#0]            ;1281
+000b58  48a6              LDR      r0,|L1.3572|
+000b5a  f04f0901          MOV      r9,#1                 ;1284
+000b5e  f8809000          STRB     r9,[r0,#0]            ;1284
+000b62  f8dfa27c          LDR      r10,|L1.3552|
+000b66  f44f5100          MOV      r1,#0x2000            ;1285
+000b6a  4650              MOV      r0,r10                ;1285
+000b6c  f7fffffe          BL       GPIO_ResetBits
+000b70  2102              MOVS     r1,#2                 ;1286
+000b72  4650              MOV      r0,r10                ;1286
+000b74  f7fffffe          BL       GPIO_SetBits
+000b78  7037              STRB     r7,[r6,#0]            ;1287
+000b7a  f8889000          STRB     r9,[r8,#0]            ;1288
+000b7e  e7de              B        |L1.2878|
+                  |L1.2944|
 ;;;1299                          
 ;;;1300                       }break;
 ;;;1301                   }
@@ -1759,128 +2261,320 @@
 ;;;1306   			{
 ;;;1307                   static vu8 at = 0;
 ;;;1308                   switch(page_sw)
+000b80  488e              LDR      r0,|L1.3516|
+000b82  7800              LDRB     r0,[r0,#0]  ; page_sw
+000b84  2803              CMP      r0,#3
+000b86  d12e              BNE      |L1.3046|
 ;;;1309                   {
 ;;;1310                       case face_r:
 ;;;1311                       {
 ;;;1312                           if(at == 0)
+000b88  7a29              LDRB     r1,[r5,#8]  ; at
 ;;;1313                           {
 ;;;1314                               GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
 ;;;1315                               GPIO_ResetBits(GPIOB,GPIO_Pin_13);//R_RALY低档位                           
+000b8a  4f9b              LDR      r7,|L1.3576|
 ;;;1316                               at++;
 ;;;1317                               r_raly=0;
 ;;;1318                               manual = 1;//手动换档
+000b8c  4e9b              LDR      r6,|L1.3580|
+000b8e  b131              CBZ      r1,|L1.2974|
 ;;;1319                           }else if(at == 1){
+000b90  7a28              LDRB     r0,[r5,#8]  ; at
+000b92  2801              CMP      r0,#1
+000b94  d014              BEQ      |L1.3008|
 ;;;1320                               GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
 ;;;1321                               GPIO_SetBits(GPIOB,GPIO_Pin_13);//R_RALY高档位
 ;;;1322                               r_raly=1;
 ;;;1323                               at++;
 ;;;1324                               manual = 1;//手动换档
 ;;;1325                           }else if(at == 2){
+000b96  7a28              LDRB     r0,[r5,#8]  ; at
+000b98  2802              CMP      r0,#2
+000b9a  d022              BEQ      |L1.3042|
+000b9c  e023              B        |L1.3046|
+                  |L1.2974|
+000b9e  f44f5800          MOV      r8,#0x2000            ;1314
+000ba2  4641              MOV      r1,r8                 ;1314
+000ba4  488e              LDR      r0,|L1.3552|
+000ba6  f7fffffe          BL       GPIO_SetBits
+000baa  4641              MOV      r1,r8                 ;1315
+000bac  4638              MOV      r0,r7                 ;1315
+000bae  f7fffffe          BL       GPIO_ResetBits
+000bb2  7a28              LDRB     r0,[r5,#8]            ;1316  ; at
+000bb4  1c40              ADDS     r0,r0,#1              ;1316
+000bb6  7228              STRB     r0,[r5,#8]            ;1316
+000bb8  70ec              STRB     r4,[r5,#3]            ;1317
+000bba  2001              MOVS     r0,#1                 ;1318
+000bbc  7030              STRB     r0,[r6,#0]            ;1318
+000bbe  e012              B        |L1.3046|
+                  |L1.3008|
+000bc0  f44f5800          MOV      r8,#0x2000            ;1320
+000bc4  4641              MOV      r1,r8                 ;1320
+000bc6  4886              LDR      r0,|L1.3552|
+000bc8  f7fffffe          BL       GPIO_SetBits
+000bcc  4641              MOV      r1,r8                 ;1321
+000bce  4638              MOV      r0,r7                 ;1321
+000bd0  f7fffffe          BL       GPIO_SetBits
+000bd4  2001              MOVS     r0,#1                 ;1322
+000bd6  70e8              STRB     r0,[r5,#3]            ;1322
+000bd8  7a29              LDRB     r1,[r5,#8]            ;1323  ; at
+000bda  1c49              ADDS     r1,r1,#1              ;1323
+000bdc  7229              STRB     r1,[r5,#8]            ;1323
+000bde  7030              STRB     r0,[r6,#0]            ;1324
+000be0  e001              B        |L1.3046|
+                  |L1.3042|
 ;;;1326                               at = 0;
+000be2  722c              STRB     r4,[r5,#8]
 ;;;1327                               manual =0;
+000be4  7034              STRB     r4,[r6,#0]
+                  |L1.3046|
 ;;;1328                           }
 ;;;1329                       }
 ;;;1330                   }
 ;;;1331                   KeyCounter = 0;
+000be6  81ac              STRH     r4,[r5,#0xc]
 ;;;1332   				BEEP_Tiggr();//
+000be8  e8bd5ff0          POP      {r4-r12,lr}
+000bec  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.3056|
 ;;;1333               }
 ;;;1334   			break;
 ;;;1335   			case KEY_Powe :
 ;;;1336   			{
 ;;;1337   				
 ;;;1338   				KeyCounter = 0;
+000bf0  81ac              STRH     r4,[r5,#0xc]
 ;;;1339   				BEEP_Tiggr();//
+000bf2  e8bd5ff0          POP      {r4-r12,lr}
+000bf6  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.3066|
 ;;;1340   			}
 ;;;1341   			break;
 ;;;1342   			case KEY_Face1 :
 ;;;1343   			{
 ;;;1344   				WM_DeleteWindow(hWinR);
+000bfa  6818              LDR      r0,[r3,#0]  ; hWinR
+000bfc  f7fffffe          BL       WM_DeleteWindow
 ;;;1345                   WM_DeleteWindow(hWinWind);
+000c00  6830              LDR      r0,[r6,#0]  ; hWinWind
+000c02  f7fffffe          BL       WM_DeleteWindow
 ;;;1346                   WM_DeleteWindow(hWinG);
+000c06  6838              LDR      r0,[r7,#0]  ; hWinG
+000c08  f7fffffe          BL       WM_DeleteWindow
 ;;;1347                   WM_DeleteWindow(load_wind);
+000c0c  f8d80000          LDR      r0,[r8,#0]  ; load_wind
+000c10  f7fffffe          BL       WM_DeleteWindow
 ;;;1348                   WM_DeleteWindow(hWinsysinfo);
+000c14  f8d90000          LDR      r0,[r9,#0]  ; hWinsysinfo
+000c18  f7fffffe          BL       WM_DeleteWindow
 ;;;1349                   WM_DeleteWindow(hWincdc);
+000c1c  f8da0000          LDR      r0,[r10,#0]  ; hWincdc
+000c20  f7fffffe          BL       WM_DeleteWindow
 ;;;1350                   WM_DeleteWindow(hWinset);
+000c24  f8db0000          LDR      r0,[r11,#0]  ; hWinset
+000c28  f7fffffe          BL       WM_DeleteWindow
 ;;;1351                   GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
+000c2c  f44f4100          MOV      r1,#0x8000
+000c30  4868              LDR      r0,|L1.3540|
+000c32  f7fffffe          BL       GPIO_SetBits
 ;;;1352                   GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+000c36  4e6a              LDR      r6,|L1.3552|
+000c38  f44f5100          MOV      r1,#0x2000
+000c3c  4630              MOV      r0,r6
+000c3e  f7fffffe          BL       GPIO_SetBits
 ;;;1353                   GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+000c42  2102              MOVS     r1,#2
+000c44  4630              MOV      r0,r6
+000c46  f7fffffe          BL       GPIO_ResetBits
 ;;;1354                   CreateR();
+000c4a  f7fffffe          BL       CreateR
 ;;;1355   				KeyCounter = 0;
+000c4e  81ac              STRH     r4,[r5,#0xc]
 ;;;1356   				BEEP_Tiggr();//
+000c50  e8bd5ff0          POP      {r4-r12,lr}
+000c54  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.3160|
 ;;;1357   			}
 ;;;1358   			break;
 ;;;1359   			case KEY_Face2 :
 ;;;1360   			{
 ;;;1361   				WM_DeleteWindow(hWinR);
+000c58  6818              LDR      r0,[r3,#0]  ; hWinR
+000c5a  f7fffffe          BL       WM_DeleteWindow
 ;;;1362                   WM_DeleteWindow(hWinWind);
+000c5e  6830              LDR      r0,[r6,#0]  ; hWinWind
+000c60  f7fffffe          BL       WM_DeleteWindow
 ;;;1363                   WM_DeleteWindow(hWinG);
+000c64  6838              LDR      r0,[r7,#0]  ; hWinG
+000c66  f7fffffe          BL       WM_DeleteWindow
 ;;;1364                   WM_DeleteWindow(load_wind);
+000c6a  f8d80000          LDR      r0,[r8,#0]  ; load_wind
+000c6e  f7fffffe          BL       WM_DeleteWindow
 ;;;1365                   WM_DeleteWindow(hWinsysinfo);
+000c72  f8d90000          LDR      r0,[r9,#0]  ; hWinsysinfo
+000c76  f7fffffe          BL       WM_DeleteWindow
 ;;;1366                   WM_DeleteWindow(hWincdc);
+000c7a  f8da0000          LDR      r0,[r10,#0]  ; hWincdc
+000c7e  f7fffffe          BL       WM_DeleteWindow
 ;;;1367                   WM_DeleteWindow(hWinset);
+000c82  f8db0000          LDR      r0,[r11,#0]  ; hWinset
+000c86  f7fffffe          BL       WM_DeleteWindow
 ;;;1368   				CreateWindow2();
+000c8a  f7fffffe          BL       CreateWindow2
 ;;;1369                   t_onoff = 0;
+000c8e  72ec              STRB     r4,[r5,#0xb]
 ;;;1370                   GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+000c90  4e53              LDR      r6,|L1.3552|
+000c92  f44f5100          MOV      r1,#0x2000
+000c96  4630              MOV      r0,r6
+000c98  f7fffffe          BL       GPIO_SetBits
 ;;;1371                   GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+000c9c  2102              MOVS     r1,#2
+000c9e  4630              MOV      r0,r6
+000ca0  f7fffffe          BL       GPIO_ResetBits
 ;;;1372   				KeyCounter = 0;
+000ca4  81ac              STRH     r4,[r5,#0xc]
 ;;;1373   				BEEP_Tiggr();//
+000ca6  e8bd5ff0          POP      {r4-r12,lr}
+000caa  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.3246|
 ;;;1374   			}
 ;;;1375   			break;
 ;;;1376   			case KEY_Face3 :
 ;;;1377   			{
 ;;;1378   				WM_DeleteWindow(hWinR);
+000cae  6818              LDR      r0,[r3,#0]  ; hWinR
+000cb0  f7fffffe          BL       WM_DeleteWindow
 ;;;1379                   WM_DeleteWindow(hWinWind);
+000cb4  6830              LDR      r0,[r6,#0]  ; hWinWind
+000cb6  f7fffffe          BL       WM_DeleteWindow
 ;;;1380                   WM_DeleteWindow(hWinG);
+000cba  6838              LDR      r0,[r7,#0]  ; hWinG
+000cbc  f7fffffe          BL       WM_DeleteWindow
 ;;;1381                   WM_DeleteWindow(load_wind);
+000cc0  f8d80000          LDR      r0,[r8,#0]  ; load_wind
+000cc4  f7fffffe          BL       WM_DeleteWindow
 ;;;1382                   WM_DeleteWindow(hWinsysinfo);
+000cc8  f8d90000          LDR      r0,[r9,#0]  ; hWinsysinfo
+000ccc  f7fffffe          BL       WM_DeleteWindow
 ;;;1383                   WM_DeleteWindow(hWincdc);
+000cd0  f8da0000          LDR      r0,[r10,#0]  ; hWincdc
+000cd4  f7fffffe          BL       WM_DeleteWindow
 ;;;1384                   WM_DeleteWindow(hWinset);
+000cd8  f8db0000          LDR      r0,[r11,#0]  ; hWinset
+000cdc  f7fffffe          BL       WM_DeleteWindow
 ;;;1385   				CreateWindow();
+000ce0  f7fffffe          BL       CreateWindow
 ;;;1386                   GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
+000ce4  f44f4100          MOV      r1,#0x8000
+000ce8  483a              LDR      r0,|L1.3540|
+000cea  f7fffffe          BL       GPIO_SetBits
 ;;;1387   				KeyCounter = 0;
+000cee  81ac              STRH     r4,[r5,#0xc]
 ;;;1388   				BEEP_Tiggr();//
+000cf0  e8bd5ff0          POP      {r4-r12,lr}
+000cf4  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.3320|
 ;;;1389   			}
 ;;;1390   			break;
 ;;;1391   			case KEY_Face4 :
 ;;;1392   			{
 ;;;1393                   WM_DeleteWindow(hWinR);
+000cf8  6818              LDR      r0,[r3,#0]  ; hWinR
+000cfa  f7fffffe          BL       WM_DeleteWindow
 ;;;1394                   WM_DeleteWindow(hWinWind);
+000cfe  6830              LDR      r0,[r6,#0]  ; hWinWind
+000d00  f7fffffe          BL       WM_DeleteWindow
 ;;;1395                   WM_DeleteWindow(hWinG);
+000d04  6838              LDR      r0,[r7,#0]  ; hWinG
+000d06  f7fffffe          BL       WM_DeleteWindow
 ;;;1396                   WM_DeleteWindow(load_wind);
+000d0a  f8d80000          LDR      r0,[r8,#0]  ; load_wind
+000d0e  f7fffffe          BL       WM_DeleteWindow
 ;;;1397                   WM_DeleteWindow(hWinsysinfo);
+000d12  f8d90000          LDR      r0,[r9,#0]  ; hWinsysinfo
+000d16  f7fffffe          BL       WM_DeleteWindow
 ;;;1398                   WM_DeleteWindow(hWincdc);
+000d1a  f8da0000          LDR      r0,[r10,#0]  ; hWincdc
+000d1e  f7fffffe          BL       WM_DeleteWindow
 ;;;1399                   WM_DeleteWindow(hWinset);
+000d22  f8db0000          LDR      r0,[r11,#0]  ; hWinset
+000d26  f7fffffe          BL       WM_DeleteWindow
 ;;;1400                   CreateCDC(); 
+000d2a  f7fffffe          BL       CreateCDC
 ;;;1401   				KeyCounter = 0;
+000d2e  81ac              STRH     r4,[r5,#0xc]
 ;;;1402   				BEEP_Tiggr();//
+000d30  e8bd5ff0          POP      {r4-r12,lr}
+000d34  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.3384|
 ;;;1403   			}
 ;;;1404   			break;
 ;;;1405   			case KEY_Face5 :
 ;;;1406   			{
 ;;;1407                   WM_DeleteWindow(hWinR);
+000d38  6818              LDR      r0,[r3,#0]  ; hWinR
+000d3a  f7fffffe          BL       WM_DeleteWindow
 ;;;1408                   WM_DeleteWindow(hWinWind);
+000d3e  6830              LDR      r0,[r6,#0]  ; hWinWind
+000d40  f7fffffe          BL       WM_DeleteWindow
 ;;;1409                   WM_DeleteWindow(hWinG);
+000d44  6838              LDR      r0,[r7,#0]  ; hWinG
+000d46  f7fffffe          BL       WM_DeleteWindow
 ;;;1410                   WM_DeleteWindow(load_wind);
+000d4a  f8d80000          LDR      r0,[r8,#0]  ; load_wind
+000d4e  f7fffffe          BL       WM_DeleteWindow
 ;;;1411                   WM_DeleteWindow(hWinsysinfo);
+000d52  f8d90000          LDR      r0,[r9,#0]  ; hWinsysinfo
+000d56  f7fffffe          BL       WM_DeleteWindow
 ;;;1412                   WM_DeleteWindow(hWincdc);
+000d5a  f8da0000          LDR      r0,[r10,#0]  ; hWincdc
+000d5e  f7fffffe          BL       WM_DeleteWindow
 ;;;1413                   WM_DeleteWindow(hWinset);
+000d62  f8db0000          LDR      r0,[r11,#0]  ; hWinset
+000d66  f7fffffe          BL       WM_DeleteWindow
 ;;;1414                   CreateG();
+000d6a  f7fffffe          BL       CreateG
 ;;;1415   				KeyCounter = 0;
+000d6e  81ac              STRH     r4,[r5,#0xc]
 ;;;1416   				BEEP_Tiggr();//
+000d70  e8bd5ff0          POP      {r4-r12,lr}
+000d74  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.3448|
 ;;;1417   			}
 ;;;1418   			break;
 ;;;1419               case KEY_BIAS :
 ;;;1420   			{
 ;;;1421   				WM_DeleteWindow(hWinR);
+000d78  6818              LDR      r0,[r3,#0]  ; hWinR
+000d7a  f7fffffe          BL       WM_DeleteWindow
 ;;;1422                   WM_DeleteWindow(hWinWind);
+000d7e  6830              LDR      r0,[r6,#0]  ; hWinWind
+000d80  f7fffffe          BL       WM_DeleteWindow
 ;;;1423                   WM_DeleteWindow(hWinG);
+000d84  6838              LDR      r0,[r7,#0]  ; hWinG
+000d86  f7fffffe          BL       WM_DeleteWindow
 ;;;1424                   WM_DeleteWindow(load_wind);
+000d8a  f8d80000          LDR      r0,[r8,#0]  ; load_wind
+000d8e  f7fffffe          BL       WM_DeleteWindow
 ;;;1425                   WM_DeleteWindow(hWinsysinfo);
+000d92  f8d90000          LDR      r0,[r9,#0]  ; hWinsysinfo
+000d96  f7fffffe          BL       WM_DeleteWindow
 ;;;1426                   WM_DeleteWindow(hWincdc);
+000d9a  f8da0000          LDR      r0,[r10,#0]  ; hWincdc
+000d9e  f7fffffe          BL       WM_DeleteWindow
 ;;;1427                   WM_DeleteWindow(hWinset);
+000da2  f8db0000          LDR      r0,[r11,#0]  ; hWinset
+000da6  f7fffffe          BL       WM_DeleteWindow
 ;;;1428                   Createsysinfo();
+000daa  f7fffffe          BL       Createsysinfo
 ;;;1429                   KeyCounter = 0;
+000dae  81ac              STRH     r4,[r5,#0xc]
 ;;;1430                   BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
+000db0  e8bd5ff0          POP      {r4-r12,lr}
+000db4  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.3512|
 ;;;1431   			}
 ;;;1432   			break;
 ;;;1433   
@@ -1891,749 +2585,43 @@
 ;;;1438   		}	
 ;;;1439   	}
 ;;;1440   }
-000674  e8bd9ff0          POP      {r4-r12,pc}
-                  |L1.1656|
-000678  2101              MOVS     r1,#1                 ;838
-00067a  7001              STRB     r1,[r0,#0]            ;838
-                  |L1.1660|
-00067c  e7fa              B        |L1.1652|
-                  |L1.1662|
-00067e  487a              LDR      r0,|L1.2152|
-000680  7800              LDRB     r0,[r0,#0]            ;851  ; page_sw
-000682  2801              CMP      r0,#1                 ;851
-000684  d015              BEQ      |L1.1714|
-000686  2805              CMP      r0,#5                 ;851
-000688  d005              BEQ      |L1.1686|
-00068a  2807              CMP      r0,#7                 ;851
-00068c  d1f2              BNE      |L1.1652|
-00068e  7810              LDRB     r0,[r2,#0]            ;861  ; admin
-000690  2801              CMP      r0,#1                 ;861
-000692  d007              BEQ      |L1.1700|
-000694  e008              B        |L1.1704|
-                  |L1.1686|
-000696  f7fffffe          BL       SET_OP_LEFT
-00069a  81ac              STRH     r4,[r5,#0xc]          ;855
-00069c  e8bd5ff0          POP      {r4-r12,lr}           ;856
-0006a0  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.1700|
-0006a4  f7fffffe          BL       SYS_INFO_LEFT
-                  |L1.1704|
-0006a8  81ac              STRH     r4,[r5,#0xc]          ;865
-0006aa  e8bd5ff0          POP      {r4-r12,lr}           ;866
-0006ae  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.1714|
-0006b2  f7fffffe          BL       CDC_OP_LEFT
-0006b6  81ac              STRH     r4,[r5,#0xc]          ;872
-0006b8  e8bd5ff0          POP      {r4-r12,lr}           ;873
-0006bc  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.1728|
-0006c0  4869              LDR      r0,|L1.2152|
-0006c2  7800              LDRB     r0,[r0,#0]            ;881  ; page_sw
-0006c4  2801              CMP      r0,#1                 ;881
-0006c6  d015              BEQ      |L1.1780|
-0006c8  2805              CMP      r0,#5                 ;881
-0006ca  d005              BEQ      |L1.1752|
-0006cc  2807              CMP      r0,#7                 ;881
-0006ce  d1d1              BNE      |L1.1652|
-0006d0  7810              LDRB     r0,[r2,#0]            ;891  ; admin
-0006d2  2801              CMP      r0,#1                 ;891
-0006d4  d007              BEQ      |L1.1766|
-0006d6  e008              B        |L1.1770|
-                  |L1.1752|
-0006d8  f7fffffe          BL       SET_OP_RIGHT
-0006dc  81ac              STRH     r4,[r5,#0xc]          ;885
-0006de  e8bd5ff0          POP      {r4-r12,lr}           ;886
-0006e2  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.1766|
-0006e6  f7fffffe          BL       SYS_INFO_RIGHT
-                  |L1.1770|
-0006ea  81ac              STRH     r4,[r5,#0xc]          ;895
-0006ec  e8bd5ff0          POP      {r4-r12,lr}           ;896
-0006f0  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.1780|
-0006f4  f7fffffe          BL       CDC_OP_RIGHT
-0006f8  81ac              STRH     r4,[r5,#0xc]          ;902
-0006fa  e8bd5ff0          POP      {r4-r12,lr}           ;903
-0006fe  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.1794|
-000702  4859              LDR      r0,|L1.2152|
-000704  7800              LDRB     r0,[r0,#0]            ;911  ; page_sw
-000706  2808              CMP      r0,#8                 ;911
-000708  d2b4              BCS      |L1.1652|
-00070a  e8dff000          TBB      [pc,r0]               ;911
-00070e  041d              DCB      0x04,0x1d
-000710  051a0c13          DCB      0x05,0x1a,0x0c,0x13
-000714  042b              DCB      0x04,0x2b
-                  |L1.1814|
-000716  e7ad              B        |L1.1652|
-000718  81ac              STRH     r4,[r5,#0xc]          ;914
-00071a  f7fffffe          BL       BEEP_Tiggr
-00071e  e8bd5ff0          POP      {r4-r12,lr}           ;916
-000722  f7ffbffe          B.W      MENU_OP_UP
-000726  81ac              STRH     r4,[r5,#0xc]          ;921
-000728  f7fffffe          BL       BEEP_Tiggr
-00072c  e8bd5ff0          POP      {r4-r12,lr}           ;923
-000730  f7ffbffe          B.W      LOAD_OP_UP
-000734  f7fffffe          BL       SET_OP_UP
-000738  81ac              STRH     r4,[r5,#0xc]          ;929
-00073a  e8bd5ff0          POP      {r4-r12,lr}           ;930
-00073e  f7ffbffe          B.W      BEEP_Tiggr
-000742  7808              LDRB     r0,[r1,#0]            ;935  ; para_set2
-000744  28ff              CMP      r0,#0xff              ;935
-000746  d006              BEQ      |L1.1878|
-000748  f7fffffe          BL       CDC_OP_UP
-00074c  81ac              STRH     r4,[r5,#0xc]          ;947
-00074e  e8bd5ff0          POP      {r4-r12,lr}           ;948
-000752  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.1878|
-000756  f7fffffe          BL       OC_OP_UP
-00075a  81ac              STRH     r4,[r5,#0xc]          ;938
-00075c  e8bd5ff0          POP      {r4-r12,lr}           ;939
-000760  f7ffbffe          B.W      BEEP_Tiggr
-000764  7810              LDRB     r0,[r2,#0]            ;953  ; admin
-000766  2801              CMP      r0,#1                 ;953
-000768  d101              BNE      |L1.1902|
-00076a  f7fffffe          BL       SYS_INFO_UP
-                  |L1.1902|
-00076e  81ac              STRH     r4,[r5,#0xc]          ;957
-000770  e8bd5ff0          POP      {r4-r12,lr}           ;958
-000774  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.1912|
-000778  483b              LDR      r0,|L1.2152|
-00077a  7800              LDRB     r0,[r0,#0]            ;967  ; page_sw
-00077c  2808              CMP      r0,#8                 ;967
-00077e  d2ca              BCS      |L1.1814|
-000780  e8dff000          TBB      [pc,r0]               ;967
-000784  041d051a          DCB      0x04,0x1d,0x05,0x1a
-000788  0c13042b          DCB      0x0c,0x13,0x04,0x2b
-                  |L1.1932|
-00078c  e772              B        |L1.1652|
-00078e  81ac              STRH     r4,[r5,#0xc]          ;970
-000790  f7fffffe          BL       BEEP_Tiggr
-000794  e8bd5ff0          POP      {r4-r12,lr}           ;972
-000798  f7ffbffe          B.W      MENU_OP_DOWN
-00079c  81ac              STRH     r4,[r5,#0xc]          ;977
-00079e  f7fffffe          BL       BEEP_Tiggr
-0007a2  e8bd5ff0          POP      {r4-r12,lr}           ;979
-0007a6  f7ffbffe          B.W      LOAD_OP_DOWN
-0007aa  f7fffffe          BL       SET_OP_DOWN
-0007ae  81ac              STRH     r4,[r5,#0xc]          ;985
-0007b0  e8bd5ff0          POP      {r4-r12,lr}           ;986
-0007b4  f7ffbffe          B.W      BEEP_Tiggr
-0007b8  7808              LDRB     r0,[r1,#0]            ;991  ; para_set2
-0007ba  28ff              CMP      r0,#0xff              ;991
-0007bc  d006              BEQ      |L1.1996|
-0007be  f7fffffe          BL       CDC_OP_DOWN
-0007c2  81ac              STRH     r4,[r5,#0xc]          ;1002
-0007c4  e8bd5ff0          POP      {r4-r12,lr}           ;1003
-0007c8  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.1996|
-0007cc  f7fffffe          BL       OC_OP_DOWN
-0007d0  81ac              STRH     r4,[r5,#0xc]          ;994
-0007d2  e8bd5ff0          POP      {r4-r12,lr}           ;995
-0007d6  f7ffbffe          B.W      BEEP_Tiggr
-0007da  7810              LDRB     r0,[r2,#0]            ;1008  ; admin
-0007dc  2801              CMP      r0,#1                 ;1008
-0007de  d101              BNE      |L1.2020|
-0007e0  f7fffffe          BL       SYS_INFO_DOWN
-                  |L1.2020|
-0007e4  81ac              STRH     r4,[r5,#0xc]          ;1012
-0007e6  e8bd5ff0          POP      {r4-r12,lr}           ;1013
-0007ea  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2030|
-0007ee  481e              LDR      r0,|L1.2152|
-0007f0  7800              LDRB     r0,[r0,#0]            ;1023  ; page_sw
-0007f2  2808              CMP      r0,#8                 ;1023
-0007f4  d28f              BCS      |L1.1814|
-0007f6  e8dff000          TBB      [pc,r0]               ;1023
-0007fa  0424              DCB      0x04,0x24
-0007fc  0513160c          DCB      0x05,0x13,0x16,0x0c
-000800  042b              DCB      0x04,0x2b
-000802  e737              B        |L1.1652|
-000804  f7fffffe          BL       MENU_SET
-000808  81ac              STRH     r4,[r5,#0xc]          ;1027
-00080a  e8bd5ff0          POP      {r4-r12,lr}           ;1028
-00080e  f7ffbffe          B.W      BEEP_Tiggr
-000812  f7fffffe          BL       PARA_SET
-000816  81ac              STRH     r4,[r5,#0xc]          ;1034
-000818  e8bd5ff0          POP      {r4-r12,lr}           ;1035
-00081c  f7ffbffe          B.W      BEEP_Tiggr
-000820  7808              LDRB     r0,[r1,#0]            ;1040  ; para_set2
-000822  28ff              CMP      r0,#0xff              ;1040
-000824  d006              BEQ      |L1.2100|
-000826  f7fffffe          BL       LOAD_SET
-00082a  81ac              STRH     r4,[r5,#0xc]          ;1051
-00082c  e8bd5ff0          POP      {r4-r12,lr}           ;1052
-000830  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2100|
-000834  f7fffffe          BL       OC_SET
-000838  81ac              STRH     r4,[r5,#0xc]          ;1043
-00083a  e8bd5ff0          POP      {r4-r12,lr}           ;1044
-00083e  f7ffbffe          B.W      BEEP_Tiggr
-000842  f7fffffe          BL       CDC_SET
-000846  81ac              STRH     r4,[r5,#0xc]          ;1058
-000848  e8bd5ff0          POP      {r4-r12,lr}           ;1059
-00084c  f7ffbffe          B.W      BEEP_Tiggr
-000850  f7fffffe          BL       CFM_PASS
-000854  81ac              STRH     r4,[r5,#0xc]          ;1065
-000856  e8bd5ff0          POP      {r4-r12,lr}           ;1066
-00085a  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2142|
-00085e  7868              LDRB     r0,[r5,#1]            ;1074  ; track
-000860  2805              CMP      r0,#5                 ;1074
-000862  d293              BCS      |L1.1932|
-000864  e00c              B        |L1.2176|
-000866  0000              DCW      0x0000
-                  |L1.2152|
-                          DCD      page_sw
-                  |L1.2156|
-00086c  3800              DCB      "8",0
-00086e  00                DCB      0
-00086f  00                DCB      0
-                  |L1.2160|
-000870  3900              DCB      "9",0
-000872  00                DCB      0
-000873  00                DCB      0
-                  |L1.2164|
-000874  3000              DCB      "0",0
-000876  00                DCB      0
-000877  00                DCB      0
-                  |L1.2168|
-000878  2e00              DCB      ".",0
-00087a  00                DCB      0
-00087b  00                DCB      0
-                  |L1.2172|
-                          DCD      oc_mode
-                  |L1.2176|
-000880  e8dff000          TBB      [pc,r0]               ;1074
-000884  63834303          DCB      0x63,0x83,0x43,0x03
-000888  2300              DCB      0x23,0x00
-00088a  6818              LDR      r0,[r3,#0]            ;1078  ; hWinR
-00088c  f7fffffe          BL       WM_DeleteWindow
-000890  6830              LDR      r0,[r6,#0]            ;1079  ; hWinWind
-000892  f7fffffe          BL       WM_DeleteWindow
-000896  6838              LDR      r0,[r7,#0]            ;1080  ; hWinG
-000898  f7fffffe          BL       WM_DeleteWindow
-00089c  f8d80000          LDR      r0,[r8,#0]            ;1081  ; load_wind
-0008a0  f7fffffe          BL       WM_DeleteWindow
-0008a4  f8d90000          LDR      r0,[r9,#0]            ;1082  ; hWinsysinfo
-0008a8  f7fffffe          BL       WM_DeleteWindow
-0008ac  f8da0000          LDR      r0,[r10,#0]           ;1083  ; hWincdc
-0008b0  f7fffffe          BL       WM_DeleteWindow
-0008b4  f8db0000          LDR      r0,[r11,#0]           ;1084  ; hWinset
-0008b8  f7fffffe          BL       WM_DeleteWindow
-0008bc  f7fffffe          BL       CreateR
-0008c0  81ac              STRH     r4,[r5,#0xc]          ;1086
-0008c2  e8bd5ff0          POP      {r4-r12,lr}           ;1087
-0008c6  f7ffbffe          B.W      BEEP_Tiggr
-0008ca  6818              LDR      r0,[r3,#0]            ;1092  ; hWinR
-0008cc  f7fffffe          BL       WM_DeleteWindow
-0008d0  6830              LDR      r0,[r6,#0]            ;1093  ; hWinWind
-0008d2  f7fffffe          BL       WM_DeleteWindow
-0008d6  6838              LDR      r0,[r7,#0]            ;1094  ; hWinG
-0008d8  f7fffffe          BL       WM_DeleteWindow
-0008dc  f8d80000          LDR      r0,[r8,#0]            ;1095  ; load_wind
-0008e0  f7fffffe          BL       WM_DeleteWindow
-0008e4  f8d90000          LDR      r0,[r9,#0]            ;1096  ; hWinsysinfo
-0008e8  f7fffffe          BL       WM_DeleteWindow
-0008ec  f8da0000          LDR      r0,[r10,#0]           ;1097  ; hWincdc
-0008f0  f7fffffe          BL       WM_DeleteWindow
-0008f4  f8db0000          LDR      r0,[r11,#0]           ;1098  ; hWinset
-0008f8  f7fffffe          BL       WM_DeleteWindow
-0008fc  f7fffffe          BL       CreateWindow2
-000900  81ac              STRH     r4,[r5,#0xc]          ;1100
-000902  e8bd5ff0          POP      {r4-r12,lr}           ;1101
-000906  f7ffbffe          B.W      BEEP_Tiggr
-00090a  6818              LDR      r0,[r3,#0]            ;1106  ; hWinR
-00090c  f7fffffe          BL       WM_DeleteWindow
-000910  6830              LDR      r0,[r6,#0]            ;1107  ; hWinWind
-000912  f7fffffe          BL       WM_DeleteWindow
-000916  6838              LDR      r0,[r7,#0]            ;1108  ; hWinG
-000918  f7fffffe          BL       WM_DeleteWindow
-00091c  f8d80000          LDR      r0,[r8,#0]            ;1109  ; load_wind
-000920  f7fffffe          BL       WM_DeleteWindow
-000924  f8d90000          LDR      r0,[r9,#0]            ;1110  ; hWinsysinfo
-000928  f7fffffe          BL       WM_DeleteWindow
-00092c  f8da0000          LDR      r0,[r10,#0]           ;1111  ; hWincdc
-000930  f7fffffe          BL       WM_DeleteWindow
-000934  f8db0000          LDR      r0,[r11,#0]           ;1112  ; hWinset
-000938  f7fffffe          BL       WM_DeleteWindow
-00093c  f7fffffe          BL       CreateWindow
-000940  81ac              STRH     r4,[r5,#0xc]          ;1114
-000942  e8bd5ff0          POP      {r4-r12,lr}           ;1115
-000946  f7ffbffe          B.W      BEEP_Tiggr
-00094a  6818              LDR      r0,[r3,#0]            ;1120  ; hWinR
-00094c  f7fffffe          BL       WM_DeleteWindow
-000950  6830              LDR      r0,[r6,#0]            ;1121  ; hWinWind
-000952  f7fffffe          BL       WM_DeleteWindow
-000956  6838              LDR      r0,[r7,#0]            ;1122  ; hWinG
-000958  f7fffffe          BL       WM_DeleteWindow
-00095c  f8d80000          LDR      r0,[r8,#0]            ;1123  ; load_wind
-000960  f7fffffe          BL       WM_DeleteWindow
-000964  f8d90000          LDR      r0,[r9,#0]            ;1124  ; hWinsysinfo
-000968  f7fffffe          BL       WM_DeleteWindow
-00096c  f8da0000          LDR      r0,[r10,#0]           ;1125  ; hWincdc
-000970  f7fffffe          BL       WM_DeleteWindow
-000974  f8db0000          LDR      r0,[r11,#0]           ;1126  ; hWinset
-000978  f7fffffe          BL       WM_DeleteWindow
-00097c  f7fffffe          BL       CreateG
-000980  81ac              STRH     r4,[r5,#0xc]          ;1128
-000982  e8bd5ff0          POP      {r4-r12,lr}           ;1129
-000986  f7ffbffe          B.W      BEEP_Tiggr
-00098a  6818              LDR      r0,[r3,#0]            ;1134  ; hWinR
-00098c  f7fffffe          BL       WM_DeleteWindow
-000990  6830              LDR      r0,[r6,#0]            ;1135  ; hWinWind
-000992  f7fffffe          BL       WM_DeleteWindow
-000996  6838              LDR      r0,[r7,#0]            ;1136  ; hWinG
-000998  f7fffffe          BL       WM_DeleteWindow
-00099c  f8d80000          LDR      r0,[r8,#0]            ;1137  ; load_wind
-0009a0  f7fffffe          BL       WM_DeleteWindow
-0009a4  f8d90000          LDR      r0,[r9,#0]            ;1138  ; hWinsysinfo
-0009a8  f7fffffe          BL       WM_DeleteWindow
-0009ac  f8da0000          LDR      r0,[r10,#0]           ;1139  ; hWincdc
-0009b0  f7fffffe          BL       WM_DeleteWindow
-0009b4  f8db0000          LDR      r0,[r11,#0]           ;1140  ; hWinset
-0009b8  f7fffffe          BL       WM_DeleteWindow
-0009bc  f7fffffe          BL       CreateCDC
-0009c0  81ac              STRH     r4,[r5,#0xc]          ;1142
-0009c2  e8bd5ff0          POP      {r4-r12,lr}           ;1143
-0009c6  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2506|
-0009ca  6818              LDR      r0,[r3,#0]            ;1169  ; hWinR
-0009cc  f7fffffe          BL       WM_DeleteWindow
-0009d0  6830              LDR      r0,[r6,#0]            ;1170  ; hWinWind
-0009d2  f7fffffe          BL       WM_DeleteWindow
-0009d6  6838              LDR      r0,[r7,#0]            ;1171  ; hWinG
-0009d8  f7fffffe          BL       WM_DeleteWindow
-0009dc  f8d80000          LDR      r0,[r8,#0]            ;1172  ; load_wind
-0009e0  f7fffffe          BL       WM_DeleteWindow
-0009e4  f8d90000          LDR      r0,[r9,#0]            ;1173  ; hWinsysinfo
-0009e8  f7fffffe          BL       WM_DeleteWindow
-0009ec  f8da0000          LDR      r0,[r10,#0]           ;1174  ; hWincdc
-0009f0  e008              B        |L1.2564|
-                  |L1.2546|
-0009f2  e014              B        |L1.2590|
-                  |L1.2548|
-0009f4  e1cf              B        |L1.3478|
-                  |L1.2550|
-0009f6  e10a              B        |L1.3086|
-                  |L1.2552|
-0009f8  e0d1              B        |L1.2974|
-                  |L1.2554|
-0009fa  e10d              B        |L1.3096|
-                  |L1.2556|
-0009fc  e13b              B        |L1.3190|
-                  |L1.2558|
-0009fe  e165              B        |L1.3276|
-                  |L1.2560|
-000a00  e189              B        |L1.3350|
-                  |L1.2562|
-000a02  e1a8              B        |L1.3414|
-                  |L1.2564|
-000a04  f7fffffe          BL       WM_DeleteWindow
-000a08  f8db0000          LDR      r0,[r11,#0]           ;1175  ; hWinset
-000a0c  f7fffffe          BL       WM_DeleteWindow
-000a10  f7fffffe          BL       CreateSET
-000a14  81ac              STRH     r4,[r5,#0xc]          ;1177
-000a16  e8bd5ff0          POP      {r4-r12,lr}           ;1178
-000a1a  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2590|
-000a1e  48ee              LDR      r0,|L1.3544|
-000a20  7800              LDRB     r0,[r0,#0]            ;1183  ; page_sw
-000a22  2703              MOVS     r7,#3                 ;387
-000a24  4eed              LDR      r6,|L1.3548|
-000a26  2801              CMP      r0,#1                 ;1183
-000a28  d07e              BEQ      |L1.2856|
-000a2a  2802              CMP      r0,#2                 ;1183
-000a2c  d04f              BEQ      |L1.2766|
-000a2e  2803              CMP      r0,#3                 ;1183
-000a30  d010              BEQ      |L1.2644|
-000a32  2804              CMP      r0,#4                 ;1183
-000a34  f47fae22          BNE      |L1.1660|
-000a38  7ae8              LDRB     r0,[r5,#0xb]          ;1223  ; t_onoff
-000a3a  1c40              ADDS     r0,r0,#1              ;1223
-000a3c  72e8              STRB     r0,[r5,#0xb]          ;1223
-000a3e  7ae8              LDRB     r0,[r5,#0xb]          ;1224  ; t_onoff
-000a40  2801              CMP      r0,#1                 ;1224
-000a42  d900              BLS      |L1.2630|
-000a44  72ec              STRB     r4,[r5,#0xb]          ;1226
-                  |L1.2630|
-000a46  7ae8              LDRB     r0,[r5,#0xb]          ;1228  ; t_onoff
-000a48  4fe5              LDR      r7,|L1.3552|
-000a4a  b1c8              CBZ      r0,|L1.2688|
-000a4c  7ae8              LDRB     r0,[r5,#0xb]          ;1236  ; t_onoff
-000a4e  2801              CMP      r0,#1                 ;1236
-000a50  d024              BEQ      |L1.2716|
-000a52  e037              B        |L1.2756|
-                  |L1.2644|
-000a54  78a8              LDRB     r0,[r5,#2]            ;1211  ; r_test
-000a56  b968              CBNZ     r0,|L1.2676|
-000a58  48e2              LDR      r0,|L1.3556|
-000a5a  ed900a00          VLDR     s0,[r0,#0]            ;1211
-000a5e  48e2              LDR      r0,|L1.3560|
-000a60  edd00a00          VLDR     s1,[r0,#0]            ;1211
-000a64  eeb40ae0          VCMPE.F32 s0,s1                 ;1211
-000a68  eef1fa10          VMRS     APSR_nzcv,FPSCR       ;1211
-000a6c  dd02              BLE      |L1.2676|
-000a6e  2001              MOVS     r0,#1                 ;1213
-000a70  70a8              STRB     r0,[r5,#2]            ;1213
-000a72  e000              B        |L1.2678|
-                  |L1.2676|
-000a74  70ac              STRB     r4,[r5,#2]            ;1215
-                  |L1.2678|
-000a76  81ac              STRH     r4,[r5,#0xc]          ;1217
-000a78  e8bd5ff0          POP      {r4-r12,lr}           ;1218
-000a7c  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2688|
-000a80  48da              LDR      r0,|L1.3564|
-000a82  6801              LDR      r1,[r0,#0]            ;1230  ; flagA
-000a84  f0210140          BIC      r1,r1,#0x40           ;1230
-000a88  6001              STR      r1,[r0,#0]            ;1230  ; flagA
-000a8a  f44f4100          MOV      r1,#0x8000            ;1231
-000a8e  48d8              LDR      r0,|L1.3568|
-000a90  f7fffffe          BL       GPIO_SetBits
-000a94  726c              STRB     r4,[r5,#9]            ;1232
-000a96  7034              STRB     r4,[r6,#0]            ;1233
-000a98  703c              STRB     r4,[r7,#0]            ;1234
-000a9a  e013              B        |L1.2756|
-                  |L1.2716|
-000a9c  48d3              LDR      r0,|L1.3564|
-000a9e  6801              LDR      r1,[r0,#0]            ;1238  ; flagA
-000aa0  f0410140          ORR      r1,r1,#0x40           ;1238
-000aa4  6001              STR      r1,[r0,#0]            ;1238  ; flagA
-000aa6  f44f4100          MOV      r1,#0x8000            ;1239
-000aaa  48d1              LDR      r0,|L1.3568|
-000aac  f7fffffe          BL       GPIO_ResetBits
-000ab0  48d0              LDR      r0,|L1.3572|
-000ab2  6800              LDR      r0,[r0,#0]            ;1240  ; flagD
-000ab4  0600              LSLS     r0,r0,#24             ;1240
-000ab6  d401              BMI      |L1.2748|
-000ab8  2001              MOVS     r0,#1                 ;1242
-000aba  7268              STRB     r0,[r5,#9]            ;1242
-                  |L1.2748|
-000abc  2002              MOVS     r0,#2                 ;1244
-000abe  7030              STRB     r0,[r6,#0]            ;1244
-000ac0  2001              MOVS     r0,#1                 ;1245
-000ac2  7038              STRB     r0,[r7,#0]            ;1245
-                  |L1.2756|
-000ac4  81ac              STRH     r4,[r5,#0xc]          ;1247
-000ac6  e8bd5ff0          POP      {r4-r12,lr}           ;1248
-000aca  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2766|
-000ace  79e8              LDRB     r0,[r5,#7]            ;1253  ; POW_t
-000ad0  1c40              ADDS     r0,r0,#1              ;1253
-000ad2  71e8              STRB     r0,[r5,#7]            ;1253
-000ad4  79e8              LDRB     r0,[r5,#7]            ;1254  ; POW_t
-000ad6  2801              CMP      r0,#1                 ;1254
-000ad8  d900              BLS      |L1.2780|
-000ada  71ec              STRB     r4,[r5,#7]            ;1256
-                  |L1.2780|
-000adc  79e8              LDRB     r0,[r5,#7]            ;1258  ; POW_t
-000ade  f8df8318          LDR      r8,|L1.3576|
-000ae2  b118              CBZ      r0,|L1.2796|
-000ae4  79e8              LDRB     r0,[r5,#7]            ;1265  ; POW_t
-000ae6  2801              CMP      r0,#1                 ;1265
-000ae8  d00e              BEQ      |L1.2824|
-000aea  e01c              B        |L1.2854|
-                  |L1.2796|
-000aec  4fc3              LDR      r7,|L1.3580|
-000aee  2102              MOVS     r1,#2                 ;1260
-000af0  4638              MOV      r0,r7                 ;1260
-000af2  f7fffffe          BL       GPIO_ResetBits
-000af6  f44f5100          MOV      r1,#0x2000            ;1261
-000afa  4638              MOV      r0,r7                 ;1261
-000afc  f7fffffe          BL       GPIO_SetBits
-000b00  7034              STRB     r4,[r6,#0]            ;1262
-000b02  f8884000          STRB     r4,[r8,#0]            ;1263
-000b06  e00e              B        |L1.2854|
-                  |L1.2824|
-000b08  f8df92f0          LDR      r9,|L1.3580|
-000b0c  f44f5100          MOV      r1,#0x2000            ;1267
-000b10  4648              MOV      r0,r9                 ;1267
-000b12  f7fffffe          BL       GPIO_ResetBits
-000b16  2102              MOVS     r1,#2                 ;1268
-000b18  4648              MOV      r0,r9                 ;1268
-000b1a  f7fffffe          BL       GPIO_SetBits
-000b1e  7037              STRB     r7,[r6,#0]            ;1269
-000b20  2001              MOVS     r0,#1                 ;1270
-000b22  f8880000          STRB     r0,[r8,#0]            ;1270
-                  |L1.2854|
-000b26  e000              B        |L1.2858|
-                  |L1.2856|
-000b28  e004              B        |L1.2868|
-                  |L1.2858|
-000b2a  81ac              STRH     r4,[r5,#0xc]          ;1272
-000b2c  e8bd5ff0          POP      {r4-r12,lr}           ;1273
-000b30  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2868|
-000b34  f8df82c8          LDR      r8,|L1.3584|
-000b38  f8980000          LDRB     r0,[r8,#0]            ;1277  ; cdc_sw
-000b3c  b198              CBZ      r0,|L1.2918|
-000b3e  4faf              LDR      r7,|L1.3580|
-000b40  2102              MOVS     r1,#2                 ;1291
-000b42  4638              MOV      r0,r7                 ;1291
-000b44  f7fffffe          BL       GPIO_ResetBits
-000b48  f44f5100          MOV      r1,#0x2000            ;1292
-000b4c  4638              MOV      r0,r7                 ;1292
-000b4e  f7fffffe          BL       GPIO_SetBits
-000b52  f8884000          STRB     r4,[r8,#0]            ;1293
-000b56  48ab              LDR      r0,|L1.3588|
-000b58  7004              STRB     r4,[r0,#0]            ;1294
-000b5a  7034              STRB     r4,[r6,#0]            ;1295
-                  |L1.2908|
-000b5c  81ac              STRH     r4,[r5,#0xc]          ;1297
-000b5e  e8bd5ff0          POP      {r4-r12,lr}           ;1298
-000b62  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2918|
-000b66  48a8              LDR      r0,|L1.3592|
-000b68  6fc1              LDR      r1,[r0,#0x7c]         ;1279  ; Run_Control
-000b6a  6041              STR      r1,[r0,#4]            ;1279  ; Run_Control
-000b6c  f8d01088          LDR      r1,[r0,#0x88]         ;1280  ; Run_Control
-000b70  6081              STR      r1,[r0,#8]            ;1280  ; Run_Control
-000b72  48a6              LDR      r0,|L1.3596|
-000b74  7004              STRB     r4,[r0,#0]            ;1281
-000b76  48a6              LDR      r0,|L1.3600|
-000b78  f04f0901          MOV      r9,#1                 ;1284
-000b7c  f8809000          STRB     r9,[r0,#0]            ;1284
-000b80  f8dfa278          LDR      r10,|L1.3580|
-000b84  f44f5100          MOV      r1,#0x2000            ;1285
-000b88  4650              MOV      r0,r10                ;1285
-000b8a  f7fffffe          BL       GPIO_ResetBits
-000b8e  2102              MOVS     r1,#2                 ;1286
-000b90  4650              MOV      r0,r10                ;1286
-000b92  f7fffffe          BL       GPIO_SetBits
-000b96  7037              STRB     r7,[r6,#0]            ;1287
-000b98  f8889000          STRB     r9,[r8,#0]            ;1288
-000b9c  e7de              B        |L1.2908|
-                  |L1.2974|
-000b9e  488e              LDR      r0,|L1.3544|
-000ba0  7800              LDRB     r0,[r0,#0]            ;1308  ; page_sw
-000ba2  2803              CMP      r0,#3                 ;1308
-000ba4  d12e              BNE      |L1.3076|
-000ba6  7a29              LDRB     r1,[r5,#8]            ;1312  ; at
-000ba8  4f9a              LDR      r7,|L1.3604|
-000baa  4e9b              LDR      r6,|L1.3608|
-000bac  b131              CBZ      r1,|L1.3004|
-000bae  7a28              LDRB     r0,[r5,#8]            ;1319  ; at
-000bb0  2801              CMP      r0,#1                 ;1319
-000bb2  d014              BEQ      |L1.3038|
-000bb4  7a28              LDRB     r0,[r5,#8]            ;1325  ; at
-000bb6  2802              CMP      r0,#2                 ;1325
-000bb8  d022              BEQ      |L1.3072|
-000bba  e023              B        |L1.3076|
-                  |L1.3004|
-000bbc  f44f5800          MOV      r8,#0x2000            ;1314
-000bc0  4641              MOV      r1,r8                 ;1314
-000bc2  488e              LDR      r0,|L1.3580|
-000bc4  f7fffffe          BL       GPIO_SetBits
-000bc8  4641              MOV      r1,r8                 ;1315
-000bca  4638              MOV      r0,r7                 ;1315
-000bcc  f7fffffe          BL       GPIO_ResetBits
-000bd0  7a28              LDRB     r0,[r5,#8]            ;1316  ; at
-000bd2  1c40              ADDS     r0,r0,#1              ;1316
-000bd4  7228              STRB     r0,[r5,#8]            ;1316
-000bd6  70ec              STRB     r4,[r5,#3]            ;1317
-000bd8  2001              MOVS     r0,#1                 ;1318
-000bda  7030              STRB     r0,[r6,#0]            ;1318
-000bdc  e012              B        |L1.3076|
-                  |L1.3038|
-000bde  f44f5800          MOV      r8,#0x2000            ;1320
-000be2  4641              MOV      r1,r8                 ;1320
-000be4  4885              LDR      r0,|L1.3580|
-000be6  f7fffffe          BL       GPIO_SetBits
-000bea  4641              MOV      r1,r8                 ;1321
-000bec  4638              MOV      r0,r7                 ;1321
-000bee  f7fffffe          BL       GPIO_SetBits
-000bf2  2001              MOVS     r0,#1                 ;1322
-000bf4  70e8              STRB     r0,[r5,#3]            ;1322
-000bf6  7a29              LDRB     r1,[r5,#8]            ;1323  ; at
-000bf8  1c49              ADDS     r1,r1,#1              ;1323
-000bfa  7229              STRB     r1,[r5,#8]            ;1323
-000bfc  7030              STRB     r0,[r6,#0]            ;1324
-000bfe  e001              B        |L1.3076|
-                  |L1.3072|
-000c00  722c              STRB     r4,[r5,#8]            ;1326
-000c02  7034              STRB     r4,[r6,#0]            ;1327
-                  |L1.3076|
-000c04  81ac              STRH     r4,[r5,#0xc]          ;1331
-000c06  e8bd5ff0          POP      {r4-r12,lr}           ;1332
-000c0a  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3086|
-000c0e  81ac              STRH     r4,[r5,#0xc]          ;1338
-000c10  e8bd5ff0          POP      {r4-r12,lr}           ;1339
-000c14  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3096|
-000c18  6818              LDR      r0,[r3,#0]            ;1344  ; hWinR
-000c1a  f7fffffe          BL       WM_DeleteWindow
-000c1e  6830              LDR      r0,[r6,#0]            ;1345  ; hWinWind
-000c20  f7fffffe          BL       WM_DeleteWindow
-000c24  6838              LDR      r0,[r7,#0]            ;1346  ; hWinG
-000c26  f7fffffe          BL       WM_DeleteWindow
-000c2a  f8d80000          LDR      r0,[r8,#0]            ;1347  ; load_wind
-000c2e  f7fffffe          BL       WM_DeleteWindow
-000c32  f8d90000          LDR      r0,[r9,#0]            ;1348  ; hWinsysinfo
-000c36  f7fffffe          BL       WM_DeleteWindow
-000c3a  f8da0000          LDR      r0,[r10,#0]           ;1349  ; hWincdc
-000c3e  f7fffffe          BL       WM_DeleteWindow
-000c42  f8db0000          LDR      r0,[r11,#0]           ;1350  ; hWinset
-000c46  f7fffffe          BL       WM_DeleteWindow
-000c4a  f44f4100          MOV      r1,#0x8000            ;1351
-000c4e  4868              LDR      r0,|L1.3568|
-000c50  f7fffffe          BL       GPIO_SetBits
-000c54  4e69              LDR      r6,|L1.3580|
-000c56  f44f5100          MOV      r1,#0x2000            ;1352
-000c5a  4630              MOV      r0,r6                 ;1352
-000c5c  f7fffffe          BL       GPIO_SetBits
-000c60  2102              MOVS     r1,#2                 ;1353
-000c62  4630              MOV      r0,r6                 ;1353
-000c64  f7fffffe          BL       GPIO_ResetBits
-000c68  f7fffffe          BL       CreateR
-000c6c  81ac              STRH     r4,[r5,#0xc]          ;1355
-000c6e  e8bd5ff0          POP      {r4-r12,lr}           ;1356
-000c72  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3190|
-000c76  6818              LDR      r0,[r3,#0]            ;1361  ; hWinR
-000c78  f7fffffe          BL       WM_DeleteWindow
-000c7c  6830              LDR      r0,[r6,#0]            ;1362  ; hWinWind
-000c7e  f7fffffe          BL       WM_DeleteWindow
-000c82  6838              LDR      r0,[r7,#0]            ;1363  ; hWinG
-000c84  f7fffffe          BL       WM_DeleteWindow
-000c88  f8d80000          LDR      r0,[r8,#0]            ;1364  ; load_wind
-000c8c  f7fffffe          BL       WM_DeleteWindow
-000c90  f8d90000          LDR      r0,[r9,#0]            ;1365  ; hWinsysinfo
-000c94  f7fffffe          BL       WM_DeleteWindow
-000c98  f8da0000          LDR      r0,[r10,#0]           ;1366  ; hWincdc
-000c9c  f7fffffe          BL       WM_DeleteWindow
-000ca0  f8db0000          LDR      r0,[r11,#0]           ;1367  ; hWinset
-000ca4  f7fffffe          BL       WM_DeleteWindow
-000ca8  f7fffffe          BL       CreateWindow2
-000cac  72ec              STRB     r4,[r5,#0xb]          ;1369
-000cae  4e53              LDR      r6,|L1.3580|
-000cb0  f44f5100          MOV      r1,#0x2000            ;1370
-000cb4  4630              MOV      r0,r6                 ;1370
-000cb6  f7fffffe          BL       GPIO_SetBits
-000cba  2102              MOVS     r1,#2                 ;1371
-000cbc  4630              MOV      r0,r6                 ;1371
-000cbe  f7fffffe          BL       GPIO_ResetBits
-000cc2  81ac              STRH     r4,[r5,#0xc]          ;1372
-000cc4  e8bd5ff0          POP      {r4-r12,lr}           ;1373
-000cc8  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3276|
-000ccc  6818              LDR      r0,[r3,#0]            ;1378  ; hWinR
-000cce  f7fffffe          BL       WM_DeleteWindow
-000cd2  6830              LDR      r0,[r6,#0]            ;1379  ; hWinWind
-000cd4  f7fffffe          BL       WM_DeleteWindow
-000cd8  6838              LDR      r0,[r7,#0]            ;1380  ; hWinG
-000cda  f7fffffe          BL       WM_DeleteWindow
-000cde  f8d80000          LDR      r0,[r8,#0]            ;1381  ; load_wind
-000ce2  f7fffffe          BL       WM_DeleteWindow
-000ce6  f8d90000          LDR      r0,[r9,#0]            ;1382  ; hWinsysinfo
-000cea  f7fffffe          BL       WM_DeleteWindow
-000cee  f8da0000          LDR      r0,[r10,#0]           ;1383  ; hWincdc
-000cf2  f7fffffe          BL       WM_DeleteWindow
-000cf6  f8db0000          LDR      r0,[r11,#0]           ;1384  ; hWinset
-000cfa  f7fffffe          BL       WM_DeleteWindow
-000cfe  f7fffffe          BL       CreateWindow
-000d02  f44f4100          MOV      r1,#0x8000            ;1386
-000d06  483a              LDR      r0,|L1.3568|
-000d08  f7fffffe          BL       GPIO_SetBits
-000d0c  81ac              STRH     r4,[r5,#0xc]          ;1387
-000d0e  e8bd5ff0          POP      {r4-r12,lr}           ;1388
-000d12  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3350|
-000d16  6818              LDR      r0,[r3,#0]            ;1393  ; hWinR
-000d18  f7fffffe          BL       WM_DeleteWindow
-000d1c  6830              LDR      r0,[r6,#0]            ;1394  ; hWinWind
-000d1e  f7fffffe          BL       WM_DeleteWindow
-000d22  6838              LDR      r0,[r7,#0]            ;1395  ; hWinG
-000d24  f7fffffe          BL       WM_DeleteWindow
-000d28  f8d80000          LDR      r0,[r8,#0]            ;1396  ; load_wind
-000d2c  f7fffffe          BL       WM_DeleteWindow
-000d30  f8d90000          LDR      r0,[r9,#0]            ;1397  ; hWinsysinfo
-000d34  f7fffffe          BL       WM_DeleteWindow
-000d38  f8da0000          LDR      r0,[r10,#0]           ;1398  ; hWincdc
-000d3c  f7fffffe          BL       WM_DeleteWindow
-000d40  f8db0000          LDR      r0,[r11,#0]           ;1399  ; hWinset
-000d44  f7fffffe          BL       WM_DeleteWindow
-000d48  f7fffffe          BL       CreateCDC
-000d4c  81ac              STRH     r4,[r5,#0xc]          ;1401
-000d4e  e8bd5ff0          POP      {r4-r12,lr}           ;1402
-000d52  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3414|
-000d56  6818              LDR      r0,[r3,#0]            ;1407  ; hWinR
-000d58  f7fffffe          BL       WM_DeleteWindow
-000d5c  6830              LDR      r0,[r6,#0]            ;1408  ; hWinWind
-000d5e  f7fffffe          BL       WM_DeleteWindow
-000d62  6838              LDR      r0,[r7,#0]            ;1409  ; hWinG
-000d64  f7fffffe          BL       WM_DeleteWindow
-000d68  f8d80000          LDR      r0,[r8,#0]            ;1410  ; load_wind
-000d6c  f7fffffe          BL       WM_DeleteWindow
-000d70  f8d90000          LDR      r0,[r9,#0]            ;1411  ; hWinsysinfo
-000d74  f7fffffe          BL       WM_DeleteWindow
-000d78  f8da0000          LDR      r0,[r10,#0]           ;1412  ; hWincdc
-000d7c  f7fffffe          BL       WM_DeleteWindow
-000d80  f8db0000          LDR      r0,[r11,#0]           ;1413  ; hWinset
-000d84  f7fffffe          BL       WM_DeleteWindow
-000d88  f7fffffe          BL       CreateG
-000d8c  81ac              STRH     r4,[r5,#0xc]          ;1415
-000d8e  e8bd5ff0          POP      {r4-r12,lr}           ;1416
-000d92  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3478|
-000d96  6818              LDR      r0,[r3,#0]            ;1421  ; hWinR
-000d98  f7fffffe          BL       WM_DeleteWindow
-000d9c  6830              LDR      r0,[r6,#0]            ;1422  ; hWinWind
-000d9e  f7fffffe          BL       WM_DeleteWindow
-000da2  6838              LDR      r0,[r7,#0]            ;1423  ; hWinG
-000da4  f7fffffe          BL       WM_DeleteWindow
-000da8  f8d80000          LDR      r0,[r8,#0]            ;1424  ; load_wind
-000dac  f7fffffe          BL       WM_DeleteWindow
-000db0  f8d90000          LDR      r0,[r9,#0]            ;1425  ; hWinsysinfo
-000db4  f7fffffe          BL       WM_DeleteWindow
-000db8  f8da0000          LDR      r0,[r10,#0]           ;1426  ; hWincdc
-000dbc  f7fffffe          BL       WM_DeleteWindow
-000dc0  f8db0000          LDR      r0,[r11,#0]           ;1427  ; hWinset
-000dc4  f7fffffe          BL       WM_DeleteWindow
-000dc8  f7fffffe          BL       Createsysinfo
-000dcc  81ac              STRH     r4,[r5,#0xc]          ;1429
-000dce  e8bd5ff0          POP      {r4-r12,lr}           ;1430
-000dd2  f7ffbffe          B.W      BEEP_Tiggr
+000db8  e8bd9ff0          POP      {r4-r12,pc}
 ;;;1441   
                           ENDP
 
-000dd6  0000              DCW      0x0000
-                  |L1.3544|
+                  |L1.3516|
                           DCD      page_sw
-                  |L1.3548|
+                  |L1.3520|
                           DCD      mode_sw
-                  |L1.3552|
+                  |L1.3524|
                           DCD      load_sw
-                  |L1.3556|
+                  |L1.3528|
                           DCD      DISS_Voltage
-                  |L1.3560|
+                  |L1.3532|
                           DCD      gate_v
-                  |L1.3564|
+                  |L1.3536|
                           DCD      flagA
-                  |L1.3568|
+                  |L1.3540|
                           DCD      0x40020000
-                  |L1.3572|
+                  |L1.3544|
                           DCD      flagD
-                  |L1.3576|
+                  |L1.3548|
                           DCD      pow_sw
-                  |L1.3580|
+                  |L1.3552|
                           DCD      0x40020800
-                  |L1.3584|
+                  |L1.3556|
                           DCD      cdc_sw
-                  |L1.3588|
+                  |L1.3560|
                           DCD      paused
-                  |L1.3592|
+                  |L1.3564|
                           DCD      Run_Control
-                  |L1.3596|
+                  |L1.3568|
                           DCD      cutoff_flag
-                  |L1.3600|
+                  |L1.3572|
                           DCD      charge_step
-                  |L1.3604|
+                  |L1.3576|
                           DCD      0x40020400
-                  |L1.3608|
+                  |L1.3580|
                           DCD      manual
 
                           AREA ||i.Key_Scan||, CODE, READONLY, ALIGN=2

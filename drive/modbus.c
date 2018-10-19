@@ -691,23 +691,44 @@ void Transformation_ADC(void)
 	}
 /*****************************内阻值转换*******************************************/
 	var32 = Rmon_value;
-	var32 = var32 * REG_CorrectionR;  
-	if ((Polar3 & 0x01) == 0x01)		  
-	{
-		if (var32 < REG_ReadR_Offset) 
-		{
-			var32 = 0;
-		}
-		else var32 = var32 - REG_ReadR_Offset;
-	}
-	else var32 = var32 + REG_ReadR_Offset;
-	var32 = var32 >> 12;
-	if (var32 < 1)
-	{
-		var32 = 0;				  //清零
-	}
-	R_VLUE = var32;
-	var32 = 0;	
+    if(r_raly == 1)
+    {
+        var32 = var32 * REG_CorrectionR;  
+        if ((Polar3 & 0x01) == 0x01)		  
+        {
+            if (var32 < REG_ReadR_Offset) 
+            {
+                var32 = 0;
+            }
+            else var32 = var32 - REG_ReadR_Offset;
+        }
+        else var32 = var32 + REG_ReadR_Offset;
+        var32 = var32 >> 12;
+        if (var32 < 1)
+        {
+            var32 = 0;				  //?￡
+        }
+        R_VLUE = var32;
+        var32 = 0;
+    }else{
+        var32 = var32 * REG_CorrectionRL;  
+        if ((Polar3 & 0x01) == 0x01)		  
+        {
+            if (var32 < REG_ReadRL_Offset) 
+            {
+                var32 = 0;
+            }
+            else var32 = var32 - REG_ReadRL_Offset;
+        }
+        else var32 = var32 + REG_ReadRL_Offset;
+        var32 = var32 >> 12;
+        if (var32 < 1)
+        {
+            var32 = 0;				  //?￡
+        }
+        R_VLUE = var32;
+        var32 = 0;
+    }  	
 	/*****************************稳压电源测量电压转换*******************************************/
 	var32 = Vmon_value;
 	var32 = var32 * REG_POWERV;  

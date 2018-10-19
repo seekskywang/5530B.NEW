@@ -154,24 +154,24 @@ extern struct bitDefine
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
   { WINDOW_CreateIndirect, "R", ID_WINDOW_1, 0, 0, 480, 272, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_0, 28, 50, 64, 32, 0, 0x64, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_1, 28, 120, 64, 32, 0, 0x64, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_1, 300, 50, 100, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_3, 240, 50, 32, 30, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_4, 239, 121, 32, 32, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_6, 217, 128, 32, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_43, 300, 150, 100, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_44, 300, 60, 100, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_45, 300, 90, 100, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_46, 400, 60, 57, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_47, 400, 90, 57, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_44, 300, 75, 100, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_45, 300, 100, 100, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_46, 400, 75, 57, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_47, 400, 100, 57, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_80, 95, 48, 150, 40, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_81, 95, 116, 150, 40, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_82, 95, 184, 150, 40, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_83, 400, 175, 57, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_96, 240, 5, 120, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_97, 400, 120, 60, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_97, 400, 125, 60, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_98, 405, 5, 80, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_117, 400, 200, 60, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_118, 300, 120, 100, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_118, 300, 125, 100, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_124, 300, 2, 80, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_125, 5, 225, 80, 30, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_130, 400, 150, 60, 20, 0, 0x0, 0 },
@@ -179,7 +179,7 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
   { TEXT_CreateIndirect, "Text", ID_TEXT_126, 5, 255, 50, 20, 20, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_127, 54, 255, 20, 20, 20, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_128, 68, 254, 20, 20, 20, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_132, 440, 30, 40, 20, 20, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_132, 400, 50, 40, 20, 20, 0x0, 0 },
   { BUTTON_CreateIndirect, "Button", ID_BUTTON_13, 83, 226, 77, 45, 0, 0x0, 0 },
   { BUTTON_CreateIndirect, "Button", ID_BUTTON_14, 163, 226, 77, 45, 0, 0x0, 0 },
   { BUTTON_CreateIndirect, "Button", ID_BUTTON_15, 243, 226, 77, 45, 0, 0x0, 0 },
@@ -271,20 +271,21 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 GUI_SetFont(&GUI_FontEN40);
                 GUI_SetColor(GUI_LIGHTGRAY);
                 GUI_DispStringAt("I:", 28, 190);
+                GUI_DispStringAt("R:", 28, 120);
                 GUI_SetColor(GUI_LIGHTGRAY);
                 GUI_DispStringAt("A", 240, 187);
                 GUI_SetFont(&GUI_Font24_1);
                 GUI_SetColor(GUI_WHITE);
-                GUI_DispStringAt("A",460,60);
-                GUI_DispStringAt("A",460,90);
-                GUI_DispStringAt("V",460,120);
+                GUI_DispStringAt("A",460,75);
+                GUI_DispStringAt("A",460,100);
+                GUI_DispStringAt("V",460,125);
                 GUI_DispStringAt("ms",450,150);
                 GUI_DispStringAt("A",460,175);
                 GUI_DispStringAt("ms",450,200);
                 GUI_SetFont(&GUI_Fontset_font);
-                GUI_DispStringAt("电流", 300, 175);
+                GUI_DispStringAt("负载电流", 300, 175);
                 GUI_DispStringAt("短路时间", 300, 200);//SET
-                GUI_DispStringAt("过流测试", 340, 30);//SET
+//                GUI_DispStringAt("过流测试", 340, 30);//SET
 //                 if(oc_data == 0)
 //                 {
 //                     GUI_SetFont(&GUI_Font24_1);
@@ -351,28 +352,30 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             }
         }
         
-        if(oc_mode == 0)
-        {
-            GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
-            flag_Load_CC = 1;
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_132);
-            TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
-            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-            GUI_UC_SetEncodeUTF8();        
-            TEXT_SetText(hItem,"CC");
-        }else if(oc_mode == 1){
-            GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV
-            flag_Load_CC = 0;
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_132);
-            TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
-            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-            GUI_UC_SetEncodeUTF8();        
-            TEXT_SetText(hItem,"CV");
-        }
+        
        
         
         if(para_set2 == set_2_on)
         {
+            if(oc_mode == 0)
+            {
+                GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+                flag_Load_CC = 1;
+                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_132);
+                TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+                TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+                GUI_UC_SetEncodeUTF8();        
+                TEXT_SetText(hItem,"CC");
+            }else if(oc_mode == 1){
+                GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV
+                flag_Load_CC = 0;
+                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_132);
+                TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+                TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+                GUI_UC_SetEncodeUTF8();        
+                TEXT_SetText(hItem,"CV");
+            }
+        
             if(short_finish == 1)
             {
                 if(gate_v == 0)
@@ -892,11 +895,6 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     //
     // Initialization of 'Text'
     //
-        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_1);
-        GUI_UC_SetEncodeUTF8();
-        TEXT_SetText(hItem, "R:");
-        TEXT_SetTextColor(hItem, GUI_LIGHTGRAY);
-        TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
     //
     // Initialization of 'Text'
     //
@@ -1019,6 +1017,13 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         switch(para_set2){
             case set_2_on:
             {
+                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_1);
+                GUI_UC_SetEncodeUTF8();
+                TEXT_SetText(hItem, "过流模式");
+                TEXT_SetBkColor(hItem,0x00BFFFFF);
+                TEXT_SetTextColor(hItem, GUI_BLACK);
+                TEXT_SetFont(hItem, &GUI_Fontset_font);
+                
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_43);
                 GUI_UC_SetEncodeUTF8();
                 TEXT_SetText(hItem, "步进时间");
@@ -1028,8 +1033,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_44);
                 GUI_UC_SetEncodeUTF8();
                 TEXT_SetText(hItem, "起始电流");
-                TEXT_SetBkColor(hItem,0x00BFFFFF);
-                TEXT_SetTextColor(hItem, GUI_BLACK);
+                TEXT_SetTextColor(hItem, GUI_WHITE);
                 TEXT_SetFont(hItem, &GUI_Fontset_font);
                 
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_45);
@@ -1103,13 +1107,13 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 if(oc_mode == 0)
                 {
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_132);
-                    TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
+                    TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
                     TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
                     GUI_UC_SetEncodeUTF8();        
                     TEXT_SetText(hItem,"CC");
                 }else if(oc_mode == 1){
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_132);
-                    TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
+                    TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
                     TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
                     GUI_UC_SetEncodeUTF8();        
                     TEXT_SetText(hItem,"CV");
@@ -1121,6 +1125,10 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             }
             case set_2_off:
             {
+                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_1);
+                TEXT_SetText(hItem, "");
+                TEXT_SetTextColor(hItem, GUI_INVALID_COLOR);
+                
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_43);
                 TEXT_SetText(hItem, "");
                 TEXT_SetTextColor(hItem, GUI_INVALID_COLOR);
@@ -1194,7 +1202,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 */
 WM_HWIN CreateR(void);
 WM_HWIN CreateR(void) {
-  oc_sw = set_20;
+  oc_sw = set_72;
   page_sw = face_r;
   track = face_r;
     con_flag = 0;
@@ -1219,6 +1227,22 @@ void OC_OP_DOWN(void)
 {
     switch(oc_sw)
     {
+        case set_72:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinR);
+            hItem = WM_GetDialogItem(hWinR, ID_TEXT_1);
+            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+            TEXT_SetTextColor(hItem, GUI_WHITE);
+            
+            hItem = WM_GetDialogItem(hWinR, ID_TEXT_44);
+            TEXT_SetBkColor(hItem,0x00BFFFFF);
+            TEXT_SetTextColor(hItem, GUI_BLACK);
+            
+            oc_sw = set_20;
+            break;
+        }
+        
         case set_20:
         {
             WM_HWIN hItem;
@@ -1272,11 +1296,11 @@ void OC_OP_DOWN(void)
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
             TEXT_SetTextColor(hItem, GUI_WHITE);
             
-            hItem = WM_GetDialogItem(hWinR, ID_TEXT_44);
+            hItem = WM_GetDialogItem(hWinR, ID_TEXT_1);
             TEXT_SetBkColor(hItem,0x00BFFFFF);
             TEXT_SetTextColor(hItem, GUI_BLACK);
             
-            oc_sw = set_20;
+            oc_sw = set_72;
             break;
         }
         
@@ -1289,11 +1313,11 @@ void OC_OP_UP(void)
 {
     switch(oc_sw)
     {
-        case set_20:
+        case set_72:
         {
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWinR);
-            hItem = WM_GetDialogItem(hWinR, ID_TEXT_44);
+            hItem = WM_GetDialogItem(hWinR, ID_TEXT_1);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
             TEXT_SetTextColor(hItem, GUI_WHITE);
             
@@ -1302,6 +1326,22 @@ void OC_OP_UP(void)
             TEXT_SetTextColor(hItem, GUI_BLACK);
             
             oc_sw = set_70;
+            break;
+        }
+        
+        case set_20:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinR);
+            hItem = WM_GetDialogItem(hWinR, ID_TEXT_44);
+            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+            TEXT_SetTextColor(hItem, GUI_WHITE);
+            
+            hItem = WM_GetDialogItem(hWinR, ID_TEXT_1);
+            TEXT_SetBkColor(hItem,0x00BFFFFF);
+            TEXT_SetTextColor(hItem, GUI_BLACK);
+            
+            oc_sw = set_72;
             break;
         }
         case set_21:
@@ -1533,6 +1573,19 @@ void OC_SET(void) {
             Wrtite_step();
             break;
         }
+        
+        case set_72:
+        {
+            WM_HWIN hItem;
+            if(oc_mode == 0)
+            {
+                oc_mode = 1;
+            }else{
+                oc_mode = 0;
+            }
+            break;
+        }
+        
     }
 }
 

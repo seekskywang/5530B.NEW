@@ -778,6 +778,31 @@
               <FileType>1</FileType>
               <FilePath>..\APP\load_Face.c</FilePath>
             </File>
+            <File>
+              <FileName>c_dc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\c_dc.c</FilePath>
+            </File>
+            <File>
+              <FileName>graph.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\graph.c</FilePath>
+            </File>
+            <File>
+              <FileName>settings.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\settings.c</FilePath>
+            </File>
+            <File>
+              <FileName>STARTER.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\STARTER.c</FilePath>
+            </File>
+            <File>
+              <FileName>sysinfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\sysinfo.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -792,6 +817,36 @@
               <FileName>HZ12.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\drive\HZ12.c</FilePath>
+            </File>
+            <File>
+              <FileName>EN40.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fonts\EN40.c</FilePath>
+            </File>
+            <File>
+              <FileName>HZ20S.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fonts\HZ20S.c</FilePath>
+            </File>
+            <File>
+              <FileName>HZ32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fonts\HZ32.c</FilePath>
+            </File>
+            <File>
+              <FileName>set_font.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fonts\set_font.c</FilePath>
+            </File>
+            <File>
+              <FileName>symbol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fonts\symbol.c</FilePath>
+            </File>
+            <File>
+              <FileName>unit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fonts\unit.c</FilePath>
             </File>
           </Files>
         </Group>

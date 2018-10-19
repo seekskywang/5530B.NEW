@@ -35047,6 +35047,7 @@ N#define set_68          67
 N#define set_69          68
 N#define set_70          69
 N#define set_71          70
+N#define set_72          71
 N/*
 N************************************************************************
 N*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -35607,6 +35608,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -36080,6 +36082,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -50406,6 +50409,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -50874,6 +50878,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -51354,6 +51359,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -51824,6 +51830,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						²ÎÊıÉèÖÃÊ¶±ğ·û
@@ -52162,6 +52169,8 @@ N    TIM3_Int_Init(10000-1,8400-1);
 N	TIM6_Config();
 N	ADC1_DMA_Init();
 N	USART_Configuration();
+W "..\User\main.c" 58 5 function "USART3_Configuration" declared implicitly
+N    USART3_Configuration();
 N	i2c_CfgGpio();//24C01å¼•è„šåˆå§‹åŒ–
 N	TM1650_GPIO_INT();		/*TM1650å¼•è„šåˆå§‹åŒ– */
 N	DAC8531_GPIOCoing();//DACåˆå§‹åŒ–
@@ -52169,6 +52178,10 @@ N	AD7689_InitializeSPI2();//AD7689åˆå§‹åŒ–
 N	LCD_Initializtion();//æ¶²æ™¶å±åˆå§‹åŒ–
 N	EEPROM_READ_Coeff();//è¯»å–æ ¡å‡†å‚æ•°
 N	//IWDG_Inte();
+N    GPIO_ResetBits(GPIOC,GPIO_Pin_13);
+X    GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N    GPIO_SetBits(GPIOC,GPIO_Pin_13);//å…³é—­ç”µæºè¾“å‡ºç»§ç”µå™¨
+X    GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
 N	MainTask();
 N}
 N

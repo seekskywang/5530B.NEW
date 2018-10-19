@@ -35048,6 +35048,7 @@ N#define set_68          67
 N#define set_69          68
 N#define set_70          69
 N#define set_71          70
+N#define set_72          71
 N/*
 N************************************************************************
 N*						参数设置识别符
@@ -35519,6 +35520,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						参数设置识别符
@@ -36014,6 +36016,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						参数设置识别符
@@ -36478,6 +36481,7 @@ S#define set_68          67
 S#define set_69          68
 S#define set_70          69
 S#define set_71          70
+S#define set_72          71
 S/*
 S************************************************************************
 S*						参数设置识别符
@@ -51362,25 +51366,24 @@ N
 N			case KEY_ESC :
 X			case 0X6D :
 N			{
-N                
+N              sLCD_WR_REG(0x01);
 N//                main();
 N//				timer_sw = 0;
 N				KeyCounter = 0;
 N			   BEEP_Tiggr();//瑙﹀彂铚傞福鍣
-N               switch(page_sw){
-N                   case face_r:
-X                   case 3:
-N                   {
-N                        if(oc_mode == 0)
-N                        {
-N                            oc_mode = 1;
-N                        }else{
-N                            oc_mode = 0;
-N                        }
-N                   }break;
-N                   default:sLCD_WR_REG(0x01);
-N                   break;
-N               }
+N//                switch(page_sw){
+N//                    case face_r:
+N//                    {
+N//                         if(oc_mode == 0)
+N//                         {
+N//                             oc_mode = 1;
+N//                         }else{
+N//                             oc_mode = 0;
+N//                         }
+N//                    }break;
+N//                    default:sLCD_WR_REG(0x01);
+N//                    break;
+N//                }
 N			}
 N			break;
 N			

@@ -498,6 +498,7 @@ WM_HWIN CreateWindow2(void) {
   SET_Current_Laod = load_c;
   pass = 0;
   mode_sw = mode_load;
+  GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
   GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
   GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
   TM1650_SET_LED(0x68,0x70);

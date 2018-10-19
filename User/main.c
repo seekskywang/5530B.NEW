@@ -55,6 +55,7 @@ int main(void)
 	TIM6_Config();
 	ADC1_DMA_Init();
 	USART_Configuration();
+    USART3_Configuration();
 	i2c_CfgGpio();//24C01引脚初始化
 	TM1650_GPIO_INT();		/*TM1650引脚初始化 */
 	DAC8531_GPIOCoing();//DAC初始化
@@ -62,6 +63,8 @@ int main(void)
 	LCD_Initializtion();//液晶屏初始化
 	EEPROM_READ_Coeff();//读取校准参数
 	//IWDG_Inte();
+    GPIO_ResetBits(GPIOC,GPIO_Pin_13);
+    GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
 	MainTask();
 }
 

@@ -825,24 +825,24 @@ void Key_Funtion(void)
 			
 			case KEY_ESC :
 			{
-                
+              sLCD_WR_REG(0x01);
 //                main();
 //				timer_sw = 0;
 				KeyCounter = 0;
 			   BEEP_Tiggr();//触发蜂鸣�
-               switch(page_sw){
-                   case face_r:
-                   {
-                        if(oc_mode == 0)
-                        {
-                            oc_mode = 1;
-                        }else{
-                            oc_mode = 0;
-                        }
-                   }break;
-                   default:sLCD_WR_REG(0x01);
-                   break;
-               }
+//                switch(page_sw){
+//                    case face_r:
+//                    {
+//                         if(oc_mode == 0)
+//                         {
+//                             oc_mode = 1;
+//                         }else{
+//                             oc_mode = 0;
+//                         }
+//                    }break;
+//                    default:sLCD_WR_REG(0x01);
+//                    break;
+//                }
 			}
 			break;
 			

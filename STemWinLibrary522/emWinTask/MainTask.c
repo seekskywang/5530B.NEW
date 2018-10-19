@@ -30,9 +30,16 @@ extern struct bitDefine
     unsigned bit7: 1;
 } flagA, flagB,flagC,flagD,flagE,flagF,flagG;
 
+extern vu8 resetflag;
+extern vu8 resdone;
 extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ16;
 extern WM_HWIN CreateWindow(void);
 extern WM_HWIN CreateR(void);
+
+static void ee_Delay( vu32 nCount)	 //İ²Õ¥Ö„Ò“Ê±Ú¯Ë½
+{
+	for(; nCount != 0; nCount--);
+}
 /**********************************************************************************************************
 *	º¯ Êı Ãû: MainTask
 *	¹¦ÄÜËµÃ÷: GUIÖ÷º¯Êı
@@ -43,6 +50,8 @@ extern WM_HWIN CreateR(void);
 void MainTask(void) 
 { 
 //	unsigned char  ucKeyCode;
+    static int read1963;
+    static int scancount;
 	GUI_Init();
 	WM_SetDesktopColor(GUI_BLUE);  
 	GUI_Clear();//ÇåÆÁ
@@ -57,9 +66,8 @@ void MainTask(void)
 	SLIDER_SetDefaultSkin(SLIDER_SKIN_FLEX);
 	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
 	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
-    GPIO_ResetBits(GPIOC,GPIO_Pin_13);
-    GPIO_SetBits(GPIOC,GPIO_Pin_13);//å…³é—­ç”µæºè¾“å‡ºç»§ç”µå™¨
-	CreateR();//¿ª»ú½øÈëÄÚ×è²âÊÔ½çÃæ
+    CreateSTARTER();
+//	CreateR();//¿ª»ú½øÈëÄÚ×è²âÊÔ½çÃæ
 	flag_Load_CC=1;//¿ª»ú¸ºÔØÄ¬ÈÏ½øÈëCCÄ£Ê½
 	GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
 	GPIO_SetBits(GPIOA,GPIO_Pin_15);//OFF
@@ -70,6 +78,31 @@ void MainTask(void)
 		TIM_SetCompare1(TIM2,Contr_Current);//ÎÈÑ¹µçÔ´µçÁ÷DAC
 		TIM_SetCompare2(TIM2,Contr_Voltage);//ÎÈÑ¹µçÔ´µçÑ¹DAC
 		DAC8531_Send(Contr_Laod);//¼ÓÔØDACÖµ
+        if(page_sw != face_starter)
+        {
+            if(scancount == 9)
+            {
+                sLCD_WR_REG(0xf1);
+                ee_Delay(30);
+                read1963 =sLCD_Read_Data();
+                scancount = 0;
+            }else{
+                scancount++;
+            }
+//                 if(resdone == 1)
+//                 {
+//                     sLCD_WR_REG(0xf1);
+//                     ee_Delay(30);
+//                     read1963 =sLCD_Read_Data();
+//                 }
+             if(read1963 != 0x03)
+             {
+                 resetflag = 1;               
+             }else{
+                 resdone = 0;
+                 resetflag = 0; 
+             }
+        }
 		if(Flag_DAC_OFF==0)
 		{
 			Transformation_ADC();
