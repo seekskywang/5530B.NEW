@@ -27,7 +27,7 @@ extern vu8 code5;
 extern vu8 code6;
 extern vu8 code7;
 extern vu8 code8;
-
+extern vu8 oc_mode;
 
 //================================================================//
 extern struct bitDefine
@@ -485,6 +485,7 @@ void EEPROM_READ_Coeff(void)
     code8 = EEPROM_READ_Byte(0x8B);
     flag_Load_CC = EEPROM_READ_Byte(0x8C);
     steptime = EEPROM_READ_Byte(0x8D);
+    oc_mode = EEPROM_READ_Byte(0xB3);
     
     set_max_v=EEPROM_READ_Byte(0x62);
 	set_max_v=set_max_v<<8;
@@ -715,6 +716,8 @@ void Write_Limits(void)
     data_8bit = set_dc_cutoff_v >> 8;
 	EEPROM_WriteByte(0xA9, data_8bit);
 	EEPROM_WriteByte(0xAA, set_dc_cutoff_v);
+    
+    EEPROM_WriteByte(0xB3, oc_mode);
 }
 
 void Write_btype(void)

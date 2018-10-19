@@ -68,8 +68,8 @@ void MainTask(void)
 	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
     CreateSTARTER();
 //	CreateR();//开机进入内阻测试界面
-	flag_Load_CC=1;//开机负载默认进入CC模式
-	GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+// 	flag_Load_CC=1;//开机负载默认进入CC模式
+// 	GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
 	GPIO_SetBits(GPIOA,GPIO_Pin_15);//OFF
 	Flag_Swtich_ON=0;
     

@@ -154,7 +154,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         GUI_DispStringAt("JK5530B", 140, 50);
         GUI_DispStringAt("Ver:1.5", 140, 75);
        
-        GUI_DispStringAt("Ver:1.1", 140, 100);
+        GUI_DispStringAt("Ver:1.2", 140, 100);
         GUI_DispStringAt("-", 191, 125);
         GUI_DispStringAt("-", 227, 125);
         GUI_DispStringAt("A", 164, 150);

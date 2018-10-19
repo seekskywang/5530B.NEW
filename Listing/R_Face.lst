@@ -52501,7 +52501,7 @@ Xvu8 oct_sw = 0;
 Nvu8 oc_test = 0;
 Nextern vu8 t_onoff;
 Nextern vu8 mode_sw;
-N
+Nfloat crec1,crec2;
 Nextern vu8 LOAD_t;
 N//extern vu8 status_flash;
 Nextern vu8 pass;
@@ -52806,8 +52806,8 @@ N            TEXT_SetText(hItem,"");
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_128);       
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x010D));       
 N            TEXT_SetText(hItem,"");
-N            if(R_VLUE < 300)
-X            if(Run_Control[13] < 300)
+N            if(R_VLUE < 180 && DISS_Voltage > 1)
+X            if(Run_Control[13] < 180 && DISS_Voltage > 1)
 N            {
 N                GPIO_ResetBits(GPIOB,GPIO_Pin_13);//R_RALY低档位 
 X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
@@ -52839,7 +52839,7 @@ N                TEXT_SetText(hItem,"Ω");
 N            }else{
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_126);       
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x010B));       
-N                TEXT_SetText(hItem,"250");
+N                TEXT_SetText(hItem,"200");
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_127);       
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x010C));       
 N                TEXT_SetText(hItem,"m");
@@ -52954,7 +52954,7 @@ N                        if(con_flag == 1 && oct_sw == oct_off && finish == 0)
 X                        if(con_flag == 1 && oct_sw == 0 && finish == 0)
 N                        {
 W "..\APP\R_Face.c" 439 33 single-precision operand implicitly converted to double-precision
-N                             if((float)(GUI_GetTime()/500.0 - time1) > 0.5)
+N                             if((float)(GUI_GetTime()/500.0 - time1) > 1.5)
 N                            {
 N                                r = R_VLUE;
 X                                r = Run_Control[13];
@@ -52976,7 +52976,7 @@ N                        if(con_flag == 1 && oct_sw == oct_off && finish == 0)
 X                        if(con_flag == 1 && oct_sw == 0 && finish == 0)
 N                        {
 W "..\APP\R_Face.c" 455 33 single-precision operand implicitly converted to double-precision
-N                             if((float)(GUI_GetTime()/500.0 - time1) > 0.5)
+N                             if((float)(GUI_GetTime()/500.0 - time1) > 1.5)
 N                             {
 N                                r = R_VLUE;
 X                                r = Run_Control[13];
@@ -53167,8 +53167,8 @@ N                        }else if(DISS_Voltage > 1 && oct_sw == oct_off && short
 X                        }else if(DISS_Voltage > 1 && oct_sw == 0 && short_flag == 0){
 N                            
 N//                             Mode_SW_CONT(0x02);
-N                            SET_Current_Laod = (int)(oc_data*1000);
-X                            Run_Control[4] = (int)(oc_data*1000);
+N                            SET_Current_Laod = (int)(oc_data*1000) + 5000;
+X                            Run_Control[4] = (int)(oc_data*1000) + 5000;
 N                            short_flag =1;
 N                            short_start = GUI_GetTime()*2;
 N                        }
@@ -53678,7 +53678,7 @@ N                        TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色
 X                        TEXT_SetTextColor(hItem, 0x000000FF);
 N                        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
 N                        GUI_UC_SetEncodeUTF8();        
-N                        TEXT_SetText(hItem,"250");
+N                        TEXT_SetText(hItem,"200");
 N                        
 N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_127);
 X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x010C));
@@ -53956,6 +53956,7 @@ N//    GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
 N//    GPIO_SetBits(GPIOB,GPIO_Pin_13);
 N//    r_raly = 1;
 N//  set_init_c = SET_Current_Laod;
+N    r_raly = 1;
 N  pass = 0;
 N  hWinR = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), _cbDialog, WM_HBKWIN, 0, 0);
 X  hWinR = GUI_CreateDialogBox(_aDialogCreate, (sizeof(_aDialogCreate) / sizeof(_aDialogCreate[0])), _cbDialog, WM_GetDesktopWindow(), 0, 0);
@@ -54482,8 +54483,9 @@ N                oc_mode = 1;
 N            }else{
 N                oc_mode = 0;
 N            }
+N            Write_Limits();
 N            break;
-W "..\APP\R_Face.c" 1579 21 variable "hItem" was declared but never referenced
+W "..\APP\R_Face.c" 1580 21 variable "hItem" was declared but never referenced
 N        }
 N        
 N    }
@@ -54856,29 +54858,46 @@ N    WM_HWIN hItem;
 X    GUI_HWIN hItem;
 N    char sbs_c[6];
 N    float change_sbs_c;   
-N             
-W "..\APP\R_Face.c" 1923 47 single-precision operand implicitly converted to double-precision
-N    if(v - /*DISS_Voltage*/DISS_POW_Voltage > v*0.5 && para_set2 == set_2_on)
-X    if(v -  DISS_POW_Voltage > v*0.5 && para_set2 == 0xff)
+N    crec2 = crec1;
+N    crec1 = DISS_Current;         
+W "..\APP\R_Face.c" 1926 61 single-precision operand implicitly converted to double-precision
+N    if((crec1 < crec2 || v - /*DISS_Voltage*/DISS_Voltage > v*0.9) && para_set2 == set_2_on)
+X    if((crec1 < crec2 || v -  DISS_Voltage > v*0.9) && para_set2 == 0xff)
 N    {
+N        if(oc_mode == 0)
+N        {
+N            //        oc_data = (float)(SET_Current_Laod+csum)/1000;       
+N            oc_data = crec2;
+N            SET_Current_Laod = set_init_c;
+X            Run_Control[4] = Run_Control[22];
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_47);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x6C));
+N            change_sbs_c = (float)set_sbs_c/1000;
+X            change_sbs_c = (float)Run_Control[23]/1000;
+N            sprintf(sbs_c,"%.3f",change_sbs_c);
+N            TEXT_SetText(hItem,sbs_c);
+N            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//关闭负载   
+X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N            t_onoff = 0;
+N            stepcount = 0;
+N            oct_sw = oct_off;
+X            oct_sw = 0;
+N            finish = 1;
+N            crec1 = 0;
+N            crec2 = 0;
+N        }else if(oc_mode == 1){
+N            oc_data = crec2;
+N            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//关闭负载   
+X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N            t_onoff = 0;
+N            stepcount = 0;
+N            oct_sw = oct_off;
+X            oct_sw = 0;
+N            finish = 1;
+N            crec1 = 0;
+N            crec2 = 0;
+N        }
 N
-N        oc_data = (float)SET_Current_Laod/1000;       
-X        oc_data = (float)Run_Control[4]/1000;       
-N        SET_Current_Laod = set_init_c;
-X        Run_Control[4] = Run_Control[22];
-N        hItem = WM_GetDialogItem(hWinR, ID_TEXT_47);
-X        hItem = WM_GetDialogItem(hWinR, (0x800 + 0x6C));
-N        change_sbs_c = (float)set_sbs_c/1000;
-X        change_sbs_c = (float)Run_Control[23]/1000;
-N        sprintf(sbs_c,"%.3f",change_sbs_c);
-N        TEXT_SetText(hItem,sbs_c);
-N        GPIO_SetBits(GPIOC,GPIO_Pin_1);//关闭负载
-X        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N        t_onoff = 0;
-N        stepcount = 0;
-N        oct_sw = oct_off;
-X        oct_sw = 0;
-N        finish = 1;
 N    }
 N}
 N
@@ -54888,10 +54907,9 @@ N    WM_HWIN hItem;
 X    GUI_HWIN hItem;
 N    char sbs_c[6];
 N    float change_sbs_c;
-N    static float crec1,crec2;
 N    static vu16 csum;
 N             
-W "..\APP\R_Face.c" 1948 43 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 1965 43 single-precision operand implicitly converted to double-precision
 N    if(v - /*DISS_Voltage*/DISS_Voltage > v*0.9 && para_set2 == set_2_on)
 X    if(v -  DISS_Voltage > v*0.9 && para_set2 == 0xff)
 N    {
@@ -54934,8 +54952,7 @@ N        if(oc_mode == 0)
 N        {
 N            SET_Current_Laod = SET_Current_Laod + set_sbs_c;
 X            Run_Control[4] = Run_Control[4] + Run_Control[23];
-N            crec2 = crec1;
-N            crec1 = DISS_Current;
+N            
 N            if(crec1 < crec2)
 N            {
 N                oc_data = crec2;

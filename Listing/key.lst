@@ -51488,8 +51488,8 @@ N                    }
 N                    case face_r:
 X                    case 3:
 N                    {
-N                        if(para_set2 == set_2_on)
-X                        if(para_set2 == 0xff)
+N                        if(para_set2 == set_2_on && oc_mode ==0)
+X                        if(para_set2 == 0xff && oc_mode ==0)
 N                        {
 W "..\drive\key.c" 937 29 function "OC_OP_UP" declared implicitly
 N                            OC_OP_UP();
@@ -51555,8 +51555,8 @@ N                    }
 N                    case face_r:
 X                    case 3:
 N                    {
-N                        if(para_set2 == set_2_on)
-X                        if(para_set2 == 0xff)
+N                        if(para_set2 == set_2_on && oc_mode ==0)
+X                        if(para_set2 == 0xff && oc_mode ==0)
 N                        {
 W "..\drive\key.c" 993 29 function "OC_OP_DOWN" declared implicitly
 N                            OC_OP_DOWN();
@@ -51814,12 +51814,13 @@ N                    }
 N                    case face_load:
 X                    case 4:
 N                    {
-N                        t_onoff++;
-N                        if(t_onoff>1)
-N                        {
-N                            t_onoff=0;
-N                        }
-N                        if(t_onoff==0)
+N//                         t_onoff++;
+N//                         if(t_onoff>1)
+N//                         {
+N//                             t_onoff=0;
+N//                         }
+N                        if(load_sw==load_on)
+X                        if(load_sw==1)
 N                        {
 N                            Flag_Swtich_ON=0;
 X                            (flagA . bit6)=0;
@@ -51830,7 +51831,8 @@ N                            mode_sw = 0;
 N                            load_sw = load_off;
 X                            load_sw = 0;
 N                        }
-N                        else if(t_onoff==1)
+N                        else if(load_sw==load_off)
+X                        else if(load_sw==0)
 N                        {
 N                            Flag_Swtich_ON=1;
 X                            (flagA . bit6)=1;
@@ -51852,13 +51854,14 @@ N                    }break;
 N                    case face_menu:
 X                    case 2:
 N                    {
-N                        static vu8 POW_t;
-N                        POW_t++;
-N                        if(POW_t>1)
-N                        {
-N                            POW_t=0;
-N                        }
-N                        if(POW_t==0)
+N//                         static vu8 POW_t;
+N//                         POW_t++;
+N//                         if(POW_t>1)
+N//                         {
+N//                             POW_t=0;
+N//                         }
+N                        if(pow_sw==pow_on)
+X                        if(pow_sw==1)
 N                        {
 N                            GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
 X                            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
@@ -51868,7 +51871,8 @@ N                            mode_sw = 0;
 N                            pow_sw = pow_off;
 X                            pow_sw = 0;
 N                        }
-N                        else if(POW_t==1)
+N                        else if(pow_sw==pow_off)
+X                        else if(pow_sw==0)
 N                        {
 N                           GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
 X                           GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
@@ -52086,11 +52090,28 @@ Nvoid setmode_r(void)
 N{
 N    GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
 X    GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N    GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器   
+N    GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器  
 X    GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
-N    GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF   
+N    GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF  
 X    GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N    pow_sw = pow_off;
+X    pow_sw = 0;
+N    load_sw = load_off;
+X    load_sw = 0;
 N    mode_sw = mode_r;
 X    mode_sw = 1;
 N}
 N
+Nvoid IO_OFF(void)
+N{
+N    GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+X    GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N    GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器  
+X    GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N    GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF  
+X    GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N    pow_sw = pow_off;
+X    pow_sw = 0;
+N    load_sw = load_off;
+X    load_sw = 0;
+N}

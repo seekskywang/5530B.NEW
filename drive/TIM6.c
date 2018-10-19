@@ -57,7 +57,7 @@ void TIM4_IRQHandler(void)
     static vu16 resetcount;
     static vu8 read1963;
     static vu16 scancount;
-    static float crec1,crec2;
+//     static float crec1,crec2;
     
     if(TIM_GetITStatus(TIM4,TIM_IT_Update)==SET) //????
     {
@@ -98,7 +98,7 @@ void TIM4_IRQHandler(void)
          
         if(oct_sw == oct_on)
         {
-//            OC_CHECK();
+            OC_CHECK();
             if(oct_sw == oct_on)
             {
                 stepcount ++;
@@ -109,20 +109,20 @@ void TIM4_IRQHandler(void)
                 }
             }
         }
-        if(page_sw == face_load)
-        {
-            if(c_rec == 1)
-            {
-                crec2 = crec1;
-                crec1 = DISS_Current;
-                if(crec2 > crec1)
-                {
-                    watch = crec2;
-                    c_rec = 0;
-                    crec2 = crec1 = 0;
-                }
-            }
-        }
+//         if(page_sw == face_load)
+//         {
+//             if(c_rec == 1)
+//             {
+//                 crec2 = crec1;
+//                 crec1 = DISS_Current;
+//                 if(crec2 > crec1)
+//                 {
+//                     watch = crec2;
+//                     c_rec = 0;
+//                     crec2 = crec1 = 0;
+//                 }
+//             }
+//         }
     }    
 }
 

@@ -53,6 +53,31 @@ void ADC1_DMA_Init(void)
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
   GPIO_Init(GPIOA, &GPIO_InitStructure);	
+  
+  
+  /* Configure the ADC1 in continous mode withe a resolutuion equal to 12 bits  */
+	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
+	ADC_CommonInitStructure.ADC_Prescaler = ADC_Prescaler_Div2;
+	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+	ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
+	ADC_CommonInit(&ADC_CommonInitStructure);
+	
+  ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;			//
+	ADC_InitStructure.ADC_ScanConvMode = ENABLE ; 	 				//
+	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;			//
+	ADC_InitStructure.ADC_ExternalTrigConv =ADC_ExternalTrigConvEdge_None;	//
+	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right; 	//
+	ADC_InitStructure.ADC_NbrOfConversion = 3;	 								//
+	ADC_Init(ADC1, &ADC_InitStructure);
+	
+	/*配置ADC时钟*/
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_84Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_3Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 3, ADC_SampleTime_3Cycles);
+  /* ADC Calibration */
+  ADC_Cmd(ADC1, ENABLE);//使能ADC
+	ADC_SoftwareStartConv(ADC1);   //开始转换
+	ADC_DMARequestAfterLastTransferCmd(ADC1,ENABLE);
 		
 	
 	//RCC_APB2PeriphResetCmd(RCC_APB2Periph_ADC1,ENABLE);	  //
@@ -82,29 +107,29 @@ void ADC1_DMA_Init(void)
   DAM1_ADC_NVIC();//DMA中断配置
   ADC_DMACmd(ADC1, ENABLE);  //使能DMA
   
-  /* Configure the ADC1 in continous mode withe a resolutuion equal to 12 bits  */
-	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
-	ADC_CommonInitStructure.ADC_Prescaler = ADC_Prescaler_Div2;
-	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
-	ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
-	ADC_CommonInit(&ADC_CommonInitStructure);
-	
-  ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;			//
-	ADC_InitStructure.ADC_ScanConvMode = ENABLE ; 	 				//
-	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;			//
-	ADC_InitStructure.ADC_ExternalTrigConv =ADC_ExternalTrigConvEdge_None;	//
-	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right; 	//
-	ADC_InitStructure.ADC_NbrOfConversion = 3;	 								//
-	ADC_Init(ADC1, &ADC_InitStructure);
-	
-	/*配置ADC时钟*/
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_84Cycles);
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_3Cycles);
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 3, ADC_SampleTime_3Cycles);
-  /* ADC Calibration */
-  ADC_Cmd(ADC1, ENABLE);//使能ADC
-	ADC_SoftwareStartConv(ADC1);   //开始转换
-	ADC_DMARequestAfterLastTransferCmd(ADC1,ENABLE);
+//   /* Configure the ADC1 in continous mode withe a resolutuion equal to 12 bits  */
+// 	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
+// 	ADC_CommonInitStructure.ADC_Prescaler = ADC_Prescaler_Div2;
+// 	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+// 	ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
+// 	ADC_CommonInit(&ADC_CommonInitStructure);
+// 	
+//   ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;			//
+// 	ADC_InitStructure.ADC_ScanConvMode = ENABLE ; 	 				//
+// 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;			//
+// 	ADC_InitStructure.ADC_ExternalTrigConv =ADC_ExternalTrigConvEdge_None;	//
+// 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right; 	//
+// 	ADC_InitStructure.ADC_NbrOfConversion = 3;	 								//
+// 	ADC_Init(ADC1, &ADC_InitStructure);
+// 	
+// 	/*配置ADC时钟*/
+// 	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_84Cycles);
+// 	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_3Cycles);
+// 	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 3, ADC_SampleTime_3Cycles);
+//   /* ADC Calibration */
+//   ADC_Cmd(ADC1, ENABLE);//使能ADC
+// 	ADC_SoftwareStartConv(ADC1);   //开始转换
+// 	ADC_DMARequestAfterLastTransferCmd(ADC1,ENABLE);
 }
 /***************************************************************/
 void DAM1_ADC_NVIC(void)

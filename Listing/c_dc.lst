@@ -53706,10 +53706,8 @@ X  track = 1;
 N  TM1650_SET_LED(0x68,0x70);
 N  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//İֆ
 X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
-N  GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N  GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-X  GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+W "..\APP\c_dc.c" 975 3 function "IO_OFF" declared implicitly
+N  IO_OFF();//�
 N//  double_sw = face_cdc;
 N  hWincdc = GUI_CreateDialogBox(_aDialogCreate4, GUI_COUNTOF(_aDialogCreate4), _cbDialog, WM_HBKWIN, 0, 0);
 X  hWincdc = GUI_CreateDialogBox(_aDialogCreate4, (sizeof(_aDialogCreate4) / sizeof(_aDialogCreate4[0])), _cbDialog, WM_GetDesktopWindow(), 0, 0);

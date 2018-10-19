@@ -972,8 +972,7 @@ WM_HWIN CreateCDC(void) {
   track = face_cdc;
   TM1650_SET_LED(0x68,0x70);
   GPIO_ResetBits(GPIOD,GPIO_Pin_12);//İֆ
-  GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-  GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+  IO_OFF();//�
 //  double_sw = face_cdc;
   hWincdc = GUI_CreateDialogBox(_aDialogCreate4, GUI_COUNTOF(_aDialogCreate4), _cbDialog, WM_HBKWIN, 0, 0);
   return hWincdc;

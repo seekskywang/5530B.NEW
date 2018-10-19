@@ -52965,6 +52965,8 @@ X  Run_Control[2] = Run_Control[40];
 N  pass = 0;
 N  mode_sw = mode_pow;
 X  mode_sw = 3;
+W "..\APP\menu.c" 434 3 function "IO_OFF" declared implicitly
+N  IO_OFF();
 N//  USART_SendData(USART3,1);//连接电源
 N  TM1650_SET_LED(0x68,0x70);
 N  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯

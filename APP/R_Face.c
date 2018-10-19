@@ -69,7 +69,7 @@ vu8 oct_sw = oct_off;
 vu8 oc_test = 0;
 extern vu8 t_onoff;
 extern vu8 mode_sw;
-
+float crec1,crec2;
 extern vu8 LOAD_t;
 //extern vu8 status_flash;
 extern vu8 pass;
@@ -320,7 +320,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             TEXT_SetText(hItem,"");
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_128);       
             TEXT_SetText(hItem,"");
-            if(R_VLUE < 300)
+            if(R_VLUE < 180 && DISS_Voltage > 1)
             {
                 GPIO_ResetBits(GPIOB,GPIO_Pin_13);//R_RALY低档位 
                 r_raly = 0;
@@ -344,7 +344,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 TEXT_SetText(hItem,"Ω");
             }else{
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_126);       
-                TEXT_SetText(hItem,"250");
+                TEXT_SetText(hItem,"200");
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_127);       
                 TEXT_SetText(hItem,"m");
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_128);       
@@ -436,7 +436,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                         
                         if(con_flag == 1 && oct_sw == oct_off && finish == 0)
                         {
-                             if((float)(GUI_GetTime()/500.0 - time1) > 0.5)
+                             if((float)(GUI_GetTime()/500.0 - time1) > 1.5)
                             {
                                 r = R_VLUE;
                                 v = DISS_Voltage;
@@ -452,7 +452,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                         }                       
                         if(con_flag == 1 && oct_sw == oct_off && finish == 0)
                         {
-                             if((float)(GUI_GetTime()/500.0 - time1) > 0.5)
+                             if((float)(GUI_GetTime()/500.0 - time1) > 1.5)
                              {
                                 r = R_VLUE;
                                 v = DISS_Voltage;
@@ -603,7 +603,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                         }else if(DISS_Voltage > 1 && oct_sw == oct_off && short_flag == 0){
                             
 //                             Mode_SW_CONT(0x02);
-                            SET_Current_Laod = (int)(oc_data*1000);
+                            SET_Current_Laod = (int)(oc_data*1000) + 5000;
                             short_flag =1;
                             short_start = GUI_GetTime()*2;
                         }
@@ -999,7 +999,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                         TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色
                         TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
                         GUI_UC_SetEncodeUTF8();        
-                        TEXT_SetText(hItem,"250");
+                        TEXT_SetText(hItem,"200");
                         
                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_127);
                         TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色
@@ -1211,6 +1211,7 @@ WM_HWIN CreateR(void) {
 //    GPIO_SetBits(GPIOB,GPIO_Pin_13);
 //    r_raly = 1;
 //  set_init_c = SET_Current_Laod;
+    r_raly = 1;
   pass = 0;
   hWinR = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), _cbDialog, WM_HBKWIN, 0, 0);
   return hWinR;
@@ -1583,6 +1584,7 @@ void OC_SET(void) {
             }else{
                 oc_mode = 0;
             }
+            Write_Limits();
             break;
         }
         
@@ -1919,21 +1921,37 @@ void OC_CHECK(void){
     WM_HWIN hItem;
     char sbs_c[6];
     float change_sbs_c;   
-             
-    if(v - /*DISS_Voltage*/DISS_POW_Voltage > v*0.5 && para_set2 == set_2_on)
+    crec2 = crec1;
+    crec1 = DISS_Current;         
+    if((crec1 < crec2 || v - /*DISS_Voltage*/DISS_Voltage > v*0.9) && para_set2 == set_2_on)
     {
+        if(oc_mode == 0)
+        {
+            //        oc_data = (float)(SET_Current_Laod+csum)/1000;       
+            oc_data = crec2;
+            SET_Current_Laod = set_init_c;
+            hItem = WM_GetDialogItem(hWinR, ID_TEXT_47);
+            change_sbs_c = (float)set_sbs_c/1000;
+            sprintf(sbs_c,"%.3f",change_sbs_c);
+            TEXT_SetText(hItem,sbs_c);
+            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//关闭负载   
+            t_onoff = 0;
+            stepcount = 0;
+            oct_sw = oct_off;
+            finish = 1;
+            crec1 = 0;
+            crec2 = 0;
+        }else if(oc_mode == 1){
+            oc_data = crec2;
+            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//关闭负载   
+            t_onoff = 0;
+            stepcount = 0;
+            oct_sw = oct_off;
+            finish = 1;
+            crec1 = 0;
+            crec2 = 0;
+        }
 
-        oc_data = (float)SET_Current_Laod/1000;       
-        SET_Current_Laod = set_init_c;
-        hItem = WM_GetDialogItem(hWinR, ID_TEXT_47);
-        change_sbs_c = (float)set_sbs_c/1000;
-        sprintf(sbs_c,"%.3f",change_sbs_c);
-        TEXT_SetText(hItem,sbs_c);
-        GPIO_SetBits(GPIOC,GPIO_Pin_1);//关闭负载
-        t_onoff = 0;
-        stepcount = 0;
-        oct_sw = oct_off;
-        finish = 1;
     }
 }
 
@@ -1942,7 +1960,6 @@ void OC_ADD(void){
     WM_HWIN hItem;
     char sbs_c[6];
     float change_sbs_c;
-    static float crec1,crec2;
     static vu16 csum;
              
     if(v - /*DISS_Voltage*/DISS_Voltage > v*0.9 && para_set2 == set_2_on)
@@ -1978,8 +1995,7 @@ void OC_ADD(void){
         if(oc_mode == 0)
         {
             SET_Current_Laod = SET_Current_Laod + set_sbs_c;
-            crec2 = crec1;
-            crec1 = DISS_Current;
+            
             if(crec1 < crec2)
             {
                 oc_data = crec2;

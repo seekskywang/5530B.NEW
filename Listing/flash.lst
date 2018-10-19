@@ -35641,7 +35641,7 @@ Nextern vu8 code5;
 Nextern vu8 code6;
 Nextern vu8 code7;
 Nextern vu8 code8;
-N
+Nextern vu8 oc_mode;
 N
 N//================================================================//
 Nextern struct bitDefine
@@ -36377,6 +36377,7 @@ N    code8 = EEPROM_READ_Byte(0x8B);
 N    flag_Load_CC = EEPROM_READ_Byte(0x8C);
 X    (flagD . bit7) = EEPROM_READ_Byte(0x8C);
 N    steptime = EEPROM_READ_Byte(0x8D);
+N    oc_mode = EEPROM_READ_Byte(0xB3);
 N    
 N    set_max_v=EEPROM_READ_Byte(0x62);
 X    Run_Control[14]=EEPROM_READ_Byte(0x62);
@@ -36732,6 +36733,8 @@ X    data_8bit = Run_Control[27] >> 8;
 N	EEPROM_WriteByte(0xA9, data_8bit);
 N	EEPROM_WriteByte(0xAA, set_dc_cutoff_v);
 X	EEPROM_WriteByte(0xAA, Run_Control[27]);
+N    
+N    EEPROM_WriteByte(0xB3, oc_mode);
 N}
 N
 Nvoid Write_btype(void)

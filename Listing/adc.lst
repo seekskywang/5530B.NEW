@@ -35218,6 +35218,45 @@ N  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 N	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
 N  GPIO_Init(GPIOA, &GPIO_InitStructure);	
 X  GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)), &GPIO_InitStructure);	
+N  
+N  
+N  /* Configure the ADC1 in continous mode withe a resolutuion equal to 12 bits  */
+N	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
+X	ADC_CommonInitStructure.ADC_Mode = ((uint32_t)0x00000000);
+N	ADC_CommonInitStructure.ADC_Prescaler = ADC_Prescaler_Div2;
+X	ADC_CommonInitStructure.ADC_Prescaler = ((uint32_t)0x00000000);
+N	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+X	ADC_CommonInitStructure.ADC_DMAAccessMode = ((uint32_t)0x00000000);
+N	ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
+X	ADC_CommonInitStructure.ADC_TwoSamplingDelay = ((uint32_t)0x00000000);
+N	ADC_CommonInit(&ADC_CommonInitStructure);
+N	
+N  ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;			//
+X  ADC_InitStructure.ADC_Resolution = ((uint32_t)0x00000000);			
+N	ADC_InitStructure.ADC_ScanConvMode = ENABLE ; 	 				//
+N	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;			//
+N	ADC_InitStructure.ADC_ExternalTrigConv =ADC_ExternalTrigConvEdge_None;	//
+X	ADC_InitStructure.ADC_ExternalTrigConv =((uint32_t)0x00000000);	
+N	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right; 	//
+X	ADC_InitStructure.ADC_DataAlign = ((uint32_t)0x00000000); 	
+N	ADC_InitStructure.ADC_NbrOfConversion = 3;	 								//
+N	ADC_Init(ADC1, &ADC_InitStructure);
+X	ADC_Init(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), &ADC_InitStructure);
+N	
+N	/*配置ADC时钟*/
+N	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_84Cycles);
+X	ADC_RegularChannelConfig(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ((uint8_t)0x02), 1, ((uint8_t)0x04));
+N	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_3Cycles);
+X	ADC_RegularChannelConfig(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ((uint8_t)0x03), 2, ((uint8_t)0x00));
+N	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 3, ADC_SampleTime_3Cycles);
+X	ADC_RegularChannelConfig(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ((uint8_t)0x06), 3, ((uint8_t)0x00));
+N  /* ADC Calibration */
+N  ADC_Cmd(ADC1, ENABLE);//使能ADC
+X  ADC_Cmd(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ENABLE);
+N	ADC_SoftwareStartConv(ADC1);   //开始转换
+X	ADC_SoftwareStartConv(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)));   
+N	ADC_DMARequestAfterLastTransferCmd(ADC1,ENABLE);
+X	ADC_DMARequestAfterLastTransferCmd(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)),ENABLE);
 N		
 N	
 N	//RCC_APB2PeriphResetCmd(RCC_APB2Periph_ADC1,ENABLE);	  //
@@ -35264,43 +35303,29 @@ N  DAM1_ADC_NVIC();//DMA中断配置
 N  ADC_DMACmd(ADC1, ENABLE);  //使能DMA
 X  ADC_DMACmd(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ENABLE);  
 N  
-N  /* Configure the ADC1 in continous mode withe a resolutuion equal to 12 bits  */
-N	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
-X	ADC_CommonInitStructure.ADC_Mode = ((uint32_t)0x00000000);
-N	ADC_CommonInitStructure.ADC_Prescaler = ADC_Prescaler_Div2;
-X	ADC_CommonInitStructure.ADC_Prescaler = ((uint32_t)0x00000000);
-N	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
-X	ADC_CommonInitStructure.ADC_DMAAccessMode = ((uint32_t)0x00000000);
-N	ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
-X	ADC_CommonInitStructure.ADC_TwoSamplingDelay = ((uint32_t)0x00000000);
-N	ADC_CommonInit(&ADC_CommonInitStructure);
-N	
-N  ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;			//
-X  ADC_InitStructure.ADC_Resolution = ((uint32_t)0x00000000);			
-N	ADC_InitStructure.ADC_ScanConvMode = ENABLE ; 	 				//
-N	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;			//
-N	ADC_InitStructure.ADC_ExternalTrigConv =ADC_ExternalTrigConvEdge_None;	//
-X	ADC_InitStructure.ADC_ExternalTrigConv =((uint32_t)0x00000000);	
-N	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right; 	//
-X	ADC_InitStructure.ADC_DataAlign = ((uint32_t)0x00000000); 	
-N	ADC_InitStructure.ADC_NbrOfConversion = 3;	 								//
-N	ADC_Init(ADC1, &ADC_InitStructure);
-X	ADC_Init(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), &ADC_InitStructure);
-N	
-N	/*配置ADC时钟*/
-N	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_84Cycles);
-X	ADC_RegularChannelConfig(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ((uint8_t)0x02), 1, ((uint8_t)0x04));
-N	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_3Cycles);
-X	ADC_RegularChannelConfig(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ((uint8_t)0x03), 2, ((uint8_t)0x00));
-N	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 3, ADC_SampleTime_3Cycles);
-X	ADC_RegularChannelConfig(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ((uint8_t)0x06), 3, ((uint8_t)0x00));
-N  /* ADC Calibration */
-N  ADC_Cmd(ADC1, ENABLE);//使能ADC
-X  ADC_Cmd(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ENABLE);
-N	ADC_SoftwareStartConv(ADC1);   //开始转换
-X	ADC_SoftwareStartConv(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)));   
-N	ADC_DMARequestAfterLastTransferCmd(ADC1,ENABLE);
-X	ADC_DMARequestAfterLastTransferCmd(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)),ENABLE);
+N//   /* Configure the ADC1 in continous mode withe a resolutuion equal to 12 bits  */
+N// 	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
+N// 	ADC_CommonInitStructure.ADC_Prescaler = ADC_Prescaler_Div2;
+N// 	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+N// 	ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
+N// 	ADC_CommonInit(&ADC_CommonInitStructure);
+N// 	
+N//   ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;			//
+N// 	ADC_InitStructure.ADC_ScanConvMode = ENABLE ; 	 				//
+N// 	ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;			//
+N// 	ADC_InitStructure.ADC_ExternalTrigConv =ADC_ExternalTrigConvEdge_None;	//
+N// 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right; 	//
+N// 	ADC_InitStructure.ADC_NbrOfConversion = 3;	 								//
+N// 	ADC_Init(ADC1, &ADC_InitStructure);
+N// 	
+N// 	/*配置ADC时钟*/
+N// 	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_84Cycles);
+N// 	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_3Cycles);
+N// 	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 3, ADC_SampleTime_3Cycles);
+N//   /* ADC Calibration */
+N//   ADC_Cmd(ADC1, ENABLE);//使能ADC
+N// 	ADC_SoftwareStartConv(ADC1);   //开始转换
+N// 	ADC_DMARequestAfterLastTransferCmd(ADC1,ENABLE);
 N}
 N/***************************************************************/
 Nvoid DAM1_ADC_NVIC(void)

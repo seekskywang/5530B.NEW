@@ -49520,7 +49520,7 @@ N{
 N    static vu16 resetcount;
 N    static vu8 read1963;
 N    static vu16 scancount;
-N    static float crec1,crec2;
+N//     static float crec1,crec2;
 N    
 N    if(TIM_GetITStatus(TIM4,TIM_IT_Update)==SET) //????
 X    if(TIM_GetITStatus(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0800)),((uint16_t)0x0001))==SET) 
@@ -49577,7 +49577,7 @@ N
 N        if(oct_sw == oct_on)
 X        if(oct_sw == 1)
 N        {
-N//            OC_CHECK();
+N            OC_CHECK();
 N            if(oct_sw == oct_on)
 X            if(oct_sw == 1)
 N            {
@@ -49589,21 +49589,20 @@ N                    stepcount = 0;
 N                }
 N            }
 N        }
-N        if(page_sw == face_load)
-X        if(page_sw == 4)
-N        {
-N            if(c_rec == 1)
-N            {
-N                crec2 = crec1;
-N                crec1 = DISS_Current;
-N                if(crec2 > crec1)
-N                {
-N                    watch = crec2;
-N                    c_rec = 0;
-N                    crec2 = crec1 = 0;
-N                }
-N            }
-N        }
+N//         if(page_sw == face_load)
+N//         {
+N//             if(c_rec == 1)
+N//             {
+N//                 crec2 = crec1;
+N//                 crec1 = DISS_Current;
+N//                 if(crec2 > crec1)
+N//                 {
+N//                     watch = crec2;
+N//                     c_rec = 0;
+N//                     crec2 = crec1 = 0;
+N//                 }
+N//             }
+N//         }
 N    }    
 N}
 N

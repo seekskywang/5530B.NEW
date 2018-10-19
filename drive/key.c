@@ -932,7 +932,7 @@ void Key_Funtion(void)
                     }
                     case face_r:
                     {
-                        if(para_set2 == set_2_on)
+                        if(para_set2 == set_2_on && oc_mode ==0)
                         {
                             OC_OP_UP();
                             KeyCounter = 0;
@@ -988,7 +988,7 @@ void Key_Funtion(void)
                     }
                     case face_r:
                     {
-                        if(para_set2 == set_2_on)
+                        if(para_set2 == set_2_on && oc_mode ==0)
                         {
                             OC_OP_DOWN();
                             KeyCounter = 0;
@@ -1220,12 +1220,12 @@ void Key_Funtion(void)
                     }
                     case face_load:
                     {
-                        t_onoff++;
-                        if(t_onoff>1)
-                        {
-                            t_onoff=0;
-                        }
-                        if(t_onoff==0)
+//                         t_onoff++;
+//                         if(t_onoff>1)
+//                         {
+//                             t_onoff=0;
+//                         }
+                        if(load_sw==load_on)
                         {
                             Flag_Swtich_ON=0;
                             GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
@@ -1233,7 +1233,7 @@ void Key_Funtion(void)
                             mode_sw = 0;
                             load_sw = load_off;
                         }
-                        else if(t_onoff==1)
+                        else if(load_sw==load_off)
                         {
                             Flag_Swtich_ON=1;
                             GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
@@ -1249,20 +1249,20 @@ void Key_Funtion(void)
                     }break;
                     case face_menu:
                     {
-                        static vu8 POW_t;
-                        POW_t++;
-                        if(POW_t>1)
-                        {
-                            POW_t=0;
-                        }
-                        if(POW_t==0)
+//                         static vu8 POW_t;
+//                         POW_t++;
+//                         if(POW_t>1)
+//                         {
+//                             POW_t=0;
+//                         }
+                        if(pow_sw==pow_on)
                         {
                             GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
                             GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
                             mode_sw = 0;
                             pow_sw = pow_off;
                         }
-                        else if(POW_t==1)
+                        else if(pow_sw==pow_off)
                         {
                            GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
                             GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出                           
@@ -1443,8 +1443,18 @@ void Key_Funtion(void)
 void setmode_r(void)
 {
     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-    GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器   
-    GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF   
+    GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器  
+    GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF  
+    pow_sw = pow_off;
+    load_sw = load_off;
     mode_sw = mode_r;
 }
 
+void IO_OFF(void)
+{
+    GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+    GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器  
+    GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF  
+    pow_sw = pow_off;
+    load_sw = load_off;
+}

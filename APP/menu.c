@@ -431,6 +431,7 @@ WM_HWIN CreateWindow(void) {
   SET_Current = pow_c;
   pass = 0;
   mode_sw = mode_pow;
+  IO_OFF();
 //  USART_SendData(USART3,1);//连接电源
   TM1650_SET_LED(0x68,0x70);
   GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯

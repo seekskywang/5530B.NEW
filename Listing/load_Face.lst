@@ -53050,14 +53050,13 @@ X  set_sw = 23;
 N  SET_Current_Laod = load_c;
 X  Run_Control[4] = Run_Control[37];
 N  pass = 0;
+W "..\APP\load_Face.c" 500 3 function "IO_OFF" declared implicitly
+N  IO_OFF();
 N  mode_sw = mode_load;
 X  mode_sw = 2;
-N  GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
-X  GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
-N  GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N  GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-X  GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N//   GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
+N//   GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+N//   GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
 N  TM1650_SET_LED(0x68,0x70);
 N  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
 X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
