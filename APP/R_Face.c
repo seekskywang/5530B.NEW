@@ -920,7 +920,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 		TEXT_SetFont(hItem, &GUI_FontEN40);
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-        sprintf(buf,"%.3f",0.000);
+        sprintf(buf,"%.3f",DISS_Voltage);
         TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
         TEXT_SetFont(hItem,&GUI_FontD24x32);//设定文本字体
         GUI_UC_SetEncodeUTF8();        
@@ -1084,7 +1084,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 TEXT_SetText(hItem,buf);
                 
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_83);
-                sprintf(buf,"%.3f",0.000);
+                sprintf(buf,"%.3f",DISS_Current);
                 TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
                 TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
                 GUI_UC_SetEncodeUTF8();        

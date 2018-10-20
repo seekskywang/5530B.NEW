@@ -52173,10 +52173,10 @@ W "..\User\main.c" 58 5 function "USART3_Configuration" declared implicitly
 N    USART3_Configuration();
 N	i2c_CfgGpio();//24C01引脚初始化
 N	TM1650_GPIO_INT();		/*TM1650引脚初始化 */
+N    EEPROM_READ_Coeff();//读取校准参数
 N	DAC8531_GPIOCoing();//DAC初始化
 N	AD7689_InitializeSPI2();//AD7689初始化
-N	LCD_Initializtion();//液晶屏初始化
-N	EEPROM_READ_Coeff();//读取校准参数
+N	LCD_Initializtion();//液晶屏初始化	
 N	//IWDG_Inte();
 N    GPIO_ResetBits(GPIOC,GPIO_Pin_13);
 X    GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));

@@ -53574,7 +53574,7 @@ N		TEXT_SetFont(hItem, &GUI_FontEN40);
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
-N        sprintf(buf,"%.3f",0.000);
+N        sprintf(buf,"%.3f",DISS_Voltage);
 N        TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
 X        TEXT_SetTextColor(hItem, 0x0000FF00);
 N        TEXT_SetFont(hItem,&GUI_FontD24x32);//设定文本字体
@@ -53789,7 +53789,7 @@ N                TEXT_SetText(hItem,buf);
 N                
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_83);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x90));
-N                sprintf(buf,"%.3f",0.000);
+N                sprintf(buf,"%.3f",DISS_Current);
 N                TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
 N                TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
