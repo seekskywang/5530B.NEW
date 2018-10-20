@@ -52451,6 +52451,8 @@ Nvoid test_load(void);
 Nextern vu8 clear_flag3;
 Nextern vu16 battery_c;
 Nextern vu8 mode_sw;
+Nextern vu8 oc_mode;
+Nu8 load_mode;
 N
 Nextern struct bitDefine
 N{
@@ -52628,7 +52630,7 @@ N            if(DISS_Voltage <= clear_lv)
 N            {
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x91));
-W "..\APP\load_Face.c" 163 36 argument is incompatible with corresponding format string conversion
+W "..\APP\load_Face.c" 165 36 argument is incompatible with corresponding format string conversion
 N                sprintf(buf,"%.3f",0);       
 N                TEXT_SetText(hItem,buf);
 N            }else{
@@ -52835,7 +52837,7 @@ N		TEXT_SetText(hItem,buf);
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x91));
-W "..\APP\load_Face.c" 329 28 argument is incompatible with corresponding format string conversion
+W "..\APP\load_Face.c" 331 28 argument is incompatible with corresponding format string conversion
 N        sprintf(buf,"%.3f",0);
 N		TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
 X		TEXT_SetTextColor(hItem, 0x0000FF00);
@@ -52845,7 +52847,7 @@ N		TEXT_SetText(hItem,buf);
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_85);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x92));
-W "..\APP\load_Face.c" 336 28 argument is incompatible with corresponding format string conversion
+W "..\APP\load_Face.c" 338 28 argument is incompatible with corresponding format string conversion
 N        sprintf(buf,"%.3f",0);
 N		TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
 X		TEXT_SetTextColor(hItem, 0x0000FF00);
@@ -52870,24 +52872,31 @@ N        TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
 N        GUI_UC_SetEncodeUTF8();        
 N        TEXT_SetText(hItem,"负载模式");
 N        
-N        if(flag_Load_CC == 1)
-X        if((flagD . bit7) == 1)
+N        if(load_mode == 1)
 N        {
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_121);
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x10F));
 N            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
 N            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-N            GUI_UC_SetEncodeUTF8();        
+N            GUI_UC_SetEncodeUTF8();
+N            GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
 N            TEXT_SetText(hItem,"CC");
-N        }else{
+N            flag_Load_CC = 1;
+X            (flagD . bit7) = 1;
+N        }else if(load_mode == 0){
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_121);
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x10F));
 N            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
 N            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-N            GUI_UC_SetEncodeUTF8();        
+N            GUI_UC_SetEncodeUTF8();  
+N            GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV            
+X            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
 N            TEXT_SetText(hItem,"CV");
+N            flag_Load_CC = 0;
+X            (flagD . bit7) = 0;
 N        }
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_122);
@@ -53050,7 +53059,7 @@ X  set_sw = 23;
 N  SET_Current_Laod = load_c;
 X  Run_Control[4] = Run_Control[37];
 N  pass = 0;
-W "..\APP\load_Face.c" 500 3 function "IO_OFF" declared implicitly
+W "..\APP\load_Face.c" 506 3 function "IO_OFF" declared implicitly
 N  IO_OFF();
 N  mode_sw = mode_load;
 X  mode_sw = 2;
@@ -53325,6 +53334,7 @@ N                    GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV
 X                    GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
 N                    flag_Load_CC = 0;
 X                    (flagD . bit7) = 0;
+N                    load_mode = 0;
 N                    Write_LOAD();
 N                    break;
 N                }
@@ -53339,6 +53349,7 @@ N                     GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
 X                     GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
 N                     flag_Load_CC = 1;
 X                     (flagD . bit7) = 1;
+N                     load_mode =1;
 N                     Write_LOAD();
 N                     break;
 N                }

@@ -51914,6 +51914,8 @@ N                           GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
 X                           GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
 N                           GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
 X                           GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N                           GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
+X                           GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
 N                           cdc_sw = cdc_off;
 X                           cdc_sw = 0;
 N                           paused = 0;
@@ -52039,7 +52041,7 @@ N                WM_DeleteWindow(load_wind);
 N                WM_DeleteWindow(hWinsysinfo);
 N                WM_DeleteWindow(hWincdc);
 N                WM_DeleteWindow(hWinset);
-W "..\drive\key.c" 1400 17 function "CreateCDC" declared implicitly
+W "..\drive\key.c" 1401 17 function "CreateCDC" declared implicitly
 N                CreateCDC(); 
 N				KeyCounter = 0;
 N				BEEP_Tiggr();//
@@ -52070,7 +52072,7 @@ N                WM_DeleteWindow(load_wind);
 N                WM_DeleteWindow(hWinsysinfo);
 N                WM_DeleteWindow(hWincdc);
 N                WM_DeleteWindow(hWinset);
-W "..\drive\key.c" 1428 17 function "Createsysinfo" declared implicitly
+W "..\drive\key.c" 1429 17 function "Createsysinfo" declared implicitly
 N                Createsysinfo();
 N                KeyCounter = 0;
 N                BEEP_Tiggr();//瑙﹀彂铚傞福鍣?

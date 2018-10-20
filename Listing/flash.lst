@@ -35642,6 +35642,7 @@ Nextern vu8 code6;
 Nextern vu8 code7;
 Nextern vu8 code8;
 Nextern vu8 oc_mode;
+Nextern vu8 load_mode;
 N
 N//================================================================//
 Nextern struct bitDefine
@@ -36755,8 +36756,7 @@ N}
 N
 Nvoid Write_LOAD(void)
 N{
-N    EEPROM_WriteByte(0x8C,flag_Load_CC);
-X    EEPROM_WriteByte(0x8C,(flagD . bit7));
+N    EEPROM_WriteByte(0x8C,load_mode);
 N}
 N/************************************************************************/
 Nvoid Write_info(void)

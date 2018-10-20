@@ -1290,6 +1290,7 @@ void Key_Funtion(void)
                            
                            GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
                            GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+                           GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
                            cdc_sw = cdc_off;
                            paused = 0;
                            mode_sw = 0;

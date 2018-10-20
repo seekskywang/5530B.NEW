@@ -5,31 +5,31 @@
                           AREA ||i.IO_OFF||, CODE, READONLY, ALIGN=2
 
                   IO_OFF PROC
-;;;1452   
-;;;1453   void IO_OFF(void)
+;;;1453   
+;;;1454   void IO_OFF(void)
 000000  b510              PUSH     {r4,lr}
-;;;1454   {
-;;;1455       GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+;;;1455   {
+;;;1456       GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
 000002  4c0a              LDR      r4,|L1.44|
 000004  2102              MOVS     r1,#2
 000006  4620              MOV      r0,r4
 000008  f7fffffe          BL       GPIO_ResetBits
-;;;1456       GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器  
+;;;1457       GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器  
 00000c  f44f5100          MOV      r1,#0x2000
 000010  4620              MOV      r0,r4
 000012  f7fffffe          BL       GPIO_SetBits
-;;;1457       GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF  
+;;;1458       GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF  
 000016  f44f4100          MOV      r1,#0x8000
 00001a  4805              LDR      r0,|L1.48|
 00001c  f7fffffe          BL       GPIO_SetBits
-;;;1458       pow_sw = pow_off;
+;;;1459       pow_sw = pow_off;
 000020  4904              LDR      r1,|L1.52|
 000022  2000              MOVS     r0,#0
 000024  7008              STRB     r0,[r1,#0]
-;;;1459       load_sw = load_off;
+;;;1460       load_sw = load_off;
 000026  4904              LDR      r1,|L1.56|
 000028  7008              STRB     r0,[r1,#0]
-;;;1460   }
+;;;1461   }
 00002a  bd10              POP      {r4,pc}
                           ENDP
 
@@ -1128,7 +1128,7 @@
                   |L2.486|
 0001e6  7028              STRB     r0,[r5,#0]            ;389
                   |L2.488|
-0001e8  e3e3              B        |L2.2482|
+0001e8  e3e8              B        |L2.2492|
                   |L2.490|
 0001ea  2005              MOVS     r0,#5                 ;497
 0001ec  e7d8              B        |L2.416|
@@ -1143,16 +1143,16 @@
 0001fc  e258              B        |L2.1712|
 0001fe  e153              B        |L2.1192|
 000200  e04c              B        |L2.668|
-000202  e3ba              B        |L2.2426|
+000202  e3bf              B        |L2.2436|
 000204  e0c6              B        |L2.916|
 000206  e029              B        |L2.604|
-000208  e2eb              B        |L2.2018|
+000208  e2ef              B        |L2.2026|
 00020a  e0ab              B        |L2.868|
-00020c  e341              B        |L2.2194|
+00020c  e346              B        |L2.2204|
 00020e  e085              B        |L2.796|
-000210  e369              B        |L2.2278|
+000210  e36e              B        |L2.2288|
 000212  e0d8              B        |L2.966|
-000214  e38f              B        |L2.2358|
+000214  e394              B        |L2.2368|
 000216  e22e              B        |L2.1654|
 000218  e173              B        |L2.1282|
 00021a  e20f              B        |L2.1596|
@@ -1318,7 +1318,7 @@
 000374  0907              DCB      0x09,0x07
 000376  a031              ADR      r0,|L2.1084|
 000378  f7fffffe          BL       INPUT_POW
-00037c  e319              B        |L2.2482|
+00037c  e31e              B        |L2.2492|
 00037e  a02f              ADR      r0,|L2.1084|
 000380  e6f8              B        |L2.372|
 000382  a02e              ADR      r0,|L2.1084|
@@ -1334,7 +1334,7 @@
                   |L2.916|
 000394  2001              MOVS     r0,#1                 ;828
 000396  f7fffffe          BL       sLCD_WR_REG
-00039a  e30a              B        |L2.2482|
+00039a  e30f              B        |L2.2492|
                   |L2.924|
 00039c  481c              LDR      r0,|L2.1040|
 00039e  7800              LDRB     r0,[r0,#0]            ;851  ; page_sw
@@ -1348,16 +1348,16 @@
 0003ae  2801              CMP      r0,#1                 ;861
 0003b0  d003              BEQ      |L2.954|
                   |L2.946|
-0003b2  e2fe              B        |L2.2482|
+0003b2  e303              B        |L2.2492|
                   |L2.948|
 0003b4  f7fffffe          BL       SET_OP_LEFT
-0003b8  e2fb              B        |L2.2482|
+0003b8  e300              B        |L2.2492|
                   |L2.954|
 0003ba  f7fffffe          BL       SYS_INFO_LEFT
-0003be  e2f8              B        |L2.2482|
+0003be  e2fd              B        |L2.2492|
                   |L2.960|
 0003c0  f7fffffe          BL       CDC_OP_LEFT
-0003c4  e2f5              B        |L2.2482|
+0003c4  e2fa              B        |L2.2492|
                   |L2.966|
 0003c6  4812              LDR      r0,|L2.1040|
 0003c8  7800              LDRB     r0,[r0,#0]            ;881  ; page_sw
@@ -1370,10 +1370,10 @@
 0003d6  7810              LDRB     r0,[r2,#0]            ;891  ; admin
 0003d8  2801              CMP      r0,#1                 ;891
 0003da  d032              BEQ      |L2.1090|
-0003dc  e2e9              B        |L2.2482|
+0003dc  e2ee              B        |L2.2492|
                   |L2.990|
 0003de  f7fffffe          BL       SET_OP_RIGHT
-0003e2  e2e6              B        |L2.2482|
+0003e2  e2eb              B        |L2.2492|
                   |L2.996|
                           DCD      flagA
                   |L2.1000|
@@ -1447,12 +1447,12 @@
                   |L2.1090|
 000442  f7fffffe          BL       SYS_INFO_RIGHT
                   |L2.1094|
-000446  e2b4              B        |L2.2482|
+000446  e2b9              B        |L2.2492|
                   |L2.1096|
 000448  f7fffffe          BL       CDC_OP_RIGHT
-00044c  e2b1              B        |L2.2482|
+00044c  e2b6              B        |L2.2492|
                   |L2.1102|
-00044e  48fd              LDR      r0,|L2.2116|
+00044e  48f7              LDR      r0,|L2.2092|
 000450  7800              LDRB     r0,[r0,#0]            ;911  ; page_sw
 000452  2808              CMP      r0,#8                 ;911
 000454  d271              BCS      |L2.1338|
@@ -1469,7 +1469,7 @@
 000476  e8bd5ff0          POP      {r4-r12,lr}           ;923
 00047a  f7ffbffe          B.W      LOAD_OP_UP
 00047e  f7fffffe          BL       SET_OP_UP
-000482  e296              B        |L2.2482|
+000482  e29b              B        |L2.2492|
 000484  7808              LDRB     r0,[r1,#0]            ;935  ; para_set2
 000486  28ff              CMP      r0,#0xff              ;935
 000488  d102              BNE      |L2.1168|
@@ -1477,17 +1477,17 @@
 00048e  b110              CBZ      r0,|L2.1174|
                   |L2.1168|
 000490  f7fffffe          BL       CDC_OP_UP
-000494  e28d              B        |L2.2482|
+000494  e292              B        |L2.2492|
                   |L2.1174|
 000496  f7fffffe          BL       OC_OP_UP
-00049a  e28a              B        |L2.2482|
+00049a  e28f              B        |L2.2492|
 00049c  7810              LDRB     r0,[r2,#0]            ;953  ; admin
 00049e  2801              CMP      r0,#1                 ;953
 0004a0  d187              BNE      |L2.946|
 0004a2  f7fffffe          BL       SYS_INFO_UP
-0004a6  e284              B        |L2.2482|
+0004a6  e289              B        |L2.2492|
                   |L2.1192|
-0004a8  48e6              LDR      r0,|L2.2116|
+0004a8  48e0              LDR      r0,|L2.2092|
 0004aa  7800              LDRB     r0,[r0,#0]            ;967  ; page_sw
 0004ac  2808              CMP      r0,#8                 ;967
 0004ae  d244              BCS      |L2.1338|
@@ -1503,7 +1503,7 @@
 0004d0  e8bd5ff0          POP      {r4-r12,lr}           ;979
 0004d4  f7ffbffe          B.W      LOAD_OP_DOWN
 0004d8  f7fffffe          BL       SET_OP_DOWN
-0004dc  e269              B        |L2.2482|
+0004dc  e26e              B        |L2.2492|
 0004de  7808              LDRB     r0,[r1,#0]            ;991  ; para_set2
 0004e0  28ff              CMP      r0,#0xff              ;991
 0004e2  d102              BNE      |L2.1258|
@@ -1511,17 +1511,17 @@
 0004e8  b110              CBZ      r0,|L2.1264|
                   |L2.1258|
 0004ea  f7fffffe          BL       CDC_OP_DOWN
-0004ee  e260              B        |L2.2482|
+0004ee  e265              B        |L2.2492|
                   |L2.1264|
 0004f0  f7fffffe          BL       OC_OP_DOWN
-0004f4  e25d              B        |L2.2482|
+0004f4  e262              B        |L2.2492|
 0004f6  7810              LDRB     r0,[r2,#0]            ;1008  ; admin
 0004f8  2801              CMP      r0,#1                 ;1008
 0004fa  d1a4              BNE      |L2.1094|
 0004fc  f7fffffe          BL       SYS_INFO_DOWN
-000500  e257              B        |L2.2482|
+000500  e25c              B        |L2.2492|
                   |L2.1282|
-000502  48d0              LDR      r0,|L2.2116|
+000502  48ca              LDR      r0,|L2.2092|
 000504  7800              LDRB     r0,[r0,#0]            ;1023  ; page_sw
 000506  2808              CMP      r0,#8                 ;1023
 000508  d217              BCS      |L2.1338|
@@ -1530,23 +1530,23 @@
 000510  040a0d07          DCB      0x04,0x0a,0x0d,0x07
 000514  1617              DCB      0x16,0x17
 000516  f7fffffe          BL       MENU_SET
-00051a  e24a              B        |L2.2482|
+00051a  e24f              B        |L2.2492|
 00051c  f7fffffe          BL       PARA_SET
-000520  e247              B        |L2.2482|
+000520  e24c              B        |L2.2492|
 000522  7808              LDRB     r0,[r1,#0]            ;1040  ; para_set2
 000524  28ff              CMP      r0,#0xff              ;1040
 000526  d002              BEQ      |L2.1326|
 000528  f7fffffe          BL       LOAD_SET
-00052c  e241              B        |L2.2482|
+00052c  e246              B        |L2.2492|
                   |L2.1326|
 00052e  f7fffffe          BL       OC_SET
-000532  e23e              B        |L2.2482|
+000532  e243              B        |L2.2492|
 000534  f7fffffe          BL       CDC_SET
-000538  e23b              B        |L2.2482|
+000538  e240              B        |L2.2492|
                   |L2.1338|
 00053a  e07e              B        |L2.1594|
 00053c  f7fffffe          BL       CFM_PASS
-000540  e237              B        |L2.2482|
+000540  e23c              B        |L2.2492|
                   |L2.1346|
 000542  7868              LDRB     r0,[r5,#1]            ;1074  ; track
 000544  2805              CMP      r0,#5                 ;1074
@@ -1567,14 +1567,14 @@
 000576  f8db0000          LDR      r0,[r11,#0]  ; hWincdc
 00057a  f7fffffe          BL       WM_DeleteWindow
 ;;;1084                           WM_DeleteWindow(hWinset);                       
-00057e  48b2              LDR      r0,|L2.2120|
+00057e  48ac              LDR      r0,|L2.2096|
 000580  6800              LDR      r0,[r0,#0]  ; hWinset
 000582  f7fffffe          BL       WM_DeleteWindow
                   |L2.1414|
 ;;;1085                           CreateR();
 000586  f7fffffe          BL       CreateR
                   |L2.1418|
-00058a  e212              B        |L2.2482|
+00058a  e217              B        |L2.2492|
 ;;;1086                           KeyCounter = 0;
 ;;;1087                           BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
 ;;;1088                           break;
@@ -1600,7 +1600,7 @@
 0005b0  f8db0000          LDR      r0,[r11,#0]  ; hWincdc
 0005b4  f7fffffe          BL       WM_DeleteWindow
 ;;;1098                           WM_DeleteWindow(hWinset);
-0005b8  48a3              LDR      r0,|L2.2120|
+0005b8  489d              LDR      r0,|L2.2096|
 0005ba  6800              LDR      r0,[r0,#0]  ; hWinset
 0005bc  f7fffffe          BL       WM_DeleteWindow
 ;;;1099                           CreateWindow2();
@@ -1608,7 +1608,7 @@
 ;;;1100                           KeyCounter = 0;
 ;;;1101                           BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
 ;;;1102                           break;
-0005c4  e1f5              B        |L2.2482|
+0005c4  e1fa              B        |L2.2492|
 ;;;1103                       }
 ;;;1104                       case face_menu:
 ;;;1105                       {
@@ -1631,7 +1631,7 @@
 0005ea  f8db0000          LDR      r0,[r11,#0]  ; hWincdc
 0005ee  f7fffffe          BL       WM_DeleteWindow
 ;;;1112                           WM_DeleteWindow(hWinset); 
-0005f2  4895              LDR      r0,|L2.2120|
+0005f2  488f              LDR      r0,|L2.2096|
 0005f4  6800              LDR      r0,[r0,#0]  ; hWinset
 0005f6  f7fffffe          BL       WM_DeleteWindow
 ;;;1113                           CreateWindow();
@@ -1639,7 +1639,7 @@
 ;;;1114                           KeyCounter = 0;
 ;;;1115                           BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
 ;;;1116                           break;
-0005fe  e1d8              B        |L2.2482|
+0005fe  e1dd              B        |L2.2492|
                   |L2.1536|
 ;;;1117                       }
 ;;;1118                       case face_graph:
@@ -1663,7 +1663,7 @@
 000624  f8db0000          LDR      r0,[r11,#0]  ; hWincdc
 000628  f7fffffe          BL       WM_DeleteWindow
 ;;;1126                           WM_DeleteWindow(hWinset); 
-00062c  4886              LDR      r0,|L2.2120|
+00062c  4880              LDR      r0,|L2.2096|
 00062e  6800              LDR      r0,[r0,#0]  ; hWinset
 000630  f7fffffe          BL       WM_DeleteWindow
 ;;;1127                           CreateG();
@@ -1671,9 +1671,9 @@
 ;;;1128                           KeyCounter = 0;
 ;;;1129                           BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
 ;;;1130                           break;
-000638  e1bb              B        |L2.2482|
+000638  e1c0              B        |L2.2492|
                   |L2.1594|
-00063a  e0c4              B        |L2.1990|
+00063a  e0b9              B        |L2.1968|
                   |L2.1596|
 ;;;1131                       }
 ;;;1132                       case face_cdc:
@@ -1697,7 +1697,7 @@
 000660  f8db0000          LDR      r0,[r11,#0]  ; hWincdc
 000664  f7fffffe          BL       WM_DeleteWindow
 ;;;1140                           WM_DeleteWindow(hWinset);
-000668  4877              LDR      r0,|L2.2120|
+000668  4871              LDR      r0,|L2.2096|
 00066a  6800              LDR      r0,[r0,#0]  ; hWinset
 00066c  f7fffffe          BL       WM_DeleteWindow
 ;;;1141                           CreateCDC();
@@ -1705,7 +1705,7 @@
 ;;;1142                           KeyCounter = 0;
 ;;;1143                           BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
 ;;;1144                           break;
-000674  e19d              B        |L2.2482|
+000674  e1a2              B        |L2.2492|
                   |L2.1654|
 ;;;1145                       }
 ;;;1146                   }
@@ -1750,7 +1750,7 @@
 00069a  f8db0000          LDR      r0,[r11,#0]  ; hWincdc
 00069e  f7fffffe          BL       WM_DeleteWindow
 ;;;1175                   WM_DeleteWindow(hWinset); 
-0006a2  4869              LDR      r0,|L2.2120|
+0006a2  4863              LDR      r0,|L2.2096|
 0006a4  6800              LDR      r0,[r0,#0]  ; hWinset
 0006a6  f7fffffe          BL       WM_DeleteWindow
 ;;;1176                   CreateSET();
@@ -1759,12 +1759,12 @@
 ;;;1178                   BEEP_Tiggr();//瑙﹀彂铚傞福鍣
 ;;;1179   			}
 ;;;1180   			break;
-0006ae  e180              B        |L2.2482|
+0006ae  e185              B        |L2.2492|
                   |L2.1712|
 ;;;1181   			case KEY_TRIG://电子负载/电源ON/OFF
 ;;;1182   			{
 ;;;1183                   switch(page_sw)
-0006b0  4864              LDR      r0,|L2.2116|
+0006b0  485e              LDR      r0,|L2.2092|
 0006b2  7800              LDRB     r0,[r0,#0]  ; page_sw
 ;;;1184                   {
 ;;;1185                       case face_r:
@@ -1816,7 +1816,7 @@
 ;;;1231                               GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
 ;;;1232                               c_rec = 0;
 ;;;1233                               mode_sw = 0;
-0006b4  4e65              LDR      r6,|L2.2124|
+0006b4  4e5f              LDR      r6,|L2.2100|
 0006b6  f04f0903          MOV      r9,#3                 ;387
 0006ba  2801              CMP      r0,#1                 ;1183
 0006bc  d061              BEQ      |L2.1922|
@@ -1825,8 +1825,8 @@
 0006c2  2803              CMP      r0,#3                 ;1183
 0006c4  d008              BEQ      |L2.1752|
 0006c6  2804              CMP      r0,#4                 ;1183
-0006c8  d17d              BNE      |L2.1990|
-0006ca  4f61              LDR      r7,|L2.2128|
+0006c8  d172              BNE      |L2.1968|
+0006ca  4f5b              LDR      r7,|L2.2104|
 0006cc  7838              LDRB     r0,[r7,#0]            ;1228  ; load_sw
 0006ce  2801              CMP      r0,#1                 ;1228
 0006d0  d014              BEQ      |L2.1788|
@@ -1835,46 +1835,46 @@
 ;;;1236                           else if(load_sw==load_off)
 0006d2  7838              LDRB     r0,[r7,#0]  ; load_sw
 0006d4  b1f0              CBZ      r0,|L2.1812|
-0006d6  e16c              B        |L2.2482|
+0006d6  e171              B        |L2.2492|
                   |L2.1752|
 0006d8  78a8              LDRB     r0,[r5,#2]            ;1211  ; r_test
 0006da  b968              CBNZ     r0,|L2.1784|
-0006dc  485d              LDR      r0,|L2.2132|
+0006dc  4857              LDR      r0,|L2.2108|
 0006de  ed900a00          VLDR     s0,[r0,#0]            ;1211
-0006e2  485d              LDR      r0,|L2.2136|
+0006e2  4857              LDR      r0,|L2.2112|
 0006e4  edd00a00          VLDR     s1,[r0,#0]            ;1211
 0006e8  eeb40ae0          VCMPE.F32 s0,s1                 ;1211
 0006ec  eef1fa10          VMRS     APSR_nzcv,FPSCR       ;1211
 0006f0  dd02              BLE      |L2.1784|
 0006f2  2001              MOVS     r0,#1                 ;1213
 0006f4  70a8              STRB     r0,[r5,#2]            ;1213
-0006f6  e15c              B        |L2.2482|
+0006f6  e161              B        |L2.2492|
                   |L2.1784|
 0006f8  70ac              STRB     r4,[r5,#2]            ;1215
-0006fa  e15a              B        |L2.2482|
+0006fa  e15f              B        |L2.2492|
                   |L2.1788|
-0006fc  4857              LDR      r0,|L2.2140|
+0006fc  4851              LDR      r0,|L2.2116|
 0006fe  6801              LDR      r1,[r0,#0]            ;1230  ; flagA
 000700  f0210140          BIC      r1,r1,#0x40           ;1230
 000704  6001              STR      r1,[r0,#0]            ;1231  ; flagA
 000706  f44f4100          MOV      r1,#0x8000            ;1231
-00070a  4855              LDR      r0,|L2.2144|
+00070a  484f              LDR      r0,|L2.2120|
 00070c  f7fffffe          BL       GPIO_SetBits
 000710  722c              STRB     r4,[r5,#8]            ;1232
 000712  e023              B        |L2.1884|
                   |L2.1812|
 ;;;1237                           {
 ;;;1238                               Flag_Swtich_ON=1;
-000714  4851              LDR      r0,|L2.2140|
+000714  484b              LDR      r0,|L2.2116|
 000716  6801              LDR      r1,[r0,#0]  ; flagA
 000718  f0410140          ORR      r1,r1,#0x40
 ;;;1239                               GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
 00071c  6001              STR      r1,[r0,#0]  ; flagA
 00071e  f44f4100          MOV      r1,#0x8000
-000722  484f              LDR      r0,|L2.2144|
+000722  4849              LDR      r0,|L2.2120|
 000724  f7fffffe          BL       GPIO_ResetBits
 ;;;1240                               if(flag_Load_CC == 0)
-000728  484e              LDR      r0,|L2.2148|
+000728  4848              LDR      r0,|L2.2124|
 00072a  6800              LDR      r0,[r0,#0]  ; flagD
 00072c  0600              LSLS     r0,r0,#24
 00072e  d401              BMI      |L2.1844|
@@ -1902,7 +1902,7 @@
 ;;;1256   //                             POW_t=0;
 ;;;1257   //                         }
 ;;;1258                           if(pow_sw==pow_on)
-000738  4f4b              LDR      r7,|L2.2152|
+000738  4f45              LDR      r7,|L2.2128|
 00073a  7838              LDRB     r0,[r7,#0]  ; pow_sw
 00073c  2801              CMP      r0,#1
 00073e  d002              BEQ      |L2.1862|
@@ -1915,9 +1915,9 @@
 ;;;1265                           else if(pow_sw==pow_off)
 000740  7838              LDRB     r0,[r7,#0]  ; pow_sw
 000742  b170              CBZ      r0,|L2.1890|
-000744  e135              B        |L2.2482|
+000744  e13a              B        |L2.2492|
                   |L2.1862|
-000746  f8df8124          LDR      r8,|L2.2156|
+000746  f8df810c          LDR      r8,|L2.2132|
 00074a  2102              MOVS     r1,#2                 ;1260
 00074c  4640              MOV      r0,r8                 ;1260
 00074e  f7fffffe          BL       GPIO_ResetBits
@@ -1927,11 +1927,11 @@
                   |L2.1884|
 00075c  7034              STRB     r4,[r6,#0]            ;1233
 00075e  703c              STRB     r4,[r7,#0]            ;1234
-000760  e127              B        |L2.2482|
+000760  e12c              B        |L2.2492|
                   |L2.1890|
 ;;;1266                           {
 ;;;1267                              GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
-000762  f8df8108          LDR      r8,|L2.2156|
+000762  f8df80f0          LDR      r8,|L2.2132|
 000766  f44f5100          MOV      r1,#0x2000
 00076a  4640              MOV      r0,r8
 00076c  f7fffffe          BL       GPIO_ResetBits
@@ -1946,7 +1946,7 @@
 00077c  2001              MOVS     r0,#1                 ;1245
                   |L2.1918|
 00077e  7038              STRB     r0,[r7,#0]            ;1245
-000780  e117              B        |L2.2482|
+000780  e11c              B        |L2.2492|
                   |L2.1922|
 ;;;1270                               pow_sw = pow_on;
 ;;;1271                           }
@@ -1956,9 +1956,9 @@
 ;;;1275                        case face_cdc:
 ;;;1276                       {
 ;;;1277                           if(cdc_sw == cdc_off)
-000782  4f3b              LDR      r7,|L2.2160|
+000782  4f35              LDR      r7,|L2.2136|
 000784  7838              LDRB     r0,[r7,#0]  ; cdc_sw
-000786  b170              CBZ      r0,|L2.1958|
+000786  b1a0              CBZ      r0,|L2.1970|
 ;;;1278                           {
 ;;;1279                              SET_Voltage = opv1;
 ;;;1280                              SET_Current = opc1;
@@ -1973,7 +1973,7 @@
 ;;;1289                           }else{
 ;;;1290                              
 ;;;1291                              GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-000788  f8df80e0          LDR      r8,|L2.2156|
+000788  f8df80c8          LDR      r8,|L2.2132|
 00078c  2102              MOVS     r1,#2
 00078e  4640              MOV      r0,r8
 000790  f7fffffe          BL       GPIO_ResetBits
@@ -1981,377 +1981,380 @@
 000794  f44f5100          MOV      r1,#0x2000
 000798  4640              MOV      r0,r8
 00079a  f7fffffe          BL       GPIO_SetBits
-;;;1293                              cdc_sw = cdc_off;
-00079e  703c              STRB     r4,[r7,#0]
-;;;1294                              paused = 0;
-0007a0  4834              LDR      r0,|L2.2164|
-0007a2  7004              STRB     r4,[r0,#0]
-;;;1295                              mode_sw = 0;
-0007a4  e073              B        |L2.2190|
-                  |L2.1958|
-0007a6  4834              LDR      r0,|L2.2168|
-0007a8  6fc1              LDR      r1,[r0,#0x7c]         ;1279  ; Run_Control
-0007aa  6041              STR      r1,[r0,#4]            ;1279  ; Run_Control
-0007ac  f8d01088          LDR      r1,[r0,#0x88]         ;1280  ; Run_Control
-0007b0  6081              STR      r1,[r0,#8]            ;1280  ; Run_Control
-0007b2  4832              LDR      r0,|L2.2172|
-0007b4  7004              STRB     r4,[r0,#0]            ;1281
-0007b6  4932              LDR      r1,|L2.2176|
-0007b8  f04f0801          MOV      r8,#1                 ;1284
-0007bc  f8818000          STRB     r8,[r1,#0]            ;1284
-0007c0  f44f5100          MOV      r1,#0x2000            ;1285
-0007c4  e000              B        |L2.1992|
-                  |L2.1990|
-0007c6  e0f9              B        |L2.2492|
-                  |L2.1992|
-0007c8  f8dfa0a0          LDR      r10,|L2.2156|
-0007cc  4650              MOV      r0,r10                ;1285
-0007ce  f7fffffe          BL       GPIO_ResetBits
-0007d2  2102              MOVS     r1,#2                 ;1286
-0007d4  4650              MOV      r0,r10                ;1286
-0007d6  f7fffffe          BL       GPIO_SetBits
-0007da  f8869000          STRB     r9,[r6,#0]            ;1287
-0007de  4640              MOV      r0,r8                 ;1288
-0007e0  e7cd              B        |L2.1918|
-                  |L2.2018|
-;;;1296                           }
-;;;1297                           KeyCounter = 0;
-;;;1298                           BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
-;;;1299                          
-;;;1300                       }break;
-;;;1301                   }
-;;;1302   				
-;;;1303   			}
-;;;1304   			break;
-;;;1305   			case KEY_Reset://电阻高低档位切换
-;;;1306   			{
-;;;1307                   static vu8 at = 0;
-;;;1308                   switch(page_sw)
-0007e2  4818              LDR      r0,|L2.2116|
-0007e4  7800              LDRB     r0,[r0,#0]  ; page_sw
-0007e6  2803              CMP      r0,#3
-0007e8  d10a              BNE      |L2.2048|
-;;;1309                   {
-;;;1310                       case face_r:
-;;;1311                       {
-;;;1312                           if(at == 0)
-0007ea  79e8              LDRB     r0,[r5,#7]  ; at
-;;;1313                           {
-;;;1314                               GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-;;;1315                               GPIO_ResetBits(GPIOB,GPIO_Pin_13);//R_RALY低档位                           
-0007ec  f8df8094          LDR      r8,|L2.2180|
-;;;1316                               at++;
-;;;1317                               r_raly=0;
-;;;1318                               manual = 1;//手动换档
-0007f0  4e25              LDR      r6,|L2.2184|
-0007f2  b130              CBZ      r0,|L2.2050|
-;;;1319                           }else if(at == 1){
-0007f4  79e8              LDRB     r0,[r5,#7]  ; at
-0007f6  2801              CMP      r0,#1
-0007f8  d013              BEQ      |L2.2082|
-;;;1320                               GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-;;;1321                               GPIO_SetBits(GPIOB,GPIO_Pin_13);//R_RALY高档位
-;;;1322                               r_raly=1;
-;;;1323                               at++;
-;;;1324                               manual = 1;//手动换档
-;;;1325                           }else if(at == 2){
-0007fa  79e8              LDRB     r0,[r5,#7]  ; at
-0007fc  2802              CMP      r0,#2
-0007fe  d045              BEQ      |L2.2188|
-                  |L2.2048|
-000800  e0d7              B        |L2.2482|
-                  |L2.2050|
-000802  f44f5700          MOV      r7,#0x2000            ;1314
-000806  4639              MOV      r1,r7                 ;1314
-000808  4818              LDR      r0,|L2.2156|
-00080a  f7fffffe          BL       GPIO_SetBits
+;;;1293                              GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
+00079e  f44f4100          MOV      r1,#0x8000
+0007a2  4829              LDR      r0,|L2.2120|
+0007a4  f7fffffe          BL       GPIO_SetBits
+;;;1294                              cdc_sw = cdc_off;
+0007a8  703c              STRB     r4,[r7,#0]
+;;;1295                              paused = 0;
+0007aa  482c              LDR      r0,|L2.2140|
+0007ac  7004              STRB     r4,[r0,#0]
+;;;1296                              mode_sw = 0;
+0007ae  e073              B        |L2.2200|
+                  |L2.1968|
+0007b0  e109              B        |L2.2502|
+                  |L2.1970|
+0007b2  482b              LDR      r0,|L2.2144|
+0007b4  6fc1              LDR      r1,[r0,#0x7c]         ;1279  ; Run_Control
+0007b6  6041              STR      r1,[r0,#4]            ;1279  ; Run_Control
+0007b8  f8d01088          LDR      r1,[r0,#0x88]         ;1280  ; Run_Control
+0007bc  6081              STR      r1,[r0,#8]            ;1280  ; Run_Control
+0007be  4829              LDR      r0,|L2.2148|
+0007c0  7004              STRB     r4,[r0,#0]            ;1281
+0007c2  4929              LDR      r1,|L2.2152|
+0007c4  f04f0801          MOV      r8,#1                 ;1284
+0007c8  f8818000          STRB     r8,[r1,#0]            ;1284
+0007cc  f8dfa084          LDR      r10,|L2.2132|
+0007d0  f44f5100          MOV      r1,#0x2000            ;1285
+0007d4  4650              MOV      r0,r10                ;1285
+0007d6  f7fffffe          BL       GPIO_ResetBits
+0007da  2102              MOVS     r1,#2                 ;1286
+0007dc  4650              MOV      r0,r10                ;1286
+0007de  f7fffffe          BL       GPIO_SetBits
+0007e2  f8869000          STRB     r9,[r6,#0]            ;1287
+0007e6  4640              MOV      r0,r8                 ;1288
+0007e8  e7c9              B        |L2.1918|
+                  |L2.2026|
+;;;1297                           }
+;;;1298                           KeyCounter = 0;
+;;;1299                           BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
+;;;1300                          
+;;;1301                       }break;
+;;;1302                   }
+;;;1303   				
+;;;1304   			}
+;;;1305   			break;
+;;;1306   			case KEY_Reset://电阻高低档位切换
+;;;1307   			{
+;;;1308                   static vu8 at = 0;
+;;;1309                   switch(page_sw)
+0007ea  4810              LDR      r0,|L2.2092|
+0007ec  7800              LDRB     r0,[r0,#0]  ; page_sw
+0007ee  2803              CMP      r0,#3
+0007f0  d10a              BNE      |L2.2056|
+;;;1310                   {
+;;;1311                       case face_r:
+;;;1312                       {
+;;;1313                           if(at == 0)
+0007f2  79e8              LDRB     r0,[r5,#7]  ; at
+;;;1314                           {
+;;;1315                               GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+;;;1316                               GPIO_ResetBits(GPIOB,GPIO_Pin_13);//R_RALY低档位                           
+0007f4  f8df8074          LDR      r8,|L2.2156|
+;;;1317                               at++;
+;;;1318                               r_raly=0;
+;;;1319                               manual = 1;//手动换档
+0007f8  4e1d              LDR      r6,|L2.2160|
+0007fa  b130              CBZ      r0,|L2.2058|
+;;;1320                           }else if(at == 1){
+0007fc  79e8              LDRB     r0,[r5,#7]  ; at
+0007fe  2801              CMP      r0,#1
+000800  d038              BEQ      |L2.2164|
+;;;1321                               GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+;;;1322                               GPIO_SetBits(GPIOB,GPIO_Pin_13);//R_RALY高档位
+;;;1323                               r_raly=1;
+;;;1324                               at++;
+;;;1325                               manual = 1;//手动换档
+;;;1326                           }else if(at == 2){
+000802  79e8              LDRB     r0,[r5,#7]  ; at
+000804  2802              CMP      r0,#2
+000806  d046              BEQ      |L2.2198|
+                  |L2.2056|
+000808  e0d8              B        |L2.2492|
+                  |L2.2058|
+00080a  f44f5700          MOV      r7,#0x2000            ;1315
 00080e  4639              MOV      r1,r7                 ;1315
-000810  4640              MOV      r0,r8                 ;1315
-000812  f7fffffe          BL       GPIO_ResetBits
-000816  79e8              LDRB     r0,[r5,#7]            ;1316  ; at
-000818  1c40              ADDS     r0,r0,#1              ;1316
-00081a  71e8              STRB     r0,[r5,#7]            ;1316
-00081c  70ec              STRB     r4,[r5,#3]            ;1317
-00081e  2001              MOVS     r0,#1                 ;1318
-000820  e00e              B        |L2.2112|
-                  |L2.2082|
-000822  f44f5700          MOV      r7,#0x2000            ;1320
-000826  4639              MOV      r1,r7                 ;1320
-000828  4810              LDR      r0,|L2.2156|
-00082a  f7fffffe          BL       GPIO_SetBits
-00082e  4639              MOV      r1,r7                 ;1321
-000830  4640              MOV      r0,r8                 ;1321
-000832  f7fffffe          BL       GPIO_SetBits
-000836  2001              MOVS     r0,#1                 ;1322
-000838  70e8              STRB     r0,[r5,#3]            ;1322
-00083a  79e9              LDRB     r1,[r5,#7]            ;1323  ; at
-00083c  1c49              ADDS     r1,r1,#1              ;1323
-00083e  71e9              STRB     r1,[r5,#7]            ;1323
-                  |L2.2112|
-000840  7030              STRB     r0,[r6,#0]            ;1318
-000842  e0b6              B        |L2.2482|
-                  |L2.2116|
+000810  4810              LDR      r0,|L2.2132|
+000812  f7fffffe          BL       GPIO_SetBits
+000816  4639              MOV      r1,r7                 ;1316
+000818  4640              MOV      r0,r8                 ;1316
+00081a  f7fffffe          BL       GPIO_ResetBits
+00081e  79e8              LDRB     r0,[r5,#7]            ;1317  ; at
+000820  1c40              ADDS     r0,r0,#1              ;1317
+000822  71e8              STRB     r0,[r5,#7]            ;1317
+000824  70ec              STRB     r4,[r5,#3]            ;1318
+000826  2001              MOVS     r0,#1                 ;1319
+000828  7030              STRB     r0,[r6,#0]            ;1319
+00082a  e0c7              B        |L2.2492|
+                  |L2.2092|
                           DCD      page_sw
-                  |L2.2120|
+                  |L2.2096|
                           DCD      hWinset
-                  |L2.2124|
+                  |L2.2100|
                           DCD      mode_sw
-                  |L2.2128|
+                  |L2.2104|
                           DCD      load_sw
-                  |L2.2132|
+                  |L2.2108|
                           DCD      DISS_Voltage
-                  |L2.2136|
+                  |L2.2112|
                           DCD      gate_v
-                  |L2.2140|
+                  |L2.2116|
                           DCD      flagA
-                  |L2.2144|
+                  |L2.2120|
                           DCD      0x40020000
-                  |L2.2148|
+                  |L2.2124|
                           DCD      flagD
-                  |L2.2152|
+                  |L2.2128|
                           DCD      pow_sw
-                  |L2.2156|
+                  |L2.2132|
                           DCD      0x40020800
-                  |L2.2160|
+                  |L2.2136|
                           DCD      cdc_sw
-                  |L2.2164|
+                  |L2.2140|
                           DCD      paused
-                  |L2.2168|
+                  |L2.2144|
                           DCD      Run_Control
-                  |L2.2172|
+                  |L2.2148|
                           DCD      cutoff_flag
-                  |L2.2176|
+                  |L2.2152|
                           DCD      charge_step
-                  |L2.2180|
+                  |L2.2156|
                           DCD      0x40020400
-                  |L2.2184|
+                  |L2.2160|
                           DCD      manual
-                  |L2.2188|
-;;;1326                               at = 0;
-00088c  71ec              STRB     r4,[r5,#7]
-                  |L2.2190|
-00088e  7034              STRB     r4,[r6,#0]            ;1295
-000890  e08f              B        |L2.2482|
-                  |L2.2194|
-;;;1327                               manual =0;
-;;;1328                           }
-;;;1329                       }
-;;;1330                   }
-;;;1331                   KeyCounter = 0;
-;;;1332   				BEEP_Tiggr();//
-;;;1333               }
-;;;1334   			break;
-;;;1335   			case KEY_Powe :
-;;;1336   			{
-;;;1337   				
-;;;1338   				KeyCounter = 0;
-;;;1339   				BEEP_Tiggr();//
-;;;1340   			}
-;;;1341   			break;
-;;;1342   			case KEY_Face1 :
-;;;1343   			{
-;;;1344   				WM_DeleteWindow(hWinR);
-000892  6818              LDR      r0,[r3,#0]  ; hWinR
-000894  f7fffffe          BL       WM_DeleteWindow
-;;;1345                   WM_DeleteWindow(hWinWind);
-000898  6830              LDR      r0,[r6,#0]  ; hWinWind
-00089a  f7fffffe          BL       WM_DeleteWindow
-;;;1346                   WM_DeleteWindow(hWinG);
-00089e  f8d80000          LDR      r0,[r8,#0]  ; hWinG
-0008a2  f7fffffe          BL       WM_DeleteWindow
-;;;1347                   WM_DeleteWindow(load_wind);
-0008a6  f8d90000          LDR      r0,[r9,#0]  ; load_wind
-0008aa  f7fffffe          BL       WM_DeleteWindow
-;;;1348                   WM_DeleteWindow(hWinsysinfo);
-0008ae  f8da0000          LDR      r0,[r10,#0]  ; hWinsysinfo
-0008b2  f7fffffe          BL       WM_DeleteWindow
-;;;1349                   WM_DeleteWindow(hWincdc);
-0008b6  f8db0000          LDR      r0,[r11,#0]  ; hWincdc
-0008ba  f7fffffe          BL       WM_DeleteWindow
-;;;1350                   WM_DeleteWindow(hWinset);
-0008be  4840              LDR      r0,|L2.2496|
-0008c0  6800              LDR      r0,[r0,#0]  ; hWinset
-0008c2  f7fffffe          BL       WM_DeleteWindow
-;;;1351                   GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
-0008c6  f44f4100          MOV      r1,#0x8000
-0008ca  483e              LDR      r0,|L2.2500|
-0008cc  f7fffffe          BL       GPIO_SetBits
-;;;1352                   GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-0008d0  4e3d              LDR      r6,|L2.2504|
-0008d2  f44f5100          MOV      r1,#0x2000
-0008d6  4630              MOV      r0,r6
-0008d8  f7fffffe          BL       GPIO_SetBits
-;;;1353                   GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-0008dc  2102              MOVS     r1,#2
-0008de  4630              MOV      r0,r6
-0008e0  f7fffffe          BL       GPIO_ResetBits
-;;;1354                   CreateR();
-;;;1355   				KeyCounter = 0;
-;;;1356   				BEEP_Tiggr();//
-;;;1357   			}
-;;;1358   			break;
-0008e4  e64f              B        |L2.1414|
-                  |L2.2278|
-;;;1359   			case KEY_Face2 :
-;;;1360   			{
-;;;1361   				WM_DeleteWindow(hWinR);
-0008e6  6818              LDR      r0,[r3,#0]  ; hWinR
-0008e8  f7fffffe          BL       WM_DeleteWindow
-;;;1362                   WM_DeleteWindow(hWinWind);
-0008ec  6830              LDR      r0,[r6,#0]  ; hWinWind
-0008ee  f7fffffe          BL       WM_DeleteWindow
-;;;1363                   WM_DeleteWindow(hWinG);
-0008f2  f8d80000          LDR      r0,[r8,#0]  ; hWinG
-0008f6  f7fffffe          BL       WM_DeleteWindow
-;;;1364                   WM_DeleteWindow(load_wind);
-0008fa  f8d90000          LDR      r0,[r9,#0]  ; load_wind
-0008fe  f7fffffe          BL       WM_DeleteWindow
-;;;1365                   WM_DeleteWindow(hWinsysinfo);
-000902  f8da0000          LDR      r0,[r10,#0]  ; hWinsysinfo
-000906  f7fffffe          BL       WM_DeleteWindow
-;;;1366                   WM_DeleteWindow(hWincdc);
-00090a  f8db0000          LDR      r0,[r11,#0]  ; hWincdc
-00090e  f7fffffe          BL       WM_DeleteWindow
-;;;1367                   WM_DeleteWindow(hWinset);
-000912  482b              LDR      r0,|L2.2496|
-000914  6800              LDR      r0,[r0,#0]  ; hWinset
-000916  f7fffffe          BL       WM_DeleteWindow
-;;;1368   				CreateWindow2();
-00091a  f7fffffe          BL       CreateWindow2
-;;;1369                   t_onoff = 0;
-00091e  72ac              STRB     r4,[r5,#0xa]
-;;;1370                   GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-000920  4e29              LDR      r6,|L2.2504|
-000922  f44f5100          MOV      r1,#0x2000
-000926  4630              MOV      r0,r6
-000928  f7fffffe          BL       GPIO_SetBits
-;;;1371                   GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-00092c  2102              MOVS     r1,#2
-00092e  4630              MOV      r0,r6
-000930  f7fffffe          BL       GPIO_ResetBits
-;;;1372   				KeyCounter = 0;
-;;;1373   				BEEP_Tiggr();//
-;;;1374   			}
-;;;1375   			break;
-000934  e03d              B        |L2.2482|
-                  |L2.2358|
-;;;1376   			case KEY_Face3 :
-;;;1377   			{
-;;;1378   				WM_DeleteWindow(hWinR);
-000936  6818              LDR      r0,[r3,#0]  ; hWinR
-000938  f7fffffe          BL       WM_DeleteWindow
-;;;1379                   WM_DeleteWindow(hWinWind);
-00093c  6830              LDR      r0,[r6,#0]  ; hWinWind
-00093e  f7fffffe          BL       WM_DeleteWindow
-;;;1380                   WM_DeleteWindow(hWinG);
-000942  f8d80000          LDR      r0,[r8,#0]  ; hWinG
-000946  f7fffffe          BL       WM_DeleteWindow
-;;;1381                   WM_DeleteWindow(load_wind);
-00094a  f8d90000          LDR      r0,[r9,#0]  ; load_wind
-00094e  f7fffffe          BL       WM_DeleteWindow
-;;;1382                   WM_DeleteWindow(hWinsysinfo);
-000952  f8da0000          LDR      r0,[r10,#0]  ; hWinsysinfo
-000956  f7fffffe          BL       WM_DeleteWindow
-;;;1383                   WM_DeleteWindow(hWincdc);
-00095a  f8db0000          LDR      r0,[r11,#0]  ; hWincdc
-00095e  f7fffffe          BL       WM_DeleteWindow
-;;;1384                   WM_DeleteWindow(hWinset);
-000962  4817              LDR      r0,|L2.2496|
-000964  6800              LDR      r0,[r0,#0]  ; hWinset
-000966  f7fffffe          BL       WM_DeleteWindow
-;;;1385   				CreateWindow();
-00096a  f7fffffe          BL       CreateWindow
-;;;1386                   GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
-00096e  f44f4100          MOV      r1,#0x8000
-000972  4814              LDR      r0,|L2.2500|
-000974  f7fffffe          BL       GPIO_SetBits
-;;;1387   				KeyCounter = 0;
-;;;1388   				BEEP_Tiggr();//
-;;;1389   			}
-;;;1390   			break;
-000978  e01b              B        |L2.2482|
-                  |L2.2426|
-;;;1391   			case KEY_Face4 :
-;;;1392   			{
-;;;1393                   WM_DeleteWindow(hWinR);
-;;;1394                   WM_DeleteWindow(hWinWind);
-;;;1395                   WM_DeleteWindow(hWinG);
-;;;1396                   WM_DeleteWindow(load_wind);
-;;;1397                   WM_DeleteWindow(hWinsysinfo);
-;;;1398                   WM_DeleteWindow(hWincdc);
-;;;1399                   WM_DeleteWindow(hWinset);
-;;;1400                   CreateCDC(); 
-;;;1401   				KeyCounter = 0;
-;;;1402   				BEEP_Tiggr();//
-;;;1403   			}
-;;;1404   			break;
-;;;1405   			case KEY_Face5 :
-;;;1406   			{
-;;;1407                   WM_DeleteWindow(hWinR);
-;;;1408                   WM_DeleteWindow(hWinWind);
-;;;1409                   WM_DeleteWindow(hWinG);
-;;;1410                   WM_DeleteWindow(load_wind);
-;;;1411                   WM_DeleteWindow(hWinsysinfo);
-;;;1412                   WM_DeleteWindow(hWincdc);
-;;;1413                   WM_DeleteWindow(hWinset);
-;;;1414                   CreateG();
-;;;1415   				KeyCounter = 0;
-;;;1416   				BEEP_Tiggr();//
-;;;1417   			}
-;;;1418   			break;
-;;;1419               case KEY_BIAS :
-;;;1420   			{
-;;;1421   				WM_DeleteWindow(hWinR);
-00097a  6818              LDR      r0,[r3,#0]  ; hWinR
-00097c  f7fffffe          BL       WM_DeleteWindow
-;;;1422                   WM_DeleteWindow(hWinWind);
-000980  6830              LDR      r0,[r6,#0]  ; hWinWind
-000982  f7fffffe          BL       WM_DeleteWindow
-;;;1423                   WM_DeleteWindow(hWinG);
-000986  f8d80000          LDR      r0,[r8,#0]  ; hWinG
-00098a  f7fffffe          BL       WM_DeleteWindow
-;;;1424                   WM_DeleteWindow(load_wind);
-00098e  f8d90000          LDR      r0,[r9,#0]  ; load_wind
-000992  f7fffffe          BL       WM_DeleteWindow
-;;;1425                   WM_DeleteWindow(hWinsysinfo);
-000996  f8da0000          LDR      r0,[r10,#0]  ; hWinsysinfo
-00099a  f7fffffe          BL       WM_DeleteWindow
-;;;1426                   WM_DeleteWindow(hWincdc);
-00099e  f8db0000          LDR      r0,[r11,#0]  ; hWincdc
-0009a2  f7fffffe          BL       WM_DeleteWindow
-;;;1427                   WM_DeleteWindow(hWinset);
-0009a6  4806              LDR      r0,|L2.2496|
-0009a8  6800              LDR      r0,[r0,#0]  ; hWinset
-0009aa  f7fffffe          BL       WM_DeleteWindow
-;;;1428                   Createsysinfo();
-0009ae  f7fffffe          BL       Createsysinfo
-                  |L2.2482|
-;;;1429                   KeyCounter = 0;
-0009b2  81ac              STRH     r4,[r5,#0xc]
-;;;1430                   BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
-0009b4  e8bd5ff0          POP      {r4-r12,lr}
-0009b8  f7ffbffe          B.W      BEEP_Tiggr
+                  |L2.2164|
+000874  f44f5700          MOV      r7,#0x2000            ;1321
+000878  4639              MOV      r1,r7                 ;1321
+00087a  4854              LDR      r0,|L2.2508|
+00087c  f7fffffe          BL       GPIO_SetBits
+000880  4639              MOV      r1,r7                 ;1322
+000882  4640              MOV      r0,r8                 ;1322
+000884  f7fffffe          BL       GPIO_SetBits
+000888  2101              MOVS     r1,#1                 ;1323
+00088a  70e9              STRB     r1,[r5,#3]            ;1323
+00088c  79e8              LDRB     r0,[r5,#7]            ;1324  ; at
+00088e  1c40              ADDS     r0,r0,#1              ;1324
+000890  71e8              STRB     r0,[r5,#7]            ;1324
+000892  7031              STRB     r1,[r6,#0]            ;1325
+000894  e092              B        |L2.2492|
+                  |L2.2198|
+;;;1327                               at = 0;
+000896  71ec              STRB     r4,[r5,#7]
+                  |L2.2200|
+000898  7034              STRB     r4,[r6,#0]            ;1296
+00089a  e08f              B        |L2.2492|
+                  |L2.2204|
+;;;1328                               manual =0;
+;;;1329                           }
+;;;1330                       }
+;;;1331                   }
+;;;1332                   KeyCounter = 0;
+;;;1333   				BEEP_Tiggr();//
+;;;1334               }
+;;;1335   			break;
+;;;1336   			case KEY_Powe :
+;;;1337   			{
+;;;1338   				
+;;;1339   				KeyCounter = 0;
+;;;1340   				BEEP_Tiggr();//
+;;;1341   			}
+;;;1342   			break;
+;;;1343   			case KEY_Face1 :
+;;;1344   			{
+;;;1345   				WM_DeleteWindow(hWinR);
+00089c  6818              LDR      r0,[r3,#0]  ; hWinR
+00089e  f7fffffe          BL       WM_DeleteWindow
+;;;1346                   WM_DeleteWindow(hWinWind);
+0008a2  6830              LDR      r0,[r6,#0]  ; hWinWind
+0008a4  f7fffffe          BL       WM_DeleteWindow
+;;;1347                   WM_DeleteWindow(hWinG);
+0008a8  f8d80000          LDR      r0,[r8,#0]  ; hWinG
+0008ac  f7fffffe          BL       WM_DeleteWindow
+;;;1348                   WM_DeleteWindow(load_wind);
+0008b0  f8d90000          LDR      r0,[r9,#0]  ; load_wind
+0008b4  f7fffffe          BL       WM_DeleteWindow
+;;;1349                   WM_DeleteWindow(hWinsysinfo);
+0008b8  f8da0000          LDR      r0,[r10,#0]  ; hWinsysinfo
+0008bc  f7fffffe          BL       WM_DeleteWindow
+;;;1350                   WM_DeleteWindow(hWincdc);
+0008c0  f8db0000          LDR      r0,[r11,#0]  ; hWincdc
+0008c4  f7fffffe          BL       WM_DeleteWindow
+;;;1351                   WM_DeleteWindow(hWinset);
+0008c8  4841              LDR      r0,|L2.2512|
+0008ca  6800              LDR      r0,[r0,#0]  ; hWinset
+0008cc  f7fffffe          BL       WM_DeleteWindow
+;;;1352                   GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
+0008d0  f44f4100          MOV      r1,#0x8000
+0008d4  483f              LDR      r0,|L2.2516|
+0008d6  f7fffffe          BL       GPIO_SetBits
+;;;1353                   GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+0008da  4e3c              LDR      r6,|L2.2508|
+0008dc  f44f5100          MOV      r1,#0x2000
+0008e0  4630              MOV      r0,r6
+0008e2  f7fffffe          BL       GPIO_SetBits
+;;;1354                   GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+0008e6  2102              MOVS     r1,#2
+0008e8  4630              MOV      r0,r6
+0008ea  f7fffffe          BL       GPIO_ResetBits
+;;;1355                   CreateR();
+;;;1356   				KeyCounter = 0;
+;;;1357   				BEEP_Tiggr();//
+;;;1358   			}
+;;;1359   			break;
+0008ee  e64a              B        |L2.1414|
+                  |L2.2288|
+;;;1360   			case KEY_Face2 :
+;;;1361   			{
+;;;1362   				WM_DeleteWindow(hWinR);
+0008f0  6818              LDR      r0,[r3,#0]  ; hWinR
+0008f2  f7fffffe          BL       WM_DeleteWindow
+;;;1363                   WM_DeleteWindow(hWinWind);
+0008f6  6830              LDR      r0,[r6,#0]  ; hWinWind
+0008f8  f7fffffe          BL       WM_DeleteWindow
+;;;1364                   WM_DeleteWindow(hWinG);
+0008fc  f8d80000          LDR      r0,[r8,#0]  ; hWinG
+000900  f7fffffe          BL       WM_DeleteWindow
+;;;1365                   WM_DeleteWindow(load_wind);
+000904  f8d90000          LDR      r0,[r9,#0]  ; load_wind
+000908  f7fffffe          BL       WM_DeleteWindow
+;;;1366                   WM_DeleteWindow(hWinsysinfo);
+00090c  f8da0000          LDR      r0,[r10,#0]  ; hWinsysinfo
+000910  f7fffffe          BL       WM_DeleteWindow
+;;;1367                   WM_DeleteWindow(hWincdc);
+000914  f8db0000          LDR      r0,[r11,#0]  ; hWincdc
+000918  f7fffffe          BL       WM_DeleteWindow
+;;;1368                   WM_DeleteWindow(hWinset);
+00091c  482c              LDR      r0,|L2.2512|
+00091e  6800              LDR      r0,[r0,#0]  ; hWinset
+000920  f7fffffe          BL       WM_DeleteWindow
+;;;1369   				CreateWindow2();
+000924  f7fffffe          BL       CreateWindow2
+;;;1370                   t_onoff = 0;
+000928  72ac              STRB     r4,[r5,#0xa]
+;;;1371                   GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+00092a  4e28              LDR      r6,|L2.2508|
+00092c  f44f5100          MOV      r1,#0x2000
+000930  4630              MOV      r0,r6
+000932  f7fffffe          BL       GPIO_SetBits
+;;;1372                   GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+000936  2102              MOVS     r1,#2
+000938  4630              MOV      r0,r6
+00093a  f7fffffe          BL       GPIO_ResetBits
+;;;1373   				KeyCounter = 0;
+;;;1374   				BEEP_Tiggr();//
+;;;1375   			}
+;;;1376   			break;
+00093e  e03d              B        |L2.2492|
+                  |L2.2368|
+;;;1377   			case KEY_Face3 :
+;;;1378   			{
+;;;1379   				WM_DeleteWindow(hWinR);
+000940  6818              LDR      r0,[r3,#0]  ; hWinR
+000942  f7fffffe          BL       WM_DeleteWindow
+;;;1380                   WM_DeleteWindow(hWinWind);
+000946  6830              LDR      r0,[r6,#0]  ; hWinWind
+000948  f7fffffe          BL       WM_DeleteWindow
+;;;1381                   WM_DeleteWindow(hWinG);
+00094c  f8d80000          LDR      r0,[r8,#0]  ; hWinG
+000950  f7fffffe          BL       WM_DeleteWindow
+;;;1382                   WM_DeleteWindow(load_wind);
+000954  f8d90000          LDR      r0,[r9,#0]  ; load_wind
+000958  f7fffffe          BL       WM_DeleteWindow
+;;;1383                   WM_DeleteWindow(hWinsysinfo);
+00095c  f8da0000          LDR      r0,[r10,#0]  ; hWinsysinfo
+000960  f7fffffe          BL       WM_DeleteWindow
+;;;1384                   WM_DeleteWindow(hWincdc);
+000964  f8db0000          LDR      r0,[r11,#0]  ; hWincdc
+000968  f7fffffe          BL       WM_DeleteWindow
+;;;1385                   WM_DeleteWindow(hWinset);
+00096c  4818              LDR      r0,|L2.2512|
+00096e  6800              LDR      r0,[r0,#0]  ; hWinset
+000970  f7fffffe          BL       WM_DeleteWindow
+;;;1386   				CreateWindow();
+000974  f7fffffe          BL       CreateWindow
+;;;1387                   GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
+000978  f44f4100          MOV      r1,#0x8000
+00097c  4815              LDR      r0,|L2.2516|
+00097e  f7fffffe          BL       GPIO_SetBits
+;;;1388   				KeyCounter = 0;
+;;;1389   				BEEP_Tiggr();//
+;;;1390   			}
+;;;1391   			break;
+000982  e01b              B        |L2.2492|
+                  |L2.2436|
+;;;1392   			case KEY_Face4 :
+;;;1393   			{
+;;;1394                   WM_DeleteWindow(hWinR);
+;;;1395                   WM_DeleteWindow(hWinWind);
+;;;1396                   WM_DeleteWindow(hWinG);
+;;;1397                   WM_DeleteWindow(load_wind);
+;;;1398                   WM_DeleteWindow(hWinsysinfo);
+;;;1399                   WM_DeleteWindow(hWincdc);
+;;;1400                   WM_DeleteWindow(hWinset);
+;;;1401                   CreateCDC(); 
+;;;1402   				KeyCounter = 0;
+;;;1403   				BEEP_Tiggr();//
+;;;1404   			}
+;;;1405   			break;
+;;;1406   			case KEY_Face5 :
+;;;1407   			{
+;;;1408                   WM_DeleteWindow(hWinR);
+;;;1409                   WM_DeleteWindow(hWinWind);
+;;;1410                   WM_DeleteWindow(hWinG);
+;;;1411                   WM_DeleteWindow(load_wind);
+;;;1412                   WM_DeleteWindow(hWinsysinfo);
+;;;1413                   WM_DeleteWindow(hWincdc);
+;;;1414                   WM_DeleteWindow(hWinset);
+;;;1415                   CreateG();
+;;;1416   				KeyCounter = 0;
+;;;1417   				BEEP_Tiggr();//
+;;;1418   			}
+;;;1419   			break;
+;;;1420               case KEY_BIAS :
+;;;1421   			{
+;;;1422   				WM_DeleteWindow(hWinR);
+000984  6818              LDR      r0,[r3,#0]  ; hWinR
+000986  f7fffffe          BL       WM_DeleteWindow
+;;;1423                   WM_DeleteWindow(hWinWind);
+00098a  6830              LDR      r0,[r6,#0]  ; hWinWind
+00098c  f7fffffe          BL       WM_DeleteWindow
+;;;1424                   WM_DeleteWindow(hWinG);
+000990  f8d80000          LDR      r0,[r8,#0]  ; hWinG
+000994  f7fffffe          BL       WM_DeleteWindow
+;;;1425                   WM_DeleteWindow(load_wind);
+000998  f8d90000          LDR      r0,[r9,#0]  ; load_wind
+00099c  f7fffffe          BL       WM_DeleteWindow
+;;;1426                   WM_DeleteWindow(hWinsysinfo);
+0009a0  f8da0000          LDR      r0,[r10,#0]  ; hWinsysinfo
+0009a4  f7fffffe          BL       WM_DeleteWindow
+;;;1427                   WM_DeleteWindow(hWincdc);
+0009a8  f8db0000          LDR      r0,[r11,#0]  ; hWincdc
+0009ac  f7fffffe          BL       WM_DeleteWindow
+;;;1428                   WM_DeleteWindow(hWinset);
+0009b0  4807              LDR      r0,|L2.2512|
+0009b2  6800              LDR      r0,[r0,#0]  ; hWinset
+0009b4  f7fffffe          BL       WM_DeleteWindow
+;;;1429                   Createsysinfo();
+0009b8  f7fffffe          BL       Createsysinfo
                   |L2.2492|
-;;;1431   			}
-;;;1432   			break;
-;;;1433   
-;;;1434                       
-;;;1435               
-;;;1436   			default:
-;;;1437   			break;
-;;;1438   		}	
-;;;1439   	}
-;;;1440   }
-0009bc  e8bd9ff0          POP      {r4-r12,pc}
-;;;1441   
+;;;1430                   KeyCounter = 0;
+0009bc  81ac              STRH     r4,[r5,#0xc]
+;;;1431                   BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
+0009be  e8bd5ff0          POP      {r4-r12,lr}
+0009c2  f7ffbffe          B.W      BEEP_Tiggr
+                  |L2.2502|
+;;;1432   			}
+;;;1433   			break;
+;;;1434   
+;;;1435                       
+;;;1436               
+;;;1437   			default:
+;;;1438   			break;
+;;;1439   		}	
+;;;1440   	}
+;;;1441   }
+0009c6  e8bd9ff0          POP      {r4-r12,pc}
+;;;1442   
                           ENDP
 
-                  |L2.2496|
-                          DCD      hWinset
-                  |L2.2500|
-                          DCD      0x40020000
-                  |L2.2504|
+0009ca  0000              DCW      0x0000
+                  |L2.2508|
                           DCD      0x40020800
+                  |L2.2512|
+                          DCD      hWinset
+                  |L2.2516|
+                          DCD      0x40020000
 
                           AREA ||i.Key_Scan||, CODE, READONLY, ALIGN=2
 
@@ -2496,37 +2499,37 @@
                           AREA ||i.setmode_r||, CODE, READONLY, ALIGN=2
 
                   setmode_r PROC
-;;;1442   
-;;;1443   void setmode_r(void)
+;;;1443   
+;;;1444   void setmode_r(void)
 000000  b510              PUSH     {r4,lr}
-;;;1444   {
-;;;1445       GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+;;;1445   {
+;;;1446       GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
 000002  4c0c              LDR      r4,|L4.52|
 000004  2102              MOVS     r1,#2
 000006  4620              MOV      r0,r4
 000008  f7fffffe          BL       GPIO_ResetBits
-;;;1446       GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器  
+;;;1447       GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器  
 00000c  f44f5100          MOV      r1,#0x2000
 000010  4620              MOV      r0,r4
 000012  f7fffffe          BL       GPIO_SetBits
-;;;1447       GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF  
+;;;1448       GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF  
 000016  f44f4100          MOV      r1,#0x8000
 00001a  4807              LDR      r0,|L4.56|
 00001c  f7fffffe          BL       GPIO_SetBits
-;;;1448       pow_sw = pow_off;
+;;;1449       pow_sw = pow_off;
 000020  4906              LDR      r1,|L4.60|
 000022  2000              MOVS     r0,#0
 000024  7008              STRB     r0,[r1,#0]
-;;;1449       load_sw = load_off;
+;;;1450       load_sw = load_off;
 000026  4906              LDR      r1,|L4.64|
 000028  7008              STRB     r0,[r1,#0]
-;;;1450       mode_sw = mode_r;
+;;;1451       mode_sw = mode_r;
 00002a  4906              LDR      r1,|L4.68|
 00002c  2001              MOVS     r0,#1
 00002e  7008              STRB     r0,[r1,#0]
-;;;1451   }
+;;;1452   }
 000030  bd10              POP      {r4,pc}
-;;;1452   
+;;;1453   
                           ENDP
 
 000032  0000              DCW      0x0000

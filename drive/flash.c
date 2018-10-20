@@ -28,6 +28,7 @@ extern vu8 code6;
 extern vu8 code7;
 extern vu8 code8;
 extern vu8 oc_mode;
+extern vu8 load_mode;
 
 //================================================================//
 extern struct bitDefine
@@ -738,7 +739,7 @@ void Write_oct(void)
 
 void Write_LOAD(void)
 {
-    EEPROM_WriteByte(0x8C,flag_Load_CC);
+    EEPROM_WriteByte(0x8C,load_mode);
 }
 /************************************************************************/
 void Write_info(void)

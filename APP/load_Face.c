@@ -23,6 +23,8 @@ void test_load(void);
 extern vu8 clear_flag3;
 extern vu16 battery_c;
 extern vu8 mode_sw;
+extern vu8 oc_mode;
+u8 load_mode;
 
 extern struct bitDefine
 {
@@ -352,19 +354,23 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
         GUI_UC_SetEncodeUTF8();        
         TEXT_SetText(hItem,"负载模式");
         
-        if(flag_Load_CC == 1)
+        if(load_mode == 1)
         {
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_121);
             TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
             TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-            GUI_UC_SetEncodeUTF8();        
+            GUI_UC_SetEncodeUTF8();
+            GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
             TEXT_SetText(hItem,"CC");
-        }else{
+            flag_Load_CC = 1;
+        }else if(load_mode == 0){
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_121);
             TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
             TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-            GUI_UC_SetEncodeUTF8();        
+            GUI_UC_SetEncodeUTF8();  
+            GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV            
             TEXT_SetText(hItem,"CV");
+            flag_Load_CC = 0;
         }
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_122);
@@ -689,6 +695,7 @@ void LOAD_SET(void) {
                     TEXT_SetText(hItem,"CV");
                     GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV
                     flag_Load_CC = 0;
+                    load_mode = 0;
                     Write_LOAD();
                     break;
                 }
@@ -699,6 +706,7 @@ void LOAD_SET(void) {
                      TEXT_SetText(hItem,"CC");
                      GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
                      flag_Load_CC = 1;
+                     load_mode =1;
                      Write_LOAD();
                      break;
                 }

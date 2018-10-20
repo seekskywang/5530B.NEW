@@ -44,6 +44,21 @@ vu8 charge_step;
 vu16 coff[6];
 int count_num(int data);
 WM_HWIN timer(void);
+
+//=================================================================
+extern struct bitDefine
+{
+    unsigned bit0: 1;
+    unsigned bit1: 1;
+    unsigned bit2: 1;
+    unsigned bit3: 1;
+    unsigned bit4: 1;
+    unsigned bit5: 1;
+    unsigned bit6: 1;
+    unsigned bit7: 1;
+} flagA, flagB,flagC,flagD,flagE,flagF,flagG;
+//====================================================================
+
 /*********************************************************************
 *
 *       Defines
@@ -971,8 +986,10 @@ WM_HWIN CreateCDC(void) {
   SET_Current_Laod = cdc_dc;
   track = face_cdc;
   TM1650_SET_LED(0x68,0x70);
-  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//İֆ
+  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//İֆ+
   IO_OFF();//�
+  GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+  flag_Load_CC = 1;
 //  double_sw = face_cdc;
   hWincdc = GUI_CreateDialogBox(_aDialogCreate4, GUI_COUNTOF(_aDialogCreate4), _cbDialog, WM_HBKWIN, 0, 0);
   return hWincdc;

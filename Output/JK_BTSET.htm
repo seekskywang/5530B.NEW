@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\Output\JK_BTSET.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\Output\JK_BTSET.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Sat Oct 20 08:46:52 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Sat Oct 20 13:13:44 2018
 <BR><P>
 <H3>Maximum Stack Usage =        696 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -760,13 +760,13 @@ Global Symbols
 <LI><a href="#[1e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_SET
 <LI><a href="#[1de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_OP_RIGHT
 <LI><a href="#[1db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_OP_LEFT
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 </UL>
 
 <P><STRONG><a name="[187]"></a>_printf_pre_padding</STRONG> (Thumb, 46 bytes, Stack size 16 bytes, _printf_pad.o(.text))
@@ -1319,12 +1319,12 @@ Global Symbols
 <LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_ALLOC_LockH
 <LI><a href="#[1d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_InvalidateWindow
 </UL>
-<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 </UL>
 
 <P><STRONG><a name="[1be]"></a>BUTTON_SetPressed</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, button.o(i.BUTTON_SetPressed))
@@ -1349,13 +1349,13 @@ Global Symbols
 <LI><a href="#[1d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_InvalidateWindow
 <LI><a href="#[1d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI__SetText
 </UL>
-<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_CreateIndirect
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 </UL>
 
 <P><STRONG><a name="[1a6]"></a>Bubble_sort</STRONG> (Thumb, 56 bytes, Stack size 12 bytes, ad7689.o(i.Bubble_sort))
@@ -1482,7 +1482,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> checkbox.o(.data)
 </UL>
-<P><STRONG><a name="[1e9]"></a>CreateCDC</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, c_dc.o(i.CreateCDC))
+<P><STRONG><a name="[1e9]"></a>CreateCDC</STRONG> (Thumb, 110 bytes, Stack size 16 bytes, c_dc.o(i.CreateCDC))
 <BR><BR>[Stack]<UL><LI>Max Depth = 232<LI>Call Chain = CreateCDC &rArr; GUI_CreateDialogBox &rArr; WM_ShowWindow &rArr; WM_InvalidateWindowAndDescs &rArr;  WM_InvalidateWindowAndDescs (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
@@ -1988,6 +1988,7 @@ Global Symbols
 <LI><a href="#[32a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
 <LI><a href="#[1eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IO_OFF
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[486]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;test_r
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[1a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_AD7689_Read
@@ -2018,6 +2019,7 @@ Global Symbols
 <LI><a href="#[32a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
 <LI><a href="#[1eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IO_OFF
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[486]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;test_r
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[1a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_AD7689_Read
@@ -2295,8 +2297,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 6]<UL><LI> hz20s.o(.constdata)
 <LI> symbol.o(.constdata)
-<LI> en40.o(.constdata)
 <LI> unit.o(.constdata)
+<LI> en40.o(.constdata)
 <LI> hz32.o(.constdata)
 <LI> set_font.o(.constdata)
 </UL>
@@ -2307,8 +2309,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 6]<UL><LI> hz20s.o(.constdata)
 <LI> symbol.o(.constdata)
-<LI> en40.o(.constdata)
 <LI> unit.o(.constdata)
+<LI> en40.o(.constdata)
 <LI> hz32.o(.constdata)
 <LI> set_font.o(.constdata)
 </UL>
@@ -2319,16 +2321,16 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 6]<UL><LI> hz20s.o(.constdata)
 <LI> symbol.o(.constdata)
-<LI> en40.o(.constdata)
 <LI> unit.o(.constdata)
+<LI> en40.o(.constdata)
 <LI> hz32.o(.constdata)
 <LI> set_font.o(.constdata)
 </UL>
 <P><STRONG><a name="[ee]"></a>GUIPROP_EXT_GetFontInfo</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, gui_charpext.o(i.GUIPROP_EXT_GetFontInfo))
 <BR>[Address Reference Count : 6]<UL><LI> hz20s.o(.constdata)
 <LI> symbol.o(.constdata)
-<LI> en40.o(.constdata)
 <LI> unit.o(.constdata)
+<LI> en40.o(.constdata)
 <LI> hz32.o(.constdata)
 <LI> set_font.o(.constdata)
 </UL>
@@ -2339,8 +2341,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 6]<UL><LI> hz20s.o(.constdata)
 <LI> symbol.o(.constdata)
-<LI> en40.o(.constdata)
 <LI> unit.o(.constdata)
+<LI> en40.o(.constdata)
 <LI> hz32.o(.constdata)
 <LI> set_font.o(.constdata)
 </UL>
@@ -3359,8 +3361,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[288]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_DispString
 </UL>
-<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
@@ -3368,6 +3369,7 @@ Global Symbols
 <LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RADIO_DrawSkinFlex
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PROGBAR_DrawSkinFlex
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[154]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_Paint
 <LI><a href="#[212]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WIDGET__FillStringInRect
 </UL>
@@ -3614,8 +3616,7 @@ Global Symbols
 <LI><a href="#[270]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM__InitIVRSearch
 <LI><a href="#[271]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM__GetNextIVR
 </UL>
-<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
@@ -3623,6 +3624,7 @@ Global Symbols
 <LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FRAMEWIN_DrawSkinFlex
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_DrawSkinFlex
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[3a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_DrawShaftV
 <LI><a href="#[3a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_DrawShaftH
 <LI><a href="#[20e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_FillRectEx
@@ -4132,8 +4134,7 @@ Global Symbols
 <P><STRONG><a name="[1c5]"></a>GUI_SetColor</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, gui_setcolor.o(i.GUI_SetColor))
 <BR><BR>[Calls]<UL><LI><a href="#[211]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetColor
 </UL>
-<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
@@ -4147,6 +4148,7 @@ Global Symbols
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_DrawSkinFlex
 <LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUIPROP_DispChar
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUIPROP_EXT__ClearLine
 <LI><a href="#[304]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI__DrawBitmap16bpp
 <LI><a href="#[22e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GL_SetDefault
@@ -4188,8 +4190,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[1cc]"></a>GUI_SetFont</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, gui_setfont.o(i.GUI_SetFont))
-<BR><BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<BR><BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
@@ -4198,6 +4199,7 @@ Global Symbols
 <LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CHECKBOX_DrawSkinFlex
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_DrawSkinFlex
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[22e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GL_SetDefault
 <LI><a href="#[16]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_Paint
 <LI><a href="#[14]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_Paint
@@ -4237,8 +4239,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[1cf]"></a>GUI_SetTextMode</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, gui_settextmode.o(i.GUI_SetTextMode))
-<BR><BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<BR><BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
@@ -4248,6 +4249,7 @@ Global Symbols
 <LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CHECKBOX_DrawSkinFlex
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_DrawSkinFlex
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[22e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GL_SetDefault
 <LI><a href="#[16]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_Paint
 <LI><a href="#[318]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_DrawText
@@ -4357,13 +4359,13 @@ Global Symbols
 
 <P><STRONG><a name="[379]"></a>GUI_UC_SetEncodeUTF8</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, gui_uc_encodeutf8.o(i.GUI_UC_SetEncodeUTF8))
 <BR><BR>[Called By]<UL><LI><a href="#[33d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PARA_SET
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 </UL>
 
 <P><STRONG><a name="[258]"></a>GUI_UC__GetCharCodeInc</STRONG> (Thumb, 38 bytes, Stack size 24 bytes, gui_uc.o(i.GUI_UC__GetCharCodeInc))
@@ -5011,7 +5013,7 @@ Global Symbols
 <LI><a href="#[1e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateCDC
 </UL>
 
-<P><STRONG><a name="[32a]"></a>Key_Funtion</STRONG> (Thumb, 2496 bytes, Stack size 40 bytes, key.o(i.Key_Funtion))
+<P><STRONG><a name="[32a]"></a>Key_Funtion</STRONG> (Thumb, 2506 bytes, Stack size 40 bytes, key.o(i.Key_Funtion))
 <BR><BR>[Stack]<UL><LI>Max Depth = 296 + Unknown Stack Size
 <LI>Call Chain = Key_Funtion &rArr; PARA_SET &rArr; TEXT_SetBkColor &rArr; WM_ClrHasTrans &rArr; WM_InvalidateWindow &rArr; WM_InvalidateRect &rArr; WM__InvalidateRectEx &rArr; WM__InvalidateRect &rArr;  WM__InvalidateRect (Cycle)
 </UL>
@@ -5483,7 +5485,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[32a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
 </UL>
 
-<P><STRONG><a name="[33e]"></a>LOAD_SET</STRONG> (Thumb, 638 bytes, Stack size 56 bytes, load_face.o(i.LOAD_SET))
+<P><STRONG><a name="[33e]"></a>LOAD_SET</STRONG> (Thumb, 660 bytes, Stack size 56 bytes, load_face.o(i.LOAD_SET))
 <BR><BR>[Stack]<UL><LI>Max Depth = 248 + Unknown Stack Size
 <LI>Call Chain = LOAD_SET &rArr; TEXT_SetBkColor &rArr; WM_ClrHasTrans &rArr; WM_InvalidateWindow &rArr; WM_InvalidateRect &rArr; WM__InvalidateRectEx &rArr; WM__InvalidateRect &rArr;  WM__InvalidateRect (Cycle)
 </UL>
@@ -6245,11 +6247,11 @@ Global Symbols
 <LI><a href="#[1e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_SET
 <LI><a href="#[1df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_OP_UP
 <LI><a href="#[1d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_OP_DOWN
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 </UL>
 
 <P><STRONG><a name="[378]"></a>TEXT_SetFont</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, text_setfont.o(i.TEXT_SetFont))
@@ -6260,13 +6262,13 @@ Global Symbols
 <LI><a href="#[1d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_InvalidateWindow
 </UL>
 <BR>[Called By]<UL><LI><a href="#[33d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PARA_SET
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 </UL>
 
 <P><STRONG><a name="[1dc]"></a>TEXT_SetText</STRONG> (Thumb, 74 bytes, Stack size 24 bytes, text_settext.o(i.TEXT_SetText))
@@ -6292,13 +6294,13 @@ Global Symbols
 <LI><a href="#[1e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_SET
 <LI><a href="#[1de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_OP_RIGHT
 <LI><a href="#[1db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_OP_LEFT
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 </UL>
 
 <P><STRONG><a name="[1da]"></a>TEXT_SetTextColor</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, text_settextcolor.o(i.TEXT_SetTextColor))
@@ -6330,7 +6332,6 @@ Global Symbols
 <LI><a href="#[1e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_SET
 <LI><a href="#[1df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_OP_UP
 <LI><a href="#[1d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_OP_DOWN
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
@@ -6338,6 +6339,7 @@ Global Symbols
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 </UL>
 
 <P><STRONG><a name="[3ac]"></a>TIM1_Config</STRONG> (Thumb, 78 bytes, Stack size 24 bytes, tim1.o(i.TIM1_Config))
@@ -6982,14 +6984,14 @@ Global Symbols
 <LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_ALLOC_LockH
 <LI><a href="#[1d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_InvalidateWindow
 </UL>
-<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 </UL>
 
 <P><STRONG><a name="[2c3]"></a>WM_Activate</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, wm.o(i.WM_Activate))
@@ -7043,14 +7045,14 @@ Global Symbols
 <LI><a href="#[2f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_TIMER_SetPeriod
 <LI><a href="#[2ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_TIMER_Create
 </UL>
-<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[393]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_OnTouch
 </UL>
 
@@ -7088,14 +7090,14 @@ Global Symbols
 <LI><a href="#[3f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM__GetClientRectEx
 <LI><a href="#[3f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_SendToParent
 </UL>
-<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cbBackWin
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WINDOW_Callback
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GRAPH_Callback
@@ -7267,7 +7269,6 @@ Global Symbols
 <LI><a href="#[1de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_OP_RIGHT
 <LI><a href="#[1db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_OP_LEFT
 <LI><a href="#[1d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_OP_DOWN
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
@@ -7275,6 +7276,7 @@ Global Symbols
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[24b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_GetInsideRectExScrollbar
 <LI><a href="#[3e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WIDGET__SetScrollState
 <LI><a href="#[441]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_SetScrollbar
@@ -7432,14 +7434,14 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[1b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_ALLOC_UnlockH
 <LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_ALLOC_LockH
 </UL>
-<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 </UL>
 
 <P><STRONG><a name="[408]"></a>WM_GetWindowOrgX</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, wm_getorg.o(i.WM_GetWindowOrgX))
@@ -7660,11 +7662,11 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_ALLOC_UnlockH
 <LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_ALLOC_LockH
-<LI><a href="#[41e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_MergeRect
 <LI><a href="#[3f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM__SendMsgNoData
 <LI><a href="#[3ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM__InvalidateRectEx
 <LI><a href="#[411]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM__InvalidateDrawAndDescs
 <LI><a href="#[413]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI__IntersectRect
+<LI><a href="#[41e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_MergeRect
 <LI><a href="#[3d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM__UpdateChildPositions
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM__UpdateChildPositions
@@ -7679,14 +7681,14 @@ Global Symbols
 <LI><a href="#[2f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_TIMER_SetPeriod
 <LI><a href="#[2f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_TIMER_Restart
 </UL>
-<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[397]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_OnTimer
 </UL>
 
@@ -8369,7 +8371,7 @@ Global Symbols
 <LI><a href="#[41d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_ResizeWindow
 </UL>
 
-<P><STRONG><a name="[35a]"></a>Write_LOAD</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, flash.o(i.Write_LOAD))
+<P><STRONG><a name="[35a]"></a>Write_LOAD</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, flash.o(i.Write_LOAD))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = Write_LOAD &rArr; EEPROM_WriteByte &rArr; i2c_WaitAck
 </UL>
 <BR>[Calls]<UL><LI><a href="#[20a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_WriteByte
@@ -8815,12 +8817,12 @@ Global Symbols
 <LI><a href="#[1e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_SET
 <LI><a href="#[1de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_OP_RIGHT
 <LI><a href="#[1db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_OP_LEFT
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog2
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 <LI><a href="#[44e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_RoundHalfUp
 </UL>
 
@@ -8973,11 +8975,13 @@ Local Symbols
 <BR>[Address Reference Count : 2]<UL><LI> r_face.o(i.CreateR)
 <LI> r_face.o(i.ResetR)
 </UL>
-<P><STRONG><a name="[94]"></a>_cbDialog2</STRONG> (Thumb, 1980 bytes, Stack size 64 bytes, load_face.o(i._cbDialog2))
+<P><STRONG><a name="[94]"></a>_cbDialog2</STRONG> (Thumb, 2030 bytes, Stack size 64 bytes, load_face.o(i._cbDialog2))
 <BR><BR>[Stack]<UL><LI>Max Depth = 264 + Unknown Stack Size
 <LI>Call Chain = _cbDialog2 &rArr; WM_CreateTimer &rArr; GUI_TIMER_Create &rArr; GUI_ALLOC_AllocZero &rArr; GUI_ALLOC_AllocNoInit &rArr; _Alloc &rArr; _InitOnce &rArr; _EnlargeBlocks &rArr;  _Alloc (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[41f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_RestartTimer
+<BR>[Calls]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
+<LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+<LI><a href="#[41f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_RestartTimer
 <LI><a href="#[40c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_GetTimerId
 <LI><a href="#[405]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_GetId
 <LI><a href="#[1d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_GetDialogItem
@@ -10524,10 +10528,10 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[264]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_ALLOC_h2p
 <LI><a href="#[1b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_ALLOC_UnlockH
 <LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_ALLOC_LockH
-<LI><a href="#[41e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_MergeRect
 <LI><a href="#[476]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM__RectIsNZ
 <LI><a href="#[296]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI__IntersectRects
 <LI><a href="#[2eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_SignalEvent
+<LI><a href="#[41e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_MergeRect
 </UL>
 <BR>[Called By]<UL><LI><a href="#[439]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM__InvalidateRect
 <LI><a href="#[415]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM__Invalidate1Abs

@@ -52474,6 +52474,21 @@ Nvu16 coff[6];
 Nint count_num(int data);
 NWM_HWIN timer(void);
 XGUI_HWIN timer(void);
+N
+N//=================================================================
+Nextern struct bitDefine
+N{
+N    unsigned bit0: 1;
+N    unsigned bit1: 1;
+N    unsigned bit2: 1;
+N    unsigned bit3: 1;
+N    unsigned bit4: 1;
+N    unsigned bit5: 1;
+N    unsigned bit6: 1;
+N    unsigned bit7: 1;
+N} flagA, flagB,flagC,flagD,flagE,flagF,flagG;
+N//====================================================================
+N
 N/*********************************************************************
 N*
 N*       Defines
@@ -53704,10 +53719,14 @@ X  Run_Control[4] = Run_Control[39];
 N  track = face_cdc;
 X  track = 1;
 N  TM1650_SET_LED(0x68,0x70);
-N  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//İֆ
+N  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//İֆ+
 X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
-W "..\APP\c_dc.c" 975 3 function "IO_OFF" declared implicitly
+W "..\APP\c_dc.c" 990 3 function "IO_OFF" declared implicitly
 N  IO_OFF();//�
+N  GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
+N  flag_Load_CC = 1;
+X  (flagD . bit7) = 1;
 N//  double_sw = face_cdc;
 N  hWincdc = GUI_CreateDialogBox(_aDialogCreate4, GUI_COUNTOF(_aDialogCreate4), _cbDialog, WM_HBKWIN, 0, 0);
 X  hWincdc = GUI_CreateDialogBox(_aDialogCreate4, (sizeof(_aDialogCreate4) / sizeof(_aDialogCreate4[0])), _cbDialog, WM_GetDesktopWindow(), 0, 0);
