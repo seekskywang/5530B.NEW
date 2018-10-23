@@ -52747,7 +52747,6 @@ N                GUI_SetFont(&GUI_FontEN40);
 N                GUI_SetColor(GUI_LIGHTGRAY);
 X                GUI_SetColor(0x00D3D3D3);
 N                GUI_DispStringAt("I:", 28, 190);
-N                GUI_DispStringAt("R:", 28, 120);
 N                GUI_SetColor(GUI_LIGHTGRAY);
 X                GUI_SetColor(0x00D3D3D3);
 N                GUI_DispStringAt("A", 240, 187);
@@ -52779,6 +52778,7 @@ N            }
 N            case set_2_off:
 X            case 0:
 N            {
+N                GUI_DispStringAt("R:", 28, 120);
 N                break;
 N            }
 N    }
