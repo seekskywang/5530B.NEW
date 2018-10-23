@@ -299,6 +299,8 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             }
             case set_2_off:
             {
+                GUI_SetFont(&GUI_FontEN40);
+                GUI_SetColor(GUI_LIGHTGRAY);
                 GUI_DispStringAt("R:", 28, 120);
                 break;
             }
