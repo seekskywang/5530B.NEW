@@ -25,7 +25,7 @@ vu16 ADC_Vmon_Filt[50];//稳压电源输出电压
 vu16 ADC_Rmon_Filt[50];//内阻测量
 vu16 ADC_NTC_Filt[50];//NTC
 vu16 Vmon_Filt_Doul[20];
-vu16 Rmon_Filt_Doul[20];
+vu16 Rmon_Filt_Doul[30];
 /*****************************************************************/
 void ADC1_DMA_Init(void)
 {
@@ -72,7 +72,7 @@ void ADC1_DMA_Init(void)
 	
 	/*配置ADC时钟*/
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_84Cycles);
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_3Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_112Cycles);
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 3, ADC_SampleTime_3Cycles);
   /* ADC Calibration */
   ADC_Cmd(ADC1, ENABLE);//使能ADC
@@ -198,7 +198,7 @@ void ADC_CH_Scan(void)//婊ゆ尝
 	{
 		sum +=ADC_Rmon_Filt[count];
 	}
-	if(t_dsoR<20)
+	if(t_dsoR<30)
 	{
 		Rmon_Filt_Doul[t_dsoR]=sum/50;
 		sum=0;//
@@ -206,11 +206,11 @@ void ADC_CH_Scan(void)//婊ゆ尝
 	else
 	{
 		sum=0;
-		for(count=1;count<19;count++)
+		for(count=1;count<29;count++)
 		{
 			sum +=Rmon_Filt_Doul[count];
 		}
-		Rmon_value=sum/19;
+		Rmon_value=sum/29;
 		sum=0;//
 		t_dsoR=0;
 	}

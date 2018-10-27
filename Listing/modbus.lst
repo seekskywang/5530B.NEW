@@ -36365,6 +36365,8 @@ N}
 N//===============================AD值转换成测量值============================================//
 Nvoid Transformation_ADC(void)  
 N{
+N    static u32 rave;
+N    static u8 rcount;
 N	vu32 var32;
 N	vu32 var32a;
 N/*****************************内阻测量电压转换*******************************************/
@@ -36504,6 +36506,16 @@ N            var32 = 0;				  //?￡
 N        }
 N        R_VLUE = var32;
 X        Run_Control[13] = var32;
+N//         if(rcount == 5)
+N//         {
+N//             rcount = 0;
+N//              = rave/5;
+N//             rave = 0;
+N//         }else{
+N//             rave += var32;
+N//             rcount++;
+N//         }
+N        
 N        var32 = 0;
 N    }else{
 N        var32 = var32 * REG_CorrectionRL;  
@@ -36528,6 +36540,15 @@ N            var32 = 0;				  //?￡
 N        }
 N        R_VLUE = var32;
 X        Run_Control[13] = var32;
+N//         if(rcount == 5)
+N//         {
+N//             rcount = 0;
+N//             R_VLUE = rave/5;
+N//             rave = 0;
+N//         }else{
+N//             rave += var32;
+N//             rcount++;
+N//         }
 N        var32 = 0;
 N    }  	
 N	/*****************************稳压电源测量电压转换*******************************************/
@@ -36655,6 +36676,8 @@ N		Contr_Current=0;
 N	}
 N	
 N	var32 = 0;
+W "..\drive\modbus.c" 610 16 variable "rave" was declared but never referenced
+W "..\drive\modbus.c" 611 15 variable "rcount" was declared but never referenced
 N}
 N/********************************************************************************
 N  * 名称 :   MODBUS_Conrtl

@@ -36375,8 +36375,7 @@ N    code5 = EEPROM_READ_Byte(0x88);
 N    code6 = EEPROM_READ_Byte(0x89);
 N    code7 = EEPROM_READ_Byte(0x8A);
 N    code8 = EEPROM_READ_Byte(0x8B);
-N    flag_Load_CC = EEPROM_READ_Byte(0x8C);
-X    (flagD . bit7) = EEPROM_READ_Byte(0x8C);
+N    load_mode = EEPROM_READ_Byte(0x8C);
 N    steptime = EEPROM_READ_Byte(0x8D);
 N    oc_mode = EEPROM_READ_Byte(0xB3);
 N    

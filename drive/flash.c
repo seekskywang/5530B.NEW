@@ -484,7 +484,7 @@ void EEPROM_READ_Coeff(void)
     code6 = EEPROM_READ_Byte(0x89);
     code7 = EEPROM_READ_Byte(0x8A);
     code8 = EEPROM_READ_Byte(0x8B);
-    flag_Load_CC = EEPROM_READ_Byte(0x8C);
+    load_mode = EEPROM_READ_Byte(0x8C);
     steptime = EEPROM_READ_Byte(0x8D);
     oc_mode = EEPROM_READ_Byte(0xB3);
     

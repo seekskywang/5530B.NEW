@@ -442,9 +442,14 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                              if((float)(GUI_GetTime()/500.0 - time1) > 1.5)
                             {
                                 r = R_VLUE;
-                                v = DISS_Voltage;
+//                                v = DISS_Voltage;
                                 oct_sw = oct_on;
                                 clear_flag1 = 0;
+                            }else{
+                                if(v < DISS_Voltage)
+                                {
+                                    v = DISS_Voltage;
+                                }
                             }
                         }
                     }else{
@@ -458,10 +463,15 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                              if((float)(GUI_GetTime()/500.0 - time1) > 1.5)
                              {
                                 r = R_VLUE;
-                                v = DISS_Voltage;
+//                                v = DISS_Voltage;
                                 oct_sw = oct_on;
                                 clear_flag1 = 0;
-                             }
+                             }else{
+                                if(v < DISS_Voltage)
+                                {
+                                    v = DISS_Voltage;
+                                }
+                            }
                         }
                     }
                 }

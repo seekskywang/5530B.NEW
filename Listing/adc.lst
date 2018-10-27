@@ -35182,7 +35182,7 @@ Nvu16 ADC_Vmon_Filt[50];//稳压电源输出电压
 Nvu16 ADC_Rmon_Filt[50];//内阻测量
 Nvu16 ADC_NTC_Filt[50];//NTC
 Nvu16 Vmon_Filt_Doul[20];
-Nvu16 Rmon_Filt_Doul[20];
+Nvu16 Rmon_Filt_Doul[30];
 N/*****************************************************************/
 Nvoid ADC1_DMA_Init(void)
 N{
@@ -35246,8 +35246,8 @@ N
 N	/*配置ADC时钟*/
 N	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_84Cycles);
 X	ADC_RegularChannelConfig(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ((uint8_t)0x02), 1, ((uint8_t)0x04));
-N	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_3Cycles);
-X	ADC_RegularChannelConfig(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ((uint8_t)0x03), 2, ((uint8_t)0x00));
+N	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_112Cycles);
+X	ADC_RegularChannelConfig(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ((uint8_t)0x03), 2, ((uint8_t)0x05));
 N	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 3, ADC_SampleTime_3Cycles);
 X	ADC_RegularChannelConfig(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ((uint8_t)0x06), 3, ((uint8_t)0x00));
 N  /* ADC Calibration */
@@ -35394,7 +35394,7 @@ N	for(count=0;count<50;count++)
 N	{
 N		sum +=ADC_Rmon_Filt[count];
 N	}
-N	if(t_dsoR<20)
+N	if(t_dsoR<30)
 N	{
 N		Rmon_Filt_Doul[t_dsoR]=sum/50;
 N		sum=0;//
@@ -35402,11 +35402,11 @@ N	}
 N	else
 N	{
 N		sum=0;
-N		for(count=1;count<19;count++)
+N		for(count=1;count<29;count++)
 N		{
 N			sum +=Rmon_Filt_Doul[count];
 N		}
-N		Rmon_value=sum/19;
+N		Rmon_value=sum/29;
 N		sum=0;//
 N		t_dsoR=0;
 N	}

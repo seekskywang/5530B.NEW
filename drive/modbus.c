@@ -607,6 +607,8 @@ void UART_Action(void)
 //===============================AD值转换成测量值============================================//
 void Transformation_ADC(void)  
 {
+    static u32 rave;
+    static u8 rcount;
 	vu32 var32;
 	vu32 var32a;
 /*****************************内阻测量电压转换*******************************************/
@@ -709,6 +711,16 @@ void Transformation_ADC(void)
             var32 = 0;				  //?￡
         }
         R_VLUE = var32;
+//         if(rcount == 5)
+//         {
+//             rcount = 0;
+//              = rave/5;
+//             rave = 0;
+//         }else{
+//             rave += var32;
+//             rcount++;
+//         }
+        
         var32 = 0;
     }else{
         var32 = var32 * REG_CorrectionRL;  
@@ -727,6 +739,15 @@ void Transformation_ADC(void)
             var32 = 0;				  //?￡
         }
         R_VLUE = var32;
+//         if(rcount == 5)
+//         {
+//             rcount = 0;
+//             R_VLUE = rave/5;
+//             rave = 0;
+//         }else{
+//             rave += var32;
+//             rcount++;
+//         }
         var32 = 0;
     }  	
 	/*****************************稳压电源测量电压转换*******************************************/

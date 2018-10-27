@@ -5,62 +5,62 @@
                           AREA ||i.Hardware_CRC||, CODE, READONLY, ALIGN=1
 
                   Hardware_CRC PROC
-;;;829    //-----------------------------CRC检测--------------------------------------------//
-;;;830    vu16 Hardware_CRC(vu8 *p_buffer,vu8 count)    //CRC16
+;;;850    //-----------------------------CRC检测--------------------------------------------//
+;;;851    vu16 Hardware_CRC(vu8 *p_buffer,vu8 count)    //CRC16
 000000  b530              PUSH     {r4,r5,lr}
-;;;831    {
+;;;852    {
 000002  4603              MOV      r3,r0
-;;;832    	vu16 CRC_Result=0xffff;
+;;;853    	vu16 CRC_Result=0xffff;
 000004  f64f70ff          MOV      r0,#0xffff
-;;;833    	vu8 i;
-;;;834    	if(count==0)
+;;;854    	vu8 i;
+;;;855    	if(count==0)
 000008  b901              CBNZ     r1,|L1.12|
-;;;835    	{
-;;;836    		count=1;
+;;;856    	{
+;;;857    		count=1;
 00000a  2101              MOVS     r1,#1
                   |L1.12|
-;;;837    	}
-;;;838    	while(count--)
-;;;839    	{
-;;;840    		CRC_Result^=*p_buffer;
-;;;841    		for(i=0;i<8;i++)
-;;;842    		{
-;;;843    			if(CRC_Result&1)
-;;;844    			{
-;;;845    				CRC_Result>>=1;
-;;;846    				CRC_Result^=0xA001;
+;;;858    	}
+;;;859    	while(count--)
+;;;860    	{
+;;;861    		CRC_Result^=*p_buffer;
+;;;862    		for(i=0;i<8;i++)
+;;;863    		{
+;;;864    			if(CRC_Result&1)
+;;;865    			{
+;;;866    				CRC_Result>>=1;
+;;;867    				CRC_Result^=0xA001;
 00000c  f24a0401          MOV      r4,#0xa001
                   |L1.16|
-000010  000a              MOVS     r2,r1                 ;838
-000012  f1a10101          SUB      r1,r1,#1              ;838
-000016  b2c9              UXTB     r1,r1                 ;838
+000010  000a              MOVS     r2,r1                 ;859
+000012  f1a10101          SUB      r1,r1,#1              ;859
+000016  b2c9              UXTB     r1,r1                 ;859
 000018  d00d              BEQ      |L1.54|
-00001a  781a              LDRB     r2,[r3,#0]            ;840
-00001c  4050              EORS     r0,r0,r2              ;840
-00001e  2200              MOVS     r2,#0                 ;841
+00001a  781a              LDRB     r2,[r3,#0]            ;861
+00001c  4050              EORS     r0,r0,r2              ;861
+00001e  2200              MOVS     r2,#0                 ;862
                   |L1.32|
-000020  07c5              LSLS     r5,r0,#31             ;843
-;;;847    			}
-;;;848    			else 
-;;;849    			{
-;;;850    				CRC_Result>>=1;
+000020  07c5              LSLS     r5,r0,#31             ;864
+;;;868    			}
+;;;869    			else 
+;;;870    			{
+;;;871    				CRC_Result>>=1;
 000022  ea4f0050          LSR      r0,r0,#1
 000026  d000              BEQ      |L1.42|
-000028  4060              EORS     r0,r0,r4              ;846
+000028  4060              EORS     r0,r0,r4              ;867
                   |L1.42|
-00002a  1c52              ADDS     r2,r2,#1              ;841
-00002c  b2d2              UXTB     r2,r2                 ;841
-00002e  2a08              CMP      r2,#8                 ;841
+00002a  1c52              ADDS     r2,r2,#1              ;862
+00002c  b2d2              UXTB     r2,r2                 ;862
+00002e  2a08              CMP      r2,#8                 ;862
 000030  d3f6              BCC      |L1.32|
-;;;851    			}
-;;;852    		}
-;;;853    		p_buffer++;
+;;;872    			}
+;;;873    		}
+;;;874    		p_buffer++;
 000032  1c5b              ADDS     r3,r3,#1
 000034  e7ec              B        |L1.16|
                   |L1.54|
-;;;854    	}
-;;;855    	return CRC_Result;
-;;;856    }
+;;;875    	}
+;;;876    	return CRC_Result;
+;;;877    }
 000036  bd30              POP      {r4,r5,pc}
                           ENDP
 
@@ -72,518 +72,539 @@
 ;;;608    void Transformation_ADC(void)  
 000000  b5f0              PUSH     {r4-r7,lr}
 ;;;609    {
-;;;610    	vu32 var32;
-;;;611    	vu32 var32a;
-;;;612    /*****************************内阻测量电压转换*******************************************/
-;;;613    	var32 = Vmon1_value;
+;;;610        static u32 rave;
+;;;611        static u8 rcount;
+;;;612    	vu32 var32;
+;;;613    	vu32 var32a;
+;;;614    /*****************************内阻测量电压转换*******************************************/
+;;;615    	var32 = Vmon1_value;
 000002  4895              LDR      r0,|L2.600|
 000004  6800              LDR      r0,[r0,#0]  ; Vmon1_value
-;;;614    	var32 = var32 * REG_CorrectionV;  
+;;;616    	var32 = var32 * REG_CorrectionV;  
 000006  4b95              LDR      r3,|L2.604|
 000008  6819              LDR      r1,[r3,#0]  ; Correct_Parametet
-;;;615    	if ((Polar & 0x01) == 0x01)		  
+;;;617    	if ((Polar & 0x01) == 0x01)		  
 00000a  4c95              LDR      r4,|L2.608|
-00000c  4341              MULS     r1,r0,r1              ;614
+00000c  4341              MULS     r1,r0,r1              ;616
 00000e  7820              LDRB     r0,[r4,#0]  ; correct_por
 000010  07c2              LSLS     r2,r0,#31
-;;;616    	{
-;;;617    		if (var32 < REG_ReadV_Offset) 
+;;;618    	{
+;;;619    		if (var32 < REG_ReadV_Offset) 
 000012  f1030030          ADD      r0,r3,#0x30
-;;;618    		{
-;;;619    			var32 = 0;
-;;;620    		}
-;;;621    		else var32 = var32 - REG_ReadV_Offset;
-;;;622    	}
-;;;623    	else var32 = var32 + REG_ReadV_Offset;
+;;;620    		{
+;;;621    			var32 = 0;
+;;;622    		}
+;;;623    		else var32 = var32 - REG_ReadV_Offset;
+;;;624    	}
+;;;625    	else var32 = var32 + REG_ReadV_Offset;
 000016  6802              LDR      r2,[r0,#0]  ; Correct_Strong
 000018  d006              BEQ      |L2.40|
-00001a  428a              CMP      r2,r1                 ;617
+00001a  428a              CMP      r2,r1                 ;619
 00001c  d901              BLS      |L2.34|
-00001e  2100              MOVS     r1,#0                 ;619
+00001e  2100              MOVS     r1,#0                 ;621
 000020  e003              B        |L2.42|
                   |L2.34|
-000022  6802              LDR      r2,[r0,#0]            ;621  ; Correct_Strong
-000024  1a89              SUBS     r1,r1,r2              ;621
+000022  6802              LDR      r2,[r0,#0]            ;623  ; Correct_Strong
+000024  1a89              SUBS     r1,r1,r2              ;623
 000026  e000              B        |L2.42|
                   |L2.40|
 000028  4411              ADD      r1,r1,r2
                   |L2.42|
-;;;624    	var32 = var32 >> 12;
+;;;626    	var32 = var32 >> 12;
 00002a  0b09              LSRS     r1,r1,#12
-;;;625    	if (var32 < 30) var32 = 0;				  //40mV以下清零
+;;;627    	if (var32 < 30) var32 = 0;				  //40mV以下清零
 00002c  291e              CMP      r1,#0x1e
 00002e  d200              BCS      |L2.50|
 000030  2100              MOVS     r1,#0
                   |L2.50|
-;;;626    	Voltage = var32;
+;;;628    	Voltage = var32;
 000032  4a8a              LDR      r2,|L2.604|
 000034  3260              ADDS     r2,r2,#0x60
 000036  6291              STR      r1,[r2,#0x28]  ; Run_Control
-;;;627    	DISS_Voltage=Voltage;
+;;;629    	DISS_Voltage=Voltage;
 000038  6a91              LDR      r1,[r2,#0x28]  ; Run_Control
 00003a  ee001a10          VMOV     s0,r1
 00003e  4989              LDR      r1,|L2.612|
 000040  eef80a40          VCVT.F32.U32 s1,s0
-;;;628    	DISS_Voltage=DISS_Voltage/1000;//计算显示电压
+;;;630    	DISS_Voltage=DISS_Voltage/1000;//计算显示电压
 000044  ed9f0a88          VLDR     s0,|L2.616|
 000048  ee801a80          VDIV.F32 s2,s1,s0
 00004c  ed811a00          VSTR     s2,[r1,#0]
-;;;629    	var32 = 0;
-;;;630    	/*******************负载测量电流转换**************************************/
-;;;631    	var32 = Imon1_value;
+;;;631    	var32 = 0;
+;;;632    	/*******************负载测量电流转换**************************************/
+;;;633    	var32 = Imon1_value;
 000050  4986              LDR      r1,|L2.620|
 000052  680d              LDR      r5,[r1,#0]  ; Imon1_value
-;;;632    	var32 = var32 * REG_Load_A;  
+;;;634    	var32 = var32 * REG_Load_A;  
 000054  6859              LDR      r1,[r3,#4]  ; Correct_Parametet
 000056  4369              MULS     r1,r5,r1
-;;;633    	if ((Polar1 & 0x01) == 0x01)		  
+;;;635    	if ((Polar1 & 0x01) == 0x01)		  
 000058  7865              LDRB     r5,[r4,#1]  ; correct_por
 00005a  07ed              LSLS     r5,r5,#31
-;;;634    	{
-;;;635    		if (var32 < REG_LoadA_Offset) 
-;;;636    		{
-;;;637    			var32 = 0;
-;;;638    		}
-;;;639    		else var32 = var32 - REG_LoadA_Offset;
-;;;640    	}
-;;;641    	else var32 = var32 + REG_LoadA_Offset;
+;;;636    	{
+;;;637    		if (var32 < REG_LoadA_Offset) 
+;;;638    		{
+;;;639    			var32 = 0;
+;;;640    		}
+;;;641    		else var32 = var32 - REG_LoadA_Offset;
+;;;642    	}
+;;;643    	else var32 = var32 + REG_LoadA_Offset;
 00005c  6845              LDR      r5,[r0,#4]  ; Correct_Strong
 00005e  d007              BEQ      |L2.112|
-000060  428d              CMP      r5,r1                 ;635
+000060  428d              CMP      r5,r1                 ;637
 000062  d901              BLS      |L2.104|
-000064  2100              MOVS     r1,#0                 ;637
+000064  2100              MOVS     r1,#0                 ;639
 000066  e004              B        |L2.114|
                   |L2.104|
-000068  6845              LDR      r5,[r0,#4]            ;639  ; Correct_Strong
-00006a  eba10105          SUB      r1,r1,r5              ;639
+000068  6845              LDR      r5,[r0,#4]            ;641  ; Correct_Strong
+00006a  eba10105          SUB      r1,r1,r5              ;641
 00006e  e000              B        |L2.114|
                   |L2.112|
 000070  4429              ADD      r1,r1,r5
                   |L2.114|
-;;;642    	var32 = var32 >> 12;
+;;;644    	var32 = var32 >> 12;
 000072  ea4f3111          LSR      r1,r1,#12
-;;;643    	Laod_Current = var32;
+;;;645    	Laod_Current = var32;
 000076  6311              STR      r1,[r2,#0x30]  ; Run_Control
-;;;644    	DISS_Current=Laod_Current;
+;;;646    	DISS_Current=Laod_Current;
 000078  6b11              LDR      r1,[r2,#0x30]  ; Run_Control
-;;;645    	DISS_Current=DISS_Current/1000;//计算显示电流
-;;;646    	var32 = 0;	
-;;;647    	/*************************负载电压和电流控制转换**************************************/
-;;;648    	if(flag_Load_CC==1)
-;;;649    	{
-;;;650    		var32 = SET_Current_Laod;
-;;;651    		var32=var32<<12;   
-;;;652    		if ((Polar1 & 0x04) == 0)			   
-;;;653    		{
-;;;654    			if (var32 < SET_LoadA_Offset) var32 = 0;
-;;;655    			else var32 = var32 - SET_LoadA_Offset;
-;;;656    		}
-;;;657    		else var32 = var32 + SET_LoadA_Offset;
-;;;658    		var32 = var32/SET_LoadA;
-;;;659    		var32=var32>>1;
-;;;660    		if(Flag_DAC_OFF==0)
+;;;647    	DISS_Current=DISS_Current/1000;//计算显示电流
+;;;648    	var32 = 0;	
+;;;649    	/*************************负载电压和电流控制转换**************************************/
+;;;650    	if(flag_Load_CC==1)
+;;;651    	{
+;;;652    		var32 = SET_Current_Laod;
+;;;653    		var32=var32<<12;   
+;;;654    		if ((Polar1 & 0x04) == 0)			   
+;;;655    		{
+;;;656    			if (var32 < SET_LoadA_Offset) var32 = 0;
+;;;657    			else var32 = var32 - SET_LoadA_Offset;
+;;;658    		}
+;;;659    		else var32 = var32 + SET_LoadA_Offset;
+;;;660    		var32 = var32/SET_LoadA;
+;;;661    		var32=var32>>1;
+;;;662    		if(Flag_DAC_OFF==0)
 00007a  4d7f              LDR      r5,|L2.632|
-00007c  ee001a90          VMOV     s1,r1                 ;644
+00007c  ee001a90          VMOV     s1,r1                 ;646
 000080  497b              LDR      r1,|L2.624|
-;;;661    		{
-;;;662    			Contr_Laod = var32;
+;;;663    		{
+;;;664    			Contr_Laod = var32;
 000082  4e7e              LDR      r6,|L2.636|
-000084  eef80a60          VCVT.F32.U32 s1,s1                 ;644
-000088  f04f0c00          MOV      r12,#0                ;619
-00008c  ee801a80          VDIV.F32 s2,s1,s0              ;645
-000090  ed811a00          VSTR     s2,[r1,#0]            ;645
+000084  eef80a60          VCVT.F32.U32 s1,s1                 ;646
+000088  f04f0c00          MOV      r12,#0                ;621
+00008c  ee801a80          VDIV.F32 s2,s1,s0              ;647
+000090  ed811a00          VSTR     s2,[r1,#0]            ;647
 000094  4977              LDR      r1,|L2.628|
-000096  682d              LDR      r5,[r5,#0]            ;660
-000098  6809              LDR      r1,[r1,#0]            ;648  ; flagD
-00009a  0609              LSLS     r1,r1,#24             ;648
+000096  682d              LDR      r5,[r5,#0]            ;662
+000098  6809              LDR      r1,[r1,#0]            ;650  ; flagD
+00009a  0609              LSLS     r1,r1,#24             ;650
 00009c  d519              BPL      |L2.210|
-00009e  6911              LDR      r1,[r2,#0x10]         ;650  ; Run_Control
-0000a0  7867              LDRB     r7,[r4,#1]            ;652  ; correct_por
-0000a2  ea4f3101          LSL      r1,r1,#12             ;651
-0000a6  077f              LSLS     r7,r7,#29             ;652
-0000a8  6887              LDR      r7,[r0,#8]            ;657  ; Correct_Strong
+00009e  6911              LDR      r1,[r2,#0x10]         ;652  ; Run_Control
+0000a0  7867              LDRB     r7,[r4,#1]            ;654  ; correct_por
+0000a2  ea4f3101          LSL      r1,r1,#12             ;653
+0000a6  077f              LSLS     r7,r7,#29             ;654
+0000a8  6887              LDR      r7,[r0,#8]            ;659  ; Correct_Strong
 0000aa  d407              BMI      |L2.188|
-0000ac  428f              CMP      r7,r1                 ;654
+0000ac  428f              CMP      r7,r1                 ;656
 0000ae  d901              BLS      |L2.180|
-0000b0  2100              MOVS     r1,#0                 ;654
+0000b0  2100              MOVS     r1,#0                 ;656
 0000b2  e004              B        |L2.190|
                   |L2.180|
-0000b4  6887              LDR      r7,[r0,#8]            ;655  ; Correct_Strong
-0000b6  eba10107          SUB      r1,r1,r7              ;655
+0000b4  6887              LDR      r7,[r0,#8]            ;657  ; Correct_Strong
+0000b6  eba10107          SUB      r1,r1,r7              ;657
 0000ba  e000              B        |L2.190|
                   |L2.188|
-0000bc  4439              ADD      r1,r1,r7              ;657
+0000bc  4439              ADD      r1,r1,r7              ;659
                   |L2.190|
-0000be  689f              LDR      r7,[r3,#8]            ;658  ; Correct_Parametet
-0000c0  072d              LSLS     r5,r5,#28             ;660
-0000c2  fbb1f1f7          UDIV     r1,r1,r7              ;658
-0000c6  ea4f0151          LSR      r1,r1,#1              ;659
+0000be  689f              LDR      r7,[r3,#8]            ;660  ; Correct_Parametet
+0000c0  072d              LSLS     r5,r5,#28             ;662
+0000c2  fbb1f1f7          UDIV     r1,r1,r7              ;660
+0000c6  ea4f0151          LSR      r1,r1,#1              ;661
 0000ca  d400              BMI      |L2.206|
 0000cc  8031              STRH     r1,[r6,#0]
                   |L2.206|
-;;;663    		}
-;;;664    		if(SET_Current_Laod==0)
+;;;665    		}
+;;;666    		if(SET_Current_Laod==0)
 0000ce  6911              LDR      r1,[r2,#0x10]  ; Run_Control
 0000d0  e019              B        |L2.262|
                   |L2.210|
-;;;665    		{
-;;;666    			Contr_Laod=0;
-;;;667    		}
-;;;668    		var32 = 0;
-;;;669    	}
-;;;670    	else
-;;;671    	{
-;;;672    		var32 = SET_Voltage_Laod;
+;;;667    		{
+;;;668    			Contr_Laod=0;
+;;;669    		}
+;;;670    		var32 = 0;
+;;;671    	}
+;;;672    	else
+;;;673    	{
+;;;674    		var32 = SET_Voltage_Laod;
 0000d2  68d1              LDR      r1,[r2,#0xc]  ; Run_Control
-;;;673    		var32=var32<<12;   
-;;;674    		if ((Polar2 & 0x04) == 0)			   
+;;;675    		var32=var32<<12;   
+;;;676    		if ((Polar2 & 0x04) == 0)			   
 0000d4  78a7              LDRB     r7,[r4,#2]  ; correct_por
-0000d6  ea4f3101          LSL      r1,r1,#12             ;673
+0000d6  ea4f3101          LSL      r1,r1,#12             ;675
 0000da  077f              LSLS     r7,r7,#29
 0000dc  d408              BMI      |L2.240|
-;;;675    		{
-;;;676    			if (var32 < SET_LoadA_Offset) var32 = 0;
+;;;677    		{
+;;;678    			if (var32 < SET_LoadA_Offset) var32 = 0;
 0000de  6887              LDR      r7,[r0,#8]  ; Correct_Strong
 0000e0  428f              CMP      r7,r1
 0000e2  d901              BLS      |L2.232|
 0000e4  2100              MOVS     r1,#0
 0000e6  e005              B        |L2.244|
                   |L2.232|
-;;;677    			else var32 = var32 - SET_LoadV_Offset;
+;;;679    			else var32 = var32 - SET_LoadV_Offset;
 0000e8  6907              LDR      r7,[r0,#0x10]  ; Correct_Strong
 0000ea  eba10107          SUB      r1,r1,r7
 0000ee  e001              B        |L2.244|
                   |L2.240|
-;;;678    		}
-;;;679    		else var32 = var32 + SET_LoadV_Offset;
+;;;680    		}
+;;;681    		else var32 = var32 + SET_LoadV_Offset;
 0000f0  6907              LDR      r7,[r0,#0x10]  ; Correct_Strong
 0000f2  4439              ADD      r1,r1,r7
                   |L2.244|
-;;;680    		var32 = var32/SET_LoadV;
+;;;682    		var32 = var32/SET_LoadV;
 0000f4  691f              LDR      r7,[r3,#0x10]  ; Correct_Parametet
-;;;681    		var32=var32>>1;
-;;;682    		if(Flag_DAC_OFF==0)
+;;;683    		var32=var32>>1;
+;;;684    		if(Flag_DAC_OFF==0)
 0000f6  072d              LSLS     r5,r5,#28
-0000f8  fbb1f1f7          UDIV     r1,r1,r7              ;680
-0000fc  ea4f0151          LSR      r1,r1,#1              ;681
+0000f8  fbb1f1f7          UDIV     r1,r1,r7              ;682
+0000fc  ea4f0151          LSR      r1,r1,#1              ;683
 000100  d400              BMI      |L2.260|
-;;;683    		{
-;;;684    			Contr_Laod = var32;
+;;;685    		{
+;;;686    			Contr_Laod = var32;
 000102  8031              STRH     r1,[r6,#0]
                   |L2.260|
-;;;685    		}
-;;;686    		if(SET_Voltage_Laod==0)
+;;;687    		}
+;;;688    		if(SET_Voltage_Laod==0)
 000104  68d1              LDR      r1,[r2,#0xc]  ; Run_Control
                   |L2.262|
 000106  b909              CBNZ     r1,|L2.268|
-;;;687    		{
-;;;688    			Contr_Laod=0;
+;;;689    		{
+;;;690    			Contr_Laod=0;
 000108  f8a6c000          STRH     r12,[r6,#0]
                   |L2.268|
-;;;689    		}
-;;;690    		var32 = 0;
-;;;691    	}
-;;;692    /*****************************内阻值转换*******************************************/
-;;;693    	var32 = Rmon_value;
+;;;691    		}
+;;;692    		var32 = 0;
+;;;693    	}
+;;;694    /*****************************内阻值转换*******************************************/
+;;;695    	var32 = Rmon_value;
 00010c  495c              LDR      r1,|L2.640|
 00010e  880d              LDRH     r5,[r1,#0]  ; Rmon_value
-;;;694        if(r_raly == 1)
+;;;696        if(r_raly == 1)
 000110  495c              LDR      r1,|L2.644|
 000112  7809              LDRB     r1,[r1,#0]  ; r_raly
 000114  2901              CMP      r1,#1
 000116  d009              BEQ      |L2.300|
-;;;695        {
-;;;696            var32 = var32 * REG_CorrectionR;  
-;;;697            if ((Polar3 & 0x01) == 0x01)		  
-;;;698            {
-;;;699                if (var32 < REG_ReadR_Offset) 
-;;;700                {
-;;;701                    var32 = 0;
-;;;702                }
-;;;703                else var32 = var32 - REG_ReadR_Offset;
-;;;704            }
-;;;705            else var32 = var32 + REG_ReadR_Offset;
-;;;706            var32 = var32 >> 12;
-;;;707            if (var32 < 1)
-;;;708            {
-;;;709                var32 = 0;				  //?￡
-;;;710            }
-;;;711            R_VLUE = var32;
-;;;712            var32 = 0;
-;;;713        }else{
-;;;714            var32 = var32 * REG_CorrectionRL;  
+;;;697        {
+;;;698            var32 = var32 * REG_CorrectionR;  
+;;;699            if ((Polar3 & 0x01) == 0x01)		  
+;;;700            {
+;;;701                if (var32 < REG_ReadR_Offset) 
+;;;702                {
+;;;703                    var32 = 0;
+;;;704                }
+;;;705                else var32 = var32 - REG_ReadR_Offset;
+;;;706            }
+;;;707            else var32 = var32 + REG_ReadR_Offset;
+;;;708            var32 = var32 >> 12;
+;;;709            if (var32 < 1)
+;;;710            {
+;;;711                var32 = 0;				  //?￡
+;;;712            }
+;;;713            R_VLUE = var32;
+;;;714    //         if(rcount == 5)
+;;;715    //         {
+;;;716    //             rcount = 0;
+;;;717    //              = rave/5;
+;;;718    //             rave = 0;
+;;;719    //         }else{
+;;;720    //             rave += var32;
+;;;721    //             rcount++;
+;;;722    //         }
+;;;723            
+;;;724            var32 = 0;
+;;;725        }else{
+;;;726            var32 = var32 * REG_CorrectionRL;  
 000118  6ad9              LDR      r1,[r3,#0x2c]  ; Correct_Parametet
 00011a  4369              MULS     r1,r5,r1
-;;;715            if ((Polar3 & 0x01) == 0x01)		  
+;;;727            if ((Polar3 & 0x01) == 0x01)		  
 00011c  78e5              LDRB     r5,[r4,#3]  ; correct_por
 00011e  07ed              LSLS     r5,r5,#31
-;;;716            {
-;;;717                if (var32 < REG_ReadRL_Offset) 
-;;;718                {
-;;;719                    var32 = 0;
-;;;720                }
-;;;721                else var32 = var32 - REG_ReadRL_Offset;
-;;;722            }
-;;;723            else var32 = var32 + REG_ReadRL_Offset;
+;;;728            {
+;;;729                if (var32 < REG_ReadRL_Offset) 
+;;;730                {
+;;;731                    var32 = 0;
+;;;732                }
+;;;733                else var32 = var32 - REG_ReadRL_Offset;
+;;;734            }
+;;;735            else var32 = var32 + REG_ReadRL_Offset;
 000120  6ac5              LDR      r5,[r0,#0x2c]  ; Correct_Strong
 000122  d01e              BEQ      |L2.354|
-000124  428d              CMP      r5,r1                 ;717
+000124  428d              CMP      r5,r1                 ;729
 000126  d919              BLS      |L2.348|
                   |L2.296|
-000128  2100              MOVS     r1,#0                 ;719
+000128  2100              MOVS     r1,#0                 ;731
 00012a  e009              B        |L2.320|
                   |L2.300|
-00012c  6959              LDR      r1,[r3,#0x14]         ;696  ; Correct_Parametet
-00012e  4369              MULS     r1,r5,r1              ;696
-000130  78e5              LDRB     r5,[r4,#3]            ;697  ; correct_por
-000132  07ed              LSLS     r5,r5,#31             ;697
-000134  6945              LDR      r5,[r0,#0x14]         ;705  ; Correct_Strong
+00012c  6959              LDR      r1,[r3,#0x14]         ;698  ; Correct_Parametet
+00012e  4369              MULS     r1,r5,r1              ;698
+000130  78e5              LDRB     r5,[r4,#3]            ;699  ; correct_por
+000132  07ed              LSLS     r5,r5,#31             ;699
+000134  6945              LDR      r5,[r0,#0x14]         ;707  ; Correct_Strong
 000136  d014              BEQ      |L2.354|
-000138  428d              CMP      r5,r1                 ;699
+000138  428d              CMP      r5,r1                 ;701
 00013a  d8f5              BHI      |L2.296|
-00013c  6945              LDR      r5,[r0,#0x14]         ;703  ; Correct_Strong
+00013c  6945              LDR      r5,[r0,#0x14]         ;705  ; Correct_Strong
 00013e  e00e              B        |L2.350|
                   |L2.320|
-000140  0b09              LSRS     r1,r1,#12             ;706
-;;;724            var32 = var32 >> 12;
-;;;725            if (var32 < 1)
-;;;726            {
-;;;727                var32 = 0;				  //?￡
-;;;728            }
-;;;729            R_VLUE = var32;
+000140  0b09              LSRS     r1,r1,#12             ;708
+;;;736            var32 = var32 >> 12;
+;;;737            if (var32 < 1)
+;;;738            {
+;;;739                var32 = 0;				  //?￡
+;;;740            }
+;;;741            R_VLUE = var32;
 000142  6351              STR      r1,[r2,#0x34]  ; Run_Control
-;;;730            var32 = 0;
-;;;731        }  	
-;;;732    	/*****************************稳压电源测量电压转换*******************************************/
-;;;733    	var32 = Vmon_value;
+;;;742    //         if(rcount == 5)
+;;;743    //         {
+;;;744    //             rcount = 0;
+;;;745    //             R_VLUE = rave/5;
+;;;746    //             rave = 0;
+;;;747    //         }else{
+;;;748    //             rave += var32;
+;;;749    //             rcount++;
+;;;750    //         }
+;;;751            var32 = 0;
+;;;752        }  	
+;;;753    	/*****************************稳压电源测量电压转换*******************************************/
+;;;754    	var32 = Vmon_value;
 000144  4950              LDR      r1,|L2.648|
 000146  880d              LDRH     r5,[r1,#0]  ; Vmon_value
-;;;734    	var32 = var32 * REG_POWERV;  
+;;;755    	var32 = var32 * REG_POWERV;  
 000148  6a19              LDR      r1,[r3,#0x20]  ; Correct_Parametet
 00014a  4369              MULS     r1,r5,r1
-;;;735    	if ((Polar5 & 0x01) == 0x01)		  
+;;;756    	if ((Polar5 & 0x01) == 0x01)		  
 00014c  7965              LDRB     r5,[r4,#5]  ; correct_por
 00014e  07ed              LSLS     r5,r5,#31
-;;;736    	{
-;;;737    		if (var32 < REG_POWERV_Offset) 
-;;;738    		{
-;;;739    			var32 = 0;
-;;;740    		}
-;;;741    		else var32 = var32 - REG_POWERV_Offset;
-;;;742    	}
-;;;743    	else var32 = var32 + REG_POWERV_Offset;
+;;;757    	{
+;;;758    		if (var32 < REG_POWERV_Offset) 
+;;;759    		{
+;;;760    			var32 = 0;
+;;;761    		}
+;;;762    		else var32 = var32 - REG_POWERV_Offset;
+;;;763    	}
+;;;764    	else var32 = var32 + REG_POWERV_Offset;
 000150  6a05              LDR      r5,[r0,#0x20]  ; Correct_Strong
 000152  d00b              BEQ      |L2.364|
-000154  428d              CMP      r5,r1                 ;737
+000154  428d              CMP      r5,r1                 ;758
 000156  d906              BLS      |L2.358|
-000158  2100              MOVS     r1,#0                 ;739
+000158  2100              MOVS     r1,#0                 ;760
 00015a  e008              B        |L2.366|
                   |L2.348|
-00015c  6ac5              LDR      r5,[r0,#0x2c]         ;721  ; Correct_Strong
+00015c  6ac5              LDR      r5,[r0,#0x2c]         ;733  ; Correct_Strong
                   |L2.350|
-00015e  1b49              SUBS     r1,r1,r5              ;721
+00015e  1b49              SUBS     r1,r1,r5              ;733
 000160  e7ee              B        |L2.320|
                   |L2.354|
-000162  4429              ADD      r1,r1,r5              ;723
+000162  4429              ADD      r1,r1,r5              ;735
 000164  e7ec              B        |L2.320|
                   |L2.358|
-000166  6a05              LDR      r5,[r0,#0x20]         ;741  ; Correct_Strong
-000168  1b49              SUBS     r1,r1,r5              ;741
+000166  6a05              LDR      r5,[r0,#0x20]         ;762  ; Correct_Strong
+000168  1b49              SUBS     r1,r1,r5              ;762
 00016a  e000              B        |L2.366|
                   |L2.364|
 00016c  4429              ADD      r1,r1,r5
                   |L2.366|
-;;;744    	var32 = var32 >> 14;
+;;;765    	var32 = var32 >> 14;
 00016e  0b89              LSRS     r1,r1,#14
-;;;745    	if (var32 < 40) var32 = 0;				  //40mV以下清零
+;;;766    	if (var32 < 40) var32 = 0;				  //40mV以下清零
 000170  2928              CMP      r1,#0x28
 000172  d200              BCS      |L2.374|
 000174  2100              MOVS     r1,#0
                   |L2.374|
-;;;746    	POW_Voltage = var32;
+;;;767    	POW_Voltage = var32;
 000176  6251              STR      r1,[r2,#0x24]  ; Run_Control
-;;;747    	DISS_POW_Voltage=POW_Voltage;
+;;;768    	DISS_POW_Voltage=POW_Voltage;
 000178  6a51              LDR      r1,[r2,#0x24]  ; Run_Control
 00017a  ee001a90          VMOV     s1,r1
 00017e  4943              LDR      r1,|L2.652|
 000180  eef80a60          VCVT.F32.U32 s1,s1
-;;;748    	DISS_POW_Voltage=DISS_POW_Voltage/100;//计算显示电压
+;;;769    	DISS_POW_Voltage=DISS_POW_Voltage/100;//计算显示电压
 000184  ed9f1a42          VLDR     s2,|L2.656|
 000188  eec01a81          VDIV.F32 s3,s1,s2
 00018c  edc11a00          VSTR     s3,[r1,#0]
-;;;749    	var32 = 0;
-;;;750    /*****************************稳压电源测量电流转换*******************************************/
-;;;751    	var32 = Imon_value;
+;;;770    	var32 = 0;
+;;;771    /*****************************稳压电源测量电流转换*******************************************/
+;;;772    	var32 = Imon_value;
 000190  4940              LDR      r1,|L2.660|
 000192  880d              LDRH     r5,[r1,#0]  ; Imon_value
-;;;752    	if(flag_CC_MODE==1)
+;;;773    	if(flag_CC_MODE==1)
 000194  4940              LDR      r1,|L2.664|
-;;;753    	{
-;;;754    		var32 = var32 * REG_POWERA;	   
-;;;755    		if ((Polar4 & 0x01) == 0x01)			   
-;;;756    		{
-;;;757    			if (var32 < REG_POWERA_Offset) var32 = 0;
-;;;758    			else var32 = var32 - REG_POWERA_Offset;
-;;;759    		}
-;;;760    		else
-;;;761    		{
-;;;762    			var32 = var32 + REG_POWERA_Offset;
-;;;763    		}	
-;;;764    		var32 = var32 >> 14;
-;;;765    		Current = var32;;
-;;;766    		DISS_POW_Current=Current;
+;;;774    	{
+;;;775    		var32 = var32 * REG_POWERA;	   
+;;;776    		if ((Polar4 & 0x01) == 0x01)			   
+;;;777    		{
+;;;778    			if (var32 < REG_POWERA_Offset) var32 = 0;
+;;;779    			else var32 = var32 - REG_POWERA_Offset;
+;;;780    		}
+;;;781    		else
+;;;782    		{
+;;;783    			var32 = var32 + REG_POWERA_Offset;
+;;;784    		}	
+;;;785    		var32 = var32 >> 14;
+;;;786    		Current = var32;;
+;;;787    		DISS_POW_Current=Current;
 000196  4e41              LDR      r6,|L2.668|
-000198  6809              LDR      r1,[r1,#0]            ;752  ; flagE
-00019a  0609              LSLS     r1,r1,#24             ;752
+000198  6809              LDR      r1,[r1,#0]            ;773  ; flagE
+00019a  0609              LSLS     r1,r1,#24             ;773
 00019c  d50b              BPL      |L2.438|
-00019e  6999              LDR      r1,[r3,#0x18]         ;754  ; Correct_Parametet
-0001a0  4369              MULS     r1,r5,r1              ;754
-0001a2  7925              LDRB     r5,[r4,#4]            ;755  ; correct_por
-0001a4  07ed              LSLS     r5,r5,#31             ;755
-0001a6  6985              LDR      r5,[r0,#0x18]         ;762  ; Correct_Strong
+00019e  6999              LDR      r1,[r3,#0x18]         ;775  ; Correct_Parametet
+0001a0  4369              MULS     r1,r5,r1              ;775
+0001a2  7925              LDRB     r5,[r4,#4]            ;776  ; correct_por
+0001a4  07ed              LSLS     r5,r5,#31             ;776
+0001a6  6985              LDR      r5,[r0,#0x18]         ;783  ; Correct_Strong
 0001a8  d011              BEQ      |L2.462|
-0001aa  428d              CMP      r5,r1                 ;757
+0001aa  428d              CMP      r5,r1                 ;778
 0001ac  d901              BLS      |L2.434|
                   |L2.430|
-0001ae  2100              MOVS     r1,#0                 ;757
+0001ae  2100              MOVS     r1,#0                 ;778
 0001b0  e00e              B        |L2.464|
                   |L2.434|
-0001b2  6985              LDR      r5,[r0,#0x18]         ;758  ; Correct_Strong
+0001b2  6985              LDR      r5,[r0,#0x18]         ;779  ; Correct_Strong
 0001b4  e008              B        |L2.456|
                   |L2.438|
-;;;767    		DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
-;;;768    	}
-;;;769    	else
-;;;770    	{
-;;;771    		var32 = var32 * CON_POWERA;	   
+;;;788    		DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
+;;;789    	}
+;;;790    	else
+;;;791    	{
+;;;792    		var32 = var32 * CON_POWERA;	   
 0001b6  6a99              LDR      r1,[r3,#0x28]  ; Correct_Parametet
 0001b8  4369              MULS     r1,r5,r1
-;;;772    		if ((Polar3 & 0x04) == 0x04)			   
+;;;793    		if ((Polar3 & 0x04) == 0x04)			   
 0001ba  78e5              LDRB     r5,[r4,#3]  ; correct_por
 0001bc  076d              LSLS     r5,r5,#29
-;;;773    		{
-;;;774    			if (var32 < CON_POWERA_Offset) var32 = 0;
-;;;775    			else var32 = var32 - CON_POWERA_Offset;
-;;;776    		}
-;;;777    		else
-;;;778    		{
-;;;779    			var32 = var32 + CON_POWERA_Offset;
+;;;794    		{
+;;;795    			if (var32 < CON_POWERA_Offset) var32 = 0;
+;;;796    			else var32 = var32 - CON_POWERA_Offset;
+;;;797    		}
+;;;798    		else
+;;;799    		{
+;;;800    			var32 = var32 + CON_POWERA_Offset;
 0001be  6a85              LDR      r5,[r0,#0x28]  ; Correct_Strong
 0001c0  d505              BPL      |L2.462|
-0001c2  428d              CMP      r5,r1                 ;774
+0001c2  428d              CMP      r5,r1                 ;795
 0001c4  d8f3              BHI      |L2.430|
-0001c6  6a85              LDR      r5,[r0,#0x28]         ;775  ; Correct_Strong
+0001c6  6a85              LDR      r5,[r0,#0x28]         ;796  ; Correct_Strong
                   |L2.456|
-0001c8  eba10105          SUB      r1,r1,r5              ;758
+0001c8  eba10105          SUB      r1,r1,r5              ;779
 0001cc  e000              B        |L2.464|
                   |L2.462|
-0001ce  4429              ADD      r1,r1,r5              ;762
+0001ce  4429              ADD      r1,r1,r5              ;783
                   |L2.464|
-;;;780    		}	
-;;;781    		var32 = var32 >> 14;
+;;;801    		}	
+;;;802    		var32 = var32 >> 14;
 0001d0  ea4f3191          LSR      r1,r1,#14
-;;;782    		Current = var32;;
+;;;803    		Current = var32;;
 0001d4  62d1              STR      r1,[r2,#0x2c]  ; Run_Control
-;;;783    		DISS_POW_Current=Current;
+;;;804    		DISS_POW_Current=Current;
 0001d6  6ad1              LDR      r1,[r2,#0x2c]  ; Run_Control
 0001d8  ee001a90          VMOV     s1,r1
 0001dc  eef80a60          VCVT.F32.U32 s1,s1
-;;;784    		DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
+;;;805    		DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
 0001e0  ee801a80          VDIV.F32 s2,s1,s0
 0001e4  ed861a00          VSTR     s2,[r6,#0]
-;;;785    	}
-;;;786    /**************************稳压电源设置电压转换******************************************/
-;;;787    	var32 = SET_Voltage;
+;;;806    	}
+;;;807    /**************************稳压电源设置电压转换******************************************/
+;;;808    	var32 = SET_Voltage;
 0001e8  6851              LDR      r1,[r2,#4]  ; Run_Control
-;;;788    	var32=var32<<14;   
-;;;789    	if ((Polar5 & 0x04) == 0)			   
+;;;809    	var32=var32<<14;   
+;;;810    	if ((Polar5 & 0x04) == 0)			   
 0001ea  7965              LDRB     r5,[r4,#5]  ; correct_por
-0001ec  ea4f3181          LSL      r1,r1,#14             ;788
+0001ec  ea4f3181          LSL      r1,r1,#14             ;809
 0001f0  076d              LSLS     r5,r5,#29
-;;;790    	{
-;;;791    		if (var32 < SET_POWERV_Offset) var32 = 0;
-;;;792    		else var32 = var32 - SET_POWERV_Offset;
-;;;793    	}
-;;;794    	else var32 = var32 + SET_POWERV_Offset;
+;;;811    	{
+;;;812    		if (var32 < SET_POWERV_Offset) var32 = 0;
+;;;813    		else var32 = var32 - SET_POWERV_Offset;
+;;;814    	}
+;;;815    	else var32 = var32 + SET_POWERV_Offset;
 0001f2  6a45              LDR      r5,[r0,#0x24]  ; Correct_Strong
 0001f4  d407              BMI      |L2.518|
-0001f6  428d              CMP      r5,r1                 ;791
+0001f6  428d              CMP      r5,r1                 ;812
 0001f8  d901              BLS      |L2.510|
-0001fa  2100              MOVS     r1,#0                 ;791
+0001fa  2100              MOVS     r1,#0                 ;812
 0001fc  e004              B        |L2.520|
                   |L2.510|
-0001fe  6a45              LDR      r5,[r0,#0x24]         ;792  ; Correct_Strong
-000200  eba10105          SUB      r1,r1,r5              ;792
+0001fe  6a45              LDR      r5,[r0,#0x24]         ;813  ; Correct_Strong
+000200  eba10105          SUB      r1,r1,r5              ;813
 000204  e000              B        |L2.520|
                   |L2.518|
 000206  4429              ADD      r1,r1,r5
                   |L2.520|
-;;;795    	var32 = var32/SET_POWERV;
+;;;816    	var32 = var32/SET_POWERV;
 000208  6a5d              LDR      r5,[r3,#0x24]  ; Correct_Parametet
 00020a  fbb1f1f5          UDIV     r1,r1,r5
-;;;796    	var32=var32>>1;
-;;;797    	Contr_Voltage = var32;
+;;;817    	var32=var32>>1;
+;;;818    	Contr_Voltage = var32;
 00020e  4d24              LDR      r5,|L2.672|
-000210  ea4f0151          LSR      r1,r1,#1              ;796
+000210  ea4f0151          LSR      r1,r1,#1              ;817
 000214  8029              STRH     r1,[r5,#0]
-;;;798    	if(SET_Voltage==0)
+;;;819    	if(SET_Voltage==0)
 000216  6851              LDR      r1,[r2,#4]  ; Run_Control
 000218  b909              CBNZ     r1,|L2.542|
-;;;799    	{
-;;;800    		Contr_Voltage=0;
+;;;820    	{
+;;;821    		Contr_Voltage=0;
 00021a  f8a5c000          STRH     r12,[r5,#0]
                   |L2.542|
-;;;801    	}
-;;;802    	var32 = 0;
-;;;803    /**************************稳压电源设置电流转换**************************************/
-;;;804    	var32 = SET_Current;
+;;;822    	}
+;;;823    	var32 = 0;
+;;;824    /**************************稳压电源设置电流转换**************************************/
+;;;825    	var32 = SET_Current;
 00021e  6891              LDR      r1,[r2,#8]  ; Run_Control
-;;;805    	var32=var32<<14;   
-;;;806    	if ((Polar4 & 0x04) == 0)			   
+;;;826    	var32=var32<<14;   
+;;;827    	if ((Polar4 & 0x04) == 0)			   
 000220  7924              LDRB     r4,[r4,#4]  ; correct_por
-000222  ea4f3181          LSL      r1,r1,#14             ;805
+000222  ea4f3181          LSL      r1,r1,#14             ;826
 000226  0764              LSLS     r4,r4,#29
 000228  d407              BMI      |L2.570|
-;;;807    	{
-;;;808    		if (var32 < SET_POWERA_Offset) var32 = 0;
+;;;828    	{
+;;;829    		if (var32 < SET_POWERA_Offset) var32 = 0;
 00022a  69c4              LDR      r4,[r0,#0x1c]  ; Correct_Strong
 00022c  428c              CMP      r4,r1
 00022e  d901              BLS      |L2.564|
 000230  2000              MOVS     r0,#0
 000232  e004              B        |L2.574|
                   |L2.564|
-;;;809    		else var32 = var32 - SET_POWERA_Offset;
+;;;830    		else var32 = var32 - SET_POWERA_Offset;
 000234  69c0              LDR      r0,[r0,#0x1c]  ; Correct_Strong
 000236  1a08              SUBS     r0,r1,r0
 000238  e001              B        |L2.574|
                   |L2.570|
-;;;810    	}
-;;;811    	else var32 = var32 + SET_POWERA_Offset;
+;;;831    	}
+;;;832    	else var32 = var32 + SET_POWERA_Offset;
 00023a  69c0              LDR      r0,[r0,#0x1c]  ; Correct_Strong
 00023c  4408              ADD      r0,r0,r1
                   |L2.574|
-;;;812    	var32 = var32/SET_POWERA;
+;;;833    	var32 = var32/SET_POWERA;
 00023e  69d9              LDR      r1,[r3,#0x1c]  ; Correct_Parametet
 000240  fbb0f0f1          UDIV     r0,r0,r1
-;;;813    	var32=var32>>1;
-;;;814    	Contr_Current = var32;
+;;;834    	var32=var32>>1;
+;;;835    	Contr_Current = var32;
 000244  4917              LDR      r1,|L2.676|
-000246  0840              LSRS     r0,r0,#1              ;813
+000246  0840              LSRS     r0,r0,#1              ;834
 000248  8008              STRH     r0,[r1,#0]
-;;;815    	if(SET_Current==0)
+;;;836    	if(SET_Current==0)
 00024a  6890              LDR      r0,[r2,#8]  ; Run_Control
 00024c  2800              CMP      r0,#0
 00024e  d101              BNE      |L2.596|
-;;;816    	{
-;;;817    		Contr_Current=0;
+;;;837    	{
+;;;838    		Contr_Current=0;
 000250  f8a1c000          STRH     r12,[r1,#0]
                   |L2.596|
-;;;818    	}
-;;;819    	
-;;;820    	var32 = 0;
-;;;821    }
+;;;839    	}
+;;;840    	
+;;;841    	var32 = 0;
+;;;842    }
 000254  bdf0              POP      {r4-r7,pc}
-;;;822    /********************************************************************************
+;;;843    /********************************************************************************
                           ENDP
 
 000256  0000              DCW      0x0000
