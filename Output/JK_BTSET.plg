@@ -74,6 +74,8 @@ compiling key.c...
 ..\drive\key.c(1401): warning:  #223-D: function "CreateCDC" declared implicitly
 ..\drive\key.c(1429): warning:  #223-D: function "Createsysinfo" declared implicitly
 compiling modbus.c...
+..\drive\modbus.c(610): warning:  #177-D: variable "rave" was declared but never referenced
+..\drive\modbus.c(611): warning:  #177-D: variable "rcount" was declared but never referenced
 compiling ssd1963.c...
 ..\drive\ssd1963.c(168): warning:  #550-D: variable "FSMC_NORSRAMTimingInitStructure" was set but never used
 compiling TIM1.c...
@@ -106,7 +108,7 @@ compiling menu.c...
 ..\APP\menu.c(137): warning:  #181-D: argument is incompatible with corresponding format string conversion
 ..\APP\menu.c(296): warning:  #181-D: argument is incompatible with corresponding format string conversion
 ..\APP\menu.c(303): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\menu.c(434): warning:  #223-D: function "IO_OFF" declared implicitly
+..\APP\menu.c(430): warning:  #223-D: function "IO_OFF" declared implicitly
 compiling R_Face.c...
 ..\APP\R_Face.c(388): warning:  #223-D: function "setmode_r" declared implicitly
 ..\APP\R_Face.c(392): warning:  #1035-D: single-precision operand implicitly converted to double-precision
@@ -115,29 +117,29 @@ compiling R_Face.c...
 ..\APP\R_Face.c(419): warning:  #223-D: function "setmode_r" declared implicitly
 ..\APP\R_Face.c(437): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\APP\R_Face.c(442): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(454): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(458): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(546): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(720): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(765): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(765): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(779): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(779): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(793): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(793): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(807): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(807): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(821): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(821): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1212): warning:  #223-D: function "setmode_r" declared implicitly
-..\APP\R_Face.c(1583): warning:  #177-D: variable "hItem" was declared but never referenced
-..\APP\R_Face.c(1929): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1968): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(459): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(463): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(556): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(730): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(775): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(775): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(789): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(789): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(803): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(803): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(831): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(831): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1222): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1593): warning:  #177-D: variable "hItem" was declared but never referenced
+..\APP\R_Face.c(1939): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1978): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 compiling load_Face.c...
 ..\APP\load_Face.c(165): warning:  #181-D: argument is incompatible with corresponding format string conversion
 ..\APP\load_Face.c(331): warning:  #181-D: argument is incompatible with corresponding format string conversion
 ..\APP\load_Face.c(338): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\load_Face.c(506): warning:  #223-D: function "IO_OFF" declared implicitly
+..\APP\load_Face.c(504): warning:  #223-D: function "IO_OFF" declared implicitly
 compiling c_dc.c...
 ..\APP\c_dc.c(990): warning:  #223-D: function "IO_OFF" declared implicitly
 compiling graph.c...
@@ -169,9 +171,9 @@ compiling usb_bsp.c...
 compiling usbh_usr.c...
 ..\USB\USB_APP\usbh_usr.c(19): warning:  #177-D: variable "AppState" was declared but never referenced
 linking...
-Program Size: Code=148520 RO-data=117400 RW-data=2272 ZI-data=33992  
+Program Size: Code=148552 RO-data=117400 RW-data=2272 ZI-data=34016  
 FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 70 Warning(s).
+"..\Output\JK_BTSET.axf" - 0 Error(s), 72 Warning(s).
 Load "..\\Output\\JK_BTSET.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
@@ -199,9 +201,9 @@ ROMTableAddr = 0xE00FF003
 Target info:
 ------------
 Device: STM32F407VE
-VTarget = 3.283V
+VTarget = 3.279V
 State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+TCK: 0, TDI: 0, TDO: 1, TMS: 1, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
 Software-Breakpoints: 8192
 Watchpoints:          4
@@ -211,11 +213,6 @@ Erase Done.
 Programming Done.
 Verify OK.
 Build target 'JK_BTSET'
-linking...
-Program Size: Code=148520 RO-data=117400 RW-data=2272 ZI-data=33992  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Build target 'JK_BTSET'
 compiling R_Face.c...
 ..\APP\R_Face.c(388): warning:  #223-D: function "setmode_r" declared implicitly
 ..\APP\R_Face.c(392): warning:  #1035-D: single-precision operand implicitly converted to double-precision
@@ -223,9 +220,7 @@ compiling R_Face.c...
 ..\APP\R_Face.c(413): warning:  #223-D: function "setmode_r" declared implicitly
 ..\APP\R_Face.c(419): warning:  #223-D: function "setmode_r" declared implicitly
 ..\APP\R_Face.c(437): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(442): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\APP\R_Face.c(459): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(463): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\APP\R_Face.c(556): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\APP\R_Face.c(730): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\APP\R_Face.c(775): warning:  #1035-D: single-precision operand implicitly converted to double-precision
@@ -243,496 +238,9 @@ compiling R_Face.c...
 ..\APP\R_Face.c(1939): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\APP\R_Face.c(1978): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 linking...
-Program Size: Code=148552 RO-data=117400 RW-data=2272 ZI-data=33992  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 25 Warning(s).
-Build target 'JK_BTSET'
-compiling adc.c...
-linking...
-Program Size: Code=148552 RO-data=117400 RW-data=2272 ZI-data=33992  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.259V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 200 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling adc.c...
-linking...
-Program Size: Code=148552 RO-data=117400 RW-data=2272 ZI-data=33992  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.266V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 200 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling modbus.c...
-linking...
-Program Size: Code=148608 RO-data=117400 RW-data=2276 ZI-data=33996  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Build target 'JK_BTSET'
-compiling modbus.c...
-linking...
-Program Size: Code=148640 RO-data=117400 RW-data=2276 ZI-data=33996  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.270V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 200 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-assembling startup_stm32f40_41xxx.s...
-..\Libraries\CMSIS\src\startup_stm32f40_41xxx.s(197): error: A1112E: Expected address expression
-compiling modbus.c...
-Target not created
-Build target 'JK_BTSET'
-assembling startup_stm32f40_41xxx.s...
-compiling modbus.c...
-linking...
-Program Size: Code=148640 RO-data=117400 RW-data=2276 ZI-data=33996  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.248V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 200 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling modbus.c...
-linking...
-Program Size: Code=148640 RO-data=117400 RW-data=2276 ZI-data=33996  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.272V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 200 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling adc.c...
-compiling modbus.c...
-linking...
-Program Size: Code=148640 RO-data=117400 RW-data=2276 ZI-data=34052  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.275V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 200 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling adc.c...
-linking...
-Program Size: Code=148640 RO-data=117400 RW-data=2276 ZI-data=34052  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-* JLink Info: SYSRESETREQ has confused core. Trying to reconnect and use VECTRESET.
-* JLink Info: Found SWD-DP with ID 0x2BA01477
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.261V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 200 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling modbus.c...
-linking...
-Program Size: Code=148640 RO-data=117400 RW-data=2276 ZI-data=34052  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.261V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 200 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling modbus.c...
-..\drive\modbus.c(610): warning:  #177-D: variable "rave" was declared but never referenced
-..\drive\modbus.c(611): warning:  #177-D: variable "rcount" was declared but never referenced
-linking...
-Program Size: Code=148552 RO-data=117400 RW-data=2272 ZI-data=34056  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 2 Warning(s).
-Build target 'JK_BTSET'
-compiling sysinfo.c...
-..\APP\sysinfo.c(1376): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=148552 RO-data=117400 RW-data=2272 ZI-data=34056  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 1 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.256V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 200 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling adc.c...
-linking...
 Program Size: Code=148552 RO-data=117400 RW-data=2272 ZI-data=34016  
 FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.270V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 200 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling flash.c...
-compiling load_Face.c...
-..\APP\load_Face.c(165): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\load_Face.c(331): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\load_Face.c(338): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\load_Face.c(506): warning:  #223-D: function "IO_OFF" declared implicitly
-linking...
-Program Size: Code=148544 RO-data=117400 RW-data=2272 ZI-data=34016  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 4 Warning(s).
+"..\Output\JK_BTSET.axf" - 0 Error(s), 23 Warning(s).
 Load "..\\Output\\JK_BTSET.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
@@ -771,3 +279,188 @@ JTAG speed: 200 kHz
 Erase Done.
 Programming Done.
 Verify OK.
+Build target 'JK_BTSET'
+compiling R_Face.c...
+..\APP\R_Face.c(388): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(392): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(396): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(413): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(419): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(437): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(442): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(459): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(463): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(556): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(730): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(775): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(775): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(789): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(789): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(803): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(803): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(831): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(831): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1222): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1593): warning:  #177-D: variable "hItem" was declared but never referenced
+..\APP\R_Face.c(1939): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1978): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+linking...
+Program Size: Code=148552 RO-data=117400 RW-data=2272 ZI-data=34016  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 25 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.285V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling R_Face.c...
+..\APP\R_Face.c(388): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(392): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(396): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(413): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(419): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(437): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(459): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(556): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(730): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(775): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(775): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(789): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(789): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(803): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(803): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(831): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(831): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1222): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1593): warning:  #177-D: variable "hItem" was declared but never referenced
+..\APP\R_Face.c(1939): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1978): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+linking...
+Program Size: Code=148640 RO-data=117400 RW-data=2272 ZI-data=34016  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 23 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.277V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling R_Face.c...
+..\APP\R_Face.c(388): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(392): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(396): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(413): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(419): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(437): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(442): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(459): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(463): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(556): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(730): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(775): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(775): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(789): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(789): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(803): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(803): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(817): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(831): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(831): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1222): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1593): warning:  #177-D: variable "hItem" was declared but never referenced
+..\APP\R_Face.c(1939): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1978): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling settings.c...
+..\APP\settings.c(114): error:  #20: identifier "ID_TEXT_133" is undefined
+..\APP\settings.c(115): error:  #20: identifier "ID_TEXT_134" is undefined
+Target not created
+Build target 'JK_BTSET'
+compiling settings.c...
+linking...
+Program Size: Code=148560 RO-data=117456 RW-data=2272 ZI-data=34016  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).

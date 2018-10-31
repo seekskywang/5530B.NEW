@@ -498,12 +498,16 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
 }
 
 WM_HWIN CreateWindow2(void) {
+  if(page_sw == face_graph)
+  {      
+  }else{
+      IO_OFF();
+  }
   page_sw = face_load;
   track = face_load;
   set_sw = set_24;
   SET_Current_Laod = load_c;
-  pass = 0;
-  IO_OFF();
+  pass = 0;  
   mode_sw = mode_load;
 //   GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
 //   GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出

@@ -53050,6 +53050,13 @@ N}
 N
 NWM_HWIN CreateWindow2(void) {
 XGUI_HWIN CreateWindow2(void) {
+N  if(page_sw == face_graph)
+X  if(page_sw == 0)
+N  {      
+N  }else{
+W "..\APP\load_Face.c" 504 7 function "IO_OFF" declared implicitly
+N      IO_OFF();
+N  }
 N  page_sw = face_load;
 X  page_sw = 4;
 N  track = face_load;
@@ -53058,9 +53065,7 @@ N  set_sw = set_24;
 X  set_sw = 23;
 N  SET_Current_Laod = load_c;
 X  Run_Control[4] = Run_Control[37];
-N  pass = 0;
-W "..\APP\load_Face.c" 506 3 function "IO_OFF" declared implicitly
-N  IO_OFF();
+N  pass = 0;  
 N  mode_sw = mode_load;
 X  mode_sw = 2;
 N//   GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF

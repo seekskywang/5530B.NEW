@@ -52958,7 +52958,7 @@ N                        if(con_flag == 1 && oct_sw == oct_off && finish == 0)
 X                        if(con_flag == 1 && oct_sw == 0 && finish == 0)
 N                        {
 W "..\APP\R_Face.c" 442 33 single-precision operand implicitly converted to double-precision
-N                             if((float)(GUI_GetTime()/500.0 - time1) > 1.5)
+N                             if((float)(GUI_GetTime()/500.0 - time1) > 0.8)
 N                            {
 N                                r = R_VLUE;
 X                                r = Run_Control[13];
@@ -52985,7 +52985,7 @@ N                        if(con_flag == 1 && oct_sw == oct_off && finish == 0)
 X                        if(con_flag == 1 && oct_sw == 0 && finish == 0)
 N                        {
 W "..\APP\R_Face.c" 463 33 single-precision operand implicitly converted to double-precision
-N                             if((float)(GUI_GetTime()/500.0 - time1) > 1.5)
+N                             if((float)(GUI_GetTime()/500.0 - time1) > 0.8)
 N                             {
 N                                r = R_VLUE;
 X                                r = Run_Control[13];

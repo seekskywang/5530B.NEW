@@ -52,6 +52,8 @@ extern int count_num(int data);
 #define ID_TEXT_93     	(GUI_ID_USER + 0x0101)
 #define ID_TEXT_94     	(GUI_ID_USER + 0x0102)
 #define ID_TEXT_95     	(GUI_ID_USER + 0x0103)
+#define ID_TEXT_133    	(GUI_ID_USER + 0x0122)
+#define ID_TEXT_134     (GUI_ID_USER + 0x0123)
 #define ID_BUTTON_30    (GUI_ID_USER + 0x35)
 #define ID_BUTTON_31    (GUI_ID_USER + 0x36)
 #define ID_BUTTON_32    (GUI_ID_USER + 0x37)
@@ -111,6 +113,8 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate5[] = {
   { TEXT_CreateIndirect, "Text", ID_TEXT_93, 360, 150, 120, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_94, 360, 175, 120, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_95, 360, 200, 120, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_133, 260, 125, 100, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_134, 360, 125, 80, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect,   "Text",   ID_TEXT_129, 300, 2, 80, 20, 0, 0x0, 0 },
   // USER START (Optionally insert additional widgets)
   // USER END

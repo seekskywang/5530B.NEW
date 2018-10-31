@@ -424,6 +424,11 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 }
 
 WM_HWIN CreateWindow(void) {
+  if(page_sw == face_graph)
+  {      
+  }else{
+      IO_OFF();
+  }
   page_sw = face_menu;
   track = face_menu;
   set_sw = set_10;
@@ -431,7 +436,6 @@ WM_HWIN CreateWindow(void) {
   SET_Current = pow_c;
   pass = 0;
   mode_sw = mode_pow;
-  IO_OFF();
 //  USART_SendData(USART3,1);//连接电源
   TM1650_SET_LED(0x68,0x70);
   GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
