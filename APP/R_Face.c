@@ -554,7 +554,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 }else if(DISS_Voltage < 1){
                     r_stable = 0;
                 }                    
-                if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
+                if(DISS_Voltage < 0.1)
                 {
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
                     sprintf(buf,"%.3f",0.000);       
@@ -728,7 +728,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 }
             }
                 
-            if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
+            if(DISS_Voltage < 0.1)
                 {
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
                     sprintf(buf,"%.3f",0.000);       
@@ -965,7 +965,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 		TEXT_SetFont(hItem, &GUI_FontEN40);
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-        sprintf(buf,"%.3f",DISS_Voltage);
+        sprintf(buf,"%.3f",0.000);
         TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
         TEXT_SetFont(hItem,&GUI_FontD24x32);//设定文本字体
         GUI_UC_SetEncodeUTF8();        

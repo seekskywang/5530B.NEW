@@ -157,9 +157,9 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
 	case WM_TIMER://定时模块消息
 	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime1)
 	{
-        if(clear_flag3 == 1)
-        {
-            if(DISS_Voltage <= clear_lv)
+//         if(clear_flag3 == 1)
+//         {
+            if(DISS_Voltage < 0.1)
             {
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
                 sprintf(buf,"%.3f",0);       
@@ -169,11 +169,11 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
                 sprintf(buf,"%.3f",DISS_Voltage);       
                 TEXT_SetText(hItem,buf);
             }
-        }else{
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
-            sprintf(buf,"%.3f",DISS_Voltage);       
-            TEXT_SetText(hItem,buf);
-        }
+//         }else{
+//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
+//             sprintf(buf,"%.3f",DISS_Voltage);       
+//             TEXT_SetText(hItem,buf);
+//         }
         if((float)SET_Current_Laod/1000 * DISS_Voltage > 200){
             SET_Current_Laod = 0;
             hItem = WM_GetDialogItem(load_wind, ID_TEXT_49);
@@ -187,9 +187,7 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
             TEXT_SetText(hItem,buf);
         }
         
-        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_85);
-        sprintf(buf,"%.3f",DISS_Current);        
-		TEXT_SetText(hItem,buf);
+        
         
 //        test_load();
         
@@ -204,6 +202,10 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
             battery_c = (int)bc_raw;
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_116);
             sprintf(buf,"%05d",battery_c);    
+            TEXT_SetText(hItem,buf);
+            
+            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_85);
+            sprintf(buf,"%.3f",DISS_Current);        
             TEXT_SetText(hItem,buf);
             if(status_flash == 0){
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_89);
@@ -222,6 +224,10 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
         }else{
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_89);
             TEXT_SetText(hItem,"");
+            
+            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_85);
+            sprintf(buf,"%.3f",0);        
+            TEXT_SetText(hItem,buf);
         }
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_126);       
         sprintf(buf,"%.1f",temp);
@@ -509,6 +515,7 @@ WM_HWIN CreateWindow2(void) {
   SET_Current_Laod = load_c;
   pass = 0;  
   mode_sw = mode_load;
+  SET_Voltage_Laod = load_v; 
 //   GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
 //   GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
 //   GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
@@ -670,7 +677,8 @@ void LOAD_SET(void) {
             WM_HWIN hItem;
             hItem = WM_GetDialogItem(load_wind, ID_TEXT_123);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
-            TEXT_SetTextColor(hItem, GUI_WHITE);            
+            TEXT_SetTextColor(hItem, GUI_WHITE); 
+            SET_Voltage_Laod = load_v;          
             if(SET_Voltage_Laod > 80000 || (float)SET_Voltage_Laod/1000 * DISS_Current > 200){
                 SET_Voltage_Laod = 0;
             }
@@ -825,7 +833,7 @@ void INPUT_LOAD(char* num){
             switch(bit){
                 case 1:
                 {
-                    SET_Voltage_Laod = atoi(num) * 1000;
+                    load_v = atoi(num) * 1000;
                     strcat(set_limit,num);            
                     TEXT_SetText(hItem,set_limit);
                     
@@ -840,7 +848,7 @@ void INPUT_LOAD(char* num){
                     {
                         dot_flag = 1;
                     }else{
-                        SET_Voltage_Laod = SET_Voltage_Laod * 10 + atoi(num) * 1000;
+                        load_v = load_v * 10 + atoi(num) * 1000;
                     }
                     bit = 3;
                     break;
@@ -855,10 +863,10 @@ void INPUT_LOAD(char* num){
                         {                            
                             dot_flag = 2;
                         }else{
-                            SET_Voltage_Laod = 0;
+                            load_v = 0;
                         }
                     }else{
-                        SET_Voltage_Laod = SET_Voltage_Laod + atoi(num) * 100;
+                        load_v = load_v + atoi(num) * 100;
                     }                  
                     bit = 4;
                     break;
@@ -869,11 +877,11 @@ void INPUT_LOAD(char* num){
                     TEXT_SetText(hItem,set_limit);
                     if(dot_flag == 0)
                     {
-                        SET_Voltage_Laod = 0;
+                        load_v = 0;
                     }else if(dot_flag == 2){
-                        SET_Voltage_Laod = SET_Voltage_Laod + atoi(num) * 100;
+                        load_v = load_v + atoi(num) * 100;
                     }else{
-                        SET_Voltage_Laod = SET_Voltage_Laod + atoi(num) * 10;
+                        load_v = load_v + atoi(num) * 10;
                     }                  
                     bit = 5;
                     break;
@@ -884,11 +892,11 @@ void INPUT_LOAD(char* num){
                     TEXT_SetText(hItem,set_limit);
                     if(dot_flag == 0)
                     {
-                        SET_Voltage_Laod = 0;
+                        load_v = 0;
                     }else if(dot_flag == 1){
-                        SET_Voltage_Laod = SET_Voltage_Laod + atoi(num);
+                        load_v = load_v + atoi(num);
                     }else{
-                        SET_Voltage_Laod = SET_Voltage_Laod + atoi(num) * 10;
+                        load_v = load_v + atoi(num) * 10;
                     }                 
                     bit = 6;
                     break;
@@ -899,9 +907,9 @@ void INPUT_LOAD(char* num){
                     TEXT_SetText(hItem,set_limit);
                     if(dot_flag == 0)
                     {
-                        SET_Voltage_Laod = 0;
+                        load_v = 0;
                     }else if(dot_flag == 2){
-                        SET_Voltage_Laod = SET_Voltage_Laod + atoi(num);
+                        load_v = load_v + atoi(num);
                     }                 
                     bit = 1;
                     break;

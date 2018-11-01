@@ -34908,7 +34908,7 @@ Nextern float clear_lv;
 Nextern float temp;
 Nextern vu8 set_loop_count;
 Nextern vu8 test_mode;
-Nextern vu32 Run_Control[41];	
+Nextern vu32 Run_Control[42];	
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
 N#define SET_Voltage 	    	        Run_Control[1]  //??????
 N#define SET_Current	    	    		  Run_Control[2]  //?????¡¤
@@ -34951,7 +34951,7 @@ N#define load_c    					    Run_Control[37]
 N#define pow_v    					    Run_Control[38]
 N#define cdc_dc    					    Run_Control[39]
 N#define pow_c    					    Run_Control[40]
-N
+N#define load_v    					    Run_Control[41]
 N
 Nextern vu16 coff[6];
 N#define cov1    					    coff[0]
@@ -35376,7 +35376,7 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
-Sextern vu32 Run_Control[41];	
+Sextern vu32 Run_Control[42];	
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????¡¤
@@ -35419,7 +35419,7 @@ S#define load_c    					    Run_Control[37]
 S#define pow_v    					    Run_Control[38]
 S#define cdc_dc    					    Run_Control[39]
 S#define pow_c    					    Run_Control[40]
-S
+S#define load_v    					    Run_Control[41]
 S
 Sextern vu16 coff[6];
 S#define cov1    					    coff[0]

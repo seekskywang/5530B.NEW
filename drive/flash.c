@@ -525,6 +525,10 @@ void EEPROM_READ_Coeff(void)
 	load_c=load_c<<8;
 	load_c=load_c+EEPROM_READ_Byte(0x73); 
     
+    load_v=EEPROM_READ_Byte(0xB5);
+	load_v=load_v<<8;
+	load_v=load_v+EEPROM_READ_Byte(0xB6);
+    
     set_init_c=EEPROM_READ_Byte(0x74);
 	set_init_c=set_init_c<<8;
 	set_init_c=set_init_c+EEPROM_READ_Byte(0x75);
@@ -721,6 +725,10 @@ void Write_Limits(void)
 	EEPROM_WriteByte(0xAA, set_dc_cutoff_v);
     
     EEPROM_WriteByte(0xB3, oc_mode);
+    
+    data_8bit = load_v >> 8;
+	EEPROM_WriteByte(0xB5, data_8bit);
+	EEPROM_WriteByte(0xB6, load_v);
 }
 
 void Write_btype(void)

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\Output\JK_BTSET.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\Output\JK_BTSET.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Thu Nov 01 13:55:45 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Thu Nov 01 15:06:33 2018
 <BR><P>
 <H3>Maximum Stack Usage =        696 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1266,12 +1266,12 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[1c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_SetText
 <LI><a href="#[1c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_CreateUser
 </UL>
-<BR>[Address Reference Count : 6]<UL><LI> menu.o(.constdata)
+<BR>[Address Reference Count : 6]<UL><LI> graph.o(.constdata)
+<LI> menu.o(.constdata)
 <LI> r_face.o(.constdata)
 <LI> load_face.o(.constdata)
 <LI> c_dc.o(.constdata)
 <LI> settings.o(.constdata)
-<LI> graph.o(.constdata)
 </UL>
 <P><STRONG><a name="[1c0]"></a>BUTTON_CreateUser</STRONG> (Thumb, 94 bytes, Stack size 40 bytes, button.o(i.BUTTON_CreateUser))
 <BR><BR>[Stack]<UL><LI>Max Depth = 272<LI>Call Chain = BUTTON_CreateUser &rArr; WM_CreateWindowAsChild &rArr; WM_BringToBottom &rArr; WM__InvalidateRectEx &rArr; WM__InvalidateRect &rArr;  WM__InvalidateRect (Cycle)
@@ -1548,7 +1548,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[32a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
 </UL>
 
-<P><STRONG><a name="[1f4]"></a>CreateWindow2</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, load_face.o(i.CreateWindow2))
+<P><STRONG><a name="[1f4]"></a>CreateWindow2</STRONG> (Thumb, 96 bytes, Stack size 16 bytes, load_face.o(i.CreateWindow2))
 <BR><BR>[Stack]<UL><LI>Max Depth = 232<LI>Call Chain = CreateWindow2 &rArr; GUI_CreateDialogBox &rArr; WM_ShowWindow &rArr; WM_InvalidateWindowAndDescs &rArr;  WM_InvalidateWindowAndDescs (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
@@ -1688,7 +1688,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[209]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_READ_Coeff
 </UL>
 
-<P><STRONG><a name="[209]"></a>EEPROM_READ_Coeff</STRONG> (Thumb, 2502 bytes, Stack size 16 bytes, flash.o(i.EEPROM_READ_Coeff))
+<P><STRONG><a name="[209]"></a>EEPROM_READ_Coeff</STRONG> (Thumb, 2648 bytes, Stack size 16 bytes, flash.o(i.EEPROM_READ_Coeff))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = EEPROM_READ_Coeff &rArr; EEPROM_READ_Byte &rArr; i2c_WaitAck
 </UL>
 <BR>[Calls]<UL><LI><a href="#[202]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_READ_Byte
@@ -4969,7 +4969,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[32a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
 </UL>
 
-<P><STRONG><a name="[327]"></a>INPUT_LOAD</STRONG> (Thumb, 774 bytes, Stack size 40 bytes, load_face.o(i.INPUT_LOAD))
+<P><STRONG><a name="[327]"></a>INPUT_LOAD</STRONG> (Thumb, 782 bytes, Stack size 40 bytes, load_face.o(i.INPUT_LOAD))
 <BR><BR>[Stack]<UL><LI>Max Depth = 224<LI>Call Chain = INPUT_LOAD &rArr; TEXT_SetText &rArr; WM_InvalidateWindow &rArr; WM_InvalidateRect &rArr; WM__InvalidateRectEx &rArr; WM__InvalidateRect &rArr;  WM__InvalidateRect (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_GetDialogItem
@@ -5485,7 +5485,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[32a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
 </UL>
 
-<P><STRONG><a name="[33e]"></a>LOAD_SET</STRONG> (Thumb, 660 bytes, Stack size 56 bytes, load_face.o(i.LOAD_SET))
+<P><STRONG><a name="[33e]"></a>LOAD_SET</STRONG> (Thumb, 666 bytes, Stack size 56 bytes, load_face.o(i.LOAD_SET))
 <BR><BR>[Stack]<UL><LI>Max Depth = 248 + Unknown Stack Size
 <LI>Call Chain = LOAD_SET &rArr; TEXT_SetBkColor &rArr; WM_ClrHasTrans &rArr; WM_InvalidateWindow &rArr; WM_InvalidateRect &rArr; WM__InvalidateRectEx &rArr; WM__InvalidateRect &rArr;  WM__InvalidateRect (Cycle)
 </UL>
@@ -6194,13 +6194,13 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[3aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TEXT_CreateUser
 </UL>
-<BR>[Address Reference Count : 7]<UL><LI> sysinfo.o(.constdata)
+<BR>[Address Reference Count : 7]<UL><LI> graph.o(.constdata)
+<LI> sysinfo.o(.constdata)
 <LI> menu.o(.constdata)
 <LI> r_face.o(.constdata)
 <LI> load_face.o(.constdata)
 <LI> c_dc.o(.constdata)
 <LI> settings.o(.constdata)
-<LI> graph.o(.constdata)
 </UL>
 <P><STRONG><a name="[3aa]"></a>TEXT_CreateUser</STRONG> (Thumb, 136 bytes, Stack size 48 bytes, text.o(i.TEXT_CreateUser))
 <BR><BR>[Stack]<UL><LI>Max Depth = 280<LI>Call Chain = TEXT_CreateUser &rArr; WM_CreateWindowAsChild &rArr; WM_BringToBottom &rArr; WM__InvalidateRectEx &rArr; WM__InvalidateRect &rArr;  WM__InvalidateRect (Cycle)
@@ -6957,13 +6957,13 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[3e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WINDOW_CreateUser
 </UL>
-<BR>[Address Reference Count : 8]<UL><LI> sysinfo.o(.constdata)
+<BR>[Address Reference Count : 8]<UL><LI> graph.o(.constdata)
+<LI> sysinfo.o(.constdata)
 <LI> menu.o(.constdata)
 <LI> r_face.o(.constdata)
 <LI> load_face.o(.constdata)
 <LI> c_dc.o(.constdata)
 <LI> settings.o(.constdata)
-<LI> graph.o(.constdata)
 <LI> starter.o(.constdata)
 </UL>
 <P><STRONG><a name="[3e9]"></a>WINDOW_CreateUser</STRONG> (Thumb, 80 bytes, Stack size 40 bytes, window.o(i.WINDOW_CreateUser))
@@ -8379,7 +8379,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[33e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LOAD_SET
 </UL>
 
-<P><STRONG><a name="[1e1]"></a>Write_Limits</STRONG> (Thumb, 568 bytes, Stack size 16 bytes, flash.o(i.Write_Limits))
+<P><STRONG><a name="[1e1]"></a>Write_Limits</STRONG> (Thumb, 590 bytes, Stack size 16 bytes, flash.o(i.Write_Limits))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = Write_Limits &rArr; EEPROM_WriteByte &rArr; i2c_WaitAck
 </UL>
 <BR>[Calls]<UL><LI><a href="#[20a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_WriteByte
@@ -8906,7 +8906,7 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> lcdconf_flexcolor_template.o(i.LCD_X_Config)
 </UL>
-<P><STRONG><a name="[93]"></a>_cbDialog</STRONG> (Thumb, 1694 bytes, Stack size 56 bytes, menu.o(i._cbDialog))
+<P><STRONG><a name="[93]"></a>_cbDialog</STRONG> (Thumb, 1690 bytes, Stack size 56 bytes, menu.o(i._cbDialog))
 <BR><BR>[Stack]<UL><LI>Max Depth = 256 + Unknown Stack Size
 <LI>Call Chain = _cbDialog &rArr; WM_CreateTimer &rArr; GUI_TIMER_Create &rArr; GUI_ALLOC_AllocZero &rArr; GUI_ALLOC_AllocNoInit &rArr; _Alloc &rArr; _InitOnce &rArr; _EnlargeBlocks &rArr;  _Alloc (Cycle)
 </UL>
@@ -8936,8 +8936,8 @@ Local Symbols
 <BR>[Address Reference Count : 2]<UL><LI> menu.o(i.ResetPow)
 <LI> menu.o(i.CreateWindow)
 </UL>
-<P><STRONG><a name="[90]"></a>_cbDialog</STRONG> (Thumb, 6172 bytes, Stack size 80 bytes, r_face.o(i._cbDialog))
-<BR><BR>[Stack]<UL><LI>Max Depth = 304 + Unknown Stack Size
+<P><STRONG><a name="[90]"></a>_cbDialog</STRONG> (Thumb, 5994 bytes, Stack size 72 bytes, r_face.o(i._cbDialog))
+<BR><BR>[Stack]<UL><LI>Max Depth = 296 + Unknown Stack Size
 <LI>Call Chain = _cbDialog &rArr; test_r &rArr; TEXT_SetTextColor &rArr; WM_InvalidateWindow &rArr; WM_InvalidateRect &rArr; WM__InvalidateRectEx &rArr; WM__InvalidateRect &rArr;  WM__InvalidateRect (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
@@ -8975,7 +8975,7 @@ Local Symbols
 <BR>[Address Reference Count : 2]<UL><LI> r_face.o(i.ResetR)
 <LI> r_face.o(i.CreateR)
 </UL>
-<P><STRONG><a name="[94]"></a>_cbDialog2</STRONG> (Thumb, 2030 bytes, Stack size 64 bytes, load_face.o(i._cbDialog2))
+<P><STRONG><a name="[94]"></a>_cbDialog2</STRONG> (Thumb, 2026 bytes, Stack size 64 bytes, load_face.o(i._cbDialog2))
 <BR><BR>[Stack]<UL><LI>Max Depth = 264 + Unknown Stack Size
 <LI>Call Chain = _cbDialog2 &rArr; WM_CreateTimer &rArr; GUI_TIMER_Create &rArr; GUI_ALLOC_AllocZero &rArr; GUI_ALLOC_AllocNoInit &rArr; _Alloc &rArr; _InitOnce &rArr; _EnlargeBlocks &rArr;  _Alloc (Cycle)
 </UL>

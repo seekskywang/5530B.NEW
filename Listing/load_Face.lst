@@ -48740,7 +48740,7 @@ Nextern float clear_lv;
 Nextern float temp;
 Nextern vu8 set_loop_count;
 Nextern vu8 test_mode;
-Nextern vu32 Run_Control[41];	
+Nextern vu32 Run_Control[42];	
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
 N#define SET_Voltage 	    	        Run_Control[1]  //??????
 N#define SET_Current	    	    		  Run_Control[2]  //?????��
@@ -48783,7 +48783,7 @@ N#define load_c    					    Run_Control[37]
 N#define pow_v    					    Run_Control[38]
 N#define cdc_dc    					    Run_Control[39]
 N#define pow_c    					    Run_Control[40]
-N
+N#define load_v    					    Run_Control[41]
 N
 Nextern vu16 coff[6];
 N#define cov1    					    coff[0]
@@ -49192,7 +49192,7 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
-Sextern vu32 Run_Control[41];	
+Sextern vu32 Run_Control[42];	
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????��
@@ -49235,7 +49235,7 @@ S#define load_c    					    Run_Control[37]
 S#define pow_v    					    Run_Control[38]
 S#define cdc_dc    					    Run_Control[39]
 S#define pow_c    					    Run_Control[40]
-S
+S#define load_v    					    Run_Control[41]
 S
 Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
@@ -51630,7 +51630,7 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
-Sextern vu32 Run_Control[41];	
+Sextern vu32 Run_Control[42];	
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????��
@@ -51673,7 +51673,7 @@ S#define load_c    					    Run_Control[37]
 S#define pow_v    					    Run_Control[38]
 S#define cdc_dc    					    Run_Control[39]
 S#define pow_c    					    Run_Control[40]
-S
+S#define load_v    					    Run_Control[41]
 S
 Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
@@ -52630,9 +52630,10 @@ X	case 0x0113:
 N	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime1)
 X	if(WM_GetTimerId(pMsg->Data.v) == 2)
 N	{
-N        if(clear_flag3 == 1)
-N        {
-N            if(DISS_Voltage <= clear_lv)
+N//         if(clear_flag3 == 1)
+N//         {
+W "..\APP\load_Face.c" 162 16 single-precision operand implicitly converted to double-precision
+N            if(DISS_Voltage < 0.1)
 N            {
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x91));
@@ -52645,12 +52646,11 @@ X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x91));
 N                sprintf(buf,"%.3f",DISS_Voltage);       
 N                TEXT_SetText(hItem,buf);
 N            }
-N        }else{
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x91));
-N            sprintf(buf,"%.3f",DISS_Voltage);       
-N            TEXT_SetText(hItem,buf);
-N        }
+N//         }else{
+N//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
+N//             sprintf(buf,"%.3f",DISS_Voltage);       
+N//             TEXT_SetText(hItem,buf);
+N//         }
 N        if((float)SET_Current_Laod/1000 * DISS_Voltage > 200){
 X        if((float)Run_Control[4]/1000 * DISS_Voltage > 200){
 N            SET_Current_Laod = 0;
@@ -52672,10 +52672,7 @@ N            sprintf(buf,"%.3f",dis_load_c);
 N            TEXT_SetText(hItem,buf);
 N        }
 N        
-N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_85);
-X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x92));
-N        sprintf(buf,"%.3f",DISS_Current);        
-N		TEXT_SetText(hItem,buf);
+N        
 N        
 N//        test_load();
 N        
@@ -52693,6 +52690,11 @@ N            battery_c = (int)bc_raw;
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_116);
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x10D));
 N            sprintf(buf,"%05d",battery_c);    
+N            TEXT_SetText(hItem,buf);
+N            
+N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_85);
+X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x92));
+N            sprintf(buf,"%.3f",DISS_Current);        
 N            TEXT_SetText(hItem,buf);
 N            if(status_flash == 0){
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_89);
@@ -52715,6 +52717,12 @@ N        }else{
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_89);
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x96));
 N            TEXT_SetText(hItem,"");
+N            
+N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_85);
+X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x92));
+W "..\APP\load_Face.c" 229 32 argument is incompatible with corresponding format string conversion
+N            sprintf(buf,"%.3f",0);        
+N            TEXT_SetText(hItem,buf);
 N        }
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_126);       
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x112));       
@@ -52843,7 +52851,7 @@ N		TEXT_SetText(hItem,buf);
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x91));
-W "..\APP\load_Face.c" 331 28 argument is incompatible with corresponding format string conversion
+W "..\APP\load_Face.c" 337 28 argument is incompatible with corresponding format string conversion
 N        sprintf(buf,"%.3f",0);
 N		TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
 X		TEXT_SetTextColor(hItem, 0x0000FF00);
@@ -52853,7 +52861,7 @@ N		TEXT_SetText(hItem,buf);
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_85);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x92));
-W "..\APP\load_Face.c" 338 28 argument is incompatible with corresponding format string conversion
+W "..\APP\load_Face.c" 344 28 argument is incompatible with corresponding format string conversion
 N        sprintf(buf,"%.3f",0);
 N		TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
 X		TEXT_SetTextColor(hItem, 0x0000FF00);
@@ -53060,7 +53068,7 @@ N  if(page_sw == face_graph)
 X  if(page_sw == 0)
 N  {      
 N  }else{
-W "..\APP\load_Face.c" 504 7 function "IO_OFF" declared implicitly
+W "..\APP\load_Face.c" 510 7 function "IO_OFF" declared implicitly
 N      IO_OFF();
 N  }
 N  page_sw = face_load;
@@ -53074,6 +53082,8 @@ X  Run_Control[4] = Run_Control[37];
 N  pass = 0;  
 N  mode_sw = mode_load;
 X  mode_sw = 2;
+N  SET_Voltage_Laod = load_v; 
+X  Run_Control[3] = Run_Control[41]; 
 N//   GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
 N//   GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
 N//   GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
@@ -53303,8 +53313,10 @@ N            hItem = WM_GetDialogItem(load_wind, ID_TEXT_123);
 X            hItem = WM_GetDialogItem(load_wind, (0x800 + 0x111));
 N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
 X            TEXT_SetBkColor(hItem,0xFFFFFFF);
-N            TEXT_SetTextColor(hItem, GUI_WHITE);            
-X            TEXT_SetTextColor(hItem, 0x00FFFFFF);            
+N            TEXT_SetTextColor(hItem, GUI_WHITE); 
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF); 
+N            SET_Voltage_Laod = load_v;          
+X            Run_Control[3] = Run_Control[41];          
 N            if(SET_Voltage_Laod > 80000 || (float)SET_Voltage_Laod/1000 * DISS_Current > 200){
 X            if(Run_Control[3] > 80000 || (float)Run_Control[3]/1000 * DISS_Current > 200){
 N                SET_Voltage_Laod = 0;
@@ -53493,8 +53505,8 @@ X            hItem = WM_GetDialogItem(load_wind, (0x800 + 0x111));
 N            switch(bit){
 N                case 1:
 N                {
-N                    SET_Voltage_Laod = atoi(num) * 1000;
-X                    Run_Control[3] = atoi(num) * 1000;
+N                    load_v = atoi(num) * 1000;
+X                    Run_Control[41] = atoi(num) * 1000;
 N                    strcat(set_limit,num);            
 N                    TEXT_SetText(hItem,set_limit);
 N                    
@@ -53509,8 +53521,8 @@ N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
 N                    {
 N                        dot_flag = 1;
 N                    }else{
-N                        SET_Voltage_Laod = SET_Voltage_Laod * 10 + atoi(num) * 1000;
-X                        Run_Control[3] = Run_Control[3] * 10 + atoi(num) * 1000;
+N                        load_v = load_v * 10 + atoi(num) * 1000;
+X                        Run_Control[41] = Run_Control[41] * 10 + atoi(num) * 1000;
 N                    }
 N                    bit = 3;
 N                    break;
@@ -53525,12 +53537,12 @@ N                        if(set_limit[2] == 0x2e)//判断输入是否为小数�
 N                        {                            
 N                            dot_flag = 2;
 N                        }else{
-N                            SET_Voltage_Laod = 0;
-X                            Run_Control[3] = 0;
+N                            load_v = 0;
+X                            Run_Control[41] = 0;
 N                        }
 N                    }else{
-N                        SET_Voltage_Laod = SET_Voltage_Laod + atoi(num) * 100;
-X                        Run_Control[3] = Run_Control[3] + atoi(num) * 100;
+N                        load_v = load_v + atoi(num) * 100;
+X                        Run_Control[41] = Run_Control[41] + atoi(num) * 100;
 N                    }                  
 N                    bit = 4;
 N                    break;
@@ -53541,14 +53553,14 @@ N                    strcat(set_limit,num);
 N                    TEXT_SetText(hItem,set_limit);
 N                    if(dot_flag == 0)
 N                    {
-N                        SET_Voltage_Laod = 0;
-X                        Run_Control[3] = 0;
+N                        load_v = 0;
+X                        Run_Control[41] = 0;
 N                    }else if(dot_flag == 2){
-N                        SET_Voltage_Laod = SET_Voltage_Laod + atoi(num) * 100;
-X                        Run_Control[3] = Run_Control[3] + atoi(num) * 100;
+N                        load_v = load_v + atoi(num) * 100;
+X                        Run_Control[41] = Run_Control[41] + atoi(num) * 100;
 N                    }else{
-N                        SET_Voltage_Laod = SET_Voltage_Laod + atoi(num) * 10;
-X                        Run_Control[3] = Run_Control[3] + atoi(num) * 10;
+N                        load_v = load_v + atoi(num) * 10;
+X                        Run_Control[41] = Run_Control[41] + atoi(num) * 10;
 N                    }                  
 N                    bit = 5;
 N                    break;
@@ -53559,14 +53571,14 @@ N                    strcat(set_limit,num);
 N                    TEXT_SetText(hItem,set_limit);
 N                    if(dot_flag == 0)
 N                    {
-N                        SET_Voltage_Laod = 0;
-X                        Run_Control[3] = 0;
+N                        load_v = 0;
+X                        Run_Control[41] = 0;
 N                    }else if(dot_flag == 1){
-N                        SET_Voltage_Laod = SET_Voltage_Laod + atoi(num);
-X                        Run_Control[3] = Run_Control[3] + atoi(num);
+N                        load_v = load_v + atoi(num);
+X                        Run_Control[41] = Run_Control[41] + atoi(num);
 N                    }else{
-N                        SET_Voltage_Laod = SET_Voltage_Laod + atoi(num) * 10;
-X                        Run_Control[3] = Run_Control[3] + atoi(num) * 10;
+N                        load_v = load_v + atoi(num) * 10;
+X                        Run_Control[41] = Run_Control[41] + atoi(num) * 10;
 N                    }                 
 N                    bit = 6;
 N                    break;
@@ -53577,11 +53589,11 @@ N                    strcat(set_limit,num);
 N                    TEXT_SetText(hItem,set_limit);
 N                    if(dot_flag == 0)
 N                    {
-N                        SET_Voltage_Laod = 0;
-X                        Run_Control[3] = 0;
+N                        load_v = 0;
+X                        Run_Control[41] = 0;
 N                    }else if(dot_flag == 2){
-N                        SET_Voltage_Laod = SET_Voltage_Laod + atoi(num);
-X                        Run_Control[3] = Run_Control[3] + atoi(num);
+N                        load_v = load_v + atoi(num);
+X                        Run_Control[41] = Run_Control[41] + atoi(num);
 N                    }                 
 N                    bit = 1;
 N                    break;

@@ -48740,7 +48740,7 @@ Nextern float clear_lv;
 Nextern float temp;
 Nextern vu8 set_loop_count;
 Nextern vu8 test_mode;
-Nextern vu32 Run_Control[41];	
+Nextern vu32 Run_Control[42];	
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
 N#define SET_Voltage 	    	        Run_Control[1]  //??????
 N#define SET_Current	    	    		  Run_Control[2]  //?????��
@@ -48783,7 +48783,7 @@ N#define load_c    					    Run_Control[37]
 N#define pow_v    					    Run_Control[38]
 N#define cdc_dc    					    Run_Control[39]
 N#define pow_c    					    Run_Control[40]
-N
+N#define load_v    					    Run_Control[41]
 N
 Nextern vu16 coff[6];
 N#define cov1    					    coff[0]
@@ -49192,7 +49192,7 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
-Sextern vu32 Run_Control[41];	
+Sextern vu32 Run_Control[42];	
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????��
@@ -49235,7 +49235,7 @@ S#define load_c    					    Run_Control[37]
 S#define pow_v    					    Run_Control[38]
 S#define cdc_dc    					    Run_Control[39]
 S#define pow_c    					    Run_Control[40]
-S
+S#define load_v    					    Run_Control[41]
 S
 Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
@@ -51630,7 +51630,7 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
-Sextern vu32 Run_Control[41];	
+Sextern vu32 Run_Control[42];	
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????��
@@ -51673,7 +51673,7 @@ S#define load_c    					    Run_Control[37]
 S#define pow_v    					    Run_Control[38]
 S#define cdc_dc    					    Run_Control[39]
 S#define pow_c    					    Run_Control[40]
-S
+S#define load_v    					    Run_Control[41]
 S
 Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
@@ -52597,9 +52597,10 @@ X	case 0x0113:
 N	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime2)
 X	if(WM_GetTimerId(pMsg->Data.v) == 3)
 N	{
-N        if(clear_flag2 == 1)
-N        {
-N            if(DISS_POW_Voltage <= clear_pv)
+N//         if(clear_flag2 == 1)
+N//         {
+W "..\APP\menu.c" 134 16 single-precision operand implicitly converted to double-precision
+N            if(DISS_POW_Voltage < 0.1)
 N            {
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x93));
@@ -52612,18 +52613,14 @@ X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x93));
 N                sprintf(buf,"%.2f",DISS_POW_Voltage);       
 N                TEXT_SetText(hItem,buf);
 N            }
-N        }else{
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x93));
-N            sprintf(buf,"%.2f",DISS_POW_Voltage);       
-N            TEXT_SetText(hItem,buf);
-N        }
+N//         }else{
+N//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
+N//             sprintf(buf,"%.2f",DISS_POW_Voltage);       
+N//             TEXT_SetText(hItem,buf);
+N//         }
 N        
 N        
-N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_87);
-X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x94));
-N        sprintf(buf,"%.3f",DISS_POW_Current);        
-N		TEXT_SetText(hItem,buf);
+N       
 N        
 N//        test_pow();
 N        if(pow_sw == pow_on)
@@ -52633,6 +52630,10 @@ N            battery_c = (int)bc_raw;
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_115);
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x10B));
 N            sprintf(buf,"%05d",battery_c);      
+N            TEXT_SetText(hItem,buf);
+N             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_87);
+X             hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x94));
+N            sprintf(buf,"%.3f",DISS_POW_Current);        
 N            TEXT_SetText(hItem,buf);
 N            if(status_flash == 0){
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_88);
@@ -52654,6 +52655,12 @@ N        }else{
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_88);
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x95));
 N            TEXT_SetText(hItem,"");
+N            
+N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_87);
+X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x94));
+W "..\APP\menu.c" 181 32 argument is incompatible with corresponding format string conversion
+N            sprintf(buf,"%.3f",0);        
+N            TEXT_SetText(hItem,buf);
 N        }
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_125);       
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x10C));       
@@ -52798,7 +52805,7 @@ N		TEXT_SetText(hItem,buf);
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x93));
-W "..\APP\menu.c" 296 28 argument is incompatible with corresponding format string conversion
+W "..\APP\menu.c" 301 28 argument is incompatible with corresponding format string conversion
 N        sprintf(buf,"%.2f",0);
 N		TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
 X		TEXT_SetTextColor(hItem, 0x0000FF00);
@@ -52808,7 +52815,7 @@ N		TEXT_SetText(hItem,buf);
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_87);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x94));
-W "..\APP\menu.c" 303 28 argument is incompatible with corresponding format string conversion
+W "..\APP\menu.c" 308 28 argument is incompatible with corresponding format string conversion
 N        sprintf(buf,"%.3f",0);
 N		TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
 X		TEXT_SetTextColor(hItem, 0x0000FF00);
@@ -52962,7 +52969,7 @@ N  if(page_sw == face_graph)
 X  if(page_sw == 0)
 N  {      
 N  }else{
-W "..\APP\menu.c" 430 7 function "IO_OFF" declared implicitly
+W "..\APP\menu.c" 435 7 function "IO_OFF" declared implicitly
 N      IO_OFF();
 N  }
 N  page_sw = face_menu;

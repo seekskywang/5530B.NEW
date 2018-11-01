@@ -34904,7 +34904,7 @@ Nextern float clear_lv;
 Nextern float temp;
 Nextern vu8 set_loop_count;
 Nextern vu8 test_mode;
-Nextern vu32 Run_Control[41];	
+Nextern vu32 Run_Control[42];	
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
 N#define SET_Voltage 	    	        Run_Control[1]  //??????
 N#define SET_Current	    	    		  Run_Control[2]  //?????¡¤
@@ -34947,7 +34947,7 @@ N#define load_c    					    Run_Control[37]
 N#define pow_v    					    Run_Control[38]
 N#define cdc_dc    					    Run_Control[39]
 N#define pow_c    					    Run_Control[40]
-N
+N#define load_v    					    Run_Control[41]
 N
 Nextern vu16 coff[6];
 N#define cov1    					    coff[0]
@@ -35355,7 +35355,7 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
-Sextern vu32 Run_Control[41];	
+Sextern vu32 Run_Control[42];	
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????¡¤
@@ -35398,7 +35398,7 @@ S#define load_c    					    Run_Control[37]
 S#define pow_v    					    Run_Control[38]
 S#define cdc_dc    					    Run_Control[39]
 S#define pow_c    					    Run_Control[40]
-S
+S#define load_v    					    Run_Control[41]
 S
 Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
@@ -36447,6 +36447,13 @@ X	Run_Control[37]=Run_Control[37]<<8;
 N	load_c=load_c+EEPROM_READ_Byte(0x73); 
 X	Run_Control[37]=Run_Control[37]+EEPROM_READ_Byte(0x73); 
 N    
+N    load_v=EEPROM_READ_Byte(0xB5);
+X    Run_Control[41]=EEPROM_READ_Byte(0xB5);
+N	load_v=load_v<<8;
+X	Run_Control[41]=Run_Control[41]<<8;
+N	load_v=load_v+EEPROM_READ_Byte(0xB6);
+X	Run_Control[41]=Run_Control[41]+EEPROM_READ_Byte(0xB6);
+N    
 N    set_init_c=EEPROM_READ_Byte(0x74);
 X    Run_Control[22]=EEPROM_READ_Byte(0x74);
 N	set_init_c=set_init_c<<8;
@@ -36741,6 +36748,12 @@ N	EEPROM_WriteByte(0xAA, set_dc_cutoff_v);
 X	EEPROM_WriteByte(0xAA, Run_Control[27]);
 N    
 N    EEPROM_WriteByte(0xB3, oc_mode);
+N    
+N    data_8bit = load_v >> 8;
+X    data_8bit = Run_Control[41] >> 8;
+N	EEPROM_WriteByte(0xB5, data_8bit);
+N	EEPROM_WriteByte(0xB6, load_v);
+X	EEPROM_WriteByte(0xB6, Run_Control[41]);
 N}
 N
 Nvoid Write_btype(void)

@@ -201,7 +201,7 @@ extern float clear_lv;
 extern float temp;
 extern vu8 set_loop_count;
 extern vu8 test_mode;
-extern vu32 Run_Control[41];	
+extern vu32 Run_Control[42];	
 #define onoff_ch                    Run_Control[0]  //ON/OFF
 #define SET_Voltage 	    	        Run_Control[1]  //??????
 #define SET_Current	    	    		  Run_Control[2]  //?????¡¤
@@ -244,7 +244,7 @@ extern vu32 Run_Control[41];
 #define pow_v    					    Run_Control[38]
 #define cdc_dc    					    Run_Control[39]
 #define pow_c    					    Run_Control[40]
-
+#define load_v    					    Run_Control[41]
 
 extern vu16 coff[6];
 #define cov1    					    coff[0]

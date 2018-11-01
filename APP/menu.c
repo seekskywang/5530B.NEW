@@ -129,9 +129,9 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 	case WM_TIMER://定时模块消息
 	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime2)
 	{
-        if(clear_flag2 == 1)
-        {
-            if(DISS_POW_Voltage <= clear_pv)
+//         if(clear_flag2 == 1)
+//         {
+            if(DISS_POW_Voltage < 0.1)
             {
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
                 sprintf(buf,"%.2f",0);       
@@ -141,16 +141,14 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 sprintf(buf,"%.2f",DISS_POW_Voltage);       
                 TEXT_SetText(hItem,buf);
             }
-        }else{
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
-            sprintf(buf,"%.2f",DISS_POW_Voltage);       
-            TEXT_SetText(hItem,buf);
-        }
+//         }else{
+//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
+//             sprintf(buf,"%.2f",DISS_POW_Voltage);       
+//             TEXT_SetText(hItem,buf);
+//         }
         
         
-        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_87);
-        sprintf(buf,"%.3f",DISS_POW_Current);        
-		TEXT_SetText(hItem,buf);
+       
         
 //        test_pow();
         if(pow_sw == pow_on)
@@ -158,6 +156,9 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             battery_c = (int)bc_raw;
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_115);
             sprintf(buf,"%05d",battery_c);      
+            TEXT_SetText(hItem,buf);
+             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_87);
+            sprintf(buf,"%.3f",DISS_POW_Current);        
             TEXT_SetText(hItem,buf);
             if(status_flash == 0){
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_88);
@@ -175,6 +176,10 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         }else{
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_88);
             TEXT_SetText(hItem,"");
+            
+            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_87);
+            sprintf(buf,"%.3f",0);        
+            TEXT_SetText(hItem,buf);
         }
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_125);       
         sprintf(buf,"%.1f",temp);

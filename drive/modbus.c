@@ -37,7 +37,7 @@ vu32 Correct_Parametet[12];//校准参数
 vu32 Correct_Strong[12];//校准系数
 vu8  correct_por[6];
 /*************************变量定义***********************************/
-vu32 Run_Control[41];
+vu32 Run_Control[42];
 vu8 ADDR;
 //============================函数声明===============================//
 vu16 Hardware_CRC(vu8 *p_buffer,vu8 count);
