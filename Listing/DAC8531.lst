@@ -34903,7 +34903,7 @@ Nextern float clear_pv;
 Nextern float clear_lv;
 Nextern float temp;
 Nextern vu8 set_loop_count;
-N
+Nextern vu8 test_mode;
 Nextern vu32 Run_Control[41];	
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
 N#define SET_Voltage 	    	        Run_Control[1]  //??????
@@ -35049,6 +35049,8 @@ N#define set_69          68
 N#define set_70          69
 N#define set_71          70
 N#define set_72          71
+N#define set_73          72
+N#define set_74          73
 N/*
 N************************************************************************
 N*						参数设置识别符

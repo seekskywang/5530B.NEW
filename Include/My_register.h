@@ -200,7 +200,7 @@ extern float clear_pv;
 extern float clear_lv;
 extern float temp;
 extern vu8 set_loop_count;
-
+extern vu8 test_mode;
 extern vu32 Run_Control[41];	
 #define onoff_ch                    Run_Control[0]  //ON/OFF
 #define SET_Voltage 	    	        Run_Control[1]  //??????
@@ -346,6 +346,8 @@ extern vu16 coff[6];
 #define set_70          69
 #define set_71          70
 #define set_72          71
+#define set_73          72
+#define set_74          73
 /*
 ************************************************************************
 *						参数设置识别符

@@ -20,6 +20,7 @@
 
 WM_HWIN hWinset;
 extern int count_num(int data);
+vu8 test_mode;
 
 /*********************************************************************
 *
@@ -371,6 +372,27 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 		GUI_UC_SetEncodeUTF8();
 		TEXT_SetText(hItem,"电池类型");
         
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_133);
+        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+        GUI_UC_SetEncodeUTF8();
+        TEXT_SetText(hItem,"测试模式");
+        
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_134);
+        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+        GUI_UC_SetEncodeUTF8();
+        if(test_mode == 1)
+        {
+            TEXT_SetText(hItem,"精准");
+        }else if(test_mode == 0){
+            TEXT_SetText(hItem,"快速");
+        }
+        
+        
+        
+        
+        
         
         switch(b_type)
         {
@@ -664,6 +686,21 @@ void SET_OP_DOWN(void) {
                         WM_HWIN hItem;
 //                        WM_InvalidateWindow(hWinset);
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_90);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+               
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_133);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+
+                        set_sw = set_73;
+                        break;
+                    }
+                    case set_73:
+                    {
+                        WM_HWIN hItem;
+//                        WM_InvalidateWindow(hWinset);
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_133);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
                
@@ -1013,11 +1050,11 @@ void SET_OP_UP(void) {
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
                
-                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_90);
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_133);
                         TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                         TEXT_SetTextColor(hItem, GUI_BLACK);
 
-                        set_sw = set_42;
+                        set_sw = set_73;
                         break;
                     }
                     case set_9:
@@ -1048,6 +1085,21 @@ void SET_OP_UP(void) {
                         TEXT_SetTextColor(hItem, GUI_BLACK);
 
                         set_sw = set_9;
+                        break;
+                    }
+                    case set_73:
+                    {
+                        WM_HWIN hItem;
+//                        WM_InvalidateWindow(hWinset);
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_133);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+               
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_90);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+
+                        set_sw = set_42;
                         break;
                     }
                     case set_43:
@@ -1327,11 +1379,11 @@ void SET_OP_RIGHT(void) {
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
                
-                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_90);
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_133);
                         TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                         TEXT_SetTextColor(hItem, GUI_BLACK);
                         
-                        set_sw = set_42;
+                        set_sw = set_73;
                         break;                                 
                     }
                     case set_5:
@@ -1424,6 +1476,21 @@ void SET_OP_RIGHT(void) {
                         set_sw = set_3;
                         break;
                     }
+                    case set_73:
+                    {
+                        WM_HWIN hItem;
+//                        WM_InvalidateWindow(hWinset);
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_133);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+               
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_24);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+
+                        set_sw = set_4;
+                        break;
+                    }
 //                     case set_11:
 //                     {
 //                         WM_HWIN hItem;
@@ -1499,11 +1566,11 @@ void SET_OP_LEFT(void) {
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
                
-                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_90);
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_133);
                         TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                         TEXT_SetTextColor(hItem, GUI_BLACK);
 
-                        set_sw = set_42;
+                        set_sw = set_73;
                         break;
                     }
                     case set_5:
@@ -1594,6 +1661,21 @@ void SET_OP_LEFT(void) {
                         TEXT_SetTextColor(hItem, GUI_BLACK);
 
                         set_sw = set_3;
+                        break;
+                    }
+                    case set_73:
+                    {
+                        WM_HWIN hItem;
+//                        WM_InvalidateWindow(hWinset);
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_133);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+               
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_24);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+
+                        set_sw = set_4;
                         break;
                     }
 //                     case set_11:
@@ -1953,6 +2035,29 @@ void PARA_SET(void) {
                         dot_flag = 0;
                         break; 
                     }
+                    case set_73:
+                    {
+                        if(test_mode == 1)
+                        {
+                            WM_HWIN hItem;
+                            hItem = WM_GetDialogItem(hWinset, ID_TEXT_134);
+                            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+                            TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+                            GUI_UC_SetEncodeUTF8();
+                            TEXT_SetText(hItem,"快速");
+                            test_mode = 0;
+                            Wrtite_S();
+                        }else if(test_mode == 0){
+                            WM_HWIN hItem;
+                            hItem = WM_GetDialogItem(hWinset, ID_TEXT_134);
+                            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+                            TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+                            GUI_UC_SetEncodeUTF8();
+                            TEXT_SetText(hItem,"精准");
+                            test_mode = 1;
+                            Wrtite_S();
+                        }
+                    }break;
                     case set_42:
                     {
                             WM_HWIN hItem;
@@ -1964,6 +2069,9 @@ void PARA_SET(void) {
                             hItem = WM_GetDialogItem(hWinset, ID_TEXT_91);
                             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                             TEXT_SetTextColor(hItem, GUI_BLACK);
+                        
+                            hItem = WM_GetDialogItem(hWinset, ID_TEXT_134);
+                            TEXT_SetText(hItem,"");
                             if(b_type > 5)
                             {
                                 b_type = 1;
@@ -2122,7 +2230,16 @@ void PARA_SET(void) {
                             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                             TEXT_SetTextColor(hItem, GUI_BLACK);
                         
-                            
+                            hItem = WM_GetDialogItem(hWinset, ID_TEXT_134);
+                            if(test_mode == 1)
+                            {
+                                TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+                                TEXT_SetText(hItem,"精准");
+                            }else if(test_mode == 0){
+                                TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+                                TEXT_SetText(hItem,"快速");
+                            }
+                                                   
                             switch(buffer)
                             {
                                 case Lion:
@@ -2131,7 +2248,7 @@ void PARA_SET(void) {
                                     TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                                     TEXT_SetTextColor(hItem, GUI_WHITE);
                                     TEXT_SetText(hItem,"锂电池");
-                                    b_type = Lion;
+                                    b_type = Lion;      
                                     break;
                                 }
                                 case NiMH:
@@ -2196,6 +2313,16 @@ void PARA_SET(void) {
                             hItem = WM_GetDialogItem(hWinset, ID_TEXT_90);
                             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                             TEXT_SetTextColor(hItem, GUI_BLACK);
+                        
+                            hItem = WM_GetDialogItem(hWinset, ID_TEXT_134);
+                            if(test_mode == 1)
+                            {
+                                TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+                                TEXT_SetText(hItem,"精准");
+                            }else if(test_mode == 0){
+                                TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+                                TEXT_SetText(hItem,"快速");
+                            }
                         
                             switch(buffer)
                             {
@@ -2272,6 +2399,16 @@ void PARA_SET(void) {
                             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                             TEXT_SetTextColor(hItem, GUI_BLACK);
                         
+                            hItem = WM_GetDialogItem(hWinset, ID_TEXT_134);
+                            if(test_mode == 1)
+                            {
+                                TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+                                TEXT_SetText(hItem,"精准");
+                            }else if(test_mode == 0){
+                                TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+                                TEXT_SetText(hItem,"快速");
+                            }
+                        
                             switch(buffer)
                             {
                                 case Lion:
@@ -2347,6 +2484,16 @@ void PARA_SET(void) {
                             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                             TEXT_SetTextColor(hItem, GUI_BLACK);
                         
+                            hItem = WM_GetDialogItem(hWinset, ID_TEXT_134);
+                            if(test_mode == 1)
+                            {
+                                TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+                                TEXT_SetText(hItem,"精准");
+                            }else if(test_mode == 0){
+                                TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+                                TEXT_SetText(hItem,"快速");
+                            }
+                        
                             switch(buffer)
                             {
                                 case Lion:
@@ -2421,6 +2568,16 @@ void PARA_SET(void) {
                             hItem = WM_GetDialogItem(hWinset, ID_TEXT_90);
                             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                             TEXT_SetTextColor(hItem, GUI_BLACK);
+                        
+                            hItem = WM_GetDialogItem(hWinset, ID_TEXT_134);
+                            if(test_mode == 1)
+                            {
+                                TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+                                TEXT_SetText(hItem,"精准");
+                            }else if(test_mode == 0){
+                                TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+                                TEXT_SetText(hItem,"快速");
+                            }
                         
                             switch(buffer)
                             {

@@ -439,16 +439,32 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                         
                         if(con_flag == 1 && oct_sw == oct_off && finish == 0)
                         {
-                             if((float)(GUI_GetTime()/500.0 - time1) > 0.8)
+                            if(test_mode == 0)
                             {
-                                r = R_VLUE;
-//                                v = DISS_Voltage;
-                                oct_sw = oct_on;
-                                clear_flag1 = 0;
-                            }else{
-                                if(v < DISS_Voltage)
+                                if((float)(GUI_GetTime()/500.0 - time1) > 1)
                                 {
-                                    v = DISS_Voltage;
+                                    r = R_VLUE;
+    //                                v = DISS_Voltage;
+                                    oct_sw = oct_on;
+                                    clear_flag1 = 0;
+                                }else{
+                                    if(v < DISS_Voltage)
+                                    {
+                                        v = DISS_Voltage;
+                                    }
+                                }
+                            }else if(test_mode == 1){
+                                if((float)(GUI_GetTime()/500.0 - time1) > 2.5)
+                                {
+                                    r = R_VLUE;
+    //                                v = DISS_Voltage;
+                                    oct_sw = oct_on;
+                                    clear_flag1 = 0;
+                                }else{
+                                    if(v < DISS_Voltage)
+                                    {
+                                        v = DISS_Voltage;
+                                    }
                                 }
                             }
                         }
@@ -460,16 +476,32 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                         }                       
                         if(con_flag == 1 && oct_sw == oct_off && finish == 0)
                         {
-                             if((float)(GUI_GetTime()/500.0 - time1) > 0.8)
-                             {
-                                r = R_VLUE;
-//                                v = DISS_Voltage;
-                                oct_sw = oct_on;
-                                clear_flag1 = 0;
-                             }else{
-                                if(v < DISS_Voltage)
+                            if(test_mode == 0)
+                            {
+                                if((float)(GUI_GetTime()/500.0 - time1) > 1)
                                 {
-                                    v = DISS_Voltage;
+                                    r = R_VLUE;
+    //                                v = DISS_Voltage;
+                                    oct_sw = oct_on;
+                                    clear_flag1 = 0;
+                                }else{
+                                    if(v < DISS_Voltage)
+                                    {
+                                        v = DISS_Voltage;
+                                    }
+                                }
+                            }else if(test_mode == 1){
+                                if((float)(GUI_GetTime()/500.0 - time1) > 2.5)
+                                {
+                                    r = R_VLUE;
+    //                                v = DISS_Voltage;
+                                    oct_sw = oct_on;
+                                    clear_flag1 = 0;
+                                }else{
+                                    if(v < DISS_Voltage)
+                                    {
+                                        v = DISS_Voltage;
+                                    }
                                 }
                             }
                         }
@@ -1936,7 +1968,7 @@ void OC_CHECK(void){
     float change_sbs_c;   
     crec2 = crec1;
     crec1 = DISS_Current;         
-    if((crec1 < crec2 || v - /*DISS_Voltage*/DISS_Voltage > v*0.9) && para_set2 == set_2_on)
+    if(((crec1 < crec2 && crec2 > 0.3) || v - /*DISS_Voltage*/DISS_Voltage > v*0.9) && para_set2 == set_2_on)
     {
         if(oc_mode == 0)
         {
@@ -2049,7 +2081,7 @@ void test_r(void)
     WM_HWIN hItem;
     if(para_set2 == set_2_off)
     {
-        if(R_VLUE > set_max_r || R_VLUE < set_min_r || DISS_Voltage*100 > set_max_v || DISS_Voltage*100 < set_min_v)
+        if(R_VLUE > set_max_r || R_VLUE < set_min_r || DISS_Voltage*1000 > set_max_v || DISS_Voltage*1000 < set_min_v)
         {
             if(para_set4 == set_4_on){
                 BEEP_Tiggr();
@@ -2064,7 +2096,7 @@ void test_r(void)
                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
                 TEXT_SetTextColor(hItem, GUI_GREEN);
             }
-            if(DISS_Voltage*100 > set_max_v || DISS_Voltage*100 < set_min_v){
+            if(DISS_Voltage*1000 > set_max_v || DISS_Voltage*1000 < set_min_v){
                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
                 TEXT_SetTextColor(hItem, GUI_RED);
             }else{
@@ -2084,14 +2116,14 @@ void test_r(void)
     }else{
         if(finish == 0)
         {
-            if(R_VLUE > set_max_r || R_VLUE < set_min_r || DISS_Voltage*100 > set_max_v || DISS_Voltage*100 < set_min_v)
+            if(r > set_max_r || r < set_min_r || DISS_Voltage*1000 > set_max_v || DISS_Voltage*1000 < set_min_v)
             {
                 if(para_set4 == set_4_on){
                     BEEP_Tiggr();
                 }
                 TM1650_SET_LED(0x68,0x70);//FAIL灯
                 GPIO_SetBits(GPIOD,GPIO_Pin_12);//
-                if(R_VLUE > set_max_r || R_VLUE < set_min_r)
+                if(r > set_max_r || r < set_min_r)
                 {
                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
                     TEXT_SetTextColor(hItem, GUI_RED);
@@ -2099,7 +2131,7 @@ void test_r(void)
                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
                     TEXT_SetTextColor(hItem, GUI_GREEN);
                 }
-                if(DISS_Voltage*100 > set_max_v || DISS_Voltage*100 < set_min_v){
+                if(DISS_Voltage*1000 > set_max_v || DISS_Voltage*1000 < set_min_v){
                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
                     TEXT_SetTextColor(hItem, GUI_RED);
                 }else{
@@ -2117,7 +2149,7 @@ void test_r(void)
                 TM1650_SET_LED(0x68,0xF2);//PASS灯
             }
         }else{
-            if(r > set_max_r || r < set_min_r || v*100 > set_max_v || v*100 < set_min_v || oc_data*100 > set_max_c || oc_data*100 < set_min_c)
+            if(r > set_max_r || r < set_min_r || v*1000 > set_max_v || v*1000 < set_min_v || oc_data*1000 > set_max_c || oc_data*1000 < set_min_c)
             {
                 if(para_set4 == set_4_on){
                     BEEP_Tiggr();
@@ -2132,14 +2164,14 @@ void test_r(void)
                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
                     TEXT_SetTextColor(hItem, GUI_GREEN);
                 }
-                if(v*100 > set_max_v || v*100 < set_min_v){
+                if(v*1000 > set_max_v || v*1000 < set_min_v){
                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
                     TEXT_SetTextColor(hItem, GUI_RED);
                 }else{
                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
                     TEXT_SetTextColor(hItem, GUI_GREEN);
                 }
-                if(oc_data*100 > set_max_c || oc_data*100 < set_min_c){
+                if(oc_data*1000 > set_max_c || oc_data*1000 < set_min_c){
                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_82);
                     TEXT_SetTextColor(hItem, GUI_RED);
                 }else{
