@@ -34745,6 +34745,10 @@ Nvoid CDC_OP_LEFT(void);
 Nvoid CDC_OP_RIGHT(void);
 Nvoid CDC_SET(void);
 Nvoid INPUT_CDC(char* num); 
+Nuint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+Nvoid RecHandle(void);
+Nvoid MODS_Poll(void);
+Nvoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
 N//=============================================================================
 N#define NOP   __nop();	  //???
 N
@@ -34905,9 +34909,45 @@ Nextern float clear_lv;
 Nextern float temp;
 Nextern vu8 set_loop_count;
 Nextern vu8 test_mode;
+Nextern u8 usartocflag;
+Nextern u8 usartshortflag;
+Nextern float oc_data;
 Nextern vu8 lock;
 Nextern vu32 Run_Control[42];	
 Nextern u8 lockstat1,lockstat2;
+N
+N#define SLAVE_REG_P00		0x0000       //R_VOLU
+N#define SLAVE_REG_P01		0x0001      //Load_Voltage
+N#define SLAVE_REG_P02		0x0002      //Load_Current
+N#define SLAVE_REG_P03		0x0003		//Change_Voltage
+N#define SLAVE_REG_P04		0x0004		//Change_Current
+N#define SLAVE_REG_P05		0x0005		//Load_OCP
+N#define SLAVE_REG_P06		0x0006		//Change_OCP
+N#define SLAVE_REG_P07		0x0007		//Short_Time
+N#define SLAVE_REG_P08		0x0008		//Leak_Current
+N#define SLAVE_REG_P09		0x0009		//R1_Volu
+N#define SLAVE_REG_P10		0x000A		//R2_Volu
+N#define SLAVE_REG_P11		0x000B		//Temper
+N#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+N#define SLAVE_REG_P13		0x000D		//MODE
+N#define SLAVE_REG_P14		0x000E		//Load_Mode
+N#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+N#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+N#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+N#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+N
+N/* RTU ”¶¥¥˙¬Î */
+N#define RSP_OK				0		/* ≥…π¶ */
+N#define RSP_ERR_CMD			0x01	/* ≤ª÷ß≥÷µƒπ¶ƒ‹¬Î */
+N#define RSP_ERR_REG_ADDR	0x02	/* ºƒ¥Ê∆˜µÿ÷∑¥ÌŒÛ */
+N#define RSP_ERR_VALUE		0x03	/*  ˝æ›÷µ”Ú¥ÌŒÛ */
+N#define RSP_ERR_WRITE		0x04	/* –¥»Î ß∞‹ */
+N
+N#define S_RX_BUF_SIZE		30
+N#define S_TX_BUF_SIZE		128
+N
+N
+N
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
 N#define SET_Voltage 	    	        Run_Control[1]  //??????
 N#define SET_Current	    	    		  Run_Control[2]  //?????°§
@@ -35146,6 +35186,20 @@ Nextern vu16 ADC_Imon_Filt[50];
 Nextern vu8 UART_Buffer_Rece[16];
 Nextern vu8 UART_Buffer_Send[20];
 N//============================================================================= 
+Nstruct MODS_T
+N{
+N	uint8_t RxBuf[S_RX_BUF_SIZE];
+X	uint8_t RxBuf[30];
+N	uint8_t TxBuf[S_TX_BUF_SIZE];
+X	uint8_t TxBuf[128];
+N	uint8_t RxCount;
+N	uint8_t RxStatus;
+N	uint8_t RxNewFlag;
+N	uint8_t RspCode;
+N	
+N	uint8_t TxCount;
+N};
+N
 N#define Receive_BUFFERSIZE   10
 N//=============================================================================
 N#endif
@@ -35314,6 +35368,10 @@ Svoid CDC_OP_LEFT(void);
 Svoid CDC_OP_RIGHT(void);
 Svoid CDC_SET(void);
 Svoid INPUT_CDC(char* num); 
+Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+Svoid RecHandle(void);
+Svoid MODS_Poll(void);
+Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -35474,9 +35532,45 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern u8 usartocflag;
+Sextern u8 usartshortflag;
+Sextern float oc_data;
 Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
 Sextern u8 lockstat1,lockstat2;
+S
+S#define SLAVE_REG_P00		0x0000       //R_VOLU
+S#define SLAVE_REG_P01		0x0001      //Load_Voltage
+S#define SLAVE_REG_P02		0x0002      //Load_Current
+S#define SLAVE_REG_P03		0x0003		//Change_Voltage
+S#define SLAVE_REG_P04		0x0004		//Change_Current
+S#define SLAVE_REG_P05		0x0005		//Load_OCP
+S#define SLAVE_REG_P06		0x0006		//Change_OCP
+S#define SLAVE_REG_P07		0x0007		//Short_Time
+S#define SLAVE_REG_P08		0x0008		//Leak_Current
+S#define SLAVE_REG_P09		0x0009		//R1_Volu
+S#define SLAVE_REG_P10		0x000A		//R2_Volu
+S#define SLAVE_REG_P11		0x000B		//Temper
+S#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+S#define SLAVE_REG_P13		0x000D		//MODE
+S#define SLAVE_REG_P14		0x000E		//Load_Mode
+S#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+S#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+S#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+S#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+S
+S/* RTU ”¶¥¥˙¬Î */
+S#define RSP_OK				0		/* ≥…π¶ */
+S#define RSP_ERR_CMD			0x01	/* ≤ª÷ß≥÷µƒπ¶ƒ‹¬Î */
+S#define RSP_ERR_REG_ADDR	0x02	/* ºƒ¥Ê∆˜µÿ÷∑¥ÌŒÛ */
+S#define RSP_ERR_VALUE		0x03	/*  ˝æ›÷µ”Ú¥ÌŒÛ */
+S#define RSP_ERR_WRITE		0x04	/* –¥»Î ß∞‹ */
+S
+S#define S_RX_BUF_SIZE		30
+S#define S_TX_BUF_SIZE		128
+S
+S
+S
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????°§
@@ -35715,6 +35809,18 @@ Sextern vu16 ADC_Imon_Filt[50];
 Sextern vu8 UART_Buffer_Rece[16];
 Sextern vu8 UART_Buffer_Send[20];
 S//============================================================================= 
+Sstruct MODS_T
+S{
+S	uint8_t RxBuf[S_RX_BUF_SIZE];
+S	uint8_t TxBuf[S_TX_BUF_SIZE];
+S	uint8_t RxCount;
+S	uint8_t RxStatus;
+S	uint8_t RxNewFlag;
+S	uint8_t RspCode;
+S	
+S	uint8_t TxCount;
+S};
+S
 S#define Receive_BUFFERSIZE   10
 S//=============================================================================
 N#endif
@@ -35796,6 +35902,10 @@ Svoid CDC_OP_LEFT(void);
 Svoid CDC_OP_RIGHT(void);
 Svoid CDC_SET(void);
 Svoid INPUT_CDC(char* num); 
+Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+Svoid RecHandle(void);
+Svoid MODS_Poll(void);
+Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -35956,9 +36066,45 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern u8 usartocflag;
+Sextern u8 usartshortflag;
+Sextern float oc_data;
 Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
 Sextern u8 lockstat1,lockstat2;
+S
+S#define SLAVE_REG_P00		0x0000       //R_VOLU
+S#define SLAVE_REG_P01		0x0001      //Load_Voltage
+S#define SLAVE_REG_P02		0x0002      //Load_Current
+S#define SLAVE_REG_P03		0x0003		//Change_Voltage
+S#define SLAVE_REG_P04		0x0004		//Change_Current
+S#define SLAVE_REG_P05		0x0005		//Load_OCP
+S#define SLAVE_REG_P06		0x0006		//Change_OCP
+S#define SLAVE_REG_P07		0x0007		//Short_Time
+S#define SLAVE_REG_P08		0x0008		//Leak_Current
+S#define SLAVE_REG_P09		0x0009		//R1_Volu
+S#define SLAVE_REG_P10		0x000A		//R2_Volu
+S#define SLAVE_REG_P11		0x000B		//Temper
+S#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+S#define SLAVE_REG_P13		0x000D		//MODE
+S#define SLAVE_REG_P14		0x000E		//Load_Mode
+S#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+S#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+S#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+S#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+S
+S/* RTU ”¶¥¥˙¬Î */
+S#define RSP_OK				0		/* ≥…π¶ */
+S#define RSP_ERR_CMD			0x01	/* ≤ª÷ß≥÷µƒπ¶ƒ‹¬Î */
+S#define RSP_ERR_REG_ADDR	0x02	/* ºƒ¥Ê∆˜µÿ÷∑¥ÌŒÛ */
+S#define RSP_ERR_VALUE		0x03	/*  ˝æ›÷µ”Ú¥ÌŒÛ */
+S#define RSP_ERR_WRITE		0x04	/* –¥»Î ß∞‹ */
+S
+S#define S_RX_BUF_SIZE		30
+S#define S_TX_BUF_SIZE		128
+S
+S
+S
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????°§
@@ -36197,6 +36343,18 @@ Sextern vu16 ADC_Imon_Filt[50];
 Sextern vu8 UART_Buffer_Rece[16];
 Sextern vu8 UART_Buffer_Send[20];
 S//============================================================================= 
+Sstruct MODS_T
+S{
+S	uint8_t RxBuf[S_RX_BUF_SIZE];
+S	uint8_t TxBuf[S_TX_BUF_SIZE];
+S	uint8_t RxCount;
+S	uint8_t RxStatus;
+S	uint8_t RxNewFlag;
+S	uint8_t RspCode;
+S	
+S	uint8_t TxCount;
+S};
+S
 S#define Receive_BUFFERSIZE   10
 S//=============================================================================
 N#endif
@@ -50131,6 +50289,10 @@ Svoid CDC_OP_LEFT(void);
 Svoid CDC_OP_RIGHT(void);
 Svoid CDC_SET(void);
 Svoid INPUT_CDC(char* num); 
+Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+Svoid RecHandle(void);
+Svoid MODS_Poll(void);
+Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -50291,9 +50453,45 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern u8 usartocflag;
+Sextern u8 usartshortflag;
+Sextern float oc_data;
 Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
 Sextern u8 lockstat1,lockstat2;
+S
+S#define SLAVE_REG_P00		0x0000       //R_VOLU
+S#define SLAVE_REG_P01		0x0001      //Load_Voltage
+S#define SLAVE_REG_P02		0x0002      //Load_Current
+S#define SLAVE_REG_P03		0x0003		//Change_Voltage
+S#define SLAVE_REG_P04		0x0004		//Change_Current
+S#define SLAVE_REG_P05		0x0005		//Load_OCP
+S#define SLAVE_REG_P06		0x0006		//Change_OCP
+S#define SLAVE_REG_P07		0x0007		//Short_Time
+S#define SLAVE_REG_P08		0x0008		//Leak_Current
+S#define SLAVE_REG_P09		0x0009		//R1_Volu
+S#define SLAVE_REG_P10		0x000A		//R2_Volu
+S#define SLAVE_REG_P11		0x000B		//Temper
+S#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+S#define SLAVE_REG_P13		0x000D		//MODE
+S#define SLAVE_REG_P14		0x000E		//Load_Mode
+S#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+S#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+S#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+S#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+S
+S/* RTU ”¶¥¥˙¬Î */
+S#define RSP_OK				0		/* ≥…π¶ */
+S#define RSP_ERR_CMD			0x01	/* ≤ª÷ß≥÷µƒπ¶ƒ‹¬Î */
+S#define RSP_ERR_REG_ADDR	0x02	/* ºƒ¥Ê∆˜µÿ÷∑¥ÌŒÛ */
+S#define RSP_ERR_VALUE		0x03	/*  ˝æ›÷µ”Ú¥ÌŒÛ */
+S#define RSP_ERR_WRITE		0x04	/* –¥»Î ß∞‹ */
+S
+S#define S_RX_BUF_SIZE		30
+S#define S_TX_BUF_SIZE		128
+S
+S
+S
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????°§
@@ -50532,6 +50730,18 @@ Sextern vu16 ADC_Imon_Filt[50];
 Sextern vu8 UART_Buffer_Rece[16];
 Sextern vu8 UART_Buffer_Send[20];
 S//============================================================================= 
+Sstruct MODS_T
+S{
+S	uint8_t RxBuf[S_RX_BUF_SIZE];
+S	uint8_t TxBuf[S_TX_BUF_SIZE];
+S	uint8_t RxCount;
+S	uint8_t RxStatus;
+S	uint8_t RxNewFlag;
+S	uint8_t RspCode;
+S	
+S	uint8_t TxCount;
+S};
+S
 S#define Receive_BUFFERSIZE   10
 S//=============================================================================
 N#endif
@@ -50608,6 +50818,10 @@ Svoid CDC_OP_LEFT(void);
 Svoid CDC_OP_RIGHT(void);
 Svoid CDC_SET(void);
 Svoid INPUT_CDC(char* num); 
+Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+Svoid RecHandle(void);
+Svoid MODS_Poll(void);
+Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -50768,9 +50982,45 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern u8 usartocflag;
+Sextern u8 usartshortflag;
+Sextern float oc_data;
 Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
 Sextern u8 lockstat1,lockstat2;
+S
+S#define SLAVE_REG_P00		0x0000       //R_VOLU
+S#define SLAVE_REG_P01		0x0001      //Load_Voltage
+S#define SLAVE_REG_P02		0x0002      //Load_Current
+S#define SLAVE_REG_P03		0x0003		//Change_Voltage
+S#define SLAVE_REG_P04		0x0004		//Change_Current
+S#define SLAVE_REG_P05		0x0005		//Load_OCP
+S#define SLAVE_REG_P06		0x0006		//Change_OCP
+S#define SLAVE_REG_P07		0x0007		//Short_Time
+S#define SLAVE_REG_P08		0x0008		//Leak_Current
+S#define SLAVE_REG_P09		0x0009		//R1_Volu
+S#define SLAVE_REG_P10		0x000A		//R2_Volu
+S#define SLAVE_REG_P11		0x000B		//Temper
+S#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+S#define SLAVE_REG_P13		0x000D		//MODE
+S#define SLAVE_REG_P14		0x000E		//Load_Mode
+S#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+S#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+S#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+S#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+S
+S/* RTU ”¶¥¥˙¬Î */
+S#define RSP_OK				0		/* ≥…π¶ */
+S#define RSP_ERR_CMD			0x01	/* ≤ª÷ß≥÷µƒπ¶ƒ‹¬Î */
+S#define RSP_ERR_REG_ADDR	0x02	/* ºƒ¥Ê∆˜µÿ÷∑¥ÌŒÛ */
+S#define RSP_ERR_VALUE		0x03	/*  ˝æ›÷µ”Ú¥ÌŒÛ */
+S#define RSP_ERR_WRITE		0x04	/* –¥»Î ß∞‹ */
+S
+S#define S_RX_BUF_SIZE		30
+S#define S_TX_BUF_SIZE		128
+S
+S
+S
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????°§
@@ -51009,6 +51259,18 @@ Sextern vu16 ADC_Imon_Filt[50];
 Sextern vu8 UART_Buffer_Rece[16];
 Sextern vu8 UART_Buffer_Send[20];
 S//============================================================================= 
+Sstruct MODS_T
+S{
+S	uint8_t RxBuf[S_RX_BUF_SIZE];
+S	uint8_t TxBuf[S_TX_BUF_SIZE];
+S	uint8_t RxCount;
+S	uint8_t RxStatus;
+S	uint8_t RxNewFlag;
+S	uint8_t RspCode;
+S	
+S	uint8_t TxCount;
+S};
+S
 S#define Receive_BUFFERSIZE   10
 S//=============================================================================
 N#endif
@@ -51097,6 +51359,10 @@ Svoid CDC_OP_LEFT(void);
 Svoid CDC_OP_RIGHT(void);
 Svoid CDC_SET(void);
 Svoid INPUT_CDC(char* num); 
+Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+Svoid RecHandle(void);
+Svoid MODS_Poll(void);
+Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -51257,9 +51523,45 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern u8 usartocflag;
+Sextern u8 usartshortflag;
+Sextern float oc_data;
 Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
 Sextern u8 lockstat1,lockstat2;
+S
+S#define SLAVE_REG_P00		0x0000       //R_VOLU
+S#define SLAVE_REG_P01		0x0001      //Load_Voltage
+S#define SLAVE_REG_P02		0x0002      //Load_Current
+S#define SLAVE_REG_P03		0x0003		//Change_Voltage
+S#define SLAVE_REG_P04		0x0004		//Change_Current
+S#define SLAVE_REG_P05		0x0005		//Load_OCP
+S#define SLAVE_REG_P06		0x0006		//Change_OCP
+S#define SLAVE_REG_P07		0x0007		//Short_Time
+S#define SLAVE_REG_P08		0x0008		//Leak_Current
+S#define SLAVE_REG_P09		0x0009		//R1_Volu
+S#define SLAVE_REG_P10		0x000A		//R2_Volu
+S#define SLAVE_REG_P11		0x000B		//Temper
+S#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+S#define SLAVE_REG_P13		0x000D		//MODE
+S#define SLAVE_REG_P14		0x000E		//Load_Mode
+S#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+S#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+S#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+S#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+S
+S/* RTU ”¶¥¥˙¬Î */
+S#define RSP_OK				0		/* ≥…π¶ */
+S#define RSP_ERR_CMD			0x01	/* ≤ª÷ß≥÷µƒπ¶ƒ‹¬Î */
+S#define RSP_ERR_REG_ADDR	0x02	/* ºƒ¥Ê∆˜µÿ÷∑¥ÌŒÛ */
+S#define RSP_ERR_VALUE		0x03	/*  ˝æ›÷µ”Ú¥ÌŒÛ */
+S#define RSP_ERR_WRITE		0x04	/* –¥»Î ß∞‹ */
+S
+S#define S_RX_BUF_SIZE		30
+S#define S_TX_BUF_SIZE		128
+S
+S
+S
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????°§
@@ -51498,6 +51800,18 @@ Sextern vu16 ADC_Imon_Filt[50];
 Sextern vu8 UART_Buffer_Rece[16];
 Sextern vu8 UART_Buffer_Send[20];
 S//============================================================================= 
+Sstruct MODS_T
+S{
+S	uint8_t RxBuf[S_RX_BUF_SIZE];
+S	uint8_t TxBuf[S_TX_BUF_SIZE];
+S	uint8_t RxCount;
+S	uint8_t RxStatus;
+S	uint8_t RxNewFlag;
+S	uint8_t RspCode;
+S	
+S	uint8_t TxCount;
+S};
+S
 S#define Receive_BUFFERSIZE   10
 S//=============================================================================
 N#endif
@@ -51576,6 +51890,10 @@ Svoid CDC_OP_LEFT(void);
 Svoid CDC_OP_RIGHT(void);
 Svoid CDC_SET(void);
 Svoid INPUT_CDC(char* num); 
+Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+Svoid RecHandle(void);
+Svoid MODS_Poll(void);
+Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -51736,9 +52054,45 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern u8 usartocflag;
+Sextern u8 usartshortflag;
+Sextern float oc_data;
 Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
 Sextern u8 lockstat1,lockstat2;
+S
+S#define SLAVE_REG_P00		0x0000       //R_VOLU
+S#define SLAVE_REG_P01		0x0001      //Load_Voltage
+S#define SLAVE_REG_P02		0x0002      //Load_Current
+S#define SLAVE_REG_P03		0x0003		//Change_Voltage
+S#define SLAVE_REG_P04		0x0004		//Change_Current
+S#define SLAVE_REG_P05		0x0005		//Load_OCP
+S#define SLAVE_REG_P06		0x0006		//Change_OCP
+S#define SLAVE_REG_P07		0x0007		//Short_Time
+S#define SLAVE_REG_P08		0x0008		//Leak_Current
+S#define SLAVE_REG_P09		0x0009		//R1_Volu
+S#define SLAVE_REG_P10		0x000A		//R2_Volu
+S#define SLAVE_REG_P11		0x000B		//Temper
+S#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+S#define SLAVE_REG_P13		0x000D		//MODE
+S#define SLAVE_REG_P14		0x000E		//Load_Mode
+S#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+S#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+S#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+S#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+S
+S/* RTU ”¶¥¥˙¬Î */
+S#define RSP_OK				0		/* ≥…π¶ */
+S#define RSP_ERR_CMD			0x01	/* ≤ª÷ß≥÷µƒπ¶ƒ‹¬Î */
+S#define RSP_ERR_REG_ADDR	0x02	/* ºƒ¥Ê∆˜µÿ÷∑¥ÌŒÛ */
+S#define RSP_ERR_VALUE		0x03	/*  ˝æ›÷µ”Ú¥ÌŒÛ */
+S#define RSP_ERR_WRITE		0x04	/* –¥»Î ß∞‹ */
+S
+S#define S_RX_BUF_SIZE		30
+S#define S_TX_BUF_SIZE		128
+S
+S
+S
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????°§
@@ -51977,6 +52331,18 @@ Sextern vu16 ADC_Imon_Filt[50];
 Sextern vu8 UART_Buffer_Rece[16];
 Sextern vu8 UART_Buffer_Send[20];
 S//============================================================================= 
+Sstruct MODS_T
+S{
+S	uint8_t RxBuf[S_RX_BUF_SIZE];
+S	uint8_t TxBuf[S_TX_BUF_SIZE];
+S	uint8_t RxCount;
+S	uint8_t RxStatus;
+S	uint8_t RxNewFlag;
+S	uint8_t RspCode;
+S	
+S	uint8_t TxCount;
+S};
+S
 S#define Receive_BUFFERSIZE   10
 S//=============================================================================
 N#endif
@@ -52222,10 +52588,12 @@ W "..\User\main.c" 53 5 function "TIM4_Int_Init" declared implicitly
 N    TIM4_Int_Init(2-1,8400-1);
 W "..\User\main.c" 54 5 function "TIM3_Int_Init" declared implicitly
 N    TIM3_Int_Init(10000-1,8400-1);
+W "..\User\main.c" 55 5 function "TIM5_Int_Init" declared implicitly
+N    TIM5_Int_Init(100-1,8400-1);
 N	TIM6_Config();
 N	ADC1_DMA_Init();
 N	USART_Configuration();
-W "..\User\main.c" 58 5 function "USART3_Configuration" declared implicitly
+W "..\User\main.c" 59 5 function "USART3_Configuration" declared implicitly
 N    USART3_Configuration();
 N	i2c_CfgGpio();//24C01ÂºïËÑöÂàùÂßãÂåñ
 N	TM1650_GPIO_INT();		/*TM1650ÂºïËÑöÂàùÂßãÂåñ */

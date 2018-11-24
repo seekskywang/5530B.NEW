@@ -34745,6 +34745,10 @@ Nvoid CDC_OP_LEFT(void);
 Nvoid CDC_OP_RIGHT(void);
 Nvoid CDC_SET(void);
 Nvoid INPUT_CDC(char* num); 
+Nuint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+Nvoid RecHandle(void);
+Nvoid MODS_Poll(void);
+Nvoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
 N//=============================================================================
 N#define NOP   __nop();	  //???
 N
@@ -34905,9 +34909,45 @@ Nextern float clear_lv;
 Nextern float temp;
 Nextern vu8 set_loop_count;
 Nextern vu8 test_mode;
+Nextern u8 usartocflag;
+Nextern u8 usartshortflag;
+Nextern float oc_data;
 Nextern vu8 lock;
 Nextern vu32 Run_Control[42];	
 Nextern u8 lockstat1,lockstat2;
+N
+N#define SLAVE_REG_P00		0x0000       //R_VOLU
+N#define SLAVE_REG_P01		0x0001      //Load_Voltage
+N#define SLAVE_REG_P02		0x0002      //Load_Current
+N#define SLAVE_REG_P03		0x0003		//Change_Voltage
+N#define SLAVE_REG_P04		0x0004		//Change_Current
+N#define SLAVE_REG_P05		0x0005		//Load_OCP
+N#define SLAVE_REG_P06		0x0006		//Change_OCP
+N#define SLAVE_REG_P07		0x0007		//Short_Time
+N#define SLAVE_REG_P08		0x0008		//Leak_Current
+N#define SLAVE_REG_P09		0x0009		//R1_Volu
+N#define SLAVE_REG_P10		0x000A		//R2_Volu
+N#define SLAVE_REG_P11		0x000B		//Temper
+N#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+N#define SLAVE_REG_P13		0x000D		//MODE
+N#define SLAVE_REG_P14		0x000E		//Load_Mode
+N#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+N#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+N#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+N#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+N
+N/* RTU 应答代码 */
+N#define RSP_OK				0		/* 成功 */
+N#define RSP_ERR_CMD			0x01	/* 不支持的功能码 */
+N#define RSP_ERR_REG_ADDR	0x02	/* 寄存器地址错误 */
+N#define RSP_ERR_VALUE		0x03	/* 数据值域错误 */
+N#define RSP_ERR_WRITE		0x04	/* 写入失败 */
+N
+N#define S_RX_BUF_SIZE		30
+N#define S_TX_BUF_SIZE		128
+N
+N
+N
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
 N#define SET_Voltage 	    	        Run_Control[1]  //??????
 N#define SET_Current	    	    		  Run_Control[2]  //?????·
@@ -35146,6 +35186,20 @@ Nextern vu16 ADC_Imon_Filt[50];
 Nextern vu8 UART_Buffer_Rece[16];
 Nextern vu8 UART_Buffer_Send[20];
 N//============================================================================= 
+Nstruct MODS_T
+N{
+N	uint8_t RxBuf[S_RX_BUF_SIZE];
+X	uint8_t RxBuf[30];
+N	uint8_t TxBuf[S_TX_BUF_SIZE];
+X	uint8_t TxBuf[128];
+N	uint8_t RxCount;
+N	uint8_t RxStatus;
+N	uint8_t RxNewFlag;
+N	uint8_t RspCode;
+N	
+N	uint8_t TxCount;
+N};
+N
 N#define Receive_BUFFERSIZE   10
 N//=============================================================================
 N#endif
@@ -49059,6 +49113,10 @@ Svoid CDC_OP_LEFT(void);
 Svoid CDC_OP_RIGHT(void);
 Svoid CDC_SET(void);
 Svoid INPUT_CDC(char* num); 
+Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+Svoid RecHandle(void);
+Svoid MODS_Poll(void);
+Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -49219,9 +49277,45 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern u8 usartocflag;
+Sextern u8 usartshortflag;
+Sextern float oc_data;
 Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
 Sextern u8 lockstat1,lockstat2;
+S
+S#define SLAVE_REG_P00		0x0000       //R_VOLU
+S#define SLAVE_REG_P01		0x0001      //Load_Voltage
+S#define SLAVE_REG_P02		0x0002      //Load_Current
+S#define SLAVE_REG_P03		0x0003		//Change_Voltage
+S#define SLAVE_REG_P04		0x0004		//Change_Current
+S#define SLAVE_REG_P05		0x0005		//Load_OCP
+S#define SLAVE_REG_P06		0x0006		//Change_OCP
+S#define SLAVE_REG_P07		0x0007		//Short_Time
+S#define SLAVE_REG_P08		0x0008		//Leak_Current
+S#define SLAVE_REG_P09		0x0009		//R1_Volu
+S#define SLAVE_REG_P10		0x000A		//R2_Volu
+S#define SLAVE_REG_P11		0x000B		//Temper
+S#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+S#define SLAVE_REG_P13		0x000D		//MODE
+S#define SLAVE_REG_P14		0x000E		//Load_Mode
+S#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+S#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+S#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+S#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+S
+S/* RTU 应答代码 */
+S#define RSP_OK				0		/* 成功 */
+S#define RSP_ERR_CMD			0x01	/* 不支持的功能码 */
+S#define RSP_ERR_REG_ADDR	0x02	/* 寄存器地址错误 */
+S#define RSP_ERR_VALUE		0x03	/* 数据值域错误 */
+S#define RSP_ERR_WRITE		0x04	/* 写入失败 */
+S
+S#define S_RX_BUF_SIZE		30
+S#define S_TX_BUF_SIZE		128
+S
+S
+S
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????·
@@ -49460,6 +49554,18 @@ Sextern vu16 ADC_Imon_Filt[50];
 Sextern vu8 UART_Buffer_Rece[16];
 Sextern vu8 UART_Buffer_Send[20];
 S//============================================================================= 
+Sstruct MODS_T
+S{
+S	uint8_t RxBuf[S_RX_BUF_SIZE];
+S	uint8_t TxBuf[S_TX_BUF_SIZE];
+S	uint8_t RxCount;
+S	uint8_t RxStatus;
+S	uint8_t RxNewFlag;
+S	uint8_t RspCode;
+S	
+S	uint8_t TxCount;
+S};
+S
 S#define Receive_BUFFERSIZE   10
 S//=============================================================================
 N#endif
@@ -49489,6 +49595,19 @@ L 16 "..\drive\TIM6.c" 2
 N/*****************************************************************/
 N/*****************************************************************/
 N
+Nextern struct bitDefine
+N{
+N    unsigned bit0: 1;
+N    unsigned bit1: 1;
+N    unsigned bit2: 1;
+N    unsigned bit3: 1;
+N    unsigned bit4: 1;
+N    unsigned bit5: 1;
+N    unsigned bit6: 1;
+N    unsigned bit7: 1;
+N} flagA, flagB,flagC,flagD,flagE,flagF,flagG;
+N
+N
 Nvu16 battery_c;
 Nfloat bc_raw;
 Nfloat cbc_raw;
@@ -49508,6 +49627,19 @@ Nextern vu8 hour1;
 Nvu8 resetflag;
 Nvu8 resdone;
 Nfloat watch;
+Nextern float crec1,crec2;
+Nextern u8 g_mods_timeout;
+Nextern struct MODS_T g_tModS;
+Nu32 Tick_10ms=0;
+Nu32 OldTick;
+Nu8 usartocflag = 0;//涓婁綅鏈鸿繃娴佹爣蹇椾綅
+Nu8 usartshortflag = 0;//涓婁綅鏈虹煭璺爣蹇椾綅
+Nfloat shortv;
+Nextern vu16 short_time;
+Nextern vu8 rpow;
+Nextern vu8 short_finish;
+Nextern vu8 short_flag;
+Nextern float v;
 N//????? 3 ?????
 N//arrú?????c pscú??????
 N//???????????:Tout=((arr+1)*(psc+1))/Ft us.
@@ -49544,6 +49676,18 @@ N{
 N    static vu16 resetcount;
 N    static vu8 read1963;
 N    static vu16 scancount;
+N    static vu16 uocount;
+N    static vu16 powcount;
+N    static vu16 powflag;
+N    static vu16 finishflag;
+N    static float crec1,crec2;
+N    u8 crec[6];
+N    u8 *csend;
+N    static u8 *sendbuf;
+N    u8 sendlen;
+N    static u16 recrc;
+N    static u16 scrc;
+N    u8 i;
 N//     static float crec1,crec2;
 N    
 N    if(TIM_GetITStatus(TIM4,TIM_IT_Update)==SET) //????
@@ -49566,27 +49710,27 @@ N                     GUI_Init();
 N                     if(page_sw == face_menu)
 X                     if(page_sw == 2)
 N                     {
-W "..\drive\TIM6.c" 86 26 function "ResetPow" declared implicitly
+W "..\drive\TIM6.c" 124 26 function "ResetPow" declared implicitly
 N                         ResetPow();
 N                     }else if(page_sw == face_cdc){
 X                     }else if(page_sw == 1){
-W "..\drive\TIM6.c" 88 26 function "ResetCDC" declared implicitly
+W "..\drive\TIM6.c" 126 26 function "ResetCDC" declared implicitly
 N                         ResetCDC();
 N                     }else if(page_sw == face_r){
 X                     }else if(page_sw == 3){
-W "..\drive\TIM6.c" 90 26 function "ResetR" declared implicitly
+W "..\drive\TIM6.c" 128 26 function "ResetR" declared implicitly
 N                         ResetR();
 N                     }else if(page_sw == face_load){
 X                     }else if(page_sw == 4){
-W "..\drive\TIM6.c" 92 26 function "ResetLoad" declared implicitly
+W "..\drive\TIM6.c" 130 26 function "ResetLoad" declared implicitly
 N                         ResetLoad();
 N                     }else if(page_sw == face_graph){
 X                     }else if(page_sw == 0){
-W "..\drive\TIM6.c" 94 26 function "ResetG" declared implicitly
+W "..\drive\TIM6.c" 132 26 function "ResetG" declared implicitly
 N                         ResetG();
 N                     }else if(page_sw == face_set){
 X                     }else if(page_sw == 5){
-W "..\drive\TIM6.c" 96 26 function "ResetSET" declared implicitly
+W "..\drive\TIM6.c" 134 26 function "ResetSET" declared implicitly
 N                         ResetSET();
 N                     }
 N//                     resdone = 1;
@@ -49598,20 +49742,70 @@ N                 }
 N             }
 N         }
 N         
-N        if(oct_sw == oct_on)
-X        if(oct_sw == 1)
+N        if(page_sw == face_r)
+X        if(page_sw == 3)
 N        {
-N            OC_CHECK();
 N            if(oct_sw == oct_on)
 X            if(oct_sw == 1)
 N            {
-N                stepcount ++;
-N                if(stepcount == steptime*10)
+N                OC_CHECK();
+N                if(oct_sw == oct_on)
+X                if(oct_sw == 1)
 N                {
-N                    OC_ADD();
-N                    stepcount = 0;
+N                    stepcount ++;
+N                    if(stepcount == steptime*10)
+N                    {
+N                        OC_ADD();
+N                        stepcount = 0;
+N                    }
 N                }
 N            }
+N            if(rpow == 1)
+N            {
+N                if(powcount < 1000)
+N                {
+N                    SET_Voltage =3000;
+X                    Run_Control[1] =3000;
+N                    SET_Current = 1000;
+X                    Run_Control[2] = 1000;
+N                    GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
+X                    GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N                    GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
+X                    GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N                    GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
+X                    GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                    powcount++;
+N                }else{
+N                    powcount = 0;
+N                    rpow = 0;
+N                    short_flag = 1;
+W "..\drive\TIM6.c" 174 21 function "IO_OFF" declared implicitly
+N                    IO_OFF();
+N                }                    
+N            }
+N            if(short_flag == 1)
+N            {
+N                SET_Current_Laod = (int)(oc_data*1000)+8000;
+X                Run_Control[4] = (int)(oc_data*1000)+8000;
+N//                flag_Load_CC = 1;
+N                GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
+N                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+W "..\drive\TIM6.c" 183 41 single-precision operand implicitly converted to double-precision
+N                if((v - DISS_Voltage) > v*0.6)
+N                {
+N                    GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
+X                    GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N                    short_flag = 0;
+N                    short_finish = 1;
+N                    SET_Current_Laod = set_init_c;
+X                    Run_Control[4] = Run_Control[22];
+N                }else{
+N                    short_time++;                
+N                }
+N            }
+N            
 N        }
 N//         if(page_sw == face_load)
 N//         {
@@ -49627,7 +49821,147 @@ N//                     crec2 = crec1 = 0;
 N//                 }
 N//             }
 N//         }
+N        if(usartocflag == 1)
+N        {
+N//             g_tModS.TxBuf[0] = g_tModS.RxBuf[0];
+N//             g_tModS.TxBuf[1] = g_tModS.RxBuf[1];
+N//             g_tModS.TxBuf[2] = 0x26;
+N//             g_tModS.TxBuf[3] = R_VLUE>>8;
+N//             g_tModS.TxBuf[4] = R_VLUE;
+N//             g_tModS.TxBuf[5] = (int)(DISS_Voltage*1000)>>8;
+N//             g_tModS.TxBuf[6] = (int)(DISS_Voltage*1000);
+N//             g_tModS.TxBuf[7] = (int)(DISS_Current*1000)>>8;
+N//             g_tModS.TxBuf[8] = (int)(DISS_Current*1000);
+N//             g_tModS.TxBuf[9] = (int)(DISS_POW_Voltage*100)>>8;
+N//             g_tModS.TxBuf[10] = (int)(DISS_POW_Voltage*100);
+N//             g_tModS.TxBuf[11] = (int)(DISS_POW_Current*1000)>>8;
+N//             g_tModS.TxBuf[12] = (int)(DISS_POW_Current*1000);
+N//             
+N//             for(i=15;i<41;i++)
+N//             {
+N//                 g_tModS.TxBuf[i] = 0;
+N//             }
+N//             g_tModS.TxBuf[15] = 0;
+N//             g_tModS.TxBuf[16] = 0;
+N            GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N            GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+X            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N            flag_Load_CC = 1;
+X            (flagD . bit7) = 1;
+N            GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
+N            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N            crec2 = crec1;
+N            crec1 = DISS_Current;
+W "..\drive\TIM6.c" 238 33 single-precision operand implicitly converted to double-precision
+N            if(crec1 < crec2 && crec2 > 0.3)
+N            {     
+N                oc_data = crec2;
+N                g_tModS.TxBuf[13] = (int)(oc_data*1000)>>8;
+N                g_tModS.TxBuf[14] = (int)(oc_data*1000);
+N                SET_Current_Laod = set_init_c;
+X                Run_Control[4] = Run_Control[22];
+N                GPIO_SetBits(GPIOA,GPIO_Pin_15);//鍏抽棴璐熻浇 
+X                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N                MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);
+N                t_onoff = 0;
+N                usartocflag = 0;
+N                crec1 = 0;
+N                crec2 = 0;
+N                powflag = 1;
+N                
+N            }else{
+N                if(uocount == 10)
+N                {
+N                    SET_Current_Laod = SET_Current_Laod + 10;
+X                    Run_Control[4] = Run_Control[4] + 10;
+N                    uocount = 0;
+N                }else{
+N                    uocount++;
+N                }                    
+N            }
+N        }
+N        if(powflag == 1)
+N        {
+N            if(powcount < 1000)
+N            {
+N                SET_Voltage =3000;
+X                Run_Control[1] =3000;
+N                SET_Current = 1000;
+X                Run_Control[2] = 1000;
+N                GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
+X                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
+X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N                GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
+X                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                powcount++;
+N//                 shortv = DISS_Voltage;
+N            }else{
+N                powcount = 0;
+N                powflag = 0;
+W "..\drive\TIM6.c" 276 17 function "IO_OFF" declared implicitly
+N                IO_OFF();
+N                usartshortflag = 1;
+N                
+N            }
+N        }
+N        if(usartshortflag == 1)
+N        {
+N            SET_Current_Laod = (int)(oc_data*1000)+8000;
+X            Run_Control[4] = (int)(oc_data*1000)+8000;
+N            flag_Load_CC = 1;
+X            (flagD . bit7) = 1;
+N            GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
+N            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+W "..\drive\TIM6.c" 287 42 single-precision operand implicitly converted to double-precision
+N            if((shortv - DISS_Voltage) > shortv*0.6)
+N            {
+W "..\drive\TIM6.c" 289 17 function "IO_OFF" declared implicitly
+N                IO_OFF();
+N                usartshortflag = 0;               
+N                g_tModS.TxBuf[17] = (short_time/10)>>8;
+N                g_tModS.TxBuf[18] = (short_time/10);
+N                MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);
+N                finishflag=1;
+N                short_time = 0;
+N            }else{
+N                short_time++;                
+N            }
+N        }
+N        if(finishflag == 1)
+N        {
+N            if(powcount < 1000)
+N            {
+N                SET_Voltage =3000;
+X                Run_Control[1] =3000;
+N                SET_Current = 1000;
+X                Run_Control[2] = 1000;
+N                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
+X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N                GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
+X                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                powcount++;
+N//                 shortv = DISS_Voltage;
+N            }else{
+N                powcount = 0;
+N                finishflag = 0;
+W "..\drive\TIM6.c" 313 17 function "IO_OFF" declared implicitly
+N                IO_OFF();                
+N            }
+N        }
 N    }    
+W "..\drive\TIM6.c" 99 8 variable "crec" was declared but never referenced
+W "..\drive\TIM6.c" 100 9 variable "csend" was declared but never referenced
+W "..\drive\TIM6.c" 101 16 variable "sendbuf" was declared but never referenced
+W "..\drive\TIM6.c" 102 8 variable "sendlen" was declared but never referenced
+W "..\drive\TIM6.c" 103 16 variable "recrc" was declared but never referenced
+W "..\drive\TIM6.c" 104 16 variable "scrc" was declared but never referenced
+W "..\drive\TIM6.c" 105 8 variable "i" was declared but never referenced
 N}
 N
 Nvoid TIM6_Config(void)
@@ -49875,5 +50209,131 @@ N//         TM1650_SET_LED(0x48,0x71);
 N//         TM1650_SET_LED(0x68,0xF2);//PASS?
 N    }    
 N    
+N}
+N
+Nvoid TIM5_Int_Init(u16 arr,u16 psc)
+N{
+N    TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+N    NVIC_InitTypeDef NVIC_InitStructure;
+N    
+N    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5,ENABLE); //脵使艤 TIM3 时讚
+X    RCC_APB1PeriphClockCmd(((uint32_t)0x00000008),ENABLE); 
+N    TIM_TimeBaseInitStructure.TIM_Period = arr; //財织讟装諛值
+N    TIM_TimeBaseInitStructure.TIM_Prescaler=psc; //吱时欠貣频
+N    TIM_TimeBaseInitStructure.TIM_CounterMode=TIM_CounterMode_Up; //胁蕪輪私模式
+X    TIM_TimeBaseInitStructure.TIM_CounterMode=((uint16_t)0x0000); 
+N    TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
+X    TIM_TimeBaseInitStructure.TIM_ClockDivision=((uint16_t)0x0000);
+N    TIM_TimeBaseInit(TIM5,&TIM_TimeBaseInitStructure);// 脷缘始郫吱时欠 TIM3
+X    TIM_TimeBaseInit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)),&TIM_TimeBaseInitStructure);
+N    TIM_ITConfig(TIM5,TIM_IT_Update,ENABLE); //脹諍循吱时欠 3 偌褌讗讖
+X    TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)),((uint16_t)0x0001),ENABLE); 
+N    NVIC_InitStructure.NVIC_IRQChannel=TIM5_IRQn; //吱时欠 3 讗讖
+N    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0x01; //葊占詤袌芏 1
+N    NVIC_InitStructure.NVIC_IRQChannelSubPriority=0x02; //鞋应詤袌芏 3
+N    NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
+N    NVIC_Init(&NVIC_InitStructure);// 脺缘始郫 NVIC
+N    TIM_Cmd(TIM5,ENABLE); //脻使艤吱时欠 3
+X    TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)),ENABLE); 
+N}
+N
+N
+Nvoid TIM5_IRQHandler(void)
+N{
+N    
+N    if(TIM_GetITStatus(TIM5,TIM_IT_Update)==SET) //缨远讗讖
+X    if(TIM_GetITStatus(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)),((uint16_t)0x0001))==SET) 
+N    {
+N        TIM_ClearITPendingBit(TIM5,TIM_IT_Update); //娓呴櫎涓柇鏍囧織浣?
+X        TIM_ClearITPendingBit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)),((uint16_t)0x0001)); 
+N        Tick_10ms ++;
+N        MODS_Poll();
+N    }
+N}
+N
+N
+Nvoid MODS_Poll(void)
+N{
+N	uint16_t addr;
+N	static uint16_t crc1;
+N    static u32 testi;
+N	/* 瓒呰繃3.5涓瓧绗︽椂闂村悗鎵цMODH_RxTimeOut()鍑芥暟銆傚叏灞�鍙橀噺 g_rtu_timeout = 1; 閫氱煡涓荤▼搴忓紑濮嬭В鐮?*/
+N//	if (g_mods_timeout == 0)	
+N//	{
+N//		return;								/* 娌℃湁瓒呮椂锛岀户缁帴鏀躲�備笉瑕佹竻闆?g_tModS.RxCount */
+N//	}
+N
+N    testi=g_tModS.RxCount;
+N    testi=g_tModS.RxCount;
+N    testi=g_tModS.RxCount;
+N	if(testi>7)				/* 接收到的数据小于4个字节就认为错误 */
+N	{
+N		testi=testi;
+N	}
+N	testi=g_tModS.RxCount;
+N    if(testi==8)				/* 接收到的数据小于4个字节就认为错误 */
+N	{
+N		testi=testi+1;
+N	}
+N	//判断通讯接收是否超时
+N	if(OldTick!=Tick_10ms)
+N  	{  
+N	  OldTick=Tick_10ms;
+N	   if(g_mods_timeout>0)
+N      { 
+N	    g_mods_timeout--;
+N      }
+N	  if(g_mods_timeout==0 && g_tModS.RxCount>0)   //有数但超时了
+N      { 
+N		// goto err_ret;
+N	
+N      }
+N      else if(g_mods_timeout==0 && g_tModS.RxCount==0) //没数超时了
+N         return;
+N      else //没超时了，继续收
+N         return;
+N	}
+N	else   //没有到10ms，不进入解析
+N		return;
+N	//g_mods_timeout = 0;	 					/* 清标志 */
+N
+N	if (g_tModS.RxCount < 4)				/* 接收到的数据小于4个字节就认为错误 */
+N	{
+N		goto err_ret;
+N	}
+N
+N	/* 计算CRC校验和 */
+N	crc1 = CRC16(g_tModS.RxBuf, g_tModS.RxCount);
+N	if (crc1 != 0)
+N	{
+N		goto err_ret;
+N	}
+N
+N// 	/* 站地址 (1字节） */
+N// 	addr = g_tModS.RxBuf[0];				/* 第1字节 站号 */
+N// 	if (addr != SADDR485)		 			/* 判断主机发送的命令地址是否符合 */
+N// 	{
+N// 		goto err_ret;
+N// 	}
+N
+N	/* 鍒嗘瀽搴旂敤灞傚崗璁?*/
+N    if(g_tModS.RxBuf[2] == 0xA5)
+N    {
+W "..\drive\TIM6.c" 632 9 function "UART_Action" declared implicitly
+N        UART_Action();
+N    }else{
+N//        usartocflag = 1;
+N        RecHandle();
+N    }
+N							
+N	
+Nerr_ret:
+N#if 0										/* 姝ら儴鍒嗕负浜嗕覆鍙ｆ墦鍗扮粨鏋?瀹為檯杩愮敤涓彲涓嶈 */
+S	g_tPrint.Rxlen = g_tModS.RxCount;
+S	memcpy(g_tPrint.RxBuf, g_tModS.RxBuf, g_tModS.RxCount);
+N#endif
+N	
+N 	g_tModS.RxCount = 0;					/* 蹇呴』娓呴浂璁℃暟鍣紝鏂逛究涓嬫甯у悓姝?*/
+W "..\drive\TIM6.c" 567 11 variable "addr" was declared but never referenced
 N}
 N

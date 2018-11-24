@@ -52,6 +52,7 @@ int main(void)
 	TIM2_PWM_Config();
     TIM4_Int_Init(2-1,8400-1);
     TIM3_Int_Init(10000-1,8400-1);
+    TIM5_Int_Init(100-1,8400-1);
 	TIM6_Config();
 	ADC1_DMA_Init();
 	USART_Configuration();

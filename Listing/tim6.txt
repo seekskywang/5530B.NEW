@@ -2,847 +2,1584 @@
 ; commandline ArmCC [--list --split_sections --debug -c --asm --interleave -o..\Output\tim6.o --asm_dir=..\Listing\ --list_dir=..\Listing\ --depend=..\Output\tim6.d --cpu=Cortex-M4.fp --apcs=interwork -O1 --diag_suppress=870 -I..\APP -I..\drive -I..\Include -I..\Libraries\CMSIS\inc -I..\Libraries\CMSIS\src -I..\Libraries\FWlib\inc -I..\Libraries\FWlib\src -I..\Listing -I..\Output -I..\Project -I..\STemWinLibrary522\Config -I..\STemWinLibrary522\emWinTask -I..\STemWinLibrary522\GUILib -I..\STemWinLibrary522\inc -I..\User -I..\USB\STM32_USB_HOST_Library\Class\HID\inc -I..\USB\STM32_USB_HOST_Library\Class\MSC\src -I..\USB\STM32_USB_HOST_Library\Core\src -I..\USB\USB_APP -I..\USB\STM32_USB_HOST_Library\Class\HID\src -I..\USB\STM32_USB_HOST_Library\Class\MSC\inc -I..\USB\STM32_USB_HOST_Library\Core\inc -I..\USB\STM32_USB_OTG_Driver\inc -I..\FATFS\exfuns -I..\FATFS\src\option -I..\FATFS\src -I..\MALLOC -ID:\Keil\ARM\RV31\Inc -ID:\Keil\ARM\CMSIS\Include -ID:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -DSTM32F40XX -DUSE_USB_OTG_FS -DUSE_EMBEDDED_PHY -DUSE_USB_OTG_HS -DSTM32F40XX --omf_browse=..\Output\tim6.crf ..\drive\TIM6.c]
                           THUMB
 
+                          AREA ||i.MODS_Poll||, CODE, READONLY, ALIGN=2
+
+                  MODS_Poll PROC
+;;;564    
+;;;565    void MODS_Poll(void)
+000000  b570              PUSH     {r4-r6,lr}
+;;;566    {
+;;;567    	uint16_t addr;
+;;;568    	static uint16_t crc1;
+;;;569        static u32 testi;
+;;;570    	/* è¶…è¿‡3.5ä¸ªå­—ç¬¦æ—¶é—´åŽæ‰§è¡ŒMODH_RxTimeOut()å‡½æ•°ã€‚å…¨å±€å˜é‡ g_rtu_timeout = 1; é€šçŸ¥ä¸»ç¨‹åºå¼€å§‹è§£ç ?*/
+;;;571    //	if (g_mods_timeout == 0)	
+;;;572    //	{
+;;;573    //		return;								/* æ²¡æœ‰è¶…æ—¶ï¼Œç»§ç»­æŽ¥æ”¶ã€‚ä¸è¦æ¸…é›?g_tModS.RxCount */
+;;;574    //	}
+;;;575    
+;;;576        testi=g_tModS.RxCount;
+000002  4d15              LDR      r5,|L1.88|
+000004  4c15              LDR      r4,|L1.92|
+000006  f895109e          LDRB     r1,[r5,#0x9e]  ; g_tModS
+00000a  6261              STR      r1,[r4,#0x24]  ; testi
+;;;577        testi=g_tModS.RxCount;
+;;;578        testi=g_tModS.RxCount;
+;;;579    	if(testi>7)				/* ½ÓÊÕµ½µÄÊý¾ÝÐ¡ÓÚ4¸ö×Ö½Ú¾ÍÈÏÎª´íÎó */
+;;;580    	{
+;;;581    		testi=testi;
+;;;582    	}
+;;;583    	testi=g_tModS.RxCount;
+;;;584        if(testi==8)				/* ½ÓÊÕµ½µÄÊý¾ÝÐ¡ÓÚ4¸ö×Ö½Ú¾ÍÈÏÎª´íÎó */
+00000c  2908              CMP      r1,#8
+00000e  d101              BNE      |L1.20|
+;;;585    	{
+;;;586    		testi=testi+1;
+000010  2009              MOVS     r0,#9
+000012  6260              STR      r0,[r4,#0x24]  ; testi
+                  |L1.20|
+;;;587    	}
+;;;588    	//ÅÐ¶ÏÍ¨Ñ¶½ÓÊÕÊÇ·ñ³¬Ê±
+;;;589    	if(OldTick!=Tick_10ms)
+000014  6b62              LDR      r2,[r4,#0x34]  ; OldTick
+000016  6920              LDR      r0,[r4,#0x10]  ; Tick_10ms
+000018  4282              CMP      r2,r0
+00001a  d019              BEQ      |L1.80|
+;;;590      	{  
+;;;591    	  OldTick=Tick_10ms;
+00001c  6360              STR      r0,[r4,#0x34]  ; OldTick
+;;;592    	   if(g_mods_timeout>0)
+00001e  4a10              LDR      r2,|L1.96|
+000020  7810              LDRB     r0,[r2,#0]  ; g_mods_timeout
+000022  b108              CBZ      r0,|L1.40|
+;;;593          { 
+;;;594    	    g_mods_timeout--;
+000024  1e40              SUBS     r0,r0,#1
+000026  7010              STRB     r0,[r2,#0]
+                  |L1.40|
+;;;595          }
+;;;596    	  if(g_mods_timeout==0 && g_tModS.RxCount>0)   //ÓÐÊýµ«³¬Ê±ÁË
+000028  7810              LDRB     r0,[r2,#0]  ; g_mods_timeout
+00002a  2800              CMP      r0,#0
+00002c  d110              BNE      |L1.80|
+00002e  2900              CMP      r1,#0
+000030  d00e              BEQ      |L1.80|
+;;;597          { 
+;;;598    		// goto err_ret;
+;;;599    	
+;;;600          }
+;;;601          else if(g_mods_timeout==0 && g_tModS.RxCount==0) //Ã»Êý³¬Ê±ÁË
+;;;602             return;
+;;;603          else //Ã»³¬Ê±ÁË£¬¼ÌÐøÊÕ
+;;;604             return;
+;;;605    	}
+;;;606    	else   //Ã»ÓÐµ½10ms£¬²»½øÈë½âÎö
+;;;607    		return;
+;;;608    	//g_mods_timeout = 0;	 					/* Çå±êÖ¾ */
+;;;609    
+;;;610    	if (g_tModS.RxCount < 4)				/* ½ÓÊÕµ½µÄÊý¾ÝÐ¡ÓÚ4¸ö×Ö½Ú¾ÍÈÏÎª´íÎó */
+000032  2904              CMP      r1,#4
+000034  d309              BCC      |L1.74|
+;;;611    	{
+;;;612    		goto err_ret;
+;;;613    	}
+;;;614    
+;;;615    	/* ¼ÆËãCRCÐ£ÑéºÍ */
+;;;616    	crc1 = CRC16(g_tModS.RxBuf, g_tModS.RxCount);
+000036  4808              LDR      r0,|L1.88|
+000038  f7fffffe          BL       CRC16
+00003c  81e0              STRH     r0,[r4,#0xe]
+;;;617    	if (crc1 != 0)
+00003e  b920              CBNZ     r0,|L1.74|
+;;;618    	{
+;;;619    		goto err_ret;
+;;;620    	}
+;;;621    
+;;;622    // 	/* Õ¾µØÖ· (1×Ö½Ú£© */
+;;;623    // 	addr = g_tModS.RxBuf[0];				/* µÚ1×Ö½Ú Õ¾ºÅ */
+;;;624    // 	if (addr != SADDR485)		 			/* ÅÐ¶ÏÖ÷»ú·¢ËÍµÄÃüÁîµØÖ·ÊÇ·ñ·ûºÏ */
+;;;625    // 	{
+;;;626    // 		goto err_ret;
+;;;627    // 	}
+;;;628    
+;;;629    	/* åˆ†æžåº”ç”¨å±‚åè®?*/
+;;;630        if(g_tModS.RxBuf[2] == 0xA5)
+000040  78a8              LDRB     r0,[r5,#2]  ; g_tModS
+000042  28a5              CMP      r0,#0xa5
+000044  d005              BEQ      |L1.82|
+;;;631        {
+;;;632            UART_Action();
+;;;633        }else{
+;;;634    //        usartocflag = 1;
+;;;635            RecHandle();
+000046  f7fffffe          BL       RecHandle
+                  |L1.74|
+;;;636        }
+;;;637    							
+;;;638    	
+;;;639    err_ret:
+;;;640    #if 0										/* æ­¤éƒ¨åˆ†ä¸ºäº†ä¸²å£æ‰“å°ç»“æž?å®žé™…è¿ç”¨ä¸­å¯ä¸è¦ */
+;;;641    	g_tPrint.Rxlen = g_tModS.RxCount;
+;;;642    	memcpy(g_tPrint.RxBuf, g_tModS.RxBuf, g_tModS.RxCount);
+;;;643    #endif
+;;;644    	
+;;;645     	g_tModS.RxCount = 0;					/* å¿…é¡»æ¸…é›¶è®¡æ•°å™¨ï¼Œæ–¹ä¾¿ä¸‹æ¬¡å¸§åŒæ­?*/
+00004a  2000              MOVS     r0,#0
+00004c  f885009e          STRB     r0,[r5,#0x9e]
+                  |L1.80|
+;;;646    }
+000050  bd70              POP      {r4-r6,pc}
+                  |L1.82|
+000052  f7fffffe          BL       UART_Action
+000056  e7f8              B        |L1.74|
+;;;647    
+                          ENDP
+
+                  |L1.88|
+                          DCD      g_tModS
+                  |L1.92|
+                          DCD      ||.data||
+                  |L1.96|
+                          DCD      g_mods_timeout
+
                           AREA ||i.TIM3_IRQHandler||, CODE, READONLY, ALIGN=2
 
                   TIM3_IRQHandler PROC
-;;;199    //??? 3 ??????
-;;;200    void TIM3_IRQHandler(void)
+;;;381    //??? 3 ??????
+;;;382    void TIM3_IRQHandler(void)
 000000  e92d47f0          PUSH     {r4-r10,lr}
-;;;201    {
+;;;383    {
 000004  ed2d8b02          VPUSH    {d8}
-;;;202        static vu8 calert = 0;
-;;;203        static vu16 resetcount;
-;;;204        static vu8 read1963;
-;;;205        static vu16 scancount;
-;;;206        static vu32 ctime,dctime;
-;;;207        
-;;;208        if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) //????
+;;;384        static vu8 calert = 0;
+;;;385        static vu16 resetcount;
+;;;386        static vu8 read1963;
+;;;387        static vu16 scancount;
+;;;388        static vu32 ctime,dctime;
+;;;389        
+;;;390        if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) //????
 000008  2101              MOVS     r1,#1
-00000a  4c92              LDR      r4,|L1.596|
+00000a  4c92              LDR      r4,|L2.596|
 00000c  4620              MOV      r0,r4
 00000e  f7fffffe          BL       TIM_GetITStatus
 000012  2801              CMP      r0,#1
-000014  d123              BNE      |L1.94|
-;;;209        {
-;;;210            TIM_ClearITPendingBit(TIM3,TIM_IT_Update); //??????¦Ë
+000014  d123              BNE      |L2.94|
+;;;391        {
+;;;392            TIM_ClearITPendingBit(TIM3,TIM_IT_Update); //??????¦Ë
 000016  2101              MOVS     r1,#1
 000018  4620              MOV      r0,r4
 00001a  f7fffffe          BL       TIM_ClearITPendingBit
-;;;211    //         if(page_sw != face_starter)
-;;;212    //         {
-;;;213    //              if(resetflag == 1)
-;;;214    //              {
-;;;215    //                  if(resetcount == 1)
-;;;216    //                  {
-;;;217    //                      LCD_Initializtion();
-;;;218    //                      sLCD_WR_REG(0xf1);
-;;;219    //                      GUI_Init();
-;;;220    //                      if(page_sw == face_menu)
-;;;221    //                      {
-;;;222    //                          ResetPow();
-;;;223    //                      }else if(page_sw == face_cdc){
-;;;224    //                          ResetCDC();
-;;;225    //                      }else if(page_sw == face_r){
-;;;226    //                          ResetR();
-;;;227    //                      }else if(page_sw == face_load){
-;;;228    //                          ResetLoad();
-;;;229    //                      }else if(page_sw == face_graph){
-;;;230    //                          ResetG();
-;;;231    //                      }else if(page_sw == face_set){
-;;;232    //                          ResetSET();
-;;;233    //                      }
-;;;234    //                      resdone = 1;
-;;;235    // //                     resetflag = 0;
-;;;236    //                      resetcount = 0;
-;;;237    //                  }else{
-;;;238    //                      resetcount++;
-;;;239    //                  }                
-;;;240    //              }
-;;;241    //          }
-;;;242            switch(page_sw)
-00001e  488e              LDR      r0,|L1.600|
+;;;393    //         if(page_sw != face_starter)
+;;;394    //         {
+;;;395    //              if(resetflag == 1)
+;;;396    //              {
+;;;397    //                  if(resetcount == 1)
+;;;398    //                  {
+;;;399    //                      LCD_Initializtion();
+;;;400    //                      sLCD_WR_REG(0xf1);
+;;;401    //                      GUI_Init();
+;;;402    //                      if(page_sw == face_menu)
+;;;403    //                      {
+;;;404    //                          ResetPow();
+;;;405    //                      }else if(page_sw == face_cdc){
+;;;406    //                          ResetCDC();
+;;;407    //                      }else if(page_sw == face_r){
+;;;408    //                          ResetR();
+;;;409    //                      }else if(page_sw == face_load){
+;;;410    //                          ResetLoad();
+;;;411    //                      }else if(page_sw == face_graph){
+;;;412    //                          ResetG();
+;;;413    //                      }else if(page_sw == face_set){
+;;;414    //                          ResetSET();
+;;;415    //                      }
+;;;416    //                      resdone = 1;
+;;;417    // //                     resetflag = 0;
+;;;418    //                      resetcount = 0;
+;;;419    //                  }else{
+;;;420    //                      resetcount++;
+;;;421    //                  }                
+;;;422    //              }
+;;;423    //          }
+;;;424            switch(page_sw)
+00001e  488e              LDR      r0,|L2.600|
 000020  f890c000          LDRB     r12,[r0,#0]  ; page_sw
-;;;243            {
-;;;244                case face_menu:
-;;;245                {
-;;;246                    if(pow_sw == pow_on)
-000024  4a8d              LDR      r2,|L1.604|
-;;;247                    {
-;;;248                        bc_raw += DISS_POW_Current * 1000 * 1/3600;
-000026  4b8e              LDR      r3,|L1.608|
-;;;249                    }else{
-;;;250                        bc_raw = 0;
-;;;251                    }
-;;;252                }break;
-;;;253                case face_cdc:
-;;;254                {
-;;;255                    if(mode_sw == mode_pow && cdc_sw == cdc_on)
-;;;256                    {
-;;;257                        ctime++;
-;;;258                        second = ctime%60;//ç§’
-;;;259                        minute = (ctime/60)%60;//åˆ†
-;;;260                        hour   = ctime/3600;//æ—¶
-;;;261                        cbc_raw += DISS_POW_Current * 1000 * 1/3600;
-;;;262                        bc_raw = 0;
-;;;263    //                    bc_raw += DISS_POW_Current * 1000 * 1/3600;
-;;;264                    }else if(mode_sw == mode_load && cdc_sw == cdc_on){
-;;;265                        dctime++;
-;;;266                        second1 = dctime%60;//ç§’
-;;;267                        minute1 = (dctime/60)%60;//åˆ†
-;;;268                        hour1   = dctime/3600;//æ—¶
-;;;269                        bc_raw += DISS_Current * 1000 * 1/3600;
-000028  4d8e              LDR      r5,|L1.612|
-;;;270    //                    c_sum += DISS_Current * 1000 * 1/3600;
-;;;271                        cbc_raw = 0;
-;;;272                    }else if(cdc_sw == cdc_off){
-;;;273                        bc_raw = 0;
-;;;274                        cbc_raw = 0;
-;;;275                        c_sum = 0;
-;;;276                        ctime=0;
+;;;425            {
+;;;426                case face_menu:
+;;;427                {
+;;;428                    if(pow_sw == pow_on)
+000024  4a8d              LDR      r2,|L2.604|
+;;;429                    {
+;;;430                        bc_raw += DISS_POW_Current * 1000 * 1/3600;
+000026  4b8e              LDR      r3,|L2.608|
+;;;431                    }else{
+;;;432                        bc_raw = 0;
+;;;433                    }
+;;;434                }break;
+;;;435                case face_cdc:
+;;;436                {
+;;;437                    if(mode_sw == mode_pow && cdc_sw == cdc_on)
+;;;438                    {
+;;;439                        ctime++;
+;;;440                        second = ctime%60;//ç§’
+;;;441                        minute = (ctime/60)%60;//åˆ†
+;;;442                        hour   = ctime/3600;//æ—¶
+;;;443                        cbc_raw += DISS_POW_Current * 1000 * 1/3600;
+;;;444                        bc_raw = 0;
+;;;445    //                    bc_raw += DISS_POW_Current * 1000 * 1/3600;
+;;;446                    }else if(mode_sw == mode_load && cdc_sw == cdc_on){
+;;;447                        dctime++;
+;;;448                        second1 = dctime%60;//ç§’
+;;;449                        minute1 = (dctime/60)%60;//åˆ†
+;;;450                        hour1   = dctime/3600;//æ—¶
+;;;451                        bc_raw += DISS_Current * 1000 * 1/3600;
+000028  4d8e              LDR      r5,|L2.612|
+;;;452    //                    c_sum += DISS_Current * 1000 * 1/3600;
+;;;453                        cbc_raw = 0;
+;;;454                    }else if(cdc_sw == cdc_off){
+;;;455                        bc_raw = 0;
+;;;456                        cbc_raw = 0;
+;;;457                        c_sum = 0;
+;;;458                        ctime=0;
 00002a  2600              MOVS     r6,#0
-;;;277                        dctime=0;
-;;;278                    }
-;;;279                }break;
-;;;280                case face_load:
-;;;281                {
-;;;282                    if(load_sw == load_on)
-;;;283                    {
-;;;284                        if(alert_flag == 1)
-00002c  488e              LDR      r0,|L1.616|
-00002e  498f              LDR      r1,|L1.620|
-000030  f8df823c          LDR      r8,|L1.624|
-000034  4f8f              LDR      r7,|L1.628|
-000036  ed9f8a90          VLDR     s16,|L1.632|
-00003a  eddf8a90          VLDR     s17,|L1.636|
-00003e  ed9f0a90          VLDR     s0,|L1.640|
-000042  4c90              LDR      r4,|L1.644|
-000044  f1bc0f05          CMP      r12,#5                ;242
-000048  d209              BCS      |L1.94|
-00004a  e8dff00c          TBB      [pc,r12]              ;242
+;;;459                        dctime=0;
+;;;460                    }
+;;;461                }break;
+;;;462                case face_load:
+;;;463                {
+;;;464                    if(load_sw == load_on)
+;;;465                    {
+;;;466                        if(alert_flag == 1)
+00002c  488e              LDR      r0,|L2.616|
+00002e  498f              LDR      r1,|L2.620|
+000030  f8df823c          LDR      r8,|L2.624|
+000034  4f8f              LDR      r7,|L2.628|
+000036  ed9f8a90          VLDR     s16,|L2.632|
+00003a  eddf8a90          VLDR     s17,|L2.636|
+00003e  ed9f0a90          VLDR     s0,|L2.640|
+000042  4c90              LDR      r4,|L2.644|
+000044  f1bc0f05          CMP      r12,#5                ;424
+000048  d209              BCS      |L2.94|
+00004a  e8dff00c          TBB      [pc,r12]              ;424
 00004e  af19              DCB      0xaf,0x19
 000050  03f08700          DCB      0x03,0xf0,0x87,0x00
-000054  7810              LDRB     r0,[r2,#0]            ;246  ; pow_sw
-000056  2801              CMP      r0,#1                 ;246
-000058  d005              BEQ      |L1.102|
-00005a  ed840a03          VSTR     s0,[r4,#0xc]          ;250
-                  |L1.94|
-;;;285                        {
-;;;286                            calert ++;
-;;;287                            if(calert == 3)
-;;;288                            {
-;;;289                                t_onoff = 0;
-;;;290                                GPIO_SetBits(GPIOA,GPIO_Pin_15);//????OFF
-;;;291                                mode_sw = 0;
-;;;292                                load_sw = load_off;
-;;;293                                calert = 0;                                
-;;;294                            }
-;;;295                        }
-;;;296                        bc_raw += DISS_Current * 1000 * 1/3600;
-;;;297                    }else{
-;;;298                        bc_raw = 0;
-;;;299                    }
-;;;300                }break;
-;;;301                case face_graph:
-;;;302                {
-;;;303                    if(mode_sw == mode_pow)
-;;;304                    {
-;;;305                        if(pow_sw == pow_on)
-;;;306                        {
-;;;307                            bc_raw += DISS_POW_Current * 1000 * 1/3600;
-;;;308                        }else if(mode_sw == mode_pow && cdc_sw == cdc_on)
-;;;309                        {
-;;;310                            bc_raw += DISS_POW_Current * 1000 * 1/3600;
-;;;311                        }
-;;;312                        else{
-;;;313                            bc_raw = 0;
-;;;314                        }
-;;;315                    }               
-;;;316                    
-;;;317                    if(mode_sw == mode_load)
-;;;318                    {
-;;;319                        if(load_sw == load_on)
-;;;320                        {
-;;;321                            bc_raw += DISS_Current * 1000 * 1/3600;
-;;;322                        }else{
-;;;323                            bc_raw = 0;
-;;;324                        }
-;;;325                    }
-;;;326                }break;
-;;;327                case face_r:
-;;;328                {
-;;;329                    if(oct_sw == oct_on)
-;;;330                    {
-;;;331                        if(alert_flag == 1)
-;;;332                        {
-;;;333                            calert ++;
-;;;334                            if(calert == 3)
-;;;335                            {
-;;;336                                ocstop = 1;
-;;;337                                calert = 0;
-;;;338                            }
-;;;339                        }
-;;;340                    }
-;;;341                }break;
-;;;342            }
-;;;343    //         GPIO_ResetBits(GPIOD,GPIO_Pin_12);
-;;;344    //         TM1650_SET_LED(0x48,0x71);
-;;;345    //         TM1650_SET_LED(0x68,0xF2);//PASS?
-;;;346        }    
-;;;347        
-;;;348    }
+000054  7810              LDRB     r0,[r2,#0]            ;428  ; pow_sw
+000056  2801              CMP      r0,#1                 ;428
+000058  d005              BEQ      |L2.102|
+00005a  ed840a0a          VSTR     s0,[r4,#0x28]         ;432
+                  |L2.94|
+;;;467                        {
+;;;468                            calert ++;
+;;;469                            if(calert == 3)
+;;;470                            {
+;;;471                                t_onoff = 0;
+;;;472                                GPIO_SetBits(GPIOA,GPIO_Pin_15);//????OFF
+;;;473                                mode_sw = 0;
+;;;474                                load_sw = load_off;
+;;;475                                calert = 0;                                
+;;;476                            }
+;;;477                        }
+;;;478                        bc_raw += DISS_Current * 1000 * 1/3600;
+;;;479                    }else{
+;;;480                        bc_raw = 0;
+;;;481                    }
+;;;482                }break;
+;;;483                case face_graph:
+;;;484                {
+;;;485                    if(mode_sw == mode_pow)
+;;;486                    {
+;;;487                        if(pow_sw == pow_on)
+;;;488                        {
+;;;489                            bc_raw += DISS_POW_Current * 1000 * 1/3600;
+;;;490                        }else if(mode_sw == mode_pow && cdc_sw == cdc_on)
+;;;491                        {
+;;;492                            bc_raw += DISS_POW_Current * 1000 * 1/3600;
+;;;493                        }
+;;;494                        else{
+;;;495                            bc_raw = 0;
+;;;496                        }
+;;;497                    }               
+;;;498                    
+;;;499                    if(mode_sw == mode_load)
+;;;500                    {
+;;;501                        if(load_sw == load_on)
+;;;502                        {
+;;;503                            bc_raw += DISS_Current * 1000 * 1/3600;
+;;;504                        }else{
+;;;505                            bc_raw = 0;
+;;;506                        }
+;;;507                    }
+;;;508                }break;
+;;;509                case face_r:
+;;;510                {
+;;;511                    if(oct_sw == oct_on)
+;;;512                    {
+;;;513                        if(alert_flag == 1)
+;;;514                        {
+;;;515                            calert ++;
+;;;516                            if(calert == 3)
+;;;517                            {
+;;;518                                ocstop = 1;
+;;;519                                calert = 0;
+;;;520                            }
+;;;521                        }
+;;;522                    }
+;;;523                }break;
+;;;524            }
+;;;525    //         GPIO_ResetBits(GPIOD,GPIO_Pin_12);
+;;;526    //         TM1650_SET_LED(0x48,0x71);
+;;;527    //         TM1650_SET_LED(0x68,0xF2);//PASS?
+;;;528        }    
+;;;529        
+;;;530    }
 00005e  ecbd8b02          VPOP     {d8}
 000062  e8bd87f0          POP      {r4-r10,pc}
-                  |L1.102|
-000066  ed930a00          VLDR     s0,[r3,#0]            ;248
-00006a  ee200a08          VMUL.F32 s0,s0,s16             ;248
-00006e  eec00a28          VDIV.F32 s1,s0,s17             ;248
-000072  ed940a03          VLDR     s0,[r4,#0xc]          ;248
-000076  ee300a80          VADD.F32 s0,s1,s0              ;248
-00007a  ed840a03          VSTR     s0,[r4,#0xc]          ;248
-00007e  e7ee              B        |L1.94|
-000080  f897c000          LDRB     r12,[r7,#0]           ;255  ; mode_sw
-000084  203c              MOVS     r0,#0x3c              ;258
-000086  f44f6261          MOV      r2,#0xe10             ;260
-00008a  f1bc0f03          CMP      r12,#3                ;255
-00008e  d104              BNE      |L1.154|
-000090  f891c000          LDRB     r12,[r1,#0]           ;255  ; cdc_sw
-000094  f1bc0f01          CMP      r12,#1                ;255
-000098  d003              BEQ      |L1.162|
-                  |L1.154|
-00009a  783b              LDRB     r3,[r7,#0]            ;264  ; mode_sw
-00009c  2b02              CMP      r3,#2                 ;264
-00009e  d027              BEQ      |L1.240|
-0000a0  e029              B        |L1.246|
-                  |L1.162|
-0000a2  6861              LDR      r1,[r4,#4]            ;257  ; ctime
-0000a4  1c49              ADDS     r1,r1,#1              ;257
-0000a6  6061              STR      r1,[r4,#4]            ;257  ; ctime
-0000a8  6861              LDR      r1,[r4,#4]            ;258  ; ctime
-0000aa  fbb1f5f0          UDIV     r5,r1,r0              ;258
-0000ae  fb001115          MLS      r1,r0,r5,r1           ;258
-0000b2  4d75              LDR      r5,|L1.648|
-0000b4  7029              STRB     r1,[r5,#0]            ;258
-0000b6  6861              LDR      r1,[r4,#4]            ;259  ; ctime
-0000b8  fbb1f1f0          UDIV     r1,r1,r0              ;259
-0000bc  fbb1f5f0          UDIV     r5,r1,r0              ;259
-0000c0  fb001015          MLS      r0,r0,r5,r1           ;259
-0000c4  4971              LDR      r1,|L1.652|
-0000c6  7008              STRB     r0,[r1,#0]            ;259
-0000c8  6860              LDR      r0,[r4,#4]            ;260  ; ctime
-0000ca  4971              LDR      r1,|L1.656|
-0000cc  fbb0f0f2          UDIV     r0,r0,r2              ;260
-0000d0  7008              STRB     r0,[r1,#0]            ;260
-0000d2  edd30a00          VLDR     s1,[r3,#0]            ;261
-0000d6  ee600a88          VMUL.F32 s1,s1,s16             ;261
-0000da  ee801aa8          VDIV.F32 s2,s1,s17             ;261
-0000de  edd40a04          VLDR     s1,[r4,#0x10]         ;261
-0000e2  ee710a20          VADD.F32 s1,s2,s1              ;261
-0000e6  edc40a04          VSTR     s1,[r4,#0x10]         ;261
-0000ea  ed840a03          VSTR     s0,[r4,#0xc]          ;262
-0000ee  e7b6              B        |L1.94|
-                  |L1.240|
-0000f0  780b              LDRB     r3,[r1,#0]            ;264  ; cdc_sw
-0000f2  2b01              CMP      r3,#1                 ;264
-0000f4  d00b              BEQ      |L1.270|
-                  |L1.246|
-0000f6  7808              LDRB     r0,[r1,#0]            ;272  ; cdc_sw
-0000f8  2800              CMP      r0,#0                 ;272
-0000fa  d1b0              BNE      |L1.94|
-0000fc  ed840a03          VSTR     s0,[r4,#0xc]          ;273
-000100  ed840a04          VSTR     s0,[r4,#0x10]         ;274
-000104  ed840a05          VSTR     s0,[r4,#0x14]         ;275
-000108  6066              STR      r6,[r4,#4]            ;276  ; ctime
-00010a  60a6              STR      r6,[r4,#8]            ;277  ; dctime
-                  |L1.268|
-00010c  e7a7              B        |L1.94|
-                  |L1.270|
-00010e  68a1              LDR      r1,[r4,#8]            ;265  ; dctime
-000110  1c49              ADDS     r1,r1,#1              ;265
-000112  60a1              STR      r1,[r4,#8]            ;265  ; dctime
-000114  68a1              LDR      r1,[r4,#8]            ;266  ; dctime
-000116  fbb1f3f0          UDIV     r3,r1,r0              ;266
-00011a  fb001113          MLS      r1,r0,r3,r1           ;266
-00011e  4b5d              LDR      r3,|L1.660|
-000120  7019              STRB     r1,[r3,#0]            ;266
-000122  68a1              LDR      r1,[r4,#8]            ;267  ; dctime
-000124  fbb1f1f0          UDIV     r1,r1,r0              ;267
-000128  fbb1f3f0          UDIV     r3,r1,r0              ;267
-00012c  fb001013          MLS      r0,r0,r3,r1           ;267
-000130  4959              LDR      r1,|L1.664|
-000132  7008              STRB     r0,[r1,#0]            ;267
-000134  68a0              LDR      r0,[r4,#8]            ;268  ; dctime
-000136  4959              LDR      r1,|L1.668|
-000138  fbb0f0f2          UDIV     r0,r0,r2              ;268
-00013c  7008              STRB     r0,[r1,#0]            ;268
-00013e  edd50a00          VLDR     s1,[r5,#0]            ;269
-000142  ee600a88          VMUL.F32 s1,s1,s16             ;269
-000146  ee801aa8          VDIV.F32 s2,s1,s17             ;269
-00014a  edd40a03          VLDR     s1,[r4,#0xc]          ;269
-00014e  ee710a20          VADD.F32 s1,s2,s1              ;269
-000152  edc40a03          VSTR     s1,[r4,#0xc]          ;269
-000156  ed840a04          VSTR     s0,[r4,#0x10]         ;271
-                  |L1.346|
-00015a  e780              B        |L1.94|
-00015c  f8981000          LDRB     r1,[r8,#0]            ;282  ; load_sw
-000160  2901              CMP      r1,#1                 ;282
-000162  d002              BEQ      |L1.362|
-000164  ed840a03          VSTR     s0,[r4,#0xc]          ;298
-000168  e779              B        |L1.94|
-                  |L1.362|
-00016a  7800              LDRB     r0,[r0,#0]            ;284  ; alert_flag
-00016c  2801              CMP      r0,#1                 ;284
-00016e  d110              BNE      |L1.402|
-000170  7820              LDRB     r0,[r4,#0]            ;286  ; calert
-000172  1c40              ADDS     r0,r0,#1              ;286
-000174  7020              STRB     r0,[r4,#0]            ;286
-000176  7820              LDRB     r0,[r4,#0]            ;287  ; calert
-000178  2803              CMP      r0,#3                 ;287
-00017a  d10a              BNE      |L1.402|
-00017c  4848              LDR      r0,|L1.672|
-00017e  7006              STRB     r6,[r0,#0]            ;289
-000180  f44f4100          MOV      r1,#0x8000            ;290
-000184  4847              LDR      r0,|L1.676|
+                  |L2.102|
+000066  ed930a00          VLDR     s0,[r3,#0]            ;430
+00006a  ee200a08          VMUL.F32 s0,s0,s16             ;430
+00006e  eec00a28          VDIV.F32 s1,s0,s17             ;430
+000072  ed940a0a          VLDR     s0,[r4,#0x28]         ;430
+000076  ee300a80          VADD.F32 s0,s1,s0              ;430
+00007a  ed840a0a          VSTR     s0,[r4,#0x28]         ;430
+00007e  e7ee              B        |L2.94|
+000080  f897c000          LDRB     r12,[r7,#0]           ;437  ; mode_sw
+000084  203c              MOVS     r0,#0x3c              ;440
+000086  f44f6261          MOV      r2,#0xe10             ;442
+00008a  f1bc0f03          CMP      r12,#3                ;437
+00008e  d104              BNE      |L2.154|
+000090  f891c000          LDRB     r12,[r1,#0]           ;437  ; cdc_sw
+000094  f1bc0f01          CMP      r12,#1                ;437
+000098  d003              BEQ      |L2.162|
+                  |L2.154|
+00009a  783b              LDRB     r3,[r7,#0]            ;446  ; mode_sw
+00009c  2b02              CMP      r3,#2                 ;446
+00009e  d027              BEQ      |L2.240|
+0000a0  e029              B        |L2.246|
+                  |L2.162|
+0000a2  69e1              LDR      r1,[r4,#0x1c]         ;439  ; ctime
+0000a4  1c49              ADDS     r1,r1,#1              ;439
+0000a6  61e1              STR      r1,[r4,#0x1c]         ;439  ; ctime
+0000a8  69e1              LDR      r1,[r4,#0x1c]         ;440  ; ctime
+0000aa  fbb1f5f0          UDIV     r5,r1,r0              ;440
+0000ae  fb001115          MLS      r1,r0,r5,r1           ;440
+0000b2  4d75              LDR      r5,|L2.648|
+0000b4  7029              STRB     r1,[r5,#0]            ;440
+0000b6  69e1              LDR      r1,[r4,#0x1c]         ;441  ; ctime
+0000b8  fbb1f1f0          UDIV     r1,r1,r0              ;441
+0000bc  fbb1f5f0          UDIV     r5,r1,r0              ;441
+0000c0  fb001015          MLS      r0,r0,r5,r1           ;441
+0000c4  4971              LDR      r1,|L2.652|
+0000c6  7008              STRB     r0,[r1,#0]            ;441
+0000c8  69e0              LDR      r0,[r4,#0x1c]         ;442  ; ctime
+0000ca  4971              LDR      r1,|L2.656|
+0000cc  fbb0f0f2          UDIV     r0,r0,r2              ;442
+0000d0  7008              STRB     r0,[r1,#0]            ;442
+0000d2  edd30a00          VLDR     s1,[r3,#0]            ;443
+0000d6  ee600a88          VMUL.F32 s1,s1,s16             ;443
+0000da  ee801aa8          VDIV.F32 s2,s1,s17             ;443
+0000de  edd40a0b          VLDR     s1,[r4,#0x2c]         ;443
+0000e2  ee710a20          VADD.F32 s1,s2,s1              ;443
+0000e6  edc40a0b          VSTR     s1,[r4,#0x2c]         ;443
+0000ea  ed840a0a          VSTR     s0,[r4,#0x28]         ;444
+0000ee  e7b6              B        |L2.94|
+                  |L2.240|
+0000f0  780b              LDRB     r3,[r1,#0]            ;446  ; cdc_sw
+0000f2  2b01              CMP      r3,#1                 ;446
+0000f4  d00b              BEQ      |L2.270|
+                  |L2.246|
+0000f6  7808              LDRB     r0,[r1,#0]            ;454  ; cdc_sw
+0000f8  2800              CMP      r0,#0                 ;454
+0000fa  d1b0              BNE      |L2.94|
+0000fc  ed840a0a          VSTR     s0,[r4,#0x28]         ;455
+000100  ed840a0b          VSTR     s0,[r4,#0x2c]         ;456
+000104  ed840a0c          VSTR     s0,[r4,#0x30]         ;457
+000108  61e6              STR      r6,[r4,#0x1c]         ;458  ; ctime
+00010a  6226              STR      r6,[r4,#0x20]         ;459  ; dctime
+                  |L2.268|
+00010c  e7a7              B        |L2.94|
+                  |L2.270|
+00010e  6a21              LDR      r1,[r4,#0x20]         ;447  ; dctime
+000110  1c49              ADDS     r1,r1,#1              ;447
+000112  6221              STR      r1,[r4,#0x20]         ;447  ; dctime
+000114  6a21              LDR      r1,[r4,#0x20]         ;448  ; dctime
+000116  fbb1f3f0          UDIV     r3,r1,r0              ;448
+00011a  fb001113          MLS      r1,r0,r3,r1           ;448
+00011e  4b5d              LDR      r3,|L2.660|
+000120  7019              STRB     r1,[r3,#0]            ;448
+000122  6a21              LDR      r1,[r4,#0x20]         ;449  ; dctime
+000124  fbb1f1f0          UDIV     r1,r1,r0              ;449
+000128  fbb1f3f0          UDIV     r3,r1,r0              ;449
+00012c  fb001013          MLS      r0,r0,r3,r1           ;449
+000130  4959              LDR      r1,|L2.664|
+000132  7008              STRB     r0,[r1,#0]            ;449
+000134  6a20              LDR      r0,[r4,#0x20]         ;450  ; dctime
+000136  4959              LDR      r1,|L2.668|
+000138  fbb0f0f2          UDIV     r0,r0,r2              ;450
+00013c  7008              STRB     r0,[r1,#0]            ;450
+00013e  edd50a00          VLDR     s1,[r5,#0]            ;451
+000142  ee600a88          VMUL.F32 s1,s1,s16             ;451
+000146  ee801aa8          VDIV.F32 s2,s1,s17             ;451
+00014a  edd40a0a          VLDR     s1,[r4,#0x28]         ;451
+00014e  ee710a20          VADD.F32 s1,s2,s1              ;451
+000152  edc40a0a          VSTR     s1,[r4,#0x28]         ;451
+000156  ed840a0b          VSTR     s0,[r4,#0x2c]         ;453
+                  |L2.346|
+00015a  e780              B        |L2.94|
+00015c  f8981000          LDRB     r1,[r8,#0]            ;464  ; load_sw
+000160  2901              CMP      r1,#1                 ;464
+000162  d002              BEQ      |L2.362|
+000164  ed840a0a          VSTR     s0,[r4,#0x28]         ;480
+000168  e779              B        |L2.94|
+                  |L2.362|
+00016a  7800              LDRB     r0,[r0,#0]            ;466  ; alert_flag
+00016c  2801              CMP      r0,#1                 ;466
+00016e  d110              BNE      |L2.402|
+000170  78a0              LDRB     r0,[r4,#2]            ;468  ; calert
+000172  1c40              ADDS     r0,r0,#1              ;468
+000174  70a0              STRB     r0,[r4,#2]            ;468
+000176  78a0              LDRB     r0,[r4,#2]            ;469  ; calert
+000178  2803              CMP      r0,#3                 ;469
+00017a  d10a              BNE      |L2.402|
+00017c  4848              LDR      r0,|L2.672|
+00017e  7006              STRB     r6,[r0,#0]            ;471
+000180  f44f4100          MOV      r1,#0x8000            ;472
+000184  4847              LDR      r0,|L2.676|
 000186  f7fffffe          BL       GPIO_SetBits
-00018a  703e              STRB     r6,[r7,#0]            ;291
-00018c  f8886000          STRB     r6,[r8,#0]            ;292
-000190  7026              STRB     r6,[r4,#0]            ;293
-                  |L1.402|
-000192  ed950a00          VLDR     s0,[r5,#0]            ;296
-000196  ee200a08          VMUL.F32 s0,s0,s16             ;296
-00019a  eec00a28          VDIV.F32 s1,s0,s17             ;296
-00019e  ed940a03          VLDR     s0,[r4,#0xc]          ;296
-0001a2  ee300a80          VADD.F32 s0,s1,s0              ;296
-0001a6  ed840a03          VSTR     s0,[r4,#0xc]          ;296
-0001aa  e758              B        |L1.94|
-0001ac  7838              LDRB     r0,[r7,#0]            ;303  ; mode_sw
-0001ae  2803              CMP      r0,#3                 ;303
-0001b0  d118              BNE      |L1.484|
-0001b2  7810              LDRB     r0,[r2,#0]            ;305  ; pow_sw
-0001b4  2801              CMP      r0,#1                 ;305
-0001b6  d003              BEQ      |L1.448|
-0001b8  7838              LDRB     r0,[r7,#0]            ;308  ; mode_sw
-0001ba  2803              CMP      r0,#3                 ;308
-0001bc  d00d              BEQ      |L1.474|
-0001be  e00f              B        |L1.480|
-                  |L1.448|
-0001c0  edd30a00          VLDR     s1,[r3,#0]            ;307
-0001c4  ee201a88          VMUL.F32 s2,s1,s16             ;307
-0001c8  eec10a28          VDIV.F32 s1,s2,s17             ;307
-0001cc  ed941a03          VLDR     s2,[r4,#0xc]          ;307
-0001d0  ee700a81          VADD.F32 s1,s1,s2              ;307
-0001d4  edc40a03          VSTR     s1,[r4,#0xc]          ;307
-0001d8  e004              B        |L1.484|
-                  |L1.474|
-0001da  7808              LDRB     r0,[r1,#0]            ;308  ; cdc_sw
-0001dc  2801              CMP      r0,#1                 ;308
-0001de  d00b              BEQ      |L1.504|
-                  |L1.480|
-0001e0  ed840a03          VSTR     s0,[r4,#0xc]          ;313
-                  |L1.484|
-0001e4  7838              LDRB     r0,[r7,#0]            ;317  ; mode_sw
-0001e6  2802              CMP      r0,#2                 ;317
-0001e8  d190              BNE      |L1.268|
-0001ea  f8980000          LDRB     r0,[r8,#0]            ;319  ; load_sw
-0001ee  2801              CMP      r0,#1                 ;319
-0001f0  d00f              BEQ      |L1.530|
-0001f2  ed840a03          VSTR     s0,[r4,#0xc]          ;323
-0001f6  e732              B        |L1.94|
-                  |L1.504|
-0001f8  edd30a00          VLDR     s1,[r3,#0]            ;310
-0001fc  ee600a88          VMUL.F32 s1,s1,s16             ;310
-000200  ee801aa8          VDIV.F32 s2,s1,s17             ;310
-000204  edd40a03          VLDR     s1,[r4,#0xc]          ;310
-000208  ee710a20          VADD.F32 s1,s2,s1              ;310
-00020c  edc40a03          VSTR     s1,[r4,#0xc]          ;310
-000210  e7e8              B        |L1.484|
-                  |L1.530|
-000212  ed950a00          VLDR     s0,[r5,#0]            ;321
-000216  ee200a08          VMUL.F32 s0,s0,s16             ;321
-00021a  eec00a28          VDIV.F32 s1,s0,s17             ;321
-00021e  ed940a03          VLDR     s0,[r4,#0xc]          ;321
-000222  ee300a80          VADD.F32 s0,s1,s0              ;321
-000226  ed840a03          VSTR     s0,[r4,#0xc]          ;321
-00022a  e718              B        |L1.94|
-00022c  e7ff              B        |L1.558|
-                  |L1.558|
-00022e  491e              LDR      r1,|L1.680|
-000230  7809              LDRB     r1,[r1,#0]            ;329  ; oct_sw
-000232  2901              CMP      r1,#1                 ;329
-000234  d191              BNE      |L1.346|
-000236  7800              LDRB     r0,[r0,#0]            ;331  ; alert_flag
-000238  2801              CMP      r0,#1                 ;331
-00023a  d18e              BNE      |L1.346|
-00023c  7820              LDRB     r0,[r4,#0]            ;333  ; calert
-00023e  1c40              ADDS     r0,r0,#1              ;333
-000240  7020              STRB     r0,[r4,#0]            ;333
-000242  7820              LDRB     r0,[r4,#0]            ;334  ; calert
-000244  2803              CMP      r0,#3                 ;334
-000246  d188              BNE      |L1.346|
-000248  4918              LDR      r1,|L1.684|
-00024a  2001              MOVS     r0,#1                 ;336
-00024c  7008              STRB     r0,[r1,#0]            ;336
-00024e  7026              STRB     r6,[r4,#0]            ;337
-000250  e705              B        |L1.94|
-;;;349    
+00018a  703e              STRB     r6,[r7,#0]            ;473
+00018c  f8886000          STRB     r6,[r8,#0]            ;474
+000190  70a6              STRB     r6,[r4,#2]            ;475
+                  |L2.402|
+000192  ed950a00          VLDR     s0,[r5,#0]            ;478
+000196  ee200a08          VMUL.F32 s0,s0,s16             ;478
+00019a  eec00a28          VDIV.F32 s1,s0,s17             ;478
+00019e  ed940a0a          VLDR     s0,[r4,#0x28]         ;478
+0001a2  ee300a80          VADD.F32 s0,s1,s0              ;478
+0001a6  ed840a0a          VSTR     s0,[r4,#0x28]         ;478
+0001aa  e758              B        |L2.94|
+0001ac  7838              LDRB     r0,[r7,#0]            ;485  ; mode_sw
+0001ae  2803              CMP      r0,#3                 ;485
+0001b0  d118              BNE      |L2.484|
+0001b2  7810              LDRB     r0,[r2,#0]            ;487  ; pow_sw
+0001b4  2801              CMP      r0,#1                 ;487
+0001b6  d003              BEQ      |L2.448|
+0001b8  7838              LDRB     r0,[r7,#0]            ;490  ; mode_sw
+0001ba  2803              CMP      r0,#3                 ;490
+0001bc  d00d              BEQ      |L2.474|
+0001be  e00f              B        |L2.480|
+                  |L2.448|
+0001c0  edd30a00          VLDR     s1,[r3,#0]            ;489
+0001c4  ee201a88          VMUL.F32 s2,s1,s16             ;489
+0001c8  eec10a28          VDIV.F32 s1,s2,s17             ;489
+0001cc  ed941a0a          VLDR     s2,[r4,#0x28]         ;489
+0001d0  ee700a81          VADD.F32 s1,s1,s2              ;489
+0001d4  edc40a0a          VSTR     s1,[r4,#0x28]         ;489
+0001d8  e004              B        |L2.484|
+                  |L2.474|
+0001da  7808              LDRB     r0,[r1,#0]            ;490  ; cdc_sw
+0001dc  2801              CMP      r0,#1                 ;490
+0001de  d00b              BEQ      |L2.504|
+                  |L2.480|
+0001e0  ed840a0a          VSTR     s0,[r4,#0x28]         ;495
+                  |L2.484|
+0001e4  7838              LDRB     r0,[r7,#0]            ;499  ; mode_sw
+0001e6  2802              CMP      r0,#2                 ;499
+0001e8  d190              BNE      |L2.268|
+0001ea  f8980000          LDRB     r0,[r8,#0]            ;501  ; load_sw
+0001ee  2801              CMP      r0,#1                 ;501
+0001f0  d00f              BEQ      |L2.530|
+0001f2  ed840a0a          VSTR     s0,[r4,#0x28]         ;505
+0001f6  e732              B        |L2.94|
+                  |L2.504|
+0001f8  edd30a00          VLDR     s1,[r3,#0]            ;492
+0001fc  ee600a88          VMUL.F32 s1,s1,s16             ;492
+000200  ee801aa8          VDIV.F32 s2,s1,s17             ;492
+000204  edd40a0a          VLDR     s1,[r4,#0x28]         ;492
+000208  ee710a20          VADD.F32 s1,s2,s1              ;492
+00020c  edc40a0a          VSTR     s1,[r4,#0x28]         ;492
+000210  e7e8              B        |L2.484|
+                  |L2.530|
+000212  ed950a00          VLDR     s0,[r5,#0]            ;503
+000216  ee200a08          VMUL.F32 s0,s0,s16             ;503
+00021a  eec00a28          VDIV.F32 s1,s0,s17             ;503
+00021e  ed940a0a          VLDR     s0,[r4,#0x28]         ;503
+000222  ee300a80          VADD.F32 s0,s1,s0              ;503
+000226  ed840a0a          VSTR     s0,[r4,#0x28]         ;503
+00022a  e718              B        |L2.94|
+00022c  e7ff              B        |L2.558|
+                  |L2.558|
+00022e  491e              LDR      r1,|L2.680|
+000230  7809              LDRB     r1,[r1,#0]            ;511  ; oct_sw
+000232  2901              CMP      r1,#1                 ;511
+000234  d191              BNE      |L2.346|
+000236  7800              LDRB     r0,[r0,#0]            ;513  ; alert_flag
+000238  2801              CMP      r0,#1                 ;513
+00023a  d18e              BNE      |L2.346|
+00023c  78a0              LDRB     r0,[r4,#2]            ;515  ; calert
+00023e  1c40              ADDS     r0,r0,#1              ;515
+000240  70a0              STRB     r0,[r4,#2]            ;515
+000242  78a0              LDRB     r0,[r4,#2]            ;516  ; calert
+000244  2803              CMP      r0,#3                 ;516
+000246  d188              BNE      |L2.346|
+000248  4918              LDR      r1,|L2.684|
+00024a  2001              MOVS     r0,#1                 ;518
+00024c  7008              STRB     r0,[r1,#0]            ;518
+00024e  70a6              STRB     r6,[r4,#2]            ;519
+000250  e705              B        |L2.94|
+;;;531    
                           ENDP
 
 000252  0000              DCW      0x0000
-                  |L1.596|
+                  |L2.596|
                           DCD      0x40000400
-                  |L1.600|
+                  |L2.600|
                           DCD      page_sw
-                  |L1.604|
+                  |L2.604|
                           DCD      pow_sw
-                  |L1.608|
+                  |L2.608|
                           DCD      DISS_POW_Current
-                  |L1.612|
+                  |L2.612|
                           DCD      DISS_Current
-                  |L1.616|
+                  |L2.616|
                           DCD      alert_flag
-                  |L1.620|
+                  |L2.620|
                           DCD      cdc_sw
-                  |L1.624|
+                  |L2.624|
                           DCD      load_sw
-                  |L1.628|
+                  |L2.628|
                           DCD      mode_sw
-                  |L1.632|
+                  |L2.632|
 000278  447a0000          DCFS     0x447a0000 ; 1000
-                  |L1.636|
+                  |L2.636|
 00027c  45610000          DCFS     0x45610000 ; 3600
-                  |L1.640|
+                  |L2.640|
 000280  00000000          DCFS     0x00000000 ; 0
-                  |L1.644|
+                  |L2.644|
                           DCD      ||.data||
-                  |L1.648|
+                  |L2.648|
                           DCD      second
-                  |L1.652|
+                  |L2.652|
                           DCD      minute
-                  |L1.656|
+                  |L2.656|
                           DCD      hour
-                  |L1.660|
+                  |L2.660|
                           DCD      second1
-                  |L1.664|
+                  |L2.664|
                           DCD      minute1
-                  |L1.668|
+                  |L2.668|
                           DCD      hour1
-                  |L1.672|
+                  |L2.672|
                           DCD      t_onoff
-                  |L1.676|
+                  |L2.676|
                           DCD      0x40020000
-                  |L1.680|
+                  |L2.680|
                           DCD      oct_sw
-                  |L1.684|
+                  |L2.684|
                           DCD      ocstop
 
                           AREA ||i.TIM3_Int_Init||, CODE, READONLY, ALIGN=2
 
                   TIM3_Int_Init PROC
-;;;179    //?o???¡¦??? 3!
-;;;180    void TIM3_Int_Init(u16 arr,u16 psc)
+;;;361    //?o???¡¦??? 3!
+;;;362    void TIM3_Int_Init(u16 arr,u16 psc)
 000000  b57f              PUSH     {r0-r6,lr}
-;;;181    {
+;;;363    {
 000002  4604              MOV      r4,r0
 000004  460d              MOV      r5,r1
-;;;182        TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
-;;;183        NVIC_InitTypeDef NVIC_InitStructure;
-;;;184        
-;;;185        RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE); //¨´?? TIM3 ??
+;;;364        TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+;;;365        NVIC_InitTypeDef NVIC_InitStructure;
+;;;366        
+;;;367        RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE); //¨´?? TIM3 ??
 000006  2101              MOVS     r1,#1
 000008  2002              MOVS     r0,#2
 00000a  f7fffffe          BL       RCC_APB1PeriphClockCmd
-;;;186        TIM_TimeBaseInitStructure.TIM_Period = arr; //??????
+;;;368        TIM_TimeBaseInitStructure.TIM_Period = arr; //??????
 00000e  9402              STR      r4,[sp,#8]
-;;;187        TIM_TimeBaseInitStructure.TIM_Prescaler=psc; //?????
+;;;369        TIM_TimeBaseInitStructure.TIM_Prescaler=psc; //?????
 000010  f8ad5004          STRH     r5,[sp,#4]
-;;;188        TIM_TimeBaseInitStructure.TIM_CounterMode=TIM_CounterMode_Up; //§Ó?????
+;;;370        TIM_TimeBaseInitStructure.TIM_CounterMode=TIM_CounterMode_Up; //§Ó?????
 000014  2000              MOVS     r0,#0
 000016  f8ad0006          STRH     r0,[sp,#6]
-;;;189        TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
+;;;371        TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
 00001a  f8ad000c          STRH     r0,[sp,#0xc]
-;;;190        TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInitStructure);// ¨²?????? TIM3
-00001e  4c0e              LDR      r4,|L2.88|
+;;;372        TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInitStructure);// ¨²?????? TIM3
+00001e  4c0e              LDR      r4,|L3.88|
 000020  a901              ADD      r1,sp,#4
 000022  4620              MOV      r0,r4
 000024  f7fffffe          BL       TIM_TimeBaseInit
-;;;191        TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE); //?????? 3 ?§ä??
+;;;373        TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE); //?????? 3 ?§ä??
 000028  2201              MOVS     r2,#1
 00002a  4611              MOV      r1,r2
 00002c  4620              MOV      r0,r4
 00002e  f7fffffe          BL       TIM_ITConfig
-;;;192        NVIC_InitStructure.NVIC_IRQChannel=TIM3_IRQn; //??? 3 ??
+;;;374        NVIC_InitStructure.NVIC_IRQChannel=TIM3_IRQn; //??? 3 ??
 000032  211d              MOVS     r1,#0x1d
 000034  f88d1000          STRB     r1,[sp,#0]
-;;;193        NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0x01; //????? 1
+;;;375        NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0x01; //????? 1
 000038  2101              MOVS     r1,#1
 00003a  f88d1001          STRB     r1,[sp,#1]
-;;;194        NVIC_InitStructure.NVIC_IRQChannelSubPriority=0x03; //§¾???? 3
+;;;376        NVIC_InitStructure.NVIC_IRQChannelSubPriority=0x03; //§¾???? 3
 00003e  2203              MOVS     r2,#3
 000040  f88d2002          STRB     r2,[sp,#2]
-;;;195        NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
+;;;377        NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
 000044  f88d1003          STRB     r1,[sp,#3]
-;;;196        NVIC_Init(&NVIC_InitStructure);// ¨¹??? NVIC
+;;;378        NVIC_Init(&NVIC_InitStructure);// ¨¹??? NVIC
 000048  4668              MOV      r0,sp
 00004a  f7fffffe          BL       NVIC_Init
-;;;197        TIM_Cmd(TIM3,ENABLE); //Y????? 3
+;;;379        TIM_Cmd(TIM3,ENABLE); //Y????? 3
 00004e  2101              MOVS     r1,#1
 000050  4620              MOV      r0,r4
 000052  f7fffffe          BL       TIM_Cmd
-;;;198    }
+;;;380    }
 000056  bd7f              POP      {r0-r6,pc}
-;;;199    //??? 3 ??????
+;;;381    //??? 3 ??????
                           ENDP
 
-                  |L2.88|
+                  |L3.88|
                           DCD      0x40000400
 
                           AREA ||i.TIM4_IRQHandler||, CODE, READONLY, ALIGN=2
 
                   TIM4_IRQHandler PROC
-;;;62     //??? 3 ??????
-;;;63     void TIM4_IRQHandler(void)
-000000  b570              PUSH     {r4-r6,lr}
-;;;64     {
-;;;65         static vu16 resetcount;
-;;;66         static vu8 read1963;
-;;;67         static vu16 scancount;
-;;;68     //     static float crec1,crec2;
-;;;69         
-;;;70         if(TIM_GetITStatus(TIM4,TIM_IT_Update)==SET) //????
-000002  4c2f              LDR      r4,|L3.192|
-000004  2101              MOVS     r1,#1
-000006  4620              MOV      r0,r4
-000008  f7fffffe          BL       TIM_GetITStatus
-00000c  2801              CMP      r0,#1
-00000e  d155              BNE      |L3.188|
-;;;71         {
-;;;72             TIM_ClearITPendingBit(TIM4,TIM_IT_Update); //Çå³ýÖÐ¶Ï±êÖ¾Î»
-000010  2101              MOVS     r1,#1
-000012  4620              MOV      r0,r4
-000014  f7fffffe          BL       TIM_ClearITPendingBit
-;;;73             
-;;;74             if(page_sw != face_starter)
-000018  4d2a              LDR      r5,|L3.196|
-00001a  7828              LDRB     r0,[r5,#0]  ; page_sw
-;;;75             {
-;;;76                  if(resetflag == 1)
-;;;77                  {
-;;;78                      if(resetcount == 3000)
-;;;79                      {
-;;;80     //                     sLCD_GPIO_Config();
-;;;81                          sLCD_Init();
-;;;82     //                     sLCD_WR_REG(0xf1);
-;;;83                          GUI_Init();
-;;;84                          if(page_sw == face_menu)
-;;;85                          {
-;;;86                              ResetPow();
-;;;87                          }else if(page_sw == face_cdc){
-;;;88                              ResetCDC();
-;;;89                          }else if(page_sw == face_r){
-;;;90                              ResetR();
-;;;91                          }else if(page_sw == face_load){
-;;;92                              ResetLoad();
-;;;93                          }else if(page_sw == face_graph){
-;;;94                              ResetG();
-;;;95                          }else if(page_sw == face_set){
-;;;96                              ResetSET();
-;;;97                          }
-;;;98     //                     resdone = 1;
-;;;99     //                     resetflag = 0;
-;;;100                         resetcount = 0;
-00001c  2600              MOVS     r6,#0
-00001e  2806              CMP      r0,#6                 ;74
-000020  d034              BEQ      |L3.140|
-000022  4c29              LDR      r4,|L3.200|
-000024  7860              LDRB     r0,[r4,#1]            ;76  ; resetflag
-000026  2801              CMP      r0,#1                 ;76
-000028  d130              BNE      |L3.140|
-00002a  8860              LDRH     r0,[r4,#2]            ;78  ; resetcount
-00002c  f5a06130          SUB      r1,r0,#0xb00          ;78
-000030  39b8              SUBS     r1,r1,#0xb8           ;78
-000032  d128              BNE      |L3.134|
-000034  f7fffffe          BL       sLCD_Init
-000038  f7fffffe          BL       GUI_Init
-00003c  7828              LDRB     r0,[r5,#0]            ;84  ; page_sw
-00003e  2802              CMP      r0,#2                 ;84
-000040  d00e              BEQ      |L3.96|
-000042  7828              LDRB     r0,[r5,#0]            ;87  ; page_sw
-000044  2801              CMP      r0,#1                 ;87
-000046  d00e              BEQ      |L3.102|
-000048  7828              LDRB     r0,[r5,#0]            ;89  ; page_sw
-00004a  2803              CMP      r0,#3                 ;89
-00004c  d00e              BEQ      |L3.108|
-00004e  7828              LDRB     r0,[r5,#0]            ;91  ; page_sw
-000050  2804              CMP      r0,#4                 ;91
-000052  d00e              BEQ      |L3.114|
-000054  7828              LDRB     r0,[r5,#0]            ;93  ; page_sw
-000056  b178              CBZ      r0,|L3.120|
-000058  7828              LDRB     r0,[r5,#0]            ;95  ; page_sw
-00005a  2805              CMP      r0,#5                 ;95
-00005c  d00f              BEQ      |L3.126|
-00005e  e010              B        |L3.130|
-                  |L3.96|
-000060  f7fffffe          BL       ResetPow
-000064  e00d              B        |L3.130|
-                  |L3.102|
-000066  f7fffffe          BL       ResetCDC
-00006a  e00a              B        |L3.130|
-                  |L3.108|
-00006c  f7fffffe          BL       ResetR
-000070  e007              B        |L3.130|
-                  |L3.114|
-000072  f7fffffe          BL       ResetLoad
-000076  e004              B        |L3.130|
-                  |L3.120|
-000078  f7fffffe          BL       ResetG
-00007c  e001              B        |L3.130|
-                  |L3.126|
-00007e  f7fffffe          BL       ResetSET
-                  |L3.130|
-000082  8066              STRH     r6,[r4,#2]
-000084  e002              B        |L3.140|
-                  |L3.134|
-;;;101                     }else{
-;;;102                         resetcount++;
-000086  8860              LDRH     r0,[r4,#2]  ; resetcount
-000088  1c40              ADDS     r0,r0,#1
-00008a  8060              STRH     r0,[r4,#2]
-                  |L3.140|
-;;;103                     }                
-;;;104                 }
-;;;105             }
-;;;106             
-;;;107            if(oct_sw == oct_on)
-00008c  4c0f              LDR      r4,|L3.204|
-00008e  7820              LDRB     r0,[r4,#0]  ; oct_sw
-000090  2801              CMP      r0,#1
-000092  d113              BNE      |L3.188|
-;;;108            {
-;;;109                OC_CHECK();
-000094  f7fffffe          BL       OC_CHECK
-;;;110                if(oct_sw == oct_on)
-000098  7820              LDRB     r0,[r4,#0]  ; oct_sw
-00009a  2801              CMP      r0,#1
-00009c  d10e              BNE      |L3.188|
-;;;111                {
-;;;112                    stepcount ++;
-00009e  4c0c              LDR      r4,|L3.208|
-0000a0  8820              LDRH     r0,[r4,#0]  ; stepcount
-0000a2  1c40              ADDS     r0,r0,#1
-0000a4  8020              STRH     r0,[r4,#0]
-;;;113                    if(stepcount == steptime*10)
-0000a6  480b              LDR      r0,|L3.212|
-0000a8  8800              LDRH     r0,[r0,#0]  ; steptime
-0000aa  8821              LDRH     r1,[r4,#0]  ; stepcount
-0000ac  eb000080          ADD      r0,r0,r0,LSL #2
-0000b0  ebb10f40          CMP      r1,r0,LSL #1
-0000b4  d102              BNE      |L3.188|
-;;;114                    {
-;;;115                        OC_ADD();
-0000b6  f7fffffe          BL       OC_ADD
-;;;116                        stepcount = 0;
-0000ba  8026              STRH     r6,[r4,#0]
-                  |L3.188|
-;;;117                    }
-;;;118                }
-;;;119            }
-;;;120    //         if(page_sw == face_load)
-;;;121    //         {
-;;;122    //             if(c_rec == 1)
-;;;123    //             {
-;;;124    //                 crec2 = crec1;
-;;;125    //                 crec1 = DISS_Current;
-;;;126    //                 if(crec2 > crec1)
-;;;127    //                 {
-;;;128    //                     watch = crec2;
-;;;129    //                     c_rec = 0;
-;;;130    //                     crec2 = crec1 = 0;
-;;;131    //                 }
-;;;132    //             }
-;;;133    //         }
-;;;134        }    
-;;;135    }
-0000bc  bd70              POP      {r4-r6,pc}
-;;;136    
+;;;88     //??? 3 ??????
+;;;89     void TIM4_IRQHandler(void)
+000000  e92d4ff0          PUSH     {r4-r11,lr}
+;;;90     {
+000004  ed2d8b06          VPUSH    {d8-d10}
+000008  b081              SUB      sp,sp,#4
+;;;91         static vu16 resetcount;
+;;;92         static vu8 read1963;
+;;;93         static vu16 scancount;
+;;;94         static vu16 uocount;
+;;;95         static vu16 powcount;
+;;;96         static vu16 powflag;
+;;;97         static vu16 finishflag;
+;;;98         static float crec1,crec2;
+;;;99         u8 crec[6];
+;;;100        u8 *csend;
+;;;101        static u8 *sendbuf;
+;;;102        u8 sendlen;
+;;;103        static u16 recrc;
+;;;104        static u16 scrc;
+;;;105        u8 i;
+;;;106    //     static float crec1,crec2;
+;;;107        
+;;;108        if(TIM_GetITStatus(TIM4,TIM_IT_Update)==SET) //????
+00000a  2101              MOVS     r1,#1
+00000c  4cfc              LDR      r4,|L4.1024|
+00000e  4620              MOV      r0,r4
+000010  f7fffffe          BL       TIM_GetITStatus
+000014  2801              CMP      r0,#1
+000016  d17c              BNE      |L4.274|
+;;;109        {
+;;;110            TIM_ClearITPendingBit(TIM4,TIM_IT_Update); //Çå³ýÖÐ¶Ï±êÖ¾Î»
+000018  2101              MOVS     r1,#1
+00001a  4620              MOV      r0,r4
+00001c  f7fffffe          BL       TIM_ClearITPendingBit
+;;;111            
+;;;112            if(page_sw != face_starter)
+000020  4df8              LDR      r5,|L4.1028|
+000022  7828              LDRB     r0,[r5,#0]  ; page_sw
+;;;113            {
+;;;114                 if(resetflag == 1)
+;;;115                 {
+;;;116                     if(resetcount == 3000)
+;;;117                     {
+;;;118    //                     sLCD_GPIO_Config();
+;;;119                         sLCD_Init();
+;;;120    //                     sLCD_WR_REG(0xf1);
+;;;121                         GUI_Init();
+;;;122                         if(page_sw == face_menu)
+;;;123                         {
+;;;124                             ResetPow();
+;;;125                         }else if(page_sw == face_cdc){
+;;;126                             ResetCDC();
+;;;127                         }else if(page_sw == face_r){
+;;;128                             ResetR();
+;;;129                         }else if(page_sw == face_load){
+;;;130                             ResetLoad();
+;;;131                         }else if(page_sw == face_graph){
+;;;132                             ResetG();
+;;;133                         }else if(page_sw == face_set){
+;;;134                             ResetSET();
+;;;135                         }
+;;;136    //                     resdone = 1;
+;;;137    //                     resetflag = 0;
+;;;138                         resetcount = 0;
+000024  2400              MOVS     r4,#0
+000026  f8df93e0          LDR      r9,|L4.1032|
+00002a  f64038b8          MOV      r8,#0xbb8             ;116
+00002e  2806              CMP      r0,#6                 ;112
+000030  d036              BEQ      |L4.160|
+000032  f8990003          LDRB     r0,[r9,#3]            ;114  ; resetflag
+000036  2801              CMP      r0,#1                 ;114
+000038  d132              BNE      |L4.160|
+00003a  f8b90004          LDRH     r0,[r9,#4]            ;116  ; resetcount
+00003e  4540              CMP      r0,r8                 ;116
+000040  d129              BNE      |L4.150|
+000042  f7fffffe          BL       sLCD_Init
+000046  f7fffffe          BL       GUI_Init
+00004a  7828              LDRB     r0,[r5,#0]            ;122  ; page_sw
+00004c  2802              CMP      r0,#2                 ;122
+00004e  d00e              BEQ      |L4.110|
+000050  7828              LDRB     r0,[r5,#0]            ;125  ; page_sw
+000052  2801              CMP      r0,#1                 ;125
+000054  d00e              BEQ      |L4.116|
+000056  7828              LDRB     r0,[r5,#0]            ;127  ; page_sw
+000058  2803              CMP      r0,#3                 ;127
+00005a  d00e              BEQ      |L4.122|
+00005c  7828              LDRB     r0,[r5,#0]            ;129  ; page_sw
+00005e  2804              CMP      r0,#4                 ;129
+000060  d00e              BEQ      |L4.128|
+000062  7828              LDRB     r0,[r5,#0]            ;131  ; page_sw
+000064  b178              CBZ      r0,|L4.134|
+000066  7828              LDRB     r0,[r5,#0]            ;133  ; page_sw
+000068  2805              CMP      r0,#5                 ;133
+00006a  d00f              BEQ      |L4.140|
+00006c  e010              B        |L4.144|
+                  |L4.110|
+00006e  f7fffffe          BL       ResetPow
+000072  e00d              B        |L4.144|
+                  |L4.116|
+000074  f7fffffe          BL       ResetCDC
+000078  e00a              B        |L4.144|
+                  |L4.122|
+00007a  f7fffffe          BL       ResetR
+00007e  e007              B        |L4.144|
+                  |L4.128|
+000080  f7fffffe          BL       ResetLoad
+000084  e004              B        |L4.144|
+                  |L4.134|
+000086  f7fffffe          BL       ResetG
+00008a  e001              B        |L4.144|
+                  |L4.140|
+00008c  f7fffffe          BL       ResetSET
+                  |L4.144|
+000090  f8a94004          STRH     r4,[r9,#4]
+000094  e004              B        |L4.160|
+                  |L4.150|
+;;;139                     }else{
+;;;140                         resetcount++;
+000096  f8b90004          LDRH     r0,[r9,#4]  ; resetcount
+00009a  1c40              ADDS     r0,r0,#1
+00009c  f8a90004          STRH     r0,[r9,#4]
+                  |L4.160|
+;;;141                     }                
+;;;142                 }
+;;;143             }
+;;;144             
+;;;145            if(page_sw == face_r)
+0000a0  7828              LDRB     r0,[r5,#0]  ; page_sw
+;;;146            {
+;;;147                if(oct_sw == oct_on)
+;;;148                {
+;;;149                    OC_CHECK();
+;;;150                    if(oct_sw == oct_on)
+;;;151                    {
+;;;152                        stepcount ++;
+;;;153                        if(stepcount == steptime*10)
+;;;154                        {
+;;;155                            OC_ADD();
+;;;156                            stepcount = 0;
+;;;157                        }
+;;;158                    }
+;;;159                }
+;;;160                if(rpow == 1)
+;;;161                {
+;;;162                    if(powcount < 1000)
+;;;163                    {
+;;;164                        SET_Voltage =3000;
+;;;165                        SET_Current = 1000;
+;;;166                        GPIO_SetBits(GPIOA,GPIO_Pin_15);//µç×Ó¸ºÔØOFF
+;;;167                        GPIO_ResetBits(GPIOC,GPIO_Pin_13);//´ò¿ªµçÔ´Êä³ö¼ÌµçÆ÷
+;;;168                        GPIO_SetBits(GPIOC,GPIO_Pin_1);//´ò¿ªµçÔ´Êä³ö
+;;;169                        powcount++;
+;;;170                    }else{
+;;;171                        powcount = 0;
+;;;172                        rpow = 0;
+;;;173                        short_flag = 1;
+;;;174                        IO_OFF();
+;;;175                    }                    
+;;;176                }
+;;;177                if(short_flag == 1)
+;;;178                {
+;;;179                    SET_Current_Laod = (int)(oc_data*1000)+8000;
+;;;180    //                flag_Load_CC = 1;
+;;;181                    GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+;;;182                    GPIO_ResetBits(GPIOA,GPIO_Pin_15);//µç×Ó¸ºÔØOn
+;;;183                    if((v - DISS_Voltage) > v*0.6)
+0000a2  ed9fabda          VLDR     d10,|L4.1036|
+;;;184                    {
+;;;185                        GPIO_SetBits(GPIOA,GPIO_Pin_15);//µç×Ó¸ºÔØOFF
+;;;186                        short_flag = 0;
+;;;187                        short_finish = 1;
+;;;188                        SET_Current_Laod = set_init_c;
+;;;189                    }else{
+;;;190                        short_time++;                
+0000a6  f8dfa36c          LDR      r10,|L4.1044|
+0000aa  eddf9adb          VLDR     s19,|L4.1048|
+0000ae  2601              MOVS     r6,#1                 ;108
+0000b0  4dda              LDR      r5,|L4.1052|
+0000b2  4fdb              LDR      r7,|L4.1056|
+0000b4  2803              CMP      r0,#3                 ;145
+0000b6  d17d              BNE      |L4.436|
+0000b8  f8dfb368          LDR      r11,|L4.1060|
+0000bc  f89b0000          LDRB     r0,[r11,#0]           ;147  ; oct_sw
+0000c0  2801              CMP      r0,#1                 ;147
+0000c2  d119              BNE      |L4.248|
+0000c4  f7fffffe          BL       OC_CHECK
+0000c8  f89b0000          LDRB     r0,[r11,#0]           ;150  ; oct_sw
+0000cc  2801              CMP      r0,#1                 ;150
+0000ce  d113              BNE      |L4.248|
+0000d0  f8dfb354          LDR      r11,|L4.1064|
+0000d4  f8bb0000          LDRH     r0,[r11,#0]           ;152  ; stepcount
+0000d8  1c40              ADDS     r0,r0,#1              ;152
+0000da  f8ab0000          STRH     r0,[r11,#0]           ;152
+0000de  48d3              LDR      r0,|L4.1068|
+0000e0  8800              LDRH     r0,[r0,#0]            ;153  ; steptime
+0000e2  f8bb1000          LDRH     r1,[r11,#0]           ;153  ; stepcount
+0000e6  eb000080          ADD      r0,r0,r0,LSL #2       ;153
+0000ea  ebb10f40          CMP      r1,r0,LSL #1          ;153
+0000ee  d103              BNE      |L4.248|
+0000f0  f7fffffe          BL       OC_ADD
+0000f4  f8ab4000          STRH     r4,[r11,#0]           ;156
+                  |L4.248|
+0000f8  49cd              LDR      r1,|L4.1072|
+0000fa  7808              LDRB     r0,[r1,#0]            ;160  ; rpow
+0000fc  f8dfb334          LDR      r11,|L4.1076|
+000100  2801              CMP      r0,#1                 ;160
+000102  d125              BNE      |L4.336|
+000104  f8b92008          LDRH     r2,[r9,#8]            ;162  ; powcount
+000108  f44f707a          MOV      r0,#0x3e8             ;162
+00010c  4282              CMP      r2,r0                 ;162
+00010e  d218              BCS      |L4.322|
+000110  e000              B        |L4.276|
+                  |L4.274|
+000112  e16f              B        |L4.1012|
+                  |L4.276|
+000114  f8c58004          STR      r8,[r5,#4]            ;164  ; Run_Control
+000118  60a8              STR      r0,[r5,#8]            ;165  ; Run_Control
+00011a  f44f4100          MOV      r1,#0x8000            ;166
+00011e  48c6              LDR      r0,|L4.1080|
+000120  f7fffffe          BL       GPIO_SetBits
+000124  f44f5100          MOV      r1,#0x2000            ;167
+000128  4638              MOV      r0,r7                 ;167
+00012a  f7fffffe          BL       GPIO_ResetBits
+00012e  2102              MOVS     r1,#2                 ;168
+000130  4638              MOV      r0,r7                 ;168
+000132  f7fffffe          BL       GPIO_SetBits
+000136  f8b90008          LDRH     r0,[r9,#8]            ;169  ; powcount
+00013a  1c40              ADDS     r0,r0,#1              ;169
+00013c  f8a90008          STRH     r0,[r9,#8]            ;169
+000140  e006              B        |L4.336|
+                  |L4.322|
+000142  f8a94008          STRH     r4,[r9,#8]            ;171
+000146  700c              STRB     r4,[r1,#0]            ;172
+000148  f88b6000          STRB     r6,[r11,#0]           ;173
+00014c  f7fffffe          BL       IO_OFF
+                  |L4.336|
+000150  f89b0000          LDRB     r0,[r11,#0]           ;177  ; short_flag
+000154  2801              CMP      r0,#1                 ;177
+000156  d142              BNE      |L4.478|
+000158  48b8              LDR      r0,|L4.1084|
+00015a  ed900a00          VLDR     s0,[r0,#0]            ;179
+00015e  ee200a29          VMUL.F32 s0,s0,s19             ;179
+000162  eebd0ac0          VCVT.S32.F32 s0,s0                 ;179
+000166  ee100a10          VMOV     r0,s0                 ;179
+00016a  f50050fa          ADD      r0,r0,#0x1f40         ;179
+00016e  6128              STR      r0,[r5,#0x10]         ;179  ; Run_Control
+000170  f44f6180          MOV      r1,#0x400             ;181
+000174  4638              MOV      r0,r7                 ;181
+000176  f7fffffe          BL       GPIO_ResetBits
+00017a  f44f4100          MOV      r1,#0x8000            ;182
+00017e  48ae              LDR      r0,|L4.1080|
+000180  f7fffffe          BL       GPIO_ResetBits
+000184  48ae              LDR      r0,|L4.1088|
+000186  6800              LDR      r0,[r0,#0]            ;183  ; v
+000188  ee090a10          VMOV     s18,r0                ;183
+00018c  f7fffffe          BL       __aeabi_f2d
+000190  ec532b1a          VMOV     r2,r3,d10             ;183
+000194  f7fffffe          BL       __aeabi_dmul
+000198  ec410b18          VMOV     d8,r0,r1              ;183
+00019c  48a9              LDR      r0,|L4.1092|
+00019e  ed900a00          VLDR     s0,[r0,#0]            ;183
+0001a2  ee390a40          VSUB.F32 s0,s18,s0             ;183
+0001a6  ee100a10          VMOV     r0,s0                 ;183
+0001aa  f7fffffe          BL       __aeabi_f2d
+0001ae  ec532b18          VMOV     r2,r3,d8              ;183
+0001b2  e000              B        |L4.438|
+                  |L4.436|
+0001b4  e013              B        |L4.478|
+                  |L4.438|
+0001b6  f7fffffe          BL       __aeabi_cdrcmple
+0001ba  d20b              BCS      |L4.468|
+0001bc  f44f4100          MOV      r1,#0x8000            ;185
+0001c0  489d              LDR      r0,|L4.1080|
+0001c2  f7fffffe          BL       GPIO_SetBits
+0001c6  f88b4000          STRB     r4,[r11,#0]           ;186
+0001ca  489f              LDR      r0,|L4.1096|
+0001cc  7006              STRB     r6,[r0,#0]            ;187
+0001ce  6da8              LDR      r0,[r5,#0x58]         ;188  ; Run_Control
+0001d0  6128              STR      r0,[r5,#0x10]         ;188  ; Run_Control
+0001d2  e004              B        |L4.478|
+                  |L4.468|
+0001d4  f8ba0000          LDRH     r0,[r10,#0]  ; short_time
+0001d8  1c40              ADDS     r0,r0,#1
+0001da  f8aa0000          STRH     r0,[r10,#0]
+                  |L4.478|
+;;;191                    }
+;;;192                }
+;;;193                
+;;;194            }
+;;;195    //         if(page_sw == face_load)
+;;;196    //         {
+;;;197    //             if(c_rec == 1)
+;;;198    //             {
+;;;199    //                 crec2 = crec1;
+;;;200    //                 crec1 = DISS_Current;
+;;;201    //                 if(crec2 > crec1)
+;;;202    //                 {
+;;;203    //                     watch = crec2;
+;;;204    //                     c_rec = 0;
+;;;205    //                     crec2 = crec1 = 0;
+;;;206    //                 }
+;;;207    //             }
+;;;208    //         }
+;;;209            if(usartocflag == 1)
+;;;210            {
+;;;211    //             g_tModS.TxBuf[0] = g_tModS.RxBuf[0];
+;;;212    //             g_tModS.TxBuf[1] = g_tModS.RxBuf[1];
+;;;213    //             g_tModS.TxBuf[2] = 0x26;
+;;;214    //             g_tModS.TxBuf[3] = R_VLUE>>8;
+;;;215    //             g_tModS.TxBuf[4] = R_VLUE;
+;;;216    //             g_tModS.TxBuf[5] = (int)(DISS_Voltage*1000)>>8;
+;;;217    //             g_tModS.TxBuf[6] = (int)(DISS_Voltage*1000);
+;;;218    //             g_tModS.TxBuf[7] = (int)(DISS_Current*1000)>>8;
+;;;219    //             g_tModS.TxBuf[8] = (int)(DISS_Current*1000);
+;;;220    //             g_tModS.TxBuf[9] = (int)(DISS_POW_Voltage*100)>>8;
+;;;221    //             g_tModS.TxBuf[10] = (int)(DISS_POW_Voltage*100);
+;;;222    //             g_tModS.TxBuf[11] = (int)(DISS_POW_Current*1000)>>8;
+;;;223    //             g_tModS.TxBuf[12] = (int)(DISS_POW_Current*1000);
+;;;224    //             
+;;;225    //             for(i=15;i<41;i++)
+;;;226    //             {
+;;;227    //                 g_tModS.TxBuf[i] = 0;
+;;;228    //             }
+;;;229    //             g_tModS.TxBuf[15] = 0;
+;;;230    //             g_tModS.TxBuf[16] = 0;
+;;;231                GPIO_ResetBits(GPIOC,GPIO_Pin_1);//¹Ø±ÕµçÔ´Êä³ö
+;;;232                GPIO_SetBits(GPIOC,GPIO_Pin_13);//¹Ø±ÕµçÔ´Êä³ö¼ÌµçÆ÷
+;;;233                flag_Load_CC = 1;
+;;;234                GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+;;;235                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//µç×Ó¸ºÔØOn
+;;;236                crec2 = crec1;
+;;;237                crec1 = DISS_Current;
+;;;238                if(crec1 < crec2 && crec2 > 0.3)
+;;;239                {     
+;;;240                    oc_data = crec2;
+;;;241                    g_tModS.TxBuf[13] = (int)(oc_data*1000)>>8;
+0001de  f8dfb26c          LDR      r11,|L4.1100|
+0001e2  f8991000          LDRB     r1,[r9,#0]            ;209  ; usartocflag
+;;;242                    g_tModS.TxBuf[14] = (int)(oc_data*1000);
+;;;243                    SET_Current_Laod = set_init_c;
+;;;244                    GPIO_SetBits(GPIOA,GPIO_Pin_15);//å…³é—­è´Ÿè½½ 
+;;;245                    MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);
+0001e6  f10b001e          ADD      r0,r11,#0x1e
+0001ea  9000              STR      r0,[sp,#0]            ;209
+0001ec  2901              CMP      r1,#1                 ;209
+0001ee  d15c              BNE      |L4.682|
+0001f0  2102              MOVS     r1,#2                 ;231
+0001f2  4638              MOV      r0,r7                 ;231
+0001f4  f7fffffe          BL       GPIO_ResetBits
+0001f8  f44f5100          MOV      r1,#0x2000            ;232
+0001fc  4638              MOV      r0,r7                 ;232
+0001fe  f7fffffe          BL       GPIO_SetBits
+000202  4893              LDR      r0,|L4.1104|
+000204  6801              LDR      r1,[r0,#0]            ;233  ; flagD
+000206  f0410180          ORR      r1,r1,#0x80           ;233
+00020a  6001              STR      r1,[r0,#0]            ;233  ; flagD
+00020c  f44f6180          MOV      r1,#0x400             ;234
+000210  4638              MOV      r0,r7                 ;234
+000212  f7fffffe          BL       GPIO_ResetBits
+000216  f44f4100          MOV      r1,#0x8000            ;235
+00021a  4887              LDR      r0,|L4.1080|
+00021c  f7fffffe          BL       GPIO_ResetBits
+000220  ed990a05          VLDR     s0,[r9,#0x14]         ;236
+000224  ed890a06          VSTR     s0,[r9,#0x18]         ;236
+000228  488a              LDR      r0,|L4.1108|
+00022a  edd00a00          VLDR     s1,[r0,#0]            ;237
+00022e  edc90a05          VSTR     s1,[r9,#0x14]         ;237
+000232  eef40ac0          VCMPE.F32 s1,s0                 ;238
+000236  eef1fa10          VMRS     APSR_nzcv,FPSCR       ;238
+00023a  d22d              BCS      |L4.664|
+00023c  ee100a10          VMOV     r0,s0                 ;238
+000240  4985              LDR      r1,|L4.1112|
+000242  4288              CMP      r0,r1                 ;238
+000244  db28              BLT      |L4.664|
+000246  487d              LDR      r0,|L4.1084|
+000248  ed800a00          VSTR     s0,[r0,#0]            ;240
+00024c  ee200a29          VMUL.F32 s0,s0,s19             ;241
+000250  eebd0ac0          VCVT.S32.F32 s0,s0                 ;241
+000254  ee100a10          VMOV     r0,s0                 ;241
+000258  1200              ASRS     r0,r0,#8              ;241
+00025a  f88b002b          STRB     r0,[r11,#0x2b]        ;241
+00025e  ee100a10          VMOV     r0,s0                 ;242
+000262  f88b002c          STRB     r0,[r11,#0x2c]        ;242
+000266  6da8              LDR      r0,[r5,#0x58]         ;243  ; Run_Control
+000268  6128              STR      r0,[r5,#0x10]         ;243  ; Run_Control
+00026a  f44f4100          MOV      r1,#0x8000            ;244
+00026e  4872              LDR      r0,|L4.1080|
+000270  f7fffffe          BL       GPIO_SetBits
+000274  f89b10a2          LDRB     r1,[r11,#0xa2]  ; g_tModS
+000278  9800              LDR      r0,[sp,#0]
+00027a  f7fffffe          BL       MODS_SendWithCRC
+;;;246                    t_onoff = 0;
+00027e  4877              LDR      r0,|L4.1116|
+000280  7004              STRB     r4,[r0,#0]
+;;;247                    usartocflag = 0;
+000282  f8894000          STRB     r4,[r9,#0]
+;;;248                    crec1 = 0;
+000286  ed9f0a76          VLDR     s0,|L4.1120|
+00028a  ed890a05          VSTR     s0,[r9,#0x14]
+;;;249                    crec2 = 0;
+00028e  ed890a06          VSTR     s0,[r9,#0x18]
+;;;250                    powflag = 1;
+000292  f8a9600a          STRH     r6,[r9,#0xa]
+000296  e008              B        |L4.682|
+                  |L4.664|
+;;;251                    
+;;;252                }else{
+;;;253                    if(uocount == 10)
+000298  f8b90006          LDRH     r0,[r9,#6]  ; uocount
+00029c  280a              CMP      r0,#0xa
+00029e  d009              BEQ      |L4.692|
+;;;254                    {
+;;;255                        SET_Current_Laod = SET_Current_Laod + 10;
+;;;256                        uocount = 0;
+;;;257                    }else{
+;;;258                        uocount++;
+0002a0  f8b90006          LDRH     r0,[r9,#6]  ; uocount
+0002a4  1c40              ADDS     r0,r0,#1
+0002a6  f8a90006          STRH     r0,[r9,#6]
+                  |L4.682|
+;;;259                    }                    
+;;;260                }
+;;;261            }
+;;;262            if(powflag == 1)
+0002aa  f8b9000a          LDRH     r0,[r9,#0xa]  ; powflag
+0002ae  2801              CMP      r0,#1
+0002b0  d006              BEQ      |L4.704|
+0002b2  e02a              B        |L4.778|
+                  |L4.692|
+0002b4  6928              LDR      r0,[r5,#0x10]         ;255  ; Run_Control
+0002b6  300a              ADDS     r0,r0,#0xa            ;255
+0002b8  6128              STR      r0,[r5,#0x10]         ;255  ; Run_Control
+0002ba  f8a94006          STRH     r4,[r9,#6]            ;256
+0002be  e7f4              B        |L4.682|
+                  |L4.704|
+;;;263            {
+;;;264                if(powcount < 1000)
+0002c0  f8b91008          LDRH     r1,[r9,#8]  ; powcount
+0002c4  f44f707a          MOV      r0,#0x3e8
+0002c8  4281              CMP      r1,r0
+0002ca  d216              BCS      |L4.762|
+;;;265                {
+;;;266                    SET_Voltage =3000;
+0002cc  f8c58004          STR      r8,[r5,#4]  ; Run_Control
+;;;267                    SET_Current = 1000;
+0002d0  60a8              STR      r0,[r5,#8]  ; Run_Control
+;;;268                    GPIO_SetBits(GPIOA,GPIO_Pin_15);//µç×Ó¸ºÔØOFF
+0002d2  f44f4100          MOV      r1,#0x8000
+0002d6  4858              LDR      r0,|L4.1080|
+0002d8  f7fffffe          BL       GPIO_SetBits
+;;;269                    GPIO_ResetBits(GPIOC,GPIO_Pin_13);//´ò¿ªµçÔ´Êä³ö¼ÌµçÆ÷
+0002dc  f44f5100          MOV      r1,#0x2000
+0002e0  4638              MOV      r0,r7
+0002e2  f7fffffe          BL       GPIO_ResetBits
+;;;270                    GPIO_SetBits(GPIOC,GPIO_Pin_1);//´ò¿ªµçÔ´Êä³ö
+0002e6  2102              MOVS     r1,#2
+0002e8  4638              MOV      r0,r7
+0002ea  f7fffffe          BL       GPIO_SetBits
+;;;271                    powcount++;
+0002ee  f8b90008          LDRH     r0,[r9,#8]  ; powcount
+0002f2  1c40              ADDS     r0,r0,#1
+0002f4  f8a90008          STRH     r0,[r9,#8]
+0002f8  e007              B        |L4.778|
+                  |L4.762|
+;;;272    //                 shortv = DISS_Voltage;
+;;;273                }else{
+;;;274                    powcount = 0;
+0002fa  f8a94008          STRH     r4,[r9,#8]
+;;;275                    powflag = 0;
+0002fe  f8a9400a          STRH     r4,[r9,#0xa]
+;;;276                    IO_OFF();
+000302  f7fffffe          BL       IO_OFF
+;;;277                    usartshortflag = 1;
+000306  f8896001          STRB     r6,[r9,#1]
+                  |L4.778|
+;;;278                    
+;;;279                }
+;;;280            }
+;;;281            if(usartshortflag == 1)
+00030a  f8990001          LDRB     r0,[r9,#1]  ; usartshortflag
+00030e  2801              CMP      r0,#1
+000310  d155              BNE      |L4.958|
+;;;282            {
+;;;283                SET_Current_Laod = (int)(oc_data*1000)+8000;
+000312  484a              LDR      r0,|L4.1084|
+000314  ed900a00          VLDR     s0,[r0,#0]
+000318  ee200a29          VMUL.F32 s0,s0,s19
+00031c  eebd0ac0          VCVT.S32.F32 s0,s0
+000320  ee100a10          VMOV     r0,s0
+000324  f50050fa          ADD      r0,r0,#0x1f40
+000328  6128              STR      r0,[r5,#0x10]  ; Run_Control
+;;;284                flag_Load_CC = 1;
+00032a  4849              LDR      r0,|L4.1104|
+00032c  6801              LDR      r1,[r0,#0]  ; flagD
+00032e  f0410180          ORR      r1,r1,#0x80
+000332  6001              STR      r1,[r0,#0]  ; flagD
+;;;285                GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+000334  f44f6180          MOV      r1,#0x400
+000338  4638              MOV      r0,r7
+00033a  f7fffffe          BL       GPIO_ResetBits
+;;;286                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//µç×Ó¸ºÔØOn
+00033e  f44f4100          MOV      r1,#0x8000
+000342  483d              LDR      r0,|L4.1080|
+000344  f7fffffe          BL       GPIO_ResetBits
+;;;287                if((shortv - DISS_Voltage) > shortv*0.6)
+000348  f8d90038          LDR      r0,[r9,#0x38]  ; shortv
+00034c  ee090a10          VMOV     s18,r0
+000350  f7fffffe          BL       __aeabi_f2d
+000354  ec532b1a          VMOV     r2,r3,d10
+000358  f7fffffe          BL       __aeabi_dmul
+00035c  ec410b18          VMOV     d8,r0,r1
+000360  4838              LDR      r0,|L4.1092|
+000362  ed900a00          VLDR     s0,[r0,#0]
+000366  ee390a40          VSUB.F32 s0,s18,s0
+00036a  ee100a10          VMOV     r0,s0
+00036e  f7fffffe          BL       __aeabi_f2d
+000372  ec532b18          VMOV     r2,r3,d8
+000376  f7fffffe          BL       __aeabi_cdrcmple
+00037a  d21b              BCS      |L4.948|
+;;;288                {
+;;;289                    IO_OFF();
+00037c  f7fffffe          BL       IO_OFF
+;;;290                    usartshortflag = 0;               
+000380  f8894001          STRB     r4,[r9,#1]
+;;;291                    g_tModS.TxBuf[17] = (short_time/10)>>8;
+000384  f8ba1000          LDRH     r1,[r10,#0]  ; short_time
+000388  200a              MOVS     r0,#0xa
+00038a  fbb1f1f0          UDIV     r1,r1,r0
+00038e  0a09              LSRS     r1,r1,#8
+000390  f88b102f          STRB     r1,[r11,#0x2f]
+;;;292                    g_tModS.TxBuf[18] = (short_time/10);
+000394  f8ba1000          LDRH     r1,[r10,#0]  ; short_time
+000398  fbb1f0f0          UDIV     r0,r1,r0
+00039c  f88b0030          STRB     r0,[r11,#0x30]
+;;;293                    MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);
+0003a0  f89b10a2          LDRB     r1,[r11,#0xa2]  ; g_tModS
+0003a4  9800              LDR      r0,[sp,#0]
+0003a6  f7fffffe          BL       MODS_SendWithCRC
+;;;294                    finishflag=1;
+0003aa  f8a9600c          STRH     r6,[r9,#0xc]
+;;;295                    short_time = 0;
+0003ae  f8aa4000          STRH     r4,[r10,#0]
+0003b2  e004              B        |L4.958|
+                  |L4.948|
+;;;296                }else{
+;;;297                    short_time++;                
+0003b4  f8ba0000          LDRH     r0,[r10,#0]  ; short_time
+0003b8  1c40              ADDS     r0,r0,#1
+0003ba  f8aa0000          STRH     r0,[r10,#0]
+                  |L4.958|
+;;;298                }
+;;;299            }
+;;;300            if(finishflag == 1)
+0003be  f8b9000c          LDRH     r0,[r9,#0xc]  ; finishflag
+0003c2  2801              CMP      r0,#1
+0003c4  d116              BNE      |L4.1012|
+;;;301            {
+;;;302                if(powcount < 1000)
+0003c6  f8b91008          LDRH     r1,[r9,#8]  ; powcount
+0003ca  f44f707a          MOV      r0,#0x3e8
+0003ce  4281              CMP      r1,r0
+0003d0  d248              BCS      |L4.1124|
+;;;303                {
+;;;304                    SET_Voltage =3000;
+0003d2  f8c58004          STR      r8,[r5,#4]  ; Run_Control
+;;;305                    SET_Current = 1000;
+0003d6  60a8              STR      r0,[r5,#8]  ; Run_Control
+;;;306                    GPIO_ResetBits(GPIOC,GPIO_Pin_13);//´ò¿ªµçÔ´Êä³ö¼ÌµçÆ÷
+0003d8  f44f5100          MOV      r1,#0x2000
+0003dc  4638              MOV      r0,r7
+0003de  f7fffffe          BL       GPIO_ResetBits
+;;;307                    GPIO_SetBits(GPIOC,GPIO_Pin_1);//´ò¿ªµçÔ´Êä³ö
+0003e2  2102              MOVS     r1,#2
+0003e4  4638              MOV      r0,r7
+0003e6  f7fffffe          BL       GPIO_SetBits
+;;;308                    powcount++;
+0003ea  f8b90008          LDRH     r0,[r9,#8]  ; powcount
+0003ee  1c40              ADDS     r0,r0,#1
+0003f0  f8a90008          STRH     r0,[r9,#8]
+                  |L4.1012|
+;;;309    //                 shortv = DISS_Voltage;
+;;;310                }else{
+;;;311                    powcount = 0;
+;;;312                    finishflag = 0;
+;;;313                    IO_OFF();                
+;;;314                }
+;;;315            }
+;;;316        }    
+;;;317    }
+0003f4  b001              ADD      sp,sp,#4
+0003f6  ecbd8b06          VPOP     {d8-d10}
+0003fa  e8bd8ff0          POP      {r4-r11,pc}
+0003fe  0000              DCW      0x0000
+                  |L4.1024|
+                          DCD      0x40000800
+                  |L4.1028|
+                          DCD      page_sw
+                  |L4.1032|
+                          DCD      ||.data||
+                  |L4.1036|
+00040c  33333333          DCFD     0x3fe3333333333333 ; 0.59999999999999998
+000410  3fe33333
+                  |L4.1044|
+                          DCD      short_time
+                  |L4.1048|
+000418  447a0000          DCFS     0x447a0000 ; 1000
+                  |L4.1052|
+                          DCD      Run_Control
+                  |L4.1056|
+                          DCD      0x40020800
+                  |L4.1060|
+                          DCD      oct_sw
+                  |L4.1064|
+                          DCD      stepcount
+                  |L4.1068|
+                          DCD      steptime
+                  |L4.1072|
+                          DCD      rpow
+                  |L4.1076|
+                          DCD      short_flag
+                  |L4.1080|
+                          DCD      0x40020000
+                  |L4.1084|
+                          DCD      oc_data
+                  |L4.1088|
+                          DCD      v
+                  |L4.1092|
+                          DCD      DISS_Voltage
+                  |L4.1096|
+                          DCD      short_finish
+                  |L4.1100|
+                          DCD      g_tModS
+                  |L4.1104|
+                          DCD      flagD
+                  |L4.1108|
+                          DCD      DISS_Current
+                  |L4.1112|
+                          DCD      0x3e99999a
+                  |L4.1116|
+                          DCD      t_onoff
+                  |L4.1120|
+000460  00000000          DCFS     0x00000000 ; 0
+                  |L4.1124|
+000464  f8a94008          STRH     r4,[r9,#8]            ;311
+000468  f8a9400c          STRH     r4,[r9,#0xc]          ;312
+00046c  b001              ADD      sp,sp,#4              ;313
+00046e  ecbd8b06          VPOP     {d8-d10}              ;313
+000472  e8bd4ff0          POP      {r4-r11,lr}           ;313
+000476  f7ffbffe          B.W      IO_OFF
+;;;318    
                           ENDP
 
-0000be  0000              DCW      0x0000
-                  |L3.192|
-                          DCD      0x40000800
-                  |L3.196|
-                          DCD      page_sw
-                  |L3.200|
-                          DCD      ||.data||
-                  |L3.204|
-                          DCD      oct_sw
-                  |L3.208|
-                          DCD      stepcount
-                  |L3.212|
-                          DCD      steptime
 
                           AREA ||i.TIM4_Int_Init||, CODE, READONLY, ALIGN=2
 
                   TIM4_Int_Init PROC
-;;;42     //?o???¡¦??? 3!
-;;;43     void TIM4_Int_Init(u16 arr,u16 psc)
+;;;68     //?o???¡¦??? 3!
+;;;69     void TIM4_Int_Init(u16 arr,u16 psc)
 000000  b57f              PUSH     {r0-r6,lr}
-;;;44     {
+;;;70     {
 000002  4604              MOV      r4,r0
 000004  460d              MOV      r5,r1
-;;;45         TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
-;;;46         NVIC_InitTypeDef NVIC_InitStructure;
-;;;47         
-;;;48         RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4,ENABLE); //¨´?? TIM3 ??
+;;;71         TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+;;;72         NVIC_InitTypeDef NVIC_InitStructure;
+;;;73         
+;;;74         RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4,ENABLE); //¨´?? TIM3 ??
 000006  2101              MOVS     r1,#1
 000008  2004              MOVS     r0,#4
 00000a  f7fffffe          BL       RCC_APB1PeriphClockCmd
-;;;49         TIM_TimeBaseInitStructure.TIM_Period = arr; //??????
+;;;75         TIM_TimeBaseInitStructure.TIM_Period = arr; //??????
 00000e  9402              STR      r4,[sp,#8]
-;;;50         TIM_TimeBaseInitStructure.TIM_Prescaler=psc; //?????
+;;;76         TIM_TimeBaseInitStructure.TIM_Prescaler=psc; //?????
 000010  f8ad5004          STRH     r5,[sp,#4]
-;;;51         TIM_TimeBaseInitStructure.TIM_CounterMode=TIM_CounterMode_Up; //§Ó?????
+;;;77         TIM_TimeBaseInitStructure.TIM_CounterMode=TIM_CounterMode_Up; //§Ó?????
 000014  2000              MOVS     r0,#0
 000016  f8ad0006          STRH     r0,[sp,#6]
-;;;52         TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
+;;;78         TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
 00001a  f8ad000c          STRH     r0,[sp,#0xc]
-;;;53         TIM_TimeBaseInit(TIM4,&TIM_TimeBaseInitStructure);// ¨²?????? TIM3
-00001e  4c0e              LDR      r4,|L4.88|
+;;;79         TIM_TimeBaseInit(TIM4,&TIM_TimeBaseInitStructure);// ¨²?????? TIM3
+00001e  4c0e              LDR      r4,|L5.88|
 000020  a901              ADD      r1,sp,#4
 000022  4620              MOV      r0,r4
 000024  f7fffffe          BL       TIM_TimeBaseInit
-;;;54         TIM_ITConfig(TIM4,TIM_IT_Update,ENABLE); //?????? 3 ?§ä??
+;;;80         TIM_ITConfig(TIM4,TIM_IT_Update,ENABLE); //?????? 3 ?§ä??
 000028  2201              MOVS     r2,#1
 00002a  4611              MOV      r1,r2
 00002c  4620              MOV      r0,r4
 00002e  f7fffffe          BL       TIM_ITConfig
-;;;55         NVIC_InitStructure.NVIC_IRQChannel=TIM4_IRQn; //??? 3 ??
+;;;81         NVIC_InitStructure.NVIC_IRQChannel=TIM4_IRQn; //??? 3 ??
 000032  211e              MOVS     r1,#0x1e
 000034  f88d1000          STRB     r1,[sp,#0]
-;;;56         NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0x01; //????? 1
+;;;82         NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0x01; //????? 1
 000038  2101              MOVS     r1,#1
 00003a  f88d1001          STRB     r1,[sp,#1]
-;;;57         NVIC_InitStructure.NVIC_IRQChannelSubPriority=0x03; //§¾???? 3
+;;;83         NVIC_InitStructure.NVIC_IRQChannelSubPriority=0x03; //§¾???? 3
 00003e  2203              MOVS     r2,#3
 000040  f88d2002          STRB     r2,[sp,#2]
-;;;58         NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
+;;;84         NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
 000044  f88d1003          STRB     r1,[sp,#3]
-;;;59         NVIC_Init(&NVIC_InitStructure);// ¨¹??? NVIC
+;;;85         NVIC_Init(&NVIC_InitStructure);// ¨¹??? NVIC
 000048  4668              MOV      r0,sp
 00004a  f7fffffe          BL       NVIC_Init
-;;;60         TIM_Cmd(TIM4,ENABLE); //Y????? 3
+;;;86         TIM_Cmd(TIM4,ENABLE); //Y????? 3
 00004e  2101              MOVS     r1,#1
 000050  4620              MOV      r0,r4
 000052  f7fffffe          BL       TIM_Cmd
-;;;61     }
+;;;87     }
 000056  bd7f              POP      {r0-r6,pc}
-;;;62     //??? 3 ??????
+;;;88     //??? 3 ??????
                           ENDP
 
-                  |L4.88|
+                  |L5.88|
                           DCD      0x40000800
+
+                          AREA ||i.TIM5_IRQHandler||, CODE, READONLY, ALIGN=2
+
+                  TIM5_IRQHandler PROC
+;;;552    
+;;;553    void TIM5_IRQHandler(void)
+000000  b510              PUSH     {r4,lr}
+;;;554    {
+;;;555        
+;;;556        if(TIM_GetITStatus(TIM5,TIM_IT_Update)==SET) //Ó§Ô¶××
+000002  4c0a              LDR      r4,|L6.44|
+000004  2101              MOVS     r1,#1
+000006  4620              MOV      r0,r4
+000008  f7fffffe          BL       TIM_GetITStatus
+00000c  2801              CMP      r0,#1
+00000e  d10b              BNE      |L6.40|
+;;;557        {
+;;;558            TIM_ClearITPendingBit(TIM5,TIM_IT_Update); //æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½?
+000010  2101              MOVS     r1,#1
+000012  4620              MOV      r0,r4
+000014  f7fffffe          BL       TIM_ClearITPendingBit
+;;;559            Tick_10ms ++;
+000018  4805              LDR      r0,|L6.48|
+00001a  6901              LDR      r1,[r0,#0x10]  ; Tick_10ms
+00001c  1c49              ADDS     r1,r1,#1
+00001e  6101              STR      r1,[r0,#0x10]  ; Tick_10ms
+;;;560            MODS_Poll();
+000020  e8bd4010          POP      {r4,lr}
+000024  f7ffbffe          B.W      MODS_Poll
+                  |L6.40|
+;;;561        }
+;;;562    }
+000028  bd10              POP      {r4,pc}
+;;;563    
+                          ENDP
+
+00002a  0000              DCW      0x0000
+                  |L6.44|
+                          DCD      0x40000c00
+                  |L6.48|
+                          DCD      ||.data||
+
+                          AREA ||i.TIM5_Int_Init||, CODE, READONLY, ALIGN=2
+
+                  TIM5_Int_Init PROC
+;;;531    
+;;;532    void TIM5_Int_Init(u16 arr,u16 psc)
+000000  b57f              PUSH     {r0-r6,lr}
+;;;533    {
+000002  4604              MOV      r4,r0
+000004  460d              MOV      r5,r1
+;;;534        TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+;;;535        NVIC_InitTypeDef NVIC_InitStructure;
+;;;536        
+;;;537        RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5,ENABLE); //Ã™Ê¹Åœ TIM3 Ê±×“
+000006  2101              MOVS     r1,#1
+000008  2008              MOVS     r0,#8
+00000a  f7fffffe          BL       RCC_APB1PeriphClockCmd
+;;;538        TIM_TimeBaseInitStructure.TIM_Period = arr; //Ø”Ö¯×˜×°Õ˜Öµ
+00000e  9402              STR      r4,[sp,#8]
+;;;539        TIM_TimeBaseInitStructure.TIM_Prescaler=psc; //Ö¨Ê±Ç·Ø–Æµ
+000010  f8ad5004          STRH     r5,[sp,#4]
+;;;540        TIM_TimeBaseInitStructure.TIM_CounterMode=TIM_CounterMode_Up; //Ð²ÊÝ†Ë½Ä£Ê½
+000014  2000              MOVS     r0,#0
+000016  f8ad0006          STRH     r0,[sp,#6]
+;;;541        TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
+00001a  f8ad000c          STRH     r0,[sp,#0xc]
+;;;542        TIM_TimeBaseInit(TIM5,&TIM_TimeBaseInitStructure);// ÃšÔµÊ¼Û¯Ö¨Ê±Ç· TIM3
+00001e  4c0e              LDR      r4,|L7.88|
+000020  a901              ADD      r1,sp,#4
+000022  4620              MOV      r0,r4
+000024  f7fffffe          BL       TIM_TimeBaseInit
+;;;543        TIM_ITConfig(TIM5,TIM_IT_Update,ENABLE); //Ã›ÕŠÑ­Ö¨Ê±Ç· 3 Ù¼Ñ‚××
+000028  2201              MOVS     r2,#1
+00002a  4611              MOV      r1,r2
+00002c  4620              MOV      r0,r4
+00002e  f7fffffe          BL       TIM_ITConfig
+;;;544        NVIC_InitStructure.NVIC_IRQChannel=TIM5_IRQn; //Ö¨Ê±Ç· 3 ××
+000032  2132              MOVS     r1,#0x32
+000034  f88d1000          STRB     r1,[sp,#0]
+;;;545        NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0x01; //È€Õ¼Ô…ÐˆÜ¶ 1
+000038  2101              MOVS     r1,#1
+00003a  f88d1001          STRB     r1,[sp,#1]
+;;;546        NVIC_InitStructure.NVIC_IRQChannelSubPriority=0x02; //Ð¬Ó¦Ô…ÐˆÜ¶ 3
+00003e  2202              MOVS     r2,#2
+000040  f88d2002          STRB     r2,[sp,#2]
+;;;547        NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
+000044  f88d1003          STRB     r1,[sp,#3]
+;;;548        NVIC_Init(&NVIC_InitStructure);// ÃœÔµÊ¼Û¯ NVIC
+000048  4668              MOV      r0,sp
+00004a  f7fffffe          BL       NVIC_Init
+;;;549        TIM_Cmd(TIM5,ENABLE); //ÃÊ¹ÅœÖ¨Ê±Ç· 3
+00004e  2101              MOVS     r1,#1
+000050  4620              MOV      r0,r4
+000052  f7fffffe          BL       TIM_Cmd
+;;;550    }
+000056  bd7f              POP      {r0-r6,pc}
+;;;551    
+                          ENDP
+
+                  |L7.88|
+                          DCD      0x40000c00
 
                           AREA ||i.TIM6_Config||, CODE, READONLY, ALIGN=2
 
                   TIM6_Config PROC
-;;;136    
-;;;137    void TIM6_Config(void)
+;;;318    
+;;;319    void TIM6_Config(void)
 000000  b53e              PUSH     {r1-r5,lr}
-;;;138    {
-;;;139    	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
-;;;140    	/* TIM3 ??? ---------------------------------------------------
-;;;141       TIM3 ????(TIM3CLK) ??? APB2 ?? (PCLK2)    
-;;;142        => TIM3CLK = PCLK2 = SystemCoreClock
-;;;143       TIM3CLK = SystemCoreClock, Prescaler = 0, TIM3 counter clock = SystemCoreClock
-;;;144       SystemCoreClock ?48 MHz */
-;;;145      /* TIM16 ???? */
-;;;146      RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6,ENABLE);
+;;;320    {
+;;;321    	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+;;;322    	/* TIM3 ??? ---------------------------------------------------
+;;;323       TIM3 ????(TIM3CLK) ??? APB2 ?? (PCLK2)    
+;;;324        => TIM3CLK = PCLK2 = SystemCoreClock
+;;;325       TIM3CLK = SystemCoreClock, Prescaler = 0, TIM3 counter clock = SystemCoreClock
+;;;326       SystemCoreClock ?48 MHz */
+;;;327      /* TIM16 ???? */
+;;;328      RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6,ENABLE);
 000002  2101              MOVS     r1,#1
 000004  2010              MOVS     r0,#0x10
 000006  f7fffffe          BL       RCC_APB1PeriphClockCmd
-;;;147    	
-;;;148      /* Time ??????*/
-;;;149      TIM_TimeBaseStructure.TIM_Prescaler = 4800-1;//?????
+;;;329    	
+;;;330      /* Time ??????*/
+;;;331      TIM_TimeBaseStructure.TIM_Prescaler = 4800-1;//?????
 00000a  f24120bf          MOV      r0,#0x12bf
 00000e  f8ad0000          STRH     r0,[sp,#0]
-;;;150      TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  /* Time ????????????*/
+;;;332      TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  /* Time ????????????*/
 000012  2000              MOVS     r0,#0
 000014  f8ad0002          STRH     r0,[sp,#2]
-;;;151      TIM_TimeBaseStructure.TIM_Period = 5000;
+;;;333      TIM_TimeBaseStructure.TIM_Period = 5000;
 000018  f2413188          MOV      r1,#0x1388
 00001c  9101              STR      r1,[sp,#4]
-;;;152      TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+;;;334      TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
 00001e  f8ad0008          STRH     r0,[sp,#8]
-;;;153    //  TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
-;;;154    
-;;;155      TIM_TimeBaseInit(TIM6,&TIM_TimeBaseStructure);
-000022  4c0a              LDR      r4,|L5.76|
+;;;335    //  TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
+;;;336    
+;;;337      TIM_TimeBaseInit(TIM6,&TIM_TimeBaseStructure);
+000022  4c0a              LDR      r4,|L8.76|
 000024  4669              MOV      r1,sp
 000026  4620              MOV      r0,r4
 000028  f7fffffe          BL       TIM_TimeBaseInit
-;;;156    	TIM_ITConfig(TIM6,TIM_IT_Update,ENABLE);//??????§ä??
+;;;338    	TIM_ITConfig(TIM6,TIM_IT_Update,ENABLE);//??????§ä??
 00002c  2201              MOVS     r2,#1
 00002e  4611              MOV      r1,r2
 000030  4620              MOV      r0,r4
 000032  f7fffffe          BL       TIM_ITConfig
-;;;157    	TIM_SetAutoreload(TIM6, 0xFF);//??PWM??¨º
+;;;339    	TIM_SetAutoreload(TIM6, 0xFF);//??PWM??¨º
 000036  21ff              MOVS     r1,#0xff
 000038  4620              MOV      r0,r4
 00003a  f7fffffe          BL       TIM_SetAutoreload
-;;;158    	TIM6_NVIC_Config();
+;;;340    	TIM6_NVIC_Config();
 00003e  f7fffffe          BL       TIM6_NVIC_Config
-;;;159      /* TIM3 ?????*/
-;;;160      TIM_Cmd(TIM6, ENABLE);
+;;;341      /* TIM3 ?????*/
+;;;342      TIM_Cmd(TIM6, ENABLE);
 000042  2101              MOVS     r1,#1
 000044  4620              MOV      r0,r4
 000046  f7fffffe          BL       TIM_Cmd
-;;;161    }
+;;;343    }
 00004a  bd3e              POP      {r1-r5,pc}
-;;;162    /***********************************************************************/
+;;;344    /***********************************************************************/
                           ENDP
 
-                  |L5.76|
+                  |L8.76|
                           DCD      0x40001000
 
                           AREA ||i.TIM6_NVIC_Config||, CODE, READONLY, ALIGN=1
 
                   TIM6_NVIC_Config PROC
-;;;162    /***********************************************************************/
-;;;163    static void TIM6_NVIC_Config(void)
+;;;344    /***********************************************************************/
+;;;345    static void TIM6_NVIC_Config(void)
 000000  b508              PUSH     {r3,lr}
-;;;164    {
-;;;165    	NVIC_InitTypeDef NVIC_InitStructure; 
-;;;166    	
-;;;167    	/* Enable the USART1 Interrupt */
-;;;168    	NVIC_InitStructure.NVIC_IRQChannel = TIM6_DAC_IRQn;	 
+;;;346    {
+;;;347    	NVIC_InitTypeDef NVIC_InitStructure; 
+;;;348    	
+;;;349    	/* Enable the USART1 Interrupt */
+;;;350    	NVIC_InitStructure.NVIC_IRQChannel = TIM6_DAC_IRQn;	 
 000002  2036              MOVS     r0,#0x36
 000004  f88d0000          STRB     r0,[sp,#0]
-;;;169    	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;
+;;;351    	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;
 000008  2001              MOVS     r0,#1
 00000a  f88d0001          STRB     r0,[sp,#1]
-;;;170    	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x03;
+;;;352    	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x03;
 00000e  2103              MOVS     r1,#3
 000010  f88d1002          STRB     r1,[sp,#2]
-;;;171    	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+;;;353    	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 000014  f88d0003          STRB     r0,[sp,#3]
-;;;172    	NVIC_Init(&NVIC_InitStructure);
+;;;354    	NVIC_Init(&NVIC_InitStructure);
 000018  4668              MOV      r0,sp
 00001a  f7fffffe          BL       NVIC_Init
-;;;173    }
+;;;355    }
 00001e  bd08              POP      {r3,pc}
-;;;174    
+;;;356    
                           ENDP
 
 
                           AREA ||.data||, DATA, ALIGN=2
 
-                  calert
+                  usartocflag
 000000  00                DCB      0x00
-                  resetflag
+                  usartshortflag
 000001  00                DCB      0x00
+                  calert
+000002  00                DCB      0x00
+                  resetflag
+000003  00                DCB      0x00
                   resetcount
-000002  0000              DCB      0x00,0x00
+000004  0000              DCB      0x00,0x00
+                  uocount
+000006  0000              DCB      0x00,0x00
+                  powcount
+000008  0000              DCB      0x00,0x00
+                  powflag
+00000a  0000              DCB      0x00,0x00
+                  finishflag
+00000c  0000              DCB      0x00,0x00
+                  crc1
+00000e  0000              DCB      0x00,0x00
+                  Tick_10ms
+                          DCD      0x00000000
+                  crec1
+                          DCD      0x00000000
+                  crec2
+                          DCD      0x00000000
                   ctime
                           DCD      0x00000000
                   dctime
+                          DCD      0x00000000
+                  testi
                           DCD      0x00000000
                   bc_raw
                           DCD      0x00000000
@@ -850,22 +1587,26 @@
                           DCD      0x00000000
                   c_sum
                           DCD      0x00000000
+                  OldTick
+                          DCD      0x00000000
+                  shortv
+                          DCD      0x00000000
 
-                          AREA ||area_number.10||, DATA, ALIGN=1
+                          AREA ||area_number.13||, DATA, ALIGN=1
 
-                          EXPORTAS ||area_number.10||, ||.data||
+                          EXPORTAS ||area_number.13||, ||.data||
                   battery_c
 000000  0000              DCB      0x00,0x00
 
-                          AREA ||area_number.11||, DATA, ALIGN=0
+                          AREA ||area_number.14||, DATA, ALIGN=0
 
-                          EXPORTAS ||area_number.11||, ||.data||
+                          EXPORTAS ||area_number.14||, ||.data||
                   resdone
 000000  00                DCB      0x00
 
-                          AREA ||area_number.12||, DATA, ALIGN=2
+                          AREA ||area_number.15||, DATA, ALIGN=2
 
-                          EXPORTAS ||area_number.12||, ||.data||
+                          EXPORTAS ||area_number.15||, ||.data||
                   watch
                           DCD      0x00000000
 
@@ -874,9 +1615,9 @@
 #line 1 "..\\drive\\TIM6.c"
 	AREA ||.rev16_text||, CODE, READONLY
 	THUMB
-	EXPORT |__asm___6_TIM6_c_3a0b03ec____REV16|
+	EXPORT |__asm___6_TIM6_c_119e0187____REV16|
 #line 114 "D:\\Keil\\ARM\\CMSIS\\Include\\core_cmInstr.h"
-|__asm___6_TIM6_c_3a0b03ec____REV16| PROC
+|__asm___6_TIM6_c_119e0187____REV16| PROC
 #line 115
 
  rev16 r0, r0
@@ -884,9 +1625,9 @@
 	ENDP
 	AREA ||.revsh_text||, CODE, READONLY
 	THUMB
-	EXPORT |__asm___6_TIM6_c_3a0b03ec____REVSH|
+	EXPORT |__asm___6_TIM6_c_119e0187____REVSH|
 #line 128
-|__asm___6_TIM6_c_3a0b03ec____REVSH| PROC
+|__asm___6_TIM6_c_119e0187____REVSH| PROC
 #line 129
 
  revsh r0, r0

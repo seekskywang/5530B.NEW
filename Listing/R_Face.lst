@@ -48584,6 +48584,10 @@ Nvoid CDC_OP_LEFT(void);
 Nvoid CDC_OP_RIGHT(void);
 Nvoid CDC_SET(void);
 Nvoid INPUT_CDC(char* num); 
+Nuint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+Nvoid RecHandle(void);
+Nvoid MODS_Poll(void);
+Nvoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
 N//=============================================================================
 N#define NOP   __nop();	  //???
 N
@@ -48744,9 +48748,45 @@ Nextern float clear_lv;
 Nextern float temp;
 Nextern vu8 set_loop_count;
 Nextern vu8 test_mode;
+Nextern u8 usartocflag;
+Nextern u8 usartshortflag;
+Nextern float oc_data;
 Nextern vu8 lock;
 Nextern vu32 Run_Control[42];	
 Nextern u8 lockstat1,lockstat2;
+N
+N#define SLAVE_REG_P00		0x0000       //R_VOLU
+N#define SLAVE_REG_P01		0x0001      //Load_Voltage
+N#define SLAVE_REG_P02		0x0002      //Load_Current
+N#define SLAVE_REG_P03		0x0003		//Change_Voltage
+N#define SLAVE_REG_P04		0x0004		//Change_Current
+N#define SLAVE_REG_P05		0x0005		//Load_OCP
+N#define SLAVE_REG_P06		0x0006		//Change_OCP
+N#define SLAVE_REG_P07		0x0007		//Short_Time
+N#define SLAVE_REG_P08		0x0008		//Leak_Current
+N#define SLAVE_REG_P09		0x0009		//R1_Volu
+N#define SLAVE_REG_P10		0x000A		//R2_Volu
+N#define SLAVE_REG_P11		0x000B		//Temper
+N#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+N#define SLAVE_REG_P13		0x000D		//MODE
+N#define SLAVE_REG_P14		0x000E		//Load_Mode
+N#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+N#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+N#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+N#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+N
+N/* RTU ”¶¥¥˙¬Î */
+N#define RSP_OK				0		/* ≥…π¶ */
+N#define RSP_ERR_CMD			0x01	/* ≤ª÷ß≥÷µƒπ¶ƒ‹¬Î */
+N#define RSP_ERR_REG_ADDR	0x02	/* ºƒ¥Ê∆˜µÿ÷∑¥ÌŒÛ */
+N#define RSP_ERR_VALUE		0x03	/*  ˝æ›÷µ”Ú¥ÌŒÛ */
+N#define RSP_ERR_WRITE		0x04	/* –¥»Î ß∞‹ */
+N
+N#define S_RX_BUF_SIZE		30
+N#define S_TX_BUF_SIZE		128
+N
+N
+N
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
 N#define SET_Voltage 	    	        Run_Control[1]  //??????
 N#define SET_Current	    	    		  Run_Control[2]  //?????°§
@@ -48985,6 +49025,20 @@ Nextern vu16 ADC_Imon_Filt[50];
 Nextern vu8 UART_Buffer_Rece[16];
 Nextern vu8 UART_Buffer_Send[20];
 N//============================================================================= 
+Nstruct MODS_T
+N{
+N	uint8_t RxBuf[S_RX_BUF_SIZE];
+X	uint8_t RxBuf[30];
+N	uint8_t TxBuf[S_TX_BUF_SIZE];
+X	uint8_t TxBuf[128];
+N	uint8_t RxCount;
+N	uint8_t RxStatus;
+N	uint8_t RxNewFlag;
+N	uint8_t RspCode;
+N	
+N	uint8_t TxCount;
+N};
+N
 N#define Receive_BUFFERSIZE   10
 N//=============================================================================
 N#endif
@@ -49042,6 +49096,10 @@ Svoid CDC_OP_LEFT(void);
 Svoid CDC_OP_RIGHT(void);
 Svoid CDC_SET(void);
 Svoid INPUT_CDC(char* num); 
+Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+Svoid RecHandle(void);
+Svoid MODS_Poll(void);
+Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -49202,9 +49260,45 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern u8 usartocflag;
+Sextern u8 usartshortflag;
+Sextern float oc_data;
 Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
 Sextern u8 lockstat1,lockstat2;
+S
+S#define SLAVE_REG_P00		0x0000       //R_VOLU
+S#define SLAVE_REG_P01		0x0001      //Load_Voltage
+S#define SLAVE_REG_P02		0x0002      //Load_Current
+S#define SLAVE_REG_P03		0x0003		//Change_Voltage
+S#define SLAVE_REG_P04		0x0004		//Change_Current
+S#define SLAVE_REG_P05		0x0005		//Load_OCP
+S#define SLAVE_REG_P06		0x0006		//Change_OCP
+S#define SLAVE_REG_P07		0x0007		//Short_Time
+S#define SLAVE_REG_P08		0x0008		//Leak_Current
+S#define SLAVE_REG_P09		0x0009		//R1_Volu
+S#define SLAVE_REG_P10		0x000A		//R2_Volu
+S#define SLAVE_REG_P11		0x000B		//Temper
+S#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+S#define SLAVE_REG_P13		0x000D		//MODE
+S#define SLAVE_REG_P14		0x000E		//Load_Mode
+S#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+S#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+S#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+S#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+S
+S/* RTU ”¶¥¥˙¬Î */
+S#define RSP_OK				0		/* ≥…π¶ */
+S#define RSP_ERR_CMD			0x01	/* ≤ª÷ß≥÷µƒπ¶ƒ‹¬Î */
+S#define RSP_ERR_REG_ADDR	0x02	/* ºƒ¥Ê∆˜µÿ÷∑¥ÌŒÛ */
+S#define RSP_ERR_VALUE		0x03	/*  ˝æ›÷µ”Ú¥ÌŒÛ */
+S#define RSP_ERR_WRITE		0x04	/* –¥»Î ß∞‹ */
+S
+S#define S_RX_BUF_SIZE		30
+S#define S_TX_BUF_SIZE		128
+S
+S
+S
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????°§
@@ -49443,6 +49537,18 @@ Sextern vu16 ADC_Imon_Filt[50];
 Sextern vu8 UART_Buffer_Rece[16];
 Sextern vu8 UART_Buffer_Send[20];
 S//============================================================================= 
+Sstruct MODS_T
+S{
+S	uint8_t RxBuf[S_RX_BUF_SIZE];
+S	uint8_t TxBuf[S_TX_BUF_SIZE];
+S	uint8_t RxCount;
+S	uint8_t RxStatus;
+S	uint8_t RxNewFlag;
+S	uint8_t RspCode;
+S	
+S	uint8_t TxCount;
+S};
+S
 S#define Receive_BUFFERSIZE   10
 S//=============================================================================
 N#endif
@@ -51486,6 +51592,10 @@ Svoid CDC_OP_LEFT(void);
 Svoid CDC_OP_RIGHT(void);
 Svoid CDC_SET(void);
 Svoid INPUT_CDC(char* num); 
+Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+Svoid RecHandle(void);
+Svoid MODS_Poll(void);
+Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -51646,9 +51756,45 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern u8 usartocflag;
+Sextern u8 usartshortflag;
+Sextern float oc_data;
 Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
 Sextern u8 lockstat1,lockstat2;
+S
+S#define SLAVE_REG_P00		0x0000       //R_VOLU
+S#define SLAVE_REG_P01		0x0001      //Load_Voltage
+S#define SLAVE_REG_P02		0x0002      //Load_Current
+S#define SLAVE_REG_P03		0x0003		//Change_Voltage
+S#define SLAVE_REG_P04		0x0004		//Change_Current
+S#define SLAVE_REG_P05		0x0005		//Load_OCP
+S#define SLAVE_REG_P06		0x0006		//Change_OCP
+S#define SLAVE_REG_P07		0x0007		//Short_Time
+S#define SLAVE_REG_P08		0x0008		//Leak_Current
+S#define SLAVE_REG_P09		0x0009		//R1_Volu
+S#define SLAVE_REG_P10		0x000A		//R2_Volu
+S#define SLAVE_REG_P11		0x000B		//Temper
+S#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+S#define SLAVE_REG_P13		0x000D		//MODE
+S#define SLAVE_REG_P14		0x000E		//Load_Mode
+S#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+S#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+S#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+S#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+S
+S/* RTU ”¶¥¥˙¬Î */
+S#define RSP_OK				0		/* ≥…π¶ */
+S#define RSP_ERR_CMD			0x01	/* ≤ª÷ß≥÷µƒπ¶ƒ‹¬Î */
+S#define RSP_ERR_REG_ADDR	0x02	/* ºƒ¥Ê∆˜µÿ÷∑¥ÌŒÛ */
+S#define RSP_ERR_VALUE		0x03	/*  ˝æ›÷µ”Ú¥ÌŒÛ */
+S#define RSP_ERR_WRITE		0x04	/* –¥»Î ß∞‹ */
+S
+S#define S_RX_BUF_SIZE		30
+S#define S_TX_BUF_SIZE		128
+S
+S
+S
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????°§
@@ -51887,6 +52033,18 @@ Sextern vu16 ADC_Imon_Filt[50];
 Sextern vu8 UART_Buffer_Rece[16];
 Sextern vu8 UART_Buffer_Send[20];
 S//============================================================================= 
+Sstruct MODS_T
+S{
+S	uint8_t RxBuf[S_RX_BUF_SIZE];
+S	uint8_t TxBuf[S_TX_BUF_SIZE];
+S	uint8_t RxCount;
+S	uint8_t RxStatus;
+S	uint8_t RxNewFlag;
+S	uint8_t RspCode;
+S	
+S	uint8_t TxCount;
+S};
+S
 S#define Receive_BUFFERSIZE   10
 S//=============================================================================
 N#endif
@@ -52494,7 +52652,7 @@ Nvu8 b_type;
 Nvu8 buffer;
 Nvu8 set_sw;
 Nvu8 oc_mode;
-N
+Nvu8 rpow;
 N////////////////////////////////////
 N
 Nvu32 dis_gate_v;
@@ -52502,7 +52660,7 @@ Nfloat DISS_R;//ÂÜÖÈòª
 Nextern vu8 page_sw;
 Nstatic vu8 oc_sw = set_20;
 Xstatic vu8 oc_sw = 19;
-Nstatic float oc_data;
+Nfloat oc_data;
 Nvu16 s_time;
 Nvu8 wait_flag;
 Nvu8 test_num = 0;
@@ -52929,7 +53087,7 @@ N//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
 N//                         Mode_SW_CONT(0x01);
 N                    }
 W "..\APP\R_Face.c" 398 51 single-precision operand implicitly converted to double-precision
-N                    if(/*mode_sw == mode_pow && */DISS_Voltage < 0.3  && GUI_GetTime()/500 - test_ftime > 1 /*&& R_VLUE < 50*/)
+N                    if(/*mode_sw == mode_pow && */DISS_Voltage < 0.3  && GUI_GetTime()/500 - test_ftime > 2 /*&& R_VLUE < 50*/)
 N                    {
 N//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
 N//                         Mode_SW_CONT(0x01);
@@ -53131,7 +53289,7 @@ N                if(DISS_Voltage < 0.1)
 N                {
 N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
 X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
-N                    sprintf(buf,"%.3f",0.000);       
+N                    sprintf(buf,"%.3f",0.000);
 N                    TEXT_SetText(hItem,buf);
 N                }else{
 N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
@@ -53210,74 +53368,58 @@ N                TEXT_SetTextColor(hItem, GUI_GREEN);
 X                TEXT_SetTextColor(hItem, 0x0000FF00);
 N                sprintf(buf,"%.3f",oc_data);
 N                TEXT_SetText(hItem,buf);
-N            }else{
-N                if(para_set2 == set_2_on)
-X                if(para_set2 == 0xff)
-N                {
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
-N                    sprintf(buf,"%.3f",v);       
-N                    TEXT_SetText(hItem,buf);
-N                    
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
-N                    TEXT_SetFont(hItem,&GUI_FontD24x32);
-N                    sprintf(buf,"%4d",r);       
-N                    TEXT_SetText(hItem,buf);
-N                    
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0107));
-N                    sprintf(buf,"%4d",short_time);
-N                    TEXT_SetFont(hItem,&GUI_Font24_1);//ËÆæÂÆöÊñáÊú¨Â≠ó‰Ωì      
-N                    TEXT_SetText(hItem,buf);
-N                    
-N                    if(short_finish == 0 ){
-N                        if(DISS_Voltage < 1 && short_flag == 0 && oct_sw == oct_off)
-X                        if(DISS_Voltage < 1 && short_flag == 0 && oct_sw == 0)
-N                        {
-N                            SET_Voltage =3000;
-X                            Run_Control[1] =3000;
-N                            SET_Current = 1000;
-X                            Run_Control[2] = 1000;
-N//                             Mode_SW_CONT(0x03);
-N                            GPIO_SetBits(GPIOA,GPIO_Pin_15);//ÁîµÂ≠êË¥üËΩΩOFF
-X                            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
-N                            GPIO_ResetBits(GPIOC,GPIO_Pin_13);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫ÁªßÁîµÂô®
-X                            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
-N                            GPIO_SetBits(GPIOC,GPIO_Pin_1);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫
-X                            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N//                             //GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-N                        }else if(DISS_Voltage > 1 && oct_sw == oct_off && short_flag == 0){
-X                        }else if(DISS_Voltage > 1 && oct_sw == 0 && short_flag == 0){
-N                            
-N//                             Mode_SW_CONT(0x02);
-N                            SET_Current_Laod = (int)(oc_data*1000) + 5000;
-X                            Run_Control[4] = (int)(oc_data*1000) + 5000;
-N                            short_flag =1;
-N                            short_start = GUI_GetTime()*2;
-N                        }
-N                        if(short_flag == 1)
-N                        {
-N                            GPIO_ResetBits(GPIOC,GPIO_Pin_1);//ÂÖ≥Èó≠ÁîµÊ∫êËæìÂá∫
-X                            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N                            GPIO_SetBits(GPIOC,GPIO_Pin_13);//ÂÖ≥Èó≠ÁîµÊ∫êËæìÂá∫ÁªßÁîµÂô®
-X                            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
-N                            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//ÁîµÂ≠êË¥üËΩΩOn
-X                            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
-N//                             GPIO_ResetBits(GPIOC,GPIO_Pin_1);
-N                            if(DISS_Voltage < 1){
-N                                SET_Current_Laod = set_init_c;
-X                                Run_Control[4] = Run_Control[22];
-N                                short_time = GUI_GetTime()*2 - short_start;
-N                                short_flag = 0;
-N                                short_finish = 1;
-N                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-X                                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0107));
-N                                sprintf(buf,"%4d",short_time);     
-N                                TEXT_SetText(hItem,buf);
-N                            }
-N                        }
-N                    }
+N            }
+N//             else{
+N//                 if(para_set2 == set_2_on)
+N//                 {
+N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+N//                     sprintf(buf,"%.3f",v);       
+N//                     TEXT_SetText(hItem,buf);
+N//                     
+N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+N//                     TEXT_SetFont(hItem,&GUI_FontD24x32);
+N//                     sprintf(buf,"%4d",r);       
+N//                     TEXT_SetText(hItem,buf);
+N//                     
+N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+N//                     sprintf(buf,"%4d",short_time);
+N//                     TEXT_SetFont(hItem,&GUI_Font24_1);//ËÆæÂÆöÊñáÊú¨Â≠ó‰Ωì      
+N//                     TEXT_SetText(hItem,buf);
+N//                     
+N//                     if(short_finish == 0 ){
+N//                         if(DISS_Voltage < 1 && short_flag == 0 && oct_sw == oct_off)
+N//                         {
+N//                             SET_Voltage =3000;
+N//                             SET_Current = 1000;
+N// //                             Mode_SW_CONT(0x03);
+N//                             GPIO_SetBits(GPIOA,GPIO_Pin_15);//ÁîµÂ≠êË¥üËΩΩOFF
+N//                             GPIO_ResetBits(GPIOC,GPIO_Pin_13);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫ÁªßÁîµÂô®
+N//                             GPIO_SetBits(GPIOC,GPIO_Pin_1);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫
+N// //                             //GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+N//                         }else if(DISS_Voltage > 1 && oct_sw == oct_off && short_flag == 0){
+N//                             
+N// //                             Mode_SW_CONT(0x02);
+N//                             SET_Current_Laod = (int)(oc_data*1000) + 5000;
+N//                             short_flag =1;
+N//                             short_start = GUI_GetTime()*2;
+N//                         }
+N//                         if(short_flag == 1)
+N//                         {
+N//                             GPIO_ResetBits(GPIOC,GPIO_Pin_1);//ÂÖ≥Èó≠ÁîµÊ∫êËæìÂá∫
+N//                             GPIO_SetBits(GPIOC,GPIO_Pin_13);//ÂÖ≥Èó≠ÁîµÊ∫êËæìÂá∫ÁªßÁîµÂô®
+N//                             GPIO_ResetBits(GPIOA,GPIO_Pin_15);//ÁîµÂ≠êË¥üËΩΩOn
+N// //                             GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+N//                             if(DISS_Voltage < 1){
+N//                                 SET_Current_Laod = set_init_c;
+N//                                 short_time = GUI_GetTime()*2 - short_start;
+N//                                 short_flag = 0;
+N//                                 short_finish = 1;
+N//                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+N//                                 sprintf(buf,"%4d",short_time);     
+N//                                 TEXT_SetText(hItem,buf);
+N//                             }
+N//                         }
+N//                     }
 N                    if(short_finish == 1 && test_finish == 0)
 N                    {
 N                        GPIO_SetBits(GPIOA,GPIO_Pin_15);//ÁîµÂ≠êË¥üËΩΩOFF
@@ -53292,7 +53434,10 @@ N                        GPIO_ResetBits(GPIOC,GPIO_Pin_13);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫Á
 X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
 N                        GPIO_SetBits(GPIOC,GPIO_Pin_1);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫
 X                        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N                        
+N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0107));
+N                        sprintf(buf,"%4d",short_time/10);     
+N                        TEXT_SetText(hItem,buf);
 N                        
 N//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);                                                
 N// //                         Mode_SW_CONT(0x01);
@@ -53300,20 +53445,20 @@ N
 N                        test_ftime = GUI_GetTime()/500;
 N                        test_finish = 1;
 N                    } 
-N                    
-N                }
-N                
-N                
-N                
-N    //             if(R_VLUE >= 1000)
-N    //             {
-N    //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N    //                 TEXT_SetFont(hItem,&GUI_FontEN40);//ËÆæÂÆöÊñáÊú¨Â≠ó‰Ωì
-N    //                 TEXT_SetText(hItem,"");
-N    //             }else{
-N                    
-N    //             }
-N            }
+N//                     
+N//                 }
+N//                 
+N//                 
+N//                 
+N//     //             if(R_VLUE >= 1000)
+N//     //             {
+N//     //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+N//     //                 TEXT_SetFont(hItem,&GUI_FontEN40);//ËÆæÂÆöÊñáÊú¨Â≠ó‰Ωì
+N//     //                 TEXT_SetText(hItem,"");
+N//     //             }else{
+N//                     
+N//     //             }
+N//             }
 N            
 N            
 N            
@@ -53326,7 +53471,7 @@ N            TEXT_SetText(hItem,buf);
 N            
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_83);
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x90));
-W "..\APP\R_Face.c" 720 16 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 723 16 single-precision operand implicitly converted to double-precision
 N            if(DISS_Current < 0.2)
 N            {
 N                sprintf(buf,"%.3f",0.000);
@@ -53351,7 +53496,7 @@ N                    r_raly = 1;
 N                }
 N            }
 N                
-W "..\APP\R_Face.c" 743 16 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 746 16 single-precision operand implicitly converted to double-precision
 N            if(DISS_Voltage < 0.1)
 N                {
 N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
@@ -53391,7 +53536,7 @@ N                        sprintf(buf,"%4d",r);
 N                        TEXT_SetText(hItem,buf);
 N                    }else if(r_stable == 0)
 N                    {
-W "..\APP\R_Face.c" 774 28 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 777 28 single-precision operand implicitly converted to double-precision
 N                        if(DISS_Voltage < 0.3)
 N                            {
 N                                if(para_set1 == set_1_on)
@@ -53447,8 +53592,8 @@ N            {
 N                case Lion:
 X                case 1:
 N                {
-W "..\APP\R_Face.c" 819 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 819 63 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 822 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 822 63 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0  && DISS_Voltage >= 3.4 && DISS_Voltage <= 4.2)
 X                    if(Run_Control[13] != 0  && DISS_Voltage >= 3.4 && DISS_Voltage <= 4.2)
 N                    {
@@ -53469,8 +53614,8 @@ N                }
 N                case NiMH:
 X                case 2:
 N                {
-W "..\APP\R_Face.c" 833 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 833 63 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 836 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 836 63 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0  && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
 X                    if(Run_Control[13] != 0  && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
 N                    {
@@ -53491,8 +53636,8 @@ N                }
 N                case NiCd:
 X                case 3:
 N                {
-W "..\APP\R_Face.c" 847 39 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 847 62 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 850 39 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 850 62 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0 && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
 X                    if(Run_Control[13] != 0 && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
 N                    {
@@ -53513,8 +53658,8 @@ N                }
 N                case SLA:
 X                case 4:
 N                {
-W "..\APP\R_Face.c" 861 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 861 63 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 864 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 864 63 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0  && DISS_Voltage >= 1.8 && DISS_Voltage <= 2.4)
 X                    if(Run_Control[13] != 0  && DISS_Voltage >= 1.8 && DISS_Voltage <= 2.4)
 N                    {
@@ -53535,8 +53680,8 @@ N                }
 N                case LiMH:
 X                case 5:
 N                {
-W "..\APP\R_Face.c" 875 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 875 63 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 878 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 878 63 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0  && DISS_Voltage >= 2.8 && DISS_Voltage <= 3.3)
 X                    if(Run_Control[13] != 0  && DISS_Voltage >= 2.8 && DISS_Voltage <= 3.3)
 N                    {
@@ -54041,7 +54186,7 @@ X  page_sw = 3;
 N  track = face_r;
 X  track = 3;
 N    con_flag = 0;
-W "..\APP\R_Face.c" 1266 5 function "setmode_r" declared implicitly
+W "..\APP\R_Face.c" 1269 5 function "setmode_r" declared implicitly
 N    setmode_r();
 N//    GPIO_SetBits(GPIOA,GPIO_Pin_15);//ÁîµÂ≠êË¥üËΩΩOFF
 N//    GPIO_SetBits(GPIOB,GPIO_Pin_13);
@@ -54576,7 +54721,7 @@ N                oc_mode = 0;
 N            }
 N            Write_Limits();
 N            break;
-W "..\APP\R_Face.c" 1637 21 variable "hItem" was declared but never referenced
+W "..\APP\R_Face.c" 1640 21 variable "hItem" was declared but never referenced
 N        }
 N        
 N    }
@@ -54951,8 +55096,8 @@ N    char sbs_c[6];
 N    float change_sbs_c;   
 N    crec2 = crec1;
 N    crec1 = DISS_Current;         
-W "..\APP\R_Face.c" 1983 27 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 1983 78 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 1986 27 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 1986 78 single-precision operand implicitly converted to double-precision
 N    if(((crec1 < crec2 && crec2 > 0.3) || v - /*DISS_Voltage*/DISS_Voltage > v*0.9) && para_set2 == set_2_on)
 X    if(((crec1 < crec2 && crec2 > 0.3) || v -  DISS_Voltage > v*0.9) && para_set2 == 0xff)
 N    {
@@ -54968,26 +55113,30 @@ N            change_sbs_c = (float)set_sbs_c/1000;
 X            change_sbs_c = (float)Run_Control[23]/1000;
 N            sprintf(sbs_c,"%.3f",change_sbs_c);
 N            TEXT_SetText(hItem,sbs_c);
-N            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//ÂÖ≥Èó≠Ë¥üËΩΩ   
-X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N            GPIO_SetBits(GPIOA,GPIO_Pin_15);//ÁîµÂ≠êË¥üËΩΩOFF   
+X            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
 N            t_onoff = 0;
 N            stepcount = 0;
 N            oct_sw = oct_off;
 X            oct_sw = 0;
 N            finish = 1;
+N            oc_test = 0;
 N            crec1 = 0;
 N            crec2 = 0;
+N            rpow = 1;
 N        }else if(oc_mode == 1){
 N            oc_data = crec2;
-N            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//ÂÖ≥Èó≠Ë¥üËΩΩ   
-X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N            GPIO_SetBits(GPIOA,GPIO_Pin_15);//ÁîµÂ≠êË¥üËΩΩOFF   
+X            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
 N            t_onoff = 0;
 N            stepcount = 0;
 N            oct_sw = oct_off;
 X            oct_sw = 0;
 N            finish = 1;
+N            oc_test = 0;
 N            crec1 = 0;
 N            crec2 = 0;
+N            rpow = 1;
 N        }
 N
 N    }
@@ -55001,7 +55150,7 @@ N    char sbs_c[6];
 N    float change_sbs_c;
 N    static vu16 csum;
 N             
-W "..\APP\R_Face.c" 2022 43 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 2029 43 single-precision operand implicitly converted to double-precision
 N    if(v - /*DISS_Voltage*/DISS_Voltage > v*0.9 && para_set2 == set_2_on)
 X    if(v -  DISS_Voltage > v*0.9 && para_set2 == 0xff)
 N    {
@@ -55017,19 +55166,21 @@ N            change_sbs_c = (float)set_sbs_c/1000;
 X            change_sbs_c = (float)Run_Control[23]/1000;
 N            sprintf(sbs_c,"%.3f",change_sbs_c);
 N            TEXT_SetText(hItem,sbs_c);
-N            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//ÂÖ≥Èó≠Ë¥üËΩΩ   
-X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N            GPIO_SetBits(GPIOA,GPIO_Pin_15);//ÁîµÂ≠êË¥üËΩΩOFF   
+X            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
 N            t_onoff = 0;
 N            stepcount = 0;
 N            oct_sw = oct_off;
 X            oct_sw = 0;
+N            oc_test = 0;
 N            finish = 1;
 N            crec1 = 0;
 N            crec2 = 0;
+N            rpow = 1;
 N        }else if(oc_mode == 1){
 N            oc_data = crec2;
-N            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//ÂÖ≥Èó≠Ë¥üËΩΩ   
-X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N            GPIO_SetBits(GPIOA,GPIO_Pin_15);//ÁîµÂ≠êË¥üËΩΩOFF   
+X            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
 N            t_onoff = 0;
 N            stepcount = 0;
 N            oct_sw = oct_off;
@@ -55037,6 +55188,8 @@ X            oct_sw = 0;
 N            finish = 1;
 N            crec1 = 0;
 N            crec2 = 0;
+N            oc_test = 0;
+N            rpow = 1;
 N        }
 N
 N    }else{
@@ -55056,8 +55209,8 @@ N                change_sbs_c = (float)set_sbs_c/1000;
 X                change_sbs_c = (float)Run_Control[23]/1000;
 N                sprintf(sbs_c,"%.3f",change_sbs_c);
 N                TEXT_SetText(hItem,sbs_c);
-N                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//ÂÖ≥Èó≠Ë¥üËΩΩ   
-X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N                GPIO_SetBits(GPIOA,GPIO_Pin_15);//ÁîµÂ≠êË¥üËΩΩOFF  
+X                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
 N                t_onoff = 0;
 N                stepcount = 0;
 N                oct_sw = oct_off;
@@ -55065,6 +55218,8 @@ X                oct_sw = 0;
 N                finish = 1;
 N                crec1 = 0;
 N                crec2 = 0;
+N                oc_test = 0;
+N                rpow = 1;
 N            }
 N        }else if(oc_mode == 1){
 N            SET_Voltage_Laod = 0;
@@ -55074,8 +55229,8 @@ N            crec1 = DISS_Current;
 N            if(crec1 < crec2)
 N            {
 N                oc_data = crec2;
-N                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//ÂÖ≥Èó≠Ë¥üËΩΩ   
-X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N                GPIO_SetBits(GPIOA,GPIO_Pin_15);//ÁîµÂ≠êË¥üËΩΩOFF   
+X                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
 N                t_onoff = 0;
 N                stepcount = 0;
 N                oct_sw = oct_off;
@@ -55083,6 +55238,8 @@ X                oct_sw = 0;
 N                finish = 1;
 N                crec1 = 0;
 N                crec2 = 0;
+N                oc_test = 0;
+N                rpow = 1;
 N            }
 N        }       
 N    }        

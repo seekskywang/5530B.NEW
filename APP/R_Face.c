@@ -40,14 +40,14 @@ vu8 b_type;
 vu8 buffer;
 vu8 set_sw;
 vu8 oc_mode;
-
+vu8 rpow;
 ////////////////////////////////////
 
 vu32 dis_gate_v;
 float DISS_R;//内阻
 extern vu8 page_sw;
 static vu8 oc_sw = set_20;
-static float oc_data;
+float oc_data;
 vu16 s_time;
 vu8 wait_flag;
 vu8 test_num = 0;
@@ -395,7 +395,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 //                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
 //                         Mode_SW_CONT(0x01);
                     }
-                    if(/*mode_sw == mode_pow && */DISS_Voltage < 0.3  && GUI_GetTime()/500 - test_ftime > 1 /*&& R_VLUE < 50*/)
+                    if(/*mode_sw == mode_pow && */DISS_Voltage < 0.3  && GUI_GetTime()/500 - test_ftime > 2 /*&& R_VLUE < 50*/)
                     {
 //                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
 //                         Mode_SW_CONT(0x01);
@@ -563,7 +563,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 if(DISS_Voltage < 0.1)
                 {
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-                    sprintf(buf,"%.3f",0.000);       
+                    sprintf(buf,"%.3f",0.000);
                     TEXT_SetText(hItem,buf);
                 }else{
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
@@ -625,57 +625,58 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 TEXT_SetTextColor(hItem, GUI_GREEN);
                 sprintf(buf,"%.3f",oc_data);
                 TEXT_SetText(hItem,buf);
-            }else{
-                if(para_set2 == set_2_on)
-                {
-                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-                    sprintf(buf,"%.3f",v);       
-                    TEXT_SetText(hItem,buf);
-                    
-                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-                    TEXT_SetFont(hItem,&GUI_FontD24x32);
-                    sprintf(buf,"%4d",r);       
-                    TEXT_SetText(hItem,buf);
-                    
-                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-                    sprintf(buf,"%4d",short_time);
-                    TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体      
-                    TEXT_SetText(hItem,buf);
-                    
-                    if(short_finish == 0 ){
-                        if(DISS_Voltage < 1 && short_flag == 0 && oct_sw == oct_off)
-                        {
-                            SET_Voltage =3000;
-                            SET_Current = 1000;
-//                             Mode_SW_CONT(0x03);
-                            GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
-                            GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
-                            GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
-//                             //GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-                        }else if(DISS_Voltage > 1 && oct_sw == oct_off && short_flag == 0){
-                            
-//                             Mode_SW_CONT(0x02);
-                            SET_Current_Laod = (int)(oc_data*1000) + 5000;
-                            short_flag =1;
-                            short_start = GUI_GetTime()*2;
-                        }
-                        if(short_flag == 1)
-                        {
-                            GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-                            GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-                            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
-//                             GPIO_ResetBits(GPIOC,GPIO_Pin_1);
-                            if(DISS_Voltage < 1){
-                                SET_Current_Laod = set_init_c;
-                                short_time = GUI_GetTime()*2 - short_start;
-                                short_flag = 0;
-                                short_finish = 1;
-                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-                                sprintf(buf,"%4d",short_time);     
-                                TEXT_SetText(hItem,buf);
-                            }
-                        }
-                    }
+            }
+//             else{
+//                 if(para_set2 == set_2_on)
+//                 {
+//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+//                     sprintf(buf,"%.3f",v);       
+//                     TEXT_SetText(hItem,buf);
+//                     
+//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+//                     TEXT_SetFont(hItem,&GUI_FontD24x32);
+//                     sprintf(buf,"%4d",r);       
+//                     TEXT_SetText(hItem,buf);
+//                     
+//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+//                     sprintf(buf,"%4d",short_time);
+//                     TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体      
+//                     TEXT_SetText(hItem,buf);
+//                     
+//                     if(short_finish == 0 ){
+//                         if(DISS_Voltage < 1 && short_flag == 0 && oct_sw == oct_off)
+//                         {
+//                             SET_Voltage =3000;
+//                             SET_Current = 1000;
+// //                             Mode_SW_CONT(0x03);
+//                             GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
+//                             GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
+//                             GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
+// //                             //GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+//                         }else if(DISS_Voltage > 1 && oct_sw == oct_off && short_flag == 0){
+//                             
+// //                             Mode_SW_CONT(0x02);
+//                             SET_Current_Laod = (int)(oc_data*1000) + 5000;
+//                             short_flag =1;
+//                             short_start = GUI_GetTime()*2;
+//                         }
+//                         if(short_flag == 1)
+//                         {
+//                             GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+//                             GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+//                             GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+// //                             GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+//                             if(DISS_Voltage < 1){
+//                                 SET_Current_Laod = set_init_c;
+//                                 short_time = GUI_GetTime()*2 - short_start;
+//                                 short_flag = 0;
+//                                 short_finish = 1;
+//                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+//                                 sprintf(buf,"%4d",short_time);     
+//                                 TEXT_SetText(hItem,buf);
+//                             }
+//                         }
+//                     }
                     if(short_finish == 1 && test_finish == 0)
                     {
                         GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
@@ -685,7 +686,9 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                         SET_Current = 1000;
                         GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
                         GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
-                        
+                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+                        sprintf(buf,"%4d",short_time/10);     
+                        TEXT_SetText(hItem,buf);
                         
 //                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);                                                
 // //                         Mode_SW_CONT(0x01);
@@ -693,20 +696,20 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                         test_ftime = GUI_GetTime()/500;
                         test_finish = 1;
                     } 
-                    
-                }
-                
-                
-                
-    //             if(R_VLUE >= 1000)
-    //             {
-    //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-    //                 TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
-    //                 TEXT_SetText(hItem,"");
-    //             }else{
-                    
-    //             }
-            }
+//                     
+//                 }
+//                 
+//                 
+//                 
+//     //             if(R_VLUE >= 1000)
+//     //             {
+//     //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+//     //                 TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
+//     //                 TEXT_SetText(hItem,"");
+//     //             }else{
+//                     
+//     //             }
+//             }
             
             
             
@@ -1991,22 +1994,26 @@ void OC_CHECK(void){
             change_sbs_c = (float)set_sbs_c/1000;
             sprintf(sbs_c,"%.3f",change_sbs_c);
             TEXT_SetText(hItem,sbs_c);
-            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//关闭负载   
+            GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF   
             t_onoff = 0;
             stepcount = 0;
             oct_sw = oct_off;
             finish = 1;
+            oc_test = 0;
             crec1 = 0;
             crec2 = 0;
+            rpow = 1;
         }else if(oc_mode == 1){
             oc_data = crec2;
-            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//关闭负载   
+            GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF   
             t_onoff = 0;
             stepcount = 0;
             oct_sw = oct_off;
             finish = 1;
+            oc_test = 0;
             crec1 = 0;
             crec2 = 0;
+            rpow = 1;
         }
 
     }
@@ -2030,22 +2037,26 @@ void OC_ADD(void){
             change_sbs_c = (float)set_sbs_c/1000;
             sprintf(sbs_c,"%.3f",change_sbs_c);
             TEXT_SetText(hItem,sbs_c);
-            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//关闭负载   
+            GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF   
             t_onoff = 0;
             stepcount = 0;
             oct_sw = oct_off;
+            oc_test = 0;
             finish = 1;
             crec1 = 0;
             crec2 = 0;
+            rpow = 1;
         }else if(oc_mode == 1){
             oc_data = crec2;
-            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//关闭负载   
+            GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF   
             t_onoff = 0;
             stepcount = 0;
             oct_sw = oct_off;
             finish = 1;
             crec1 = 0;
             crec2 = 0;
+            oc_test = 0;
+            rpow = 1;
         }
 
     }else{
@@ -2061,13 +2072,15 @@ void OC_ADD(void){
                 change_sbs_c = (float)set_sbs_c/1000;
                 sprintf(sbs_c,"%.3f",change_sbs_c);
                 TEXT_SetText(hItem,sbs_c);
-                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//关闭负载   
+                GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF  
                 t_onoff = 0;
                 stepcount = 0;
                 oct_sw = oct_off;
                 finish = 1;
                 crec1 = 0;
                 crec2 = 0;
+                oc_test = 0;
+                rpow = 1;
             }
         }else if(oc_mode == 1){
             SET_Voltage_Laod = 0;
@@ -2076,13 +2089,15 @@ void OC_ADD(void){
             if(crec1 < crec2)
             {
                 oc_data = crec2;
-                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//关闭负载   
+                GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF   
                 t_onoff = 0;
                 stepcount = 0;
                 oct_sw = oct_off;
                 finish = 1;
                 crec1 = 0;
                 crec2 = 0;
+                oc_test = 0;
+                rpow = 1;
             }
         }       
     }        

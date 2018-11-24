@@ -43,6 +43,10 @@ void CDC_OP_LEFT(void);
 void CDC_OP_RIGHT(void);
 void CDC_SET(void);
 void INPUT_CDC(char* num); 
+uint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+void RecHandle(void);
+void MODS_Poll(void);
+void MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
 //=============================================================================
 #define NOP   __nop();	  //???
 
@@ -203,9 +207,45 @@ extern float clear_lv;
 extern float temp;
 extern vu8 set_loop_count;
 extern vu8 test_mode;
+extern u8 usartocflag;
+extern u8 usartshortflag;
+extern float oc_data;
 extern vu8 lock;
 extern vu32 Run_Control[42];	
 extern u8 lockstat1,lockstat2;
+
+#define SLAVE_REG_P00		0x0000       //R_VOLU
+#define SLAVE_REG_P01		0x0001      //Load_Voltage
+#define SLAVE_REG_P02		0x0002      //Load_Current
+#define SLAVE_REG_P03		0x0003		//Change_Voltage
+#define SLAVE_REG_P04		0x0004		//Change_Current
+#define SLAVE_REG_P05		0x0005		//Load_OCP
+#define SLAVE_REG_P06		0x0006		//Change_OCP
+#define SLAVE_REG_P07		0x0007		//Short_Time
+#define SLAVE_REG_P08		0x0008		//Leak_Current
+#define SLAVE_REG_P09		0x0009		//R1_Volu
+#define SLAVE_REG_P10		0x000A		//R2_Volu
+#define SLAVE_REG_P11		0x000B		//Temper
+#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+#define SLAVE_REG_P13		0x000D		//MODE
+#define SLAVE_REG_P14		0x000E		//Load_Mode
+#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+
+/* RTU 应答代码 */
+#define RSP_OK				0		/* 成功 */
+#define RSP_ERR_CMD			0x01	/* 不支持的功能码 */
+#define RSP_ERR_REG_ADDR	0x02	/* 寄存器地址错误 */
+#define RSP_ERR_VALUE		0x03	/* 数据值域错误 */
+#define RSP_ERR_WRITE		0x04	/* 写入失败 */
+
+#define S_RX_BUF_SIZE		30
+#define S_TX_BUF_SIZE		128
+
+
+
 #define onoff_ch                    Run_Control[0]  //ON/OFF
 #define SET_Voltage 	    	        Run_Control[1]  //??????
 #define SET_Current	    	    		  Run_Control[2]  //?????·
@@ -444,6 +484,18 @@ extern vu16 ADC_Imon_Filt[50];
 extern vu8 UART_Buffer_Rece[16];
 extern vu8 UART_Buffer_Send[20];
 //============================================================================= 
+struct MODS_T
+{
+	uint8_t RxBuf[S_RX_BUF_SIZE];
+	uint8_t TxBuf[S_TX_BUF_SIZE];
+	uint8_t RxCount;
+	uint8_t RxStatus;
+	uint8_t RxNewFlag;
+	uint8_t RspCode;
+	
+	uint8_t TxCount;
+};
+
 #define Receive_BUFFERSIZE   10
 //=============================================================================
 #endif
