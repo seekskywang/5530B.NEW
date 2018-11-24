@@ -141,6 +141,7 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
         GUI_DispStringAt("°",342, 2);
         GUI_SetFont(&GUI_Font24_1);
         GUI_DispStringAt("C",350, 2);
+        DrawLock();
 		break;
 	case WM_KEY://接受按键消息来处理按键功能
 		switch (((WM_KEY_INFO*)(pMsg->Data.p))->Key) 
@@ -157,12 +158,18 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
 	case WM_TIMER://定时模块消息
 	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime1)
 	{
+        lockstat2 = lockstat1;
+        lockstat1 = lock;
+        if(lockstat1 != lockstat2)
+        {
+            WM_InvalidateWindow(load_wind);
+        }
 //         if(clear_flag3 == 1)
 //         {
             if(DISS_Voltage < 0.1)
             {
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
-                sprintf(buf,"%.3f",0);       
+                sprintf(buf,"%.3f",0.000);       
                 TEXT_SetText(hItem,buf);
             }else{
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
@@ -187,7 +194,7 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
             TEXT_SetText(hItem,buf);
         }
         
-        
+            
         
 //        test_load();
         

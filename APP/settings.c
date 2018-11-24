@@ -146,7 +146,6 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     vu16 dis_min_r = set_min_r;
     float dis_max_c = (float)set_max_c/1000;
     float dis_min_c = (float)set_min_c/1000;
-
     
   
   // USER START (Optionally insert additional variables)
@@ -185,12 +184,19 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     GUI_DispStringAt("°",342, 2);
     GUI_SetFont(&GUI_Font24_1);
     GUI_DispStringAt("C",350, 2);
-    
+    DrawLock();
     
 	break;
 	case WM_TIMER://֨ʱģࠩлϢ
 	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime5)
 	{
+        lockstat2 = lockstat1;
+        lockstat1 = lock; 
+        if(lockstat1 != lockstat2)
+        {
+            WM_InvalidateWindow(hWinset);
+        }
+        
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_129);       
         sprintf(buf,"%.1f",temp);
         TEXT_SetText(hItem,buf);
@@ -2037,6 +2043,10 @@ void PARA_SET(void) {
                     }
                     case set_73:
                     {
+                        if(test_mode > 1)
+                        {
+                            test_mode = 1;
+                        }
                         if(test_mode == 1)
                         {
                             WM_HWIN hItem;

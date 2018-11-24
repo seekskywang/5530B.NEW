@@ -36,9 +36,26 @@ vu8 code5 = 0;
 vu8 code6 = 0;
 vu8 code7 = 0;
 vu8 code8 = 0;
+vu8 cal = 0;
 extern vu8 pass;
-
-
+extern vu16 Modify_A_READ;
+extern vu16 Modify_C_READ;
+extern vu16 Modify_A_ACT;
+	
+extern vu16 Modify_B_READ;
+extern vu16 Modify_D_READ;
+extern vu16 Modify_B_ACT;
+extern struct bitDefine
+{
+	unsigned bit0: 1;
+	unsigned bit1: 1;
+	unsigned bit2: 1;
+	unsigned bit3: 1;
+	unsigned bit4: 1;
+	unsigned bit5: 1;
+	unsigned bit6: 1;
+	unsigned bit7: 1;
+} flagA,flagB,flagC,flagD,flagE,flagG;
 /*********************************************************************
 *
 *       Defines
@@ -62,6 +79,7 @@ extern vu8 pass;
 #define ID_TEXT_112    	(GUI_ID_USER + 0x11C)
 #define ID_TEXT_113    	(GUI_ID_USER + 0x11D)
 #define ID_TEXT_114    	(GUI_ID_USER + 0x11E)
+#define ID_TEXT_136     (GUI_ID_USER + 0x0125)
 
 #define ID_TimerTime7    8
 // USER START (Optionally insert additional defines)
@@ -99,6 +117,7 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate7[] = {
   { TEXT_CreateIndirect, "Text", ID_TEXT_112, 236, 150, 12, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_113, 140, 150, 12, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_114, 152, 150, 12, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_136, 192, 200, 80, 20, 0, 0x0, 0 },
   // USER START (Optionally insert additional widgets)
   // USER END
 };
@@ -120,7 +139,6 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate7[] = {
 static void _cbDialog(WM_MESSAGE * pMsg) {
     WM_HWIN hItem;
     static char buf[5];
-
 
     
   
@@ -152,21 +170,46 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         GUI_SetColor(0x00BFFFFF);
         GUI_SetFont(&GUI_Font24_1);
         GUI_DispStringAt("JK5530B", 140, 50);
-        GUI_DispStringAt("Ver:1.6", 140, 75);
+        GUI_DispStringAt("Ver:1.7", 140, 75);
        
         GUI_DispStringAt("Ver:1.2", 140, 100);
         GUI_DispStringAt("-", 191, 125);
         GUI_DispStringAt("-", 227, 125);
         GUI_DispStringAt("A", 164, 150);
+        DrawLock();
 	break;
 	case WM_TIMER:
 	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime7)
 	{
+        lockstat2 = lockstat1;
+        lockstat1 = lock;
+        if(lockstat1 != lockstat2)
+        {
+            WM_InvalidateWindow(hWinsysinfo);
+        }
+        
         if(pass == 14)
         {
             admin = 1;
+        }else if(pass == 10){
+            cal = 1;
         }else{
             admin = 0;
+            cal = 0;
+        }
+        
+        if(cal ==  1)
+        {
+            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_136);
+            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+            sprintf(buf,"%4d",R_VLUE);
+            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+            GUI_UC_SetEncodeUTF8();        
+            TEXT_SetText(hItem,buf);
+        }else{
+            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_136);
+            TEXT_SetText(hItem, "");
+            TEXT_SetTextColor(hItem, GUI_INVALID_COLOR);
         }
 		WM_RestartTimer(pMsg->Data.v,500);//شλ֨ʱǷ˽ֵԽճˢтʱݤԽ׌
         
@@ -1372,5 +1415,144 @@ void CFM_PASS(void){
         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
         TEXT_SetTextColor(hItem, 0x00BFFFFF);
         info_set = set_48;
+    }
+}
+
+void Rlow_cal(u8 step)
+{
+    if(step == 1)
+    {
+        Modify_A_READ = Rmon_value;//测量电压值
+		Modify_A_ACT = 0x0A;//读取低段
+    }else if(step == 2){
+        vu16 var16;
+        vu32 var32a;
+        vu32 var32b;
+        
+        vu16 var16a;
+        vu32 var32c;
+        vu32 var32d;
+        Modify_B_READ =Rmon_value;//测量电压值
+        flag_OverV=1;
+        Modify_B_ACT = 0x64;//读取高段
+        if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+        {
+            var32a = Modify_B_ACT;
+            var32a = var32a - Modify_A_ACT;
+            var32a = var32a << 12;
+            var16 = Modify_B_READ - Modify_A_READ;
+            var32a = var32a / var16;
+            REG_CorrectionRL = var32a;
+            var32a=0;
+            var32a = Modify_B_ACT;
+            var32a = var32a << 12;
+            var32b = Modify_B_READ;
+            var32b = var32b * REG_CorrectionRL;
+            if (var32a < var32b)
+            {
+                var32b = var32b - var32a;
+                REG_ReadRL_Offset = var32b;
+                Polar3 |= 0x01;
+            }
+            else 
+            {
+                var32a = var32a - var32b;
+                REG_ReadRL_Offset = var32a;
+                Polar3 &= ~0x01;
+            }
+//---------------------------------------------------------------------------------------//
+            Flash_Write_all();	//参数写进FLASH
+            flag_OverV=0;
+            Flag_DAC_OFF=0;
+        }
+        flag_ADJ_VH=0;//清掉标志位防止一直进入
+    }else if(step == 3){
+        Modify_A_READ = Rmon_value;//测量电压值
+		Modify_A_ACT = 0x64;//读取低段
+    }else if(step == 4){
+        vu16 var16;
+        vu32 var32a;
+        vu32 var32b;
+        
+        vu16 var16a;
+        vu32 var32c;
+        vu32 var32d;
+        Modify_B_READ =Rmon_value;//测量电压值
+        flag_OverV=1;
+        Modify_B_ACT = 0xC8;//读取高段
+        if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+        {
+            var32a = Modify_B_ACT;
+            var32a = var32a - Modify_A_ACT;
+            var32a = var32a << 12;
+            var16 = Modify_B_READ - Modify_A_READ;
+            var32a = var32a / var16;
+            REG_CorrectionRH = var32a;
+            var32a=0;
+            var32a = Modify_B_ACT;
+            var32a = var32a << 12;
+            var32b = Modify_B_READ;
+            var32b = var32b * REG_CorrectionRH;
+            if (var32a < var32b)
+            {
+                var32b = var32b - var32a;
+                REG_ReadRH_Offset = var32b;
+                Polar3 |= 0x01;
+            }
+            else 
+            {
+                var32a = var32a - var32b;
+                REG_ReadRH_Offset = var32a;
+                Polar3 &= ~0x01;
+            }
+//---------------------------------------------------------------------------------------//
+            Flash_Write_all();	//参数写进FLASH
+            flag_OverV=0;
+            Flag_DAC_OFF=0;
+        }
+    }else if(step == 5){
+        Modify_A_READ = Rmon_value;//测量电压值
+		Modify_A_ACT = 0xC8;//读取低段
+    }else if(step == 6){
+        vu16 var16;
+        vu32 var32a;
+        vu32 var32b;
+        
+        vu16 var16a;
+        vu32 var32c;
+        vu32 var32d;
+        Modify_B_READ =Rmon_value;//测量电压值
+        flag_OverV=1;
+        Modify_B_ACT = 0x01F4;//读取高段
+        if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+        {
+            var32a = Modify_B_ACT;
+            var32a = var32a - Modify_A_ACT;
+            var32a = var32a << 12;
+            var16 = Modify_B_READ - Modify_A_READ;
+            var32a = var32a / var16;
+            REG_CorrectionR = var32a;
+            var32a=0;
+            var32a = Modify_B_ACT;
+            var32a = var32a << 12;
+            var32b = Modify_B_READ;
+            var32b = var32b * REG_CorrectionR;
+            if (var32a < var32b)
+            {
+                var32b = var32b - var32a;
+                REG_ReadR_Offset = var32b;
+                Polar3 |= 0x01;
+            }
+            else 
+            {
+                var32a = var32a - var32b;
+                REG_ReadR_Offset = var32a;
+                Polar3 &= ~0x01;
+            }
+//---------------------------------------------------------------------------------------//
+            Flash_Write_all();	//参数写进FLASH
+            flag_OverV=0;
+            Flag_DAC_OFF=0;
+        }
     }
 }

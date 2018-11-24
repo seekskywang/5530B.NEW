@@ -48729,6 +48729,8 @@ Nextern vu8 mode_sw;
 Nextern vu16 stepcount;
 Nextern vu16 battery_c;
 Nextern float bc_raw;
+Nextern float cbc_raw;
+Nextern float c_sum;
 Nextern vu8 track;
 Nextern vu8 clear_flag1;
 Nextern vu8 clear_flag2;
@@ -48742,7 +48744,9 @@ Nextern float clear_lv;
 Nextern float temp;
 Nextern vu8 set_loop_count;
 Nextern vu8 test_mode;
+Nextern vu8 lock;
 Nextern vu32 Run_Control[42];	
+Nextern u8 lockstat1,lockstat2;
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
 N#define SET_Voltage 	    	        Run_Control[1]  //??????
 N#define SET_Current	    	    		  Run_Control[2]  //?????��
@@ -48930,7 +48934,7 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu32 Correct_Parametet[12];
+Nextern vu32 Correct_Parametet[13];
 N#define  REG_CorrectionV   Correct_Parametet[0]//???????
 N#define  REG_Load_A			   Correct_Parametet[1]//??CC???��???
 N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????��??
@@ -48945,6 +48949,7 @@ N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 N#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
 N#define  CON_POWERA				 Correct_Parametet[10]//??CV???��???
 N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
+N#define  REG_CorrectionRH    Correct_Parametet[12]
 N
 N
 N
@@ -48956,7 +48961,7 @@ N#define  Polar3						 correct_por[3]//??????CV???��?
 N#define  Polar4						 correct_por[4]//??CC???��????
 N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[12];//��???
+Nextern vu32 Correct_Strong[13];//��???
 N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???��???
 N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????��??
@@ -48971,6 +48976,7 @@ N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???��???
 N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
+N#define  REG_ReadRH_Offset   Correct_Strong[12]
 N
 N//---------------------------
 Nextern vu16 ADC_NTC_Filt[50];
@@ -49181,6 +49187,8 @@ Sextern vu8 mode_sw;
 Sextern vu16 stepcount;
 Sextern vu16 battery_c;
 Sextern float bc_raw;
+Sextern float cbc_raw;
+Sextern float c_sum;
 Sextern vu8 track;
 Sextern vu8 clear_flag1;
 Sextern vu8 clear_flag2;
@@ -49194,7 +49202,9 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
+Sextern u8 lockstat1,lockstat2;
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????��
@@ -49382,7 +49392,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[12];
+Sextern vu32 Correct_Parametet[13];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???��???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????��??
@@ -49397,6 +49407,7 @@ S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???��???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
+S#define  REG_CorrectionRH    Correct_Parametet[12]
 S
 S
 S
@@ -49408,7 +49419,7 @@ S#define  Polar3						 correct_por[3]//??????CV???��?
 S#define  Polar4						 correct_por[4]//??CC???��????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[12];//��???
+Sextern vu32 Correct_Strong[13];//��???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???��???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????��??
@@ -49423,6 +49434,7 @@ S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???��???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
+S#define  REG_ReadRH_Offset   Correct_Strong[12]
 S
 S//---------------------------
 Sextern vu16 ADC_NTC_Filt[50];
@@ -51619,6 +51631,8 @@ Sextern vu8 mode_sw;
 Sextern vu16 stepcount;
 Sextern vu16 battery_c;
 Sextern float bc_raw;
+Sextern float cbc_raw;
+Sextern float c_sum;
 Sextern vu8 track;
 Sextern vu8 clear_flag1;
 Sextern vu8 clear_flag2;
@@ -51632,7 +51646,9 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
+Sextern u8 lockstat1,lockstat2;
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????��
@@ -51820,7 +51836,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[12];
+Sextern vu32 Correct_Parametet[13];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???��???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????��??
@@ -51835,6 +51851,7 @@ S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???��???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
+S#define  REG_CorrectionRH    Correct_Parametet[12]
 S
 S
 S
@@ -51846,7 +51863,7 @@ S#define  Polar3						 correct_por[3]//??????CV???��?
 S#define  Polar4						 correct_por[4]//??CC???��????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[12];//��???
+Sextern vu32 Correct_Strong[13];//��???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???��???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????��??
@@ -51861,6 +51878,7 @@ S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???��???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
+S#define  REG_ReadRH_Offset   Correct_Strong[12]
 S
 S//---------------------------
 Sextern vu16 ADC_NTC_Filt[50];
@@ -52470,9 +52488,26 @@ Nvu8 code5 = 0;
 Nvu8 code6 = 0;
 Nvu8 code7 = 0;
 Nvu8 code8 = 0;
+Nvu8 cal = 0;
 Nextern vu8 pass;
-N
-N
+Nextern vu16 Modify_A_READ;
+Nextern vu16 Modify_C_READ;
+Nextern vu16 Modify_A_ACT;
+N	
+Nextern vu16 Modify_B_READ;
+Nextern vu16 Modify_D_READ;
+Nextern vu16 Modify_B_ACT;
+Nextern struct bitDefine
+N{
+N	unsigned bit0: 1;
+N	unsigned bit1: 1;
+N	unsigned bit2: 1;
+N	unsigned bit3: 1;
+N	unsigned bit4: 1;
+N	unsigned bit5: 1;
+N	unsigned bit6: 1;
+N	unsigned bit7: 1;
+N} flagA,flagB,flagC,flagD,flagE,flagG;
 N/*********************************************************************
 N*
 N*       Defines
@@ -52496,6 +52531,7 @@ N#define ID_TEXT_111    	(GUI_ID_USER + 0x11B)
 N#define ID_TEXT_112    	(GUI_ID_USER + 0x11C)
 N#define ID_TEXT_113    	(GUI_ID_USER + 0x11D)
 N#define ID_TEXT_114    	(GUI_ID_USER + 0x11E)
+N#define ID_TEXT_136     (GUI_ID_USER + 0x0125)
 N
 N#define ID_TimerTime7    8
 N// USER START (Optionally insert additional defines)
@@ -52550,6 +52586,8 @@ N  { TEXT_CreateIndirect, "Text", ID_TEXT_113, 140, 150, 12, 20, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x11D), 140, 150, 12, 20, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_114, 152, 150, 12, 20, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x11E), 152, 150, 12, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_136, 192, 200, 80, 20, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0125), 192, 200, 80, 20, 0, 0x0, 0 },
 N  // USER START (Optionally insert additional widgets)
 N  // USER END
 N};
@@ -52572,7 +52610,6 @@ Nstatic void _cbDialog(WM_MESSAGE * pMsg) {
 N    WM_HWIN hItem;
 X    GUI_HWIN hItem;
 N    static char buf[5];
-N
 N
 N    
 N  
@@ -52611,23 +52648,54 @@ N        GUI_DispStringAt("仪器编号", 30, 150);
 N        GUI_SetColor(0x00BFFFFF);
 N        GUI_SetFont(&GUI_Font24_1);
 N        GUI_DispStringAt("JK5530B", 140, 50);
-N        GUI_DispStringAt("Ver:1.6", 140, 75);
+N        GUI_DispStringAt("Ver:1.7", 140, 75);
 N       
 N        GUI_DispStringAt("Ver:1.2", 140, 100);
 N        GUI_DispStringAt("-", 191, 125);
 N        GUI_DispStringAt("-", 227, 125);
 N        GUI_DispStringAt("A", 164, 150);
+W "..\APP\sysinfo.c" 179 9 function "DrawLock" declared implicitly
+N        DrawLock();
 N	break;
 N	case WM_TIMER:
 X	case 0x0113:
 N	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime7)
 X	if(WM_GetTimerId(pMsg->Data.v) == 8)
 N	{
+N        lockstat2 = lockstat1;
+N        lockstat1 = lock;
+N        if(lockstat1 != lockstat2)
+N        {
+N            WM_InvalidateWindow(hWinsysinfo);
+N        }
+N        
 N        if(pass == 14)
 N        {
 N            admin = 1;
+N        }else if(pass == 10){
+N            cal = 1;
 N        }else{
 N            admin = 0;
+N            cal = 0;
+N        }
+N        
+N        if(cal ==  1)
+N        {
+N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_136);
+X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0125));
+N            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N            sprintf(buf,"%4d",R_VLUE);
+X            sprintf(buf,"%4d",Run_Control[13]);
+N            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N            GUI_UC_SetEncodeUTF8();        
+N            TEXT_SetText(hItem,buf);
+N        }else{
+N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_136);
+X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0125));
+N            TEXT_SetText(hItem, "");
+N            TEXT_SetTextColor(hItem, GUI_INVALID_COLOR);
+X            TEXT_SetTextColor(hItem, 0xFFFFFFF);
 N        }
 N		WM_RestartTimer(pMsg->Data.v,500);//شλ֨ʱǷ˽ֵԽճˢтʱݤԽ׌
 N        
@@ -54286,5 +54354,177 @@ N        TEXT_SetTextColor(hItem, 0x00BFFFFF);
 N        info_set = set_48;
 X        info_set = 47;
 N    }
-W "..\APP\sysinfo.c" 1376 2 last line of file ends without a newline
+N}
+N
+Nvoid Rlow_cal(u8 step)
+N{
+N    if(step == 1)
+N    {
+N        Modify_A_READ = Rmon_value;//测量电压值
+N		Modify_A_ACT = 0x0A;//读取低段
+N    }else if(step == 2){
+N        vu16 var16;
+N        vu32 var32a;
+N        vu32 var32b;
+N        
+N        vu16 var16a;
+N        vu32 var32c;
+N        vu32 var32d;
+N        Modify_B_READ =Rmon_value;//测量电压值
+N        flag_OverV=1;
+X        (flagG . bit1)=1;
+N        Modify_B_ACT = 0x64;//读取高段
+N        if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+X        if((flagG . bit1)==1)
+N        {
+N            var32a = Modify_B_ACT;
+N            var32a = var32a - Modify_A_ACT;
+N            var32a = var32a << 12;
+N            var16 = Modify_B_READ - Modify_A_READ;
+N            var32a = var32a / var16;
+N            REG_CorrectionRL = var32a;
+X            Correct_Parametet[11] = var32a;
+N            var32a=0;
+N            var32a = Modify_B_ACT;
+N            var32a = var32a << 12;
+N            var32b = Modify_B_READ;
+N            var32b = var32b * REG_CorrectionRL;
+X            var32b = var32b * Correct_Parametet[11];
+N            if (var32a < var32b)
+N            {
+N                var32b = var32b - var32a;
+N                REG_ReadRL_Offset = var32b;
+X                Correct_Strong[11] = var32b;
+N                Polar3 |= 0x01;
+X                correct_por[3] |= 0x01;
+N            }
+N            else 
+N            {
+N                var32a = var32a - var32b;
+N                REG_ReadRL_Offset = var32a;
+X                Correct_Strong[11] = var32a;
+N                Polar3 &= ~0x01;
+X                correct_por[3] &= ~0x01;
+N            }
+N//---------------------------------------------------------------------------------------//
+W "..\APP\sysinfo.c" 1464 13 function "Flash_Write_all" declared implicitly
+N            Flash_Write_all();	//参数写进FLASH
+N            flag_OverV=0;
+X            (flagG . bit1)=0;
+N            Flag_DAC_OFF=0;
+X            (flagB . bit3)=0;
+N        }
+N        flag_ADJ_VH=0;//清掉标志位防止一直进入
+X        (flagF . bit3)=0;
+N    }else if(step == 3){
+N        Modify_A_READ = Rmon_value;//测量电压值
+N		Modify_A_ACT = 0x64;//读取低段
+N    }else if(step == 4){
+N        vu16 var16;
+N        vu32 var32a;
+N        vu32 var32b;
+N        
+N        vu16 var16a;
+N        vu32 var32c;
+N        vu32 var32d;
+N        Modify_B_READ =Rmon_value;//测量电压值
+N        flag_OverV=1;
+X        (flagG . bit1)=1;
+N        Modify_B_ACT = 0xC8;//读取高段
+N        if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+X        if((flagG . bit1)==1)
+N        {
+N            var32a = Modify_B_ACT;
+N            var32a = var32a - Modify_A_ACT;
+N            var32a = var32a << 12;
+N            var16 = Modify_B_READ - Modify_A_READ;
+N            var32a = var32a / var16;
+N            REG_CorrectionRH = var32a;
+X            Correct_Parametet[12] = var32a;
+N            var32a=0;
+N            var32a = Modify_B_ACT;
+N            var32a = var32a << 12;
+N            var32b = Modify_B_READ;
+N            var32b = var32b * REG_CorrectionRH;
+X            var32b = var32b * Correct_Parametet[12];
+N            if (var32a < var32b)
+N            {
+N                var32b = var32b - var32a;
+N                REG_ReadRH_Offset = var32b;
+X                Correct_Strong[12] = var32b;
+N                Polar3 |= 0x01;
+X                correct_por[3] |= 0x01;
+N            }
+N            else 
+N            {
+N                var32a = var32a - var32b;
+N                REG_ReadRH_Offset = var32a;
+X                Correct_Strong[12] = var32a;
+N                Polar3 &= ~0x01;
+X                correct_por[3] &= ~0x01;
+N            }
+N//---------------------------------------------------------------------------------------//
+W "..\APP\sysinfo.c" 1509 13 function "Flash_Write_all" declared implicitly
+N            Flash_Write_all();	//参数写进FLASH
+N            flag_OverV=0;
+X            (flagG . bit1)=0;
+N            Flag_DAC_OFF=0;
+X            (flagB . bit3)=0;
+N        }
+N    }else if(step == 5){
+N        Modify_A_READ = Rmon_value;//测量电压值
+N		Modify_A_ACT = 0xC8;//读取低段
+N    }else if(step == 6){
+N        vu16 var16;
+N        vu32 var32a;
+N        vu32 var32b;
+N        
+N        vu16 var16a;
+N        vu32 var32c;
+N        vu32 var32d;
+N        Modify_B_READ =Rmon_value;//测量电压值
+N        flag_OverV=1;
+X        (flagG . bit1)=1;
+N        Modify_B_ACT = 0x01F4;//读取高段
+N        if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+X        if((flagG . bit1)==1)
+N        {
+N            var32a = Modify_B_ACT;
+N            var32a = var32a - Modify_A_ACT;
+N            var32a = var32a << 12;
+N            var16 = Modify_B_READ - Modify_A_READ;
+N            var32a = var32a / var16;
+N            REG_CorrectionR = var32a;
+X            Correct_Parametet[5] = var32a;
+N            var32a=0;
+N            var32a = Modify_B_ACT;
+N            var32a = var32a << 12;
+N            var32b = Modify_B_READ;
+N            var32b = var32b * REG_CorrectionR;
+X            var32b = var32b * Correct_Parametet[5];
+N            if (var32a < var32b)
+N            {
+N                var32b = var32b - var32a;
+N                REG_ReadR_Offset = var32b;
+X                Correct_Strong[5] = var32b;
+N                Polar3 |= 0x01;
+X                correct_por[3] |= 0x01;
+N            }
+N            else 
+N            {
+N                var32a = var32a - var32b;
+N                REG_ReadR_Offset = var32a;
+X                Correct_Strong[5] = var32a;
+N                Polar3 &= ~0x01;
+X                correct_por[3] &= ~0x01;
+N            }
+N//---------------------------------------------------------------------------------------//
+W "..\APP\sysinfo.c" 1553 13 function "Flash_Write_all" declared implicitly
+N            Flash_Write_all();	//参数写进FLASH
+N            flag_OverV=0;
+X            (flagG . bit1)=0;
+N            Flag_DAC_OFF=0;
+X            (flagB . bit3)=0;
+N        }
+N    }
 N}

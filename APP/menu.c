@@ -124,11 +124,18 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         GUI_DispStringAt("°",342, 2);
         GUI_SetFont(&GUI_Font24_1);
         GUI_DispStringAt("C",350, 2);
+        DrawLock();
 		break;
     
 	case WM_TIMER://定时模块消息
 	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime2)
 	{
+        lockstat2 = lockstat1;
+        lockstat1 = lock;
+        if(lockstat1 != lockstat2)
+        {
+            WM_InvalidateWindow(hWinWind);
+        }
 //         if(clear_flag2 == 1)
 //         {
             if(DISS_POW_Voltage < 0.1)

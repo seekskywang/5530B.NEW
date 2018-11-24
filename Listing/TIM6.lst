@@ -34890,6 +34890,8 @@ Nextern vu8 mode_sw;
 Nextern vu16 stepcount;
 Nextern vu16 battery_c;
 Nextern float bc_raw;
+Nextern float cbc_raw;
+Nextern float c_sum;
 Nextern vu8 track;
 Nextern vu8 clear_flag1;
 Nextern vu8 clear_flag2;
@@ -34903,7 +34905,9 @@ Nextern float clear_lv;
 Nextern float temp;
 Nextern vu8 set_loop_count;
 Nextern vu8 test_mode;
+Nextern vu8 lock;
 Nextern vu32 Run_Control[42];	
+Nextern u8 lockstat1,lockstat2;
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
 N#define SET_Voltage 	    	        Run_Control[1]  //??????
 N#define SET_Current	    	    		  Run_Control[2]  //?????¡¤
@@ -35091,7 +35095,7 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu32 Correct_Parametet[12];
+Nextern vu32 Correct_Parametet[13];
 N#define  REG_CorrectionV   Correct_Parametet[0]//???????
 N#define  REG_Load_A			   Correct_Parametet[1]//??CC???¡¤???
 N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????¡¤??
@@ -35106,6 +35110,7 @@ N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 N#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
 N#define  CON_POWERA				 Correct_Parametet[10]//??CV???¡¤???
 N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
+N#define  REG_CorrectionRH    Correct_Parametet[12]
 N
 N
 N
@@ -35117,7 +35122,7 @@ N#define  Polar3						 correct_por[3]//??????CV???¡¤?
 N#define  Polar4						 correct_por[4]//??CC???¡¤????
 N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[12];//§µ???
+Nextern vu32 Correct_Strong[13];//§µ???
 N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???¡¤???
 N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????¡¤??
@@ -35132,6 +35137,7 @@ N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???¡¤???
 N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
+N#define  REG_ReadRH_Offset   Correct_Strong[12]
 N
 N//---------------------------
 Nextern vu16 ADC_NTC_Filt[50];
@@ -49198,6 +49204,8 @@ Sextern vu8 mode_sw;
 Sextern vu16 stepcount;
 Sextern vu16 battery_c;
 Sextern float bc_raw;
+Sextern float cbc_raw;
+Sextern float c_sum;
 Sextern vu8 track;
 Sextern vu8 clear_flag1;
 Sextern vu8 clear_flag2;
@@ -49211,7 +49219,9 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
+Sextern u8 lockstat1,lockstat2;
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????¡¤
@@ -49399,7 +49409,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[12];
+Sextern vu32 Correct_Parametet[13];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???¡¤???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????¡¤??
@@ -49414,6 +49424,7 @@ S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???¡¤???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
+S#define  REG_CorrectionRH    Correct_Parametet[12]
 S
 S
 S
@@ -49425,7 +49436,7 @@ S#define  Polar3						 correct_por[3]//??????CV???¡¤?
 S#define  Polar4						 correct_por[4]//??CC???¡¤????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[12];//§µ???
+Sextern vu32 Correct_Strong[13];//§µ???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???¡¤???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????¡¤??
@@ -49440,6 +49451,7 @@ S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???¡¤???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
+S#define  REG_ReadRH_Offset   Correct_Strong[12]
 S
 S//---------------------------
 Sextern vu16 ADC_NTC_Filt[50];
@@ -49479,12 +49491,20 @@ N/*****************************************************************/
 N
 Nvu16 battery_c;
 Nfloat bc_raw;
+Nfloat cbc_raw;
+Nfloat c_sum;
 Nextern vu8 pow_sw;
 Nextern vu8 cdc_sw;
 Nextern vu8 load_sw;
 Nextern vu8 oct_sw; 
 Nextern vu8 oc_test;
 Nextern vu8 c_rec;
+Nextern vu8 second ;
+Nextern vu8 minute;
+Nextern vu8 hour;
+Nextern vu8 second1;
+Nextern vu8 minute1;
+Nextern vu8 hour1;
 Nvu8 resetflag;
 Nvu8 resdone;
 Nfloat watch;
@@ -49546,27 +49566,27 @@ N                     GUI_Init();
 N                     if(page_sw == face_menu)
 X                     if(page_sw == 2)
 N                     {
-W "..\drive\TIM6.c" 78 26 function "ResetPow" declared implicitly
+W "..\drive\TIM6.c" 86 26 function "ResetPow" declared implicitly
 N                         ResetPow();
 N                     }else if(page_sw == face_cdc){
 X                     }else if(page_sw == 1){
-W "..\drive\TIM6.c" 80 26 function "ResetCDC" declared implicitly
+W "..\drive\TIM6.c" 88 26 function "ResetCDC" declared implicitly
 N                         ResetCDC();
 N                     }else if(page_sw == face_r){
 X                     }else if(page_sw == 3){
-W "..\drive\TIM6.c" 82 26 function "ResetR" declared implicitly
+W "..\drive\TIM6.c" 90 26 function "ResetR" declared implicitly
 N                         ResetR();
 N                     }else if(page_sw == face_load){
 X                     }else if(page_sw == 4){
-W "..\drive\TIM6.c" 84 26 function "ResetLoad" declared implicitly
+W "..\drive\TIM6.c" 92 26 function "ResetLoad" declared implicitly
 N                         ResetLoad();
 N                     }else if(page_sw == face_graph){
 X                     }else if(page_sw == 0){
-W "..\drive\TIM6.c" 86 26 function "ResetG" declared implicitly
+W "..\drive\TIM6.c" 94 26 function "ResetG" declared implicitly
 N                         ResetG();
 N                     }else if(page_sw == face_set){
 X                     }else if(page_sw == 5){
-W "..\drive\TIM6.c" 88 26 function "ResetSET" declared implicitly
+W "..\drive\TIM6.c" 96 26 function "ResetSET" declared implicitly
 N                         ResetSET();
 N                     }
 N//                     resdone = 1;
@@ -49693,6 +49713,7 @@ N    static vu8 calert = 0;
 N    static vu16 resetcount;
 N    static vu8 read1963;
 N    static vu16 scancount;
+N    static vu32 ctime,dctime;
 N    
 N    if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) //????
 X    if(TIM_GetITStatus(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)),((uint16_t)0x0001))==SET) 
@@ -49749,10 +49770,29 @@ N            {
 N                if(mode_sw == mode_pow && cdc_sw == cdc_on)
 X                if(mode_sw == 3 && cdc_sw == 1)
 N                {
-N                    bc_raw += DISS_POW_Current * 1000 * 1/3600;
+N                    ctime++;
+N                    second = ctime%60;//ç§’
+N                    minute = (ctime/60)%60;//åˆ†
+N                    hour   = ctime/3600;//æ—¶
+N                    cbc_raw += DISS_POW_Current * 1000 * 1/3600;
+N                    bc_raw = 0;
+N//                    bc_raw += DISS_POW_Current * 1000 * 1/3600;
+N                }else if(mode_sw == mode_load && cdc_sw == cdc_on){
+X                }else if(mode_sw == 2 && cdc_sw == 1){
+N                    dctime++;
+N                    second1 = dctime%60;//ç§’
+N                    minute1 = (dctime/60)%60;//åˆ†
+N                    hour1   = dctime/3600;//æ—¶
+N                    bc_raw += DISS_Current * 1000 * 1/3600;
+N//                    c_sum += DISS_Current * 1000 * 1/3600;
+N                    cbc_raw = 0;
 N                }else if(cdc_sw == cdc_off){
 X                }else if(cdc_sw == 0){
 N                    bc_raw = 0;
+N                    cbc_raw = 0;
+N                    c_sum = 0;
+N                    ctime=0;
+N                    dctime=0;
 N                }
 N            }break;
 N            case face_load:

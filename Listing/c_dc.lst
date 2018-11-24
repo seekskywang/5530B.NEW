@@ -48729,6 +48729,8 @@ Nextern vu8 mode_sw;
 Nextern vu16 stepcount;
 Nextern vu16 battery_c;
 Nextern float bc_raw;
+Nextern float cbc_raw;
+Nextern float c_sum;
 Nextern vu8 track;
 Nextern vu8 clear_flag1;
 Nextern vu8 clear_flag2;
@@ -48742,7 +48744,9 @@ Nextern float clear_lv;
 Nextern float temp;
 Nextern vu8 set_loop_count;
 Nextern vu8 test_mode;
+Nextern vu8 lock;
 Nextern vu32 Run_Control[42];	
+Nextern u8 lockstat1,lockstat2;
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
 N#define SET_Voltage 	    	        Run_Control[1]  //??????
 N#define SET_Current	    	    		  Run_Control[2]  //?????��
@@ -48930,7 +48934,7 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu32 Correct_Parametet[12];
+Nextern vu32 Correct_Parametet[13];
 N#define  REG_CorrectionV   Correct_Parametet[0]//???????
 N#define  REG_Load_A			   Correct_Parametet[1]//??CC???��???
 N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????��??
@@ -48945,6 +48949,7 @@ N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 N#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
 N#define  CON_POWERA				 Correct_Parametet[10]//??CV???��???
 N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
+N#define  REG_CorrectionRH    Correct_Parametet[12]
 N
 N
 N
@@ -48956,7 +48961,7 @@ N#define  Polar3						 correct_por[3]//??????CV???��?
 N#define  Polar4						 correct_por[4]//??CC???��????
 N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[12];//��???
+Nextern vu32 Correct_Strong[13];//��???
 N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???��???
 N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????��??
@@ -48971,6 +48976,7 @@ N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???��???
 N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
+N#define  REG_ReadRH_Offset   Correct_Strong[12]
 N
 N//---------------------------
 Nextern vu16 ADC_NTC_Filt[50];
@@ -49181,6 +49187,8 @@ Sextern vu8 mode_sw;
 Sextern vu16 stepcount;
 Sextern vu16 battery_c;
 Sextern float bc_raw;
+Sextern float cbc_raw;
+Sextern float c_sum;
 Sextern vu8 track;
 Sextern vu8 clear_flag1;
 Sextern vu8 clear_flag2;
@@ -49194,7 +49202,9 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
+Sextern u8 lockstat1,lockstat2;
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????��
@@ -49382,7 +49392,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[12];
+Sextern vu32 Correct_Parametet[13];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???��???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????��??
@@ -49397,6 +49407,7 @@ S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???��???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
+S#define  REG_CorrectionRH    Correct_Parametet[12]
 S
 S
 S
@@ -49408,7 +49419,7 @@ S#define  Polar3						 correct_por[3]//??????CV???��?
 S#define  Polar4						 correct_por[4]//??CC???��????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[12];//��???
+Sextern vu32 Correct_Strong[13];//��???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???��???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????��??
@@ -49423,6 +49434,7 @@ S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???��???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
+S#define  REG_ReadRH_Offset   Correct_Strong[12]
 S
 S//---------------------------
 Sextern vu16 ADC_NTC_Filt[50];
@@ -51619,6 +51631,8 @@ Sextern vu8 mode_sw;
 Sextern vu16 stepcount;
 Sextern vu16 battery_c;
 Sextern float bc_raw;
+Sextern float cbc_raw;
+Sextern float c_sum;
 Sextern vu8 track;
 Sextern vu8 clear_flag1;
 Sextern vu8 clear_flag2;
@@ -51632,7 +51646,9 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
+Sextern u8 lockstat1,lockstat2;
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????��
@@ -51820,7 +51836,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[12];
+Sextern vu32 Correct_Parametet[13];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???��???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????��??
@@ -51835,6 +51851,7 @@ S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???��???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
+S#define  REG_CorrectionRH    Correct_Parametet[12]
 S
 S
 S
@@ -51846,7 +51863,7 @@ S#define  Polar3						 correct_por[3]//??????CV???��?
 S#define  Polar4						 correct_por[4]//??CC???��????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[12];//��???
+Sextern vu32 Correct_Strong[13];//��???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???��???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????��??
@@ -51861,6 +51878,7 @@ S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???��???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
+S#define  REG_ReadRH_Offset   Correct_Strong[12]
 S
 S//---------------------------
 Sextern vu16 ADC_NTC_Filt[50];
@@ -52454,9 +52472,12 @@ XGUI_HWIN hWincdc;
 N// extern void Mode_SW_CONT(vu8 mode);
 N
 Nvu8 set_loop_count = 1;
-Nstatic vu8 second = 0;
-Nstatic vu8 minute = 0;
-Nstatic vu8 hour = 0;
+Nvu8 second = 0;
+Nvu8 minute = 0;
+Nvu8 hour = 0;
+Nvu8 second1 = 0;
+Nvu8 minute1 = 0;
+Nvu8 hour1 = 0;
 Nstatic vu16 cutoff_time;
 Nvu8 cutoff_flag = 0;
 Nvu8 cdc_sw = cdc_off;
@@ -52464,7 +52485,6 @@ Xvu8 cdc_sw = 0;
 Nvu8 c_sw = c_on;
 Xvu8 c_sw = 1;
 Nvu8 timer_sw = 1;
-Nvu8 c_sum = 0;
 Nvu8 count = 1;
 Nvu8 status_flash = 0;
 Nvu8 pause_flag = 0;
@@ -52545,6 +52565,7 @@ N#define ID_TEXT_79   	(GUI_ID_USER + 0x8C)
 N#define ID_TEXT_119     (GUI_ID_USER + 0x113)
 N#define ID_TEXT_127     (GUI_ID_USER + 0x114)
 N#define ID_TEXT_131     (GUI_ID_USER + 0x120)
+N#define ID_TEXT_135     (GUI_ID_USER + 0x124)
 N
 N#define ID_TimerTime4    5
 N
@@ -52629,26 +52650,27 @@ N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_119, 260, 56, 50, 20, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x113), 260, 56, 50, 20, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_70, 270, 142, 33, 20, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x83), 270, 142, 33, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_71, 400, 4, 50, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x84), 400, 4, 50, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_72, 220, 4, 33, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x85), 220, 4, 33, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_73, 250, 4, 33, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x86), 250, 4, 33, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_74, 280, 4, 33, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x87), 280, 4, 33, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_75, 245, 3, 10, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x88), 245, 3, 10, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_76, 275, 3, 10, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x89), 275, 3, 10, 20, 0, 0x0, 0 },
+N//  { TEXT_CreateIndirect,   "Text",   ID_TEXT_71, 400, 4, 50, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_72, 295, 4, 33, 20, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x85), 295, 4, 33, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_73, 325, 4, 33, 20, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x86), 325, 4, 33, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_135,355, 4, 33, 20, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x124),355, 4, 33, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_74, 105+50, 4, 33, 20, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x87), 105+50, 4, 33, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_75, 135+50, 4, 33, 20, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x88), 135+50, 4, 33, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_76, 165+50, 4, 33, 20, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x89), 165+50, 4, 33, 20, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_77, 440, 203, 20, 23, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x8A), 440, 203, 20, 23, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_78, 465, 203, 20, 23, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x8B), 465, 203, 20, 23, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_79, 444, 205, 40, 20, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x8C), 444, 205, 40, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_127, 330, 2, 80, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x114), 330, 2, 80, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_127, 330+60, 4, 80, 20, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x114), 330+60, 4, 80, 20, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect,   "Text",   ID_TEXT_131, 5, 225, 80, 30, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect,   "Text",   (0x800 + 0x120), 5, 225, 80, 30, 0, 0x0, 0 },
 N
@@ -52691,7 +52713,6 @@ X  float dis_dc_cutoff_v = (float)Run_Control[27]/1000;
 N  float dis_dc_cutoff_c = (float)set_dc_cutoff_c/100;
 X  float dis_dc_cutoff_c = (float)Run_Control[28]/100;
 N
-N
 N  // USER START (Optionally insert additional variables)
 N  // USER END
 N
@@ -52716,7 +52737,7 @@ N        GUI_SetFont(&GUI_FontHZ20S);
 N        GUI_UC_SetEncodeUTF8();
 N        GUI_SetTextMode(GUI_TM_TRANS);//ʨ׃τѾģʽΪ֗ɫ͸ķ
 X        GUI_SetTextMode((1<<1));
-N        GUI_DispStringAt("测量显示", 130, 3);//SET
+N//         GUI_DispStringAt("测量显示", 130, 3);//SET
 N        GUI_SetColor(GUI_WHITE);//ʨ׃ǰްɫΪїɫ
 X        GUI_SetColor(0x00FFFFFF);
 N        GUI_SetFont(&GUI_Font24_1);
@@ -52734,10 +52755,22 @@ N
 N        GUI_SetColor(GUI_GREEN);
 X        GUI_SetColor(0x0000FF00);
 N        GUI_SetFont(&GUI_Fontunit);
-N        GUI_DispStringAt("°",372, 2);
+N        GUI_DispStringAt("°",372+60, 2);
 N        GUI_SetFont(&GUI_Font24_1);
-N        GUI_DispStringAt("C",380, 2);
-N    
+N        GUI_DispStringAt("C",380+60, 2);       
+W "..\APP\c_dc.c" 248 9 function "DrawLockc" declared implicitly
+N        DrawLockc();
+N        
+N        GUI_SetColor(GUI_WHITE);
+X        GUI_SetColor(0x00FFFFFF);
+N        GUI_SetFont(&GUI_Fontset_font);
+N        GUI_DispStringAt("充电",115, 4);
+N        GUI_DispStringAt("放电",255, 4);
+N        GUI_SetFont(&GUI_Font24_1);
+N        GUI_DispStringAt(":",320, 3);
+N        GUI_DispStringAt(":",350, 3);
+N        GUI_DispStringAt(":",180, 3);
+N        GUI_DispStringAt(":",210, 3);
 N    
 N	break;
 N	case WM_TIMER://֨ʱģࠩлϢ
@@ -52745,6 +52778,67 @@ X	case 0x0113:
 N	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime4)
 X	if(WM_GetTimerId(pMsg->Data.v) == 5)
 N	{
+N        lockstat2 = lockstat1;
+N        lockstat1 = lock; 
+N        if(lockstat1 != lockstat2)
+N        {
+N            WM_InvalidateWindow(hWincdc);
+N        }
+N        
+N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);
+X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x87));
+N        sprintf(buf,"%02d",hour);
+N        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N        GUI_UC_SetEncodeUTF8();        
+N        TEXT_SetText(hItem,buf);
+N
+N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_75);
+X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x88));
+N        sprintf(buf,"%02d",minute);
+N        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N        GUI_UC_SetEncodeUTF8();        
+N        TEXT_SetText(hItem,buf);
+N        
+N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);
+X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x89));
+N        sprintf(buf,"%02d",second);
+N        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N        GUI_UC_SetEncodeUTF8();        
+N        TEXT_SetText(hItem,buf);
+N        
+N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_72);
+X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x85));
+N        sprintf(buf,"%02d",hour1);
+N        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N        GUI_UC_SetEncodeUTF8();        
+N        TEXT_SetText(hItem,buf);
+N
+N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_73);
+X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x86));
+N        sprintf(buf,"%02d",minute1);
+N        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N        GUI_UC_SetEncodeUTF8();        
+N        TEXT_SetText(hItem,buf);
+N        
+N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_135);
+X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x124));
+N        sprintf(buf,"%02d",second1);
+N        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N        GUI_UC_SetEncodeUTF8();        
+N        TEXT_SetText(hItem,buf);
+N        
 N        if(mode_sw == mode_pow && cdc_sw == cdc_on){
 X        if(mode_sw == 3 && cdc_sw == 1){
 N            
@@ -52757,6 +52851,12 @@ N
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_67);
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x80));
 N            sprintf(buf,"%.3f",DISS_POW_Current);
+N            TEXT_SetText(hItem,buf);
+N            
+N            battery_c = cbc_raw;
+N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_68);
+X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x81));
+N            sprintf(buf,"%05d",battery_c);
 N            TEXT_SetText(hItem,buf);
 N            
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_77);
@@ -52794,25 +52894,20 @@ X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x83));
 N            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
 N            
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_72);        
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x85));        
-N            TEXT_SetText(hItem,"");
+N//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_72);        
+N//             TEXT_SetText(hItem,"");
 N
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_73);     
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x86));     
-N            TEXT_SetText(hItem,"");
-N            
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);      
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x87));      
-N            TEXT_SetText(hItem,"");
-N            
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_75);      
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x88));      
-N            TEXT_SetText(hItem,"");
-N            
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);      
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x89));      
-N            TEXT_SetText(hItem,"");
+N//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_73);     
+N//             TEXT_SetText(hItem,"");
+N//             
+N//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);      
+N//             TEXT_SetText(hItem,"");
+N//             
+N//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_75);      
+N//             TEXT_SetText(hItem,"");
+N//             
+N//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);      
+N//             TEXT_SetText(hItem,"");
 N            
 N            if(charge_step == 1)
 N            {
@@ -53123,62 +53218,16 @@ N            charge_step = 1;
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_119);
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x113));
 N            TEXT_SetText(hItem,"");
-N            if(paused == 0){
-N                second = (GUI_GetTime()/500-start_time)%60;//秒
-X                second = (GUI_GetTime()/500-Run_Control[29])%60;
-N                minute = ((GUI_GetTime()/500-start_time)/60)%60;//分
-X                minute = ((GUI_GetTime()/500-Run_Control[29])/60)%60;
-N                hour   = (GUI_GetTime()/500-start_time)/3600;//时
-X                hour   = (GUI_GetTime()/500-Run_Control[29])/3600;
-N            }else{
-N                second = (GUI_GetTime()/500-restart_time + pause_time)%60;//秒 
-N                minute = ((GUI_GetTime()/500-restart_time + pause_time)/60)%60;//分
-N                hour = ((GUI_GetTime()/500-restart_time) + pause_time)/3600;//时
-N            }
+N//             if(paused == 0){
+N//                 second = (GUI_GetTime()/500-start_time)%60;//秒
+N//                 minute = ((GUI_GetTime()/500-start_time)/60)%60;//分
+N//                 hour   = (GUI_GetTime()/500-start_time)/3600;//时
+N//             }else{
+N//                 second = (GUI_GetTime()/500-restart_time + pause_time)%60;//秒 
+N//                 minute = ((GUI_GetTime()/500-restart_time + pause_time)/60)%60;//分
+N//                 hour = ((GUI_GetTime()/500-restart_time) + pause_time)/3600;//时
+N//             }
 N            
-N            
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_72);
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x85));
-N            sprintf(buf,"%02d",hour);
-N            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
-X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-N            GUI_UC_SetEncodeUTF8();        
-N            TEXT_SetText(hItem,buf);
-N
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_73);
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x86));
-N            sprintf(buf,"%02d",minute);
-N            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
-X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-N            GUI_UC_SetEncodeUTF8();        
-N            TEXT_SetText(hItem,buf);
-N            
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x87));
-N            sprintf(buf,"%02d",second);
-N            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
-X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-N            GUI_UC_SetEncodeUTF8();        
-N            TEXT_SetText(hItem,buf);
-N            
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_75);
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x88));
-N            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
-X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-N            GUI_UC_SetEncodeUTF8();        
-N            TEXT_SetText(hItem,":");
-N            
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x89));
-N            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
-X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-N            GUI_UC_SetEncodeUTF8();        
-N            TEXT_SetText(hItem,":");
 N            
 N            
 N            
@@ -53193,7 +53242,7 @@ X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x80));
 N            sprintf(buf,"%.3f",DISS_Current);       
 N            TEXT_SetText(hItem,buf);
 N            
-N            battery_c = (int)(((float)(second + minute*60 + hour * 3600)/3600 * dis_load_c)*1000);
+N            battery_c = bc_raw;
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_68);
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x81));
 N            sprintf(buf,"%05d",battery_c);
@@ -53254,10 +53303,8 @@ N//                GPIO_SetBits(GPIOC,GPIO_Pin_1);//关闭负载
 N                GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
 X                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
 N                if(count > set_loop_count){
-N                    cdc_sw = cdc_off;//关闭充放电模式
-X                    cdc_sw = 0;
-N                    battery_c = (c_sum + (int)(((float)(end_time - start_time)/3600 * dis_load_c)*1000))/set_loop_count;                    
-X                    battery_c = (c_sum + (int)(((float)(Run_Control[30] - Run_Control[29])/3600 * dis_load_c)*1000))/set_loop_count;                    
+N                    c_sum += bc_raw;
+N                    battery_c = c_sum/set_loop_count;                     
 N                    count = 1;
 N                    
 N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_68);
@@ -53269,25 +53316,20 @@ N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_71);
 X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x84));
 N                    TEXT_SetText(hItem,"");
 N                    
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_72);       
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x85));       
-N                    TEXT_SetText(hItem,"");
+N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_72);       
+N//                     TEXT_SetText(hItem,"");
 N
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_73);     
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x86));     
-N                    TEXT_SetText(hItem,"");
-N                    
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);      
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x87));      
-N                    TEXT_SetText(hItem,"");
-N                    
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_75);       
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x88));       
-N                    TEXT_SetText(hItem,"");
-N                    
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);       
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x89));       
-N                    TEXT_SetText(hItem,"");
+N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_73);     
+N//                     TEXT_SetText(hItem,"");
+N//                     
+N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);      
+N//                     TEXT_SetText(hItem,"");
+N//                     
+N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_75);       
+N//                     TEXT_SetText(hItem,"");
+N//                     
+N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);       
+N//                     TEXT_SetText(hItem,"");
 N                    
 N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_77);
 X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8A));
@@ -53302,8 +53344,7 @@ X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8C));
 N                    TEXT_SetText(hItem,"");
 N                    
 N                }else{
-N                    c_sum = c_sum + (int)(((float)(end_time - start_time)/3600 * dis_load_c)*1000);
-X                    c_sum = c_sum + (int)(((float)(Run_Control[30] - Run_Control[29])/3600 * dis_load_c)*1000);
+N                    c_sum += bc_raw;
 N//                     Mode_SW_CONT(0x03);//切换至电源模式
 N                    GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
 X                    GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
@@ -53685,6 +53726,60 @@ N        TEXT_SetFont(hItem,&GUI_Font24_1);//ʨ֨τѾؖͥ
 N        sprintf(buf,"%.1f",temp);
 N        TEXT_SetText(hItem,buf);
 N        
+N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);
+X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x87));
+N        sprintf(buf,"%02d",hour);
+N        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N        GUI_UC_SetEncodeUTF8();        
+N        TEXT_SetText(hItem,buf);
+N
+N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_75);
+X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x88));
+N        sprintf(buf,"%02d",minute);
+N        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N        GUI_UC_SetEncodeUTF8();        
+N        TEXT_SetText(hItem,buf);
+N        
+N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);
+X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x89));
+N        sprintf(buf,"%02d",second);
+N        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N        GUI_UC_SetEncodeUTF8();        
+N        TEXT_SetText(hItem,buf);
+N        
+N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_72);
+X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x85));
+N        sprintf(buf,"%02d",hour1);
+N        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N        GUI_UC_SetEncodeUTF8();        
+N        TEXT_SetText(hItem,buf);
+N
+N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_73);
+X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x86));
+N        sprintf(buf,"%02d",minute1);
+N        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N        GUI_UC_SetEncodeUTF8();        
+N        TEXT_SetText(hItem,buf);
+N        
+N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_135);
+X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x124));
+N        sprintf(buf,"%02d",second1);
+N        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N        GUI_UC_SetEncodeUTF8();        
+N        TEXT_SetText(hItem,buf);
+N        
 N        
 N    // USER START (Optionally insert additional code for further widget initialization)
 N    // USER END
@@ -53727,7 +53822,7 @@ X  track = 1;
 N  TM1650_SET_LED(0x68,0x70);
 N  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//İֆ+
 X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
-W "..\APP\c_dc.c" 990 3 function "IO_OFF" declared implicitly
+W "..\APP\c_dc.c" 1066 3 function "IO_OFF" declared implicitly
 N  IO_OFF();//�
 N  GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
 X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));

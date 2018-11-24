@@ -18,12 +18,20 @@
 
 vu16 battery_c;
 float bc_raw;
+float cbc_raw;
+float c_sum;
 extern vu8 pow_sw;
 extern vu8 cdc_sw;
 extern vu8 load_sw;
 extern vu8 oct_sw; 
 extern vu8 oc_test;
 extern vu8 c_rec;
+extern vu8 second ;
+extern vu8 minute;
+extern vu8 hour;
+extern vu8 second1;
+extern vu8 minute1;
+extern vu8 hour1;
 vu8 resetflag;
 vu8 resdone;
 float watch;
@@ -195,6 +203,7 @@ void TIM3_IRQHandler(void)
     static vu16 resetcount;
     static vu8 read1963;
     static vu16 scancount;
+    static vu32 ctime,dctime;
     
     if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) //????
     {
@@ -245,9 +254,27 @@ void TIM3_IRQHandler(void)
             {
                 if(mode_sw == mode_pow && cdc_sw == cdc_on)
                 {
-                    bc_raw += DISS_POW_Current * 1000 * 1/3600;
+                    ctime++;
+                    second = ctime%60;//秒
+                    minute = (ctime/60)%60;//分
+                    hour   = ctime/3600;//时
+                    cbc_raw += DISS_POW_Current * 1000 * 1/3600;
+                    bc_raw = 0;
+//                    bc_raw += DISS_POW_Current * 1000 * 1/3600;
+                }else if(mode_sw == mode_load && cdc_sw == cdc_on){
+                    dctime++;
+                    second1 = dctime%60;//秒
+                    minute1 = (dctime/60)%60;//分
+                    hour1   = dctime/3600;//时
+                    bc_raw += DISS_Current * 1000 * 1/3600;
+//                    c_sum += DISS_Current * 1000 * 1/3600;
+                    cbc_raw = 0;
                 }else if(cdc_sw == cdc_off){
                     bc_raw = 0;
+                    cbc_raw = 0;
+                    c_sum = 0;
+                    ctime=0;
+                    dctime=0;
                 }
             }break;
             case face_load:

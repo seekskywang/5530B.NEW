@@ -46,6 +46,7 @@ extern vu8 short_finish;
 extern float gate_v;
 extern vu8 manual;
 extern vu8 oc_mode;
+extern vu8 cal;
 vu8 t_MODE;
 vu8 pass = 0;
 vu8 LOAD_t;
@@ -61,7 +62,7 @@ float clear_pv = 0;
 float clear_lv = 0;
 vu8 clear_r = 0;
 vu8 r_raly=0;
-
+vu8 lock;
 vu8 c_rec;
 
 //=================================================================
@@ -128,12 +129,12 @@ void Setvalue_Add(void);
 #define        PUSH_DISP                 0X47      //
 #define        PUSH_SETUP                0X4F     //
 
-#define        KEY_Lock                  0X75     //
+#define        KEY_Lock                  0X6C     //
 #define        KEY_BIAS                  0X6E      //
 #define        KEY_Reset                 0X66      //
 #define        KEY_TRIG                  0X75      //
 
-#define        KEY_Powe                  0X6C     //
+//#define        KEY_Powe                  0X6C     //
 #define        KEY_Face1                 0X64      //
 #define        KEY_Face2                 0X5c      //
 #define        KEY_Face3                 0X54      //
@@ -224,1219 +225,1256 @@ void Key_Funtion(void)
 	{
 		Flag_Key_Scan = 0;
 		KeyValue = Key_Scan();
-		switch(KeyValue)
-		{
-			case KEY_1 ://
-			{
-				switch(page_sw){
-                    case face_menu: 
-                    {
-                        INPUT_POW("1");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_set:
-                    {
-                         INPUT_NUM("1");
-                         KeyCounter = 0;
-                         BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                         break;
-                    }
-                    case face_r:
-                    {
-                        if(para_set2 == set_2_on)
-                        {
-                            INPUT_C("1");
-                            KeyCounter = 0;
-                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                            break;
-                        }
-                    }   
-                    case face_load:
-                    {
-                        INPUT_LOAD("1");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_cdc:
-                    {
-                        INPUT_CDC("1");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_sys_info:
-                    {
-                        if(admin == 1)
-                        {
-                            INPUT_INFO(1);    
-                        }
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }  
-                }
-				KeyCounter = 0;
-				BEEP_Tiggr();//
-			}
-			break;
-			
-			case KEY_2 ://
-			{
-				switch(page_sw){
-                    case face_menu:  
-                    {
-                        INPUT_POW("2");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                    }
-                    case face_set:
-                    {
-                        INPUT_NUM("2");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_r:
-                    {
-                        if(para_set2 == set_2_on)
-                        {
-                            INPUT_C("2");
-                            KeyCounter = 0;
-                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                            break;
-                        }
-                    }
-                    case face_load:
-                    {
-                        INPUT_LOAD("2");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_cdc:
-                    {
-                        INPUT_CDC("2");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_sys_info:
-                    {
-                        if(admin == 1)
-                        {
-                            INPUT_INFO(2);    
-                        }
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-   
-                }
-				KeyCounter = 0;
-				BEEP_Tiggr();//
-			}
-			break;
-			
-			case KEY_3 ://
-			{
-                switch(page_sw){
-                    case face_menu:  
-                    {
-                        INPUT_POW("3");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                    }
-                    case face_set:
-                    {
-                        INPUT_NUM("3");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_r:
-                    {
-                        if(para_set2 == set_2_on)
-                        {
-                            INPUT_C("3");
-                            KeyCounter = 0;
-                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                            break;
-                        }
-                    }
-                    case face_load:
-                    {
-                        INPUT_LOAD("3");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_cdc:
-                    {
-                        INPUT_CDC("3");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_sys_info:
-                    {
-                        if(admin == 1)
-                        {
-                            INPUT_INFO(3);    
-                        }else{
-                            pass += 3;
-                        }
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                }
-			}
-			break;
-			
-			case KEY_4 ://
-			{
-				switch(page_sw){
-                    case face_menu:  
-                    {
-                        INPUT_POW("4");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                    }
-                    case face_set:
-                    {
-                        INPUT_NUM("4");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_r:
-                    {
-                        if(para_set2 == set_2_on)
-                        {
-                            INPUT_C("4");
-                            KeyCounter = 0;
-                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                            break;
-                        }
-                    }
-                    case face_load:
-                    {
-                        INPUT_LOAD("4");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_cdc:
-                    {
-                        INPUT_CDC("4");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_sys_info:
-                    {
-                        if(admin == 1)
-                        {
-                            INPUT_INFO(4);    
-                        }
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                }
-			}
-			break;
-			
-			case KEY_5 ://
-			{
-				switch(page_sw){
-                    case face_menu:  
-                    {
-                        INPUT_POW("5");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                    }
-                    case face_set:
-                    {
-                        INPUT_NUM("5");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_r:
-                    {
-                        if(para_set2 == set_2_on)
-                        {
-                            INPUT_C("5");
-                            KeyCounter = 0;
-                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                            break;
-                        }
-                    }
-                    case face_load:
-                    {
-                        INPUT_LOAD("5");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_cdc:
-                    {
-                        INPUT_CDC("5");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_sys_info:
-                    {
-                        if(admin == 1)
-                        {
-                            INPUT_INFO(5);    
-                        }else{
-                            pass += 5;
-                        }
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                }
-			}
-			break;	
-			
-			case KEY_6 ://
-			{
-				switch(page_sw){
-                    case face_menu:  
-                    {
-                        INPUT_POW("6");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                    }
-                    case face_set:
-                    {
-                        INPUT_NUM("6");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_r:
-                    {
-                        if(para_set2 == set_2_on)
-                        {
-                            INPUT_C("6");
-                            KeyCounter = 0;
-                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                            break;
-                        }
-                    }
-                    case face_load:
-                    {
-                        INPUT_LOAD("6");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_cdc:
-                    {
-                        INPUT_CDC("6");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    } 
-                    case face_sys_info:
-                    {
-                        if(admin == 1)
-                        {
-                            INPUT_INFO(6);    
-                        }
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                }
-			}
-			break;
-			
-			case KEY_7 ://
-			{
-				switch(page_sw){
-                    case face_menu:  
-                    {
-                        INPUT_POW("7");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                    }
-                    case face_set:
-                    {
-                        INPUT_NUM("7");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_r:
-                    {
-                        if(para_set2 == set_2_on)
-                        {
-                            INPUT_C("7");
-                            KeyCounter = 0;
-                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                            break;
-                        }
-                    }
-                    case face_load:
-                    {
-                        INPUT_LOAD("7");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_cdc:
-                    {
-                        INPUT_CDC("7");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_sys_info:
-                    {
-                        if(admin == 1)
-                        {
-                            INPUT_INFO(7);    
-                        }
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                }
-			}
-			break;
-			
-			case KEY_8 ://
-			{
-				switch(page_sw){
-                    case face_menu:  
-                    {
-                        INPUT_POW("8");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                    }
-                    case face_set:
-                    {
-                        INPUT_NUM("8");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_r:
-                    {
-                        if(para_set2 == set_2_on)
-                        {
-                            INPUT_C("8");
-                            KeyCounter = 0;
-                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                            break;
-                        }
-                    }
-                    case face_load:
-                    {
-                        INPUT_LOAD("8");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_cdc:
-                    {
-                        INPUT_CDC("8");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_sys_info:
-                    {
-                        if(admin == 1)
-                        {
-                            INPUT_INFO(8);    
-                        }
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                }
-			}
-			break;
-			
-			case KEY_9 ://
-			{
-				switch(page_sw){
-                    case face_menu:  
-                    {
-                        INPUT_POW("9");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                    }
-                    case face_set:
-                    {
-                        INPUT_NUM("9");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_r:
-                    {
-                        if(para_set2 == set_2_on)
-                        {
-                            INPUT_C("9");
-                            KeyCounter = 0;
-                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                            break;
-                        }
-                    }
-                    case face_load:
-                    {
-                        INPUT_LOAD("9");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_cdc:
-                    {
-                        INPUT_CDC("9");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_sys_info:
-                    {
-                        if(admin == 1)
-                        {
-                            INPUT_INFO(9);    
-                        }
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                }
-			}
-			break;
-			
-			case KEY_0 ://
-			{
-				switch(page_sw){
-                    case face_menu:  
-                    {
-                        INPUT_POW("0");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                    }
-                    case face_set:
-                    {
-                        INPUT_NUM("0");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_r:
-                    {
-                        if(para_set2 == set_2_on)
-                        {
-                            INPUT_C("0");
-                            KeyCounter = 0;
-                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                            break;
-                        }
-                    }
-                    case face_load:
-                    {
-                        INPUT_LOAD("0");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_cdc:
-                    {
-                        INPUT_CDC("0");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_sys_info:
-                    {
-                        if(admin == 1)
-                        {
-                            INPUT_INFO(0);    
-                        }else{
-                            pass += 1;
-                        }
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }                    
-                }
-			}
-			break;
-			
-			case KEY_dian ://
-			{
-				switch(page_sw){
-                    case face_menu:
-                    {
-                        INPUT_POW(".");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_set:
-                    {
-                        INPUT_NUM(".");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_load:
-                    {
-                        INPUT_LOAD(".");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_r:
-                    {
-                        if(para_set2 == set_2_on)
-                        {
-                            INPUT_C(".");
-                            KeyCounter = 0;
-                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                            break;
-                        }
-                    }
-                    case face_cdc:
-                    {
-                        INPUT_CDC(".");
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }                     
-                }
-			}
-			break;
-			
-			case KEY_ESC :
-			{
-              sLCD_WR_REG(0x01);
-//                main();
-//				timer_sw = 0;
-				KeyCounter = 0;
-			   BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô
-//                switch(page_sw){
-//                    case face_r:
-//                    {
-//                         if(oc_mode == 0)
-//                         {
-//                             oc_mode = 1;
-//                         }else{
-//                             oc_mode = 0;
-//                         }
-//                    }break;
-//                    default:sLCD_WR_REG(0x01);
-//                    break;
-//                }
-			}
-			break;
-			
-			case PUSH_Lift :
-			{
-				switch(page_sw){
-                    case face_set:  //Á≥ªÁªüËÆæÁΩÆ
-                    {
-                        SET_OP_LEFT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_sys_info:
-                    {
-                        if(admin == 1)
-                        {
-                            SYS_INFO_LEFT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
-                        } 
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_cdc:  //Á≥ªÁªüËÆæÁΩÆ
-                    {
-                        CDC_OP_LEFT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                }
-			}
-			break;
-			case PUSH_Right :
-			{
-				switch(page_sw){
-                    case face_set:  //Á≥ªÁªüËÆæÁΩÆ
-                    {
-                        SET_OP_RIGHT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_sys_info:
-                    {
-                        if(admin == 1)
-                        {
-                            SYS_INFO_RIGHT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
-                        } 
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_cdc:  //Á≥ªÁªüËÆæÁΩÆ
-                    {
-                        CDC_OP_RIGHT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                }
-			}
-			break;
-			case PUSH_Up :
-			{
-				switch(page_sw){
-                    case face_menu:
-                    {
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        MENU_OP_UP();
-                        break;
-                    }                    
-                    case face_load:
-                    {
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        LOAD_OP_UP();
-                        break;
-                    }
-                    case face_set:
-                    {
-                        SET_OP_UP();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_r:
-                    {
-                        if(para_set2 == set_2_on && oc_mode ==0)
-                        {
-                            OC_OP_UP();
-                            KeyCounter = 0;
-                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                            break;
-                        }
-
-                    }
-                    case face_cdc:
-                    {
-                        CDC_OP_UP();
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_sys_info:
-                    {
-                        if(admin == 1)
-                        {
-                            SYS_INFO_UP();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
-                        }                        
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-
-                }
-			}
-			break;
-			case PUSH_Down :
-			{
-				switch(page_sw){
-                    case face_menu:
-                    {
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        MENU_OP_DOWN();
-                        break;
-                    }  
-                    case face_load:
-                    {
-                       	KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        LOAD_OP_DOWN();
-                        break;
-                    }
-                    case face_set:  //Á≥ªÁªüËÆæÁΩÆ
-                    {
-                        SET_OP_DOWN();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_r:
-                    {
-                        if(para_set2 == set_2_on && oc_mode ==0)
-                        {
-                            OC_OP_DOWN();
-                            KeyCounter = 0;
-                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                            break;
-                        }
-                    }
-                    case face_cdc:
-                    {
-                        CDC_OP_DOWN();
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_sys_info:
-                    {
-                        if(admin == 1)
-                        {
-                            SYS_INFO_DOWN();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
-                        } 
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-   
-                }
-			}
-			break;
-			
-			case ENTER ://
-			{
-				switch(page_sw){
-                    case face_menu:
-                    {
-                        MENU_SET();
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }  
-                    case face_set:
-                    {
-                        PARA_SET();  //ÂèÇÊï∞ËÆæÁΩÆ
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;                        
-                    }
-                    case face_r:
-                    {
-                        if(para_set2 == set_2_on)
-                        {
-                            OC_SET();
-                            KeyCounter = 0;
-                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                            break;
-                        }
-                    }
-                    case face_load:
-                    {
-                        LOAD_SET();
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_cdc:
-                    {
-                        CDC_SET();
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_sys_info:
-                    {
-                        CFM_PASS();
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                }
-			}
-			break;
-			case PUSH_DISP :
-			{
-				switch(track)
+        if(lock == 0)
+        {
+            switch(KeyValue)
+            {
+                case KEY_1 ://
                 {
-                    case face_r:
-                    {
-                        WM_DeleteWindow(hWinR);
-                        WM_DeleteWindow(hWinWind);
-                        WM_DeleteWindow(hWinG);
-                        WM_DeleteWindow(load_wind);
-                        WM_DeleteWindow(hWinsysinfo);
-                        WM_DeleteWindow(hWincdc);
-                        WM_DeleteWindow(hWinset);                       
-                        CreateR();
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_load:
-                    {
-                        WM_DeleteWindow(hWinR);
-                        WM_DeleteWindow(hWinWind);
-                        WM_DeleteWindow(hWinG);
-                        WM_DeleteWindow(load_wind);
-                        WM_DeleteWindow(hWinsysinfo);
-                        WM_DeleteWindow(hWincdc);
-                        WM_DeleteWindow(hWinset);
-                        CreateWindow2();
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_menu:
-                    {
-                        WM_DeleteWindow(hWinR);
-                        WM_DeleteWindow(hWinWind);
-                        WM_DeleteWindow(hWinG);
-                        WM_DeleteWindow(load_wind);
-                        WM_DeleteWindow(hWinsysinfo);
-                        WM_DeleteWindow(hWincdc);
-                        WM_DeleteWindow(hWinset); 
-                        CreateWindow();
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_graph:
-                    {
-                        WM_DeleteWindow(hWinR);
-                        WM_DeleteWindow(hWinWind);
-                        WM_DeleteWindow(hWinG);
-                        WM_DeleteWindow(load_wind);
-                        WM_DeleteWindow(hWinsysinfo);
-                        WM_DeleteWindow(hWincdc);
-                        WM_DeleteWindow(hWinset); 
-                        CreateG();
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                    case face_cdc:
-                    {
-                        WM_DeleteWindow(hWinR);
-                        WM_DeleteWindow(hWinWind);
-                        WM_DeleteWindow(hWinG);
-                        WM_DeleteWindow(load_wind);
-                        WM_DeleteWindow(hWinsysinfo);
-                        WM_DeleteWindow(hWincdc);
-                        WM_DeleteWindow(hWinset);
-                        CreateCDC();
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                        break;
-                    }
-                }
-			}
-			break;
-			case PUSH_SETUP :
-			{
-// 				KeyCounter = 0;
-// 				BEEP_Tiggr();//
-// 				t_MODE++;
-// 				if(t_MODE>1)
-// 				{
-// 					t_MODE=0;
-// 				}
-// 				if(t_MODE==0)
-// 				{
-// 					flag_Load_CC=1;//CCƒ£ Ω
-// 					GPIO_ResetBits(GPIOC,GPIO_Pin_12);//CC
-// 					
-// 				}
-// 				else if(t_MODE==1)
-// 				{
-// 					flag_Load_CC=0;//CVƒ£ Ω
-// 					GPIO_SetBits(GPIOC,GPIO_Pin_12);//CV
-// 				}
-                WM_DeleteWindow(hWinR);
-                WM_DeleteWindow(hWinWind);
-                WM_DeleteWindow(hWinG);
-                WM_DeleteWindow(load_wind);
-                WM_DeleteWindow(hWinsysinfo);
-                WM_DeleteWindow(hWincdc);
-                WM_DeleteWindow(hWinset); 
-                CreateSET();
-                KeyCounter = 0;
-                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô
-			}
-			break;
-			case KEY_TRIG://µÁ◊”∏∫‘ÿ/µÁ‘¥ON/OFF
-			{
-                switch(page_sw)
-                {
-                    case face_r:
-                    {
-//                         if(para_set2 == set_2_on)
-//                         {
-// //                            static vu8 LOAD_t;
-//                             Mode_SW_CONT(0x02);
-//                             LOAD_t++;
-//                             if(LOAD_t>1)
-//                             {
-//                                 LOAD_t=0;
-//                             }
-//                             if(LOAD_t==0)
-//                             {
-//                                 oct_sw = oct_off;
-//                                 set_add_c = 0;
-//                                 Flag_Swtich_ON=0;
-//                                 GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
-//                                  
-//                             }
-//                             else if(LOAD_t==1)
-//                             {
-//                                 oct_sw = oct_on;
-//                                 Flag_Swtich_ON=1;
-//                                 GPIO_ResetBits(GPIOC,GPIO_Pin_1);//On
-//                             }
-//                          }
-                         if(r_test == 0 && DISS_Voltage > gate_v)
-                         {
-                            r_test = 1;
-                         }else{
-                             r_test = 0;
-                         }
-                         KeyCounter = 0;
-                         BEEP_Tiggr();//¥•∑¢∑‰√˘∆˜
-                         break;
-                    }
-                    case face_load:
-                    {
-//                         t_onoff++;
-//                         if(t_onoff>1)
-//                         {
-//                             t_onoff=0;
-//                         }
-                        if(load_sw==load_on)
+                    switch(page_sw){
+                        case face_menu: 
                         {
-                            Flag_Swtich_ON=0;
-                            GPIO_SetBits(GPIOA,GPIO_Pin_15);//µÁ◊”∏∫‘ÿOFF
-                            c_rec = 0;
-                            mode_sw = 0;
-                            load_sw = load_off;
+                            INPUT_POW("1");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
                         }
-                        else if(load_sw==load_off)
+                        case face_set:
                         {
-                            Flag_Swtich_ON=1;
-                            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//µÁ◊”∏∫‘ÿOn
-                            if(flag_Load_CC == 0)
+                             INPUT_NUM("1");
+                             KeyCounter = 0;
+                             BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                             break;
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on)
                             {
-                                c_rec = 1;
+                                INPUT_C("1");
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                                break;
                             }
-                            mode_sw = mode_load;
-                            load_sw = load_on;
-                        }
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//
-                    }break;
-                    case face_menu:
-                    {
-//                         static vu8 POW_t;
-//                         POW_t++;
-//                         if(POW_t>1)
-//                         {
-//                             POW_t=0;
-//                         }
-                        if(pow_sw==pow_on)
+                        }   
+                        case face_load:
                         {
-                            GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
-                            GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
-                            mode_sw = 0;
-                            pow_sw = pow_off;
+                            INPUT_LOAD("1");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
                         }
-                        else if(pow_sw==pow_off)
+                        case face_cdc:
                         {
-                           GPIO_ResetBits(GPIOC,GPIO_Pin_13);//¥Úø™µÁ‘¥ ‰≥ˆºÃµÁ∆˜
-                            GPIO_SetBits(GPIOC,GPIO_Pin_1);//¥Úø™µÁ‘¥ ‰≥ˆ                           
-                            mode_sw = mode_pow;
-                            pow_sw = pow_on;
+                            INPUT_CDC("1");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
                         }
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//
-                    }break;
-                     case face_cdc:
-                    {
-                        if(cdc_sw == cdc_off)
+                        case face_sys_info:
                         {
-                           SET_Voltage = opv1;
-                           SET_Current = opc1;
-                           cutoff_flag = 0;
-//                           Mode_SW_CONT(0x03);
-                           
-                           charge_step = 1;
-                           GPIO_ResetBits(GPIOC,GPIO_Pin_13);//¥Úø™µÁ‘¥ ‰≥ˆºÃµÁ∆˜
-                           GPIO_SetBits(GPIOC,GPIO_Pin_1);//¥Úø™µÁ‘¥ ‰≥ˆ
-                           mode_sw = mode_pow;
-                           cdc_sw = cdc_on;
-                        }else{
-                           
-                           GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
-                           GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
-                           GPIO_SetBits(GPIOA,GPIO_Pin_15);//µÁ◊”∏∫‘ÿOFF
-                           cdc_sw = cdc_off;
-                           paused = 0;
-                           mode_sw = 0;
-                        }
-                        KeyCounter = 0;
-                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-                       
-                    }break;
+                            if(admin == 1)
+                            {
+                                INPUT_INFO(1);    
+                            }else if(cal == 1){
+                                Rlow_cal(1);
+                            }else{
+                                pass += 1;
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }  
+                    }
+                    KeyCounter = 0;
+                    BEEP_Tiggr();//
                 }
-				
-			}
-			break;
-			case KEY_Reset://µÁ◊Ë∏ﬂµÕµµŒª«–ªª
-			{
-                static vu8 at = 0;
-                switch(page_sw)
+                break;
+                
+                case KEY_2 ://
                 {
-                    case face_r:
-                    {
-                        if(at == 0)
+                    switch(page_sw){
+                        case face_menu:  
                         {
-                            GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
-                            GPIO_ResetBits(GPIOB,GPIO_Pin_13);//R_RALYµÕµµŒª                           
-                            at++;
-                            r_raly=0;
-                            manual = 1;// ÷∂Øªªµµ
-                        }else if(at == 1){
-                            GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
-                            GPIO_SetBits(GPIOB,GPIO_Pin_13);//R_RALY∏ﬂµµŒª
-                            r_raly=1;
-                            at++;
-                            manual = 1;// ÷∂Øªªµµ
-                        }else if(at == 2){
-                            at = 0;
-                            manual =0;
+                            INPUT_POW("2");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                        }
+                        case face_set:
+                        {
+                            INPUT_NUM("2");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on)
+                            {
+                                INPUT_C("2");
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                                break;
+                            }
+                        }
+                        case face_load:
+                        {
+                            INPUT_LOAD("2");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_cdc:
+                        {
+                            INPUT_CDC("2");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_sys_info:
+                        {
+                            if(admin == 1)
+                            {
+                                INPUT_INFO(2);    
+                            }else if(cal == 1){
+                                Rlow_cal(2);
+                            }else{
+                                pass += 2;
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+       
+                    }
+                    KeyCounter = 0;
+                    BEEP_Tiggr();//
+                }
+                break;
+                
+                case KEY_3 ://
+                {
+                    switch(page_sw){
+                        case face_menu:  
+                        {
+                            INPUT_POW("3");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                        }
+                        case face_set:
+                        {
+                            INPUT_NUM("3");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on)
+                            {
+                                INPUT_C("3");
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                                break;
+                            }
+                        }
+                        case face_load:
+                        {
+                            INPUT_LOAD("3");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_cdc:
+                        {
+                            INPUT_CDC("3");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_sys_info:
+                        {
+                            if(admin == 1)
+                            {
+                                INPUT_INFO(3);    
+                            }else if(cal == 1){
+                                Rlow_cal(3);
+                            }else{
+                                pass += 3;
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
                         }
                     }
                 }
-                KeyCounter = 0;
-				BEEP_Tiggr();//
-            }
-			break;
-			case KEY_Powe :
-			{
-				
-				KeyCounter = 0;
-				BEEP_Tiggr();//
-			}
-			break;
-			case KEY_Face1 :
-			{
-				WM_DeleteWindow(hWinR);
-                WM_DeleteWindow(hWinWind);
-                WM_DeleteWindow(hWinG);
-                WM_DeleteWindow(load_wind);
-                WM_DeleteWindow(hWinsysinfo);
-                WM_DeleteWindow(hWincdc);
-                WM_DeleteWindow(hWinset);
-                GPIO_SetBits(GPIOA,GPIO_Pin_15);//µÁ◊”∏∫‘ÿOFF
-                GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
-                GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
-                CreateR();
-				KeyCounter = 0;
-				BEEP_Tiggr();//
-			}
-			break;
-			case KEY_Face2 :
-			{
-				WM_DeleteWindow(hWinR);
-                WM_DeleteWindow(hWinWind);
-                WM_DeleteWindow(hWinG);
-                WM_DeleteWindow(load_wind);
-                WM_DeleteWindow(hWinsysinfo);
-                WM_DeleteWindow(hWincdc);
-                WM_DeleteWindow(hWinset);
-				CreateWindow2();
-                t_onoff = 0;
-                GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
-                GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
-				KeyCounter = 0;
-				BEEP_Tiggr();//
-			}
-			break;
-			case KEY_Face3 :
-			{
-				WM_DeleteWindow(hWinR);
-                WM_DeleteWindow(hWinWind);
-                WM_DeleteWindow(hWinG);
-                WM_DeleteWindow(load_wind);
-                WM_DeleteWindow(hWinsysinfo);
-                WM_DeleteWindow(hWincdc);
-                WM_DeleteWindow(hWinset);
-				CreateWindow();
-                GPIO_SetBits(GPIOA,GPIO_Pin_15);//µÁ◊”∏∫‘ÿOFF
-				KeyCounter = 0;
-				BEEP_Tiggr();//
-			}
-			break;
-			case KEY_Face4 :
-			{
-                WM_DeleteWindow(hWinR);
-                WM_DeleteWindow(hWinWind);
-                WM_DeleteWindow(hWinG);
-                WM_DeleteWindow(load_wind);
-                WM_DeleteWindow(hWinsysinfo);
-                WM_DeleteWindow(hWincdc);
-                WM_DeleteWindow(hWinset);
-                CreateCDC(); 
-				KeyCounter = 0;
-				BEEP_Tiggr();//
-			}
-			break;
-			case KEY_Face5 :
-			{
-                WM_DeleteWindow(hWinR);
-                WM_DeleteWindow(hWinWind);
-                WM_DeleteWindow(hWinG);
-                WM_DeleteWindow(load_wind);
-                WM_DeleteWindow(hWinsysinfo);
-                WM_DeleteWindow(hWincdc);
-                WM_DeleteWindow(hWinset);
-                CreateG();
-				KeyCounter = 0;
-				BEEP_Tiggr();//
-			}
-			break;
-            case KEY_BIAS :
-			{
-				WM_DeleteWindow(hWinR);
-                WM_DeleteWindow(hWinWind);
-                WM_DeleteWindow(hWinG);
-                WM_DeleteWindow(load_wind);
-                WM_DeleteWindow(hWinsysinfo);
-                WM_DeleteWindow(hWincdc);
-                WM_DeleteWindow(hWinset);
-                Createsysinfo();
-                KeyCounter = 0;
-                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-			}
-			break;
+                break;
+                
+                case KEY_4 ://
+                {
+                    switch(page_sw){
+                        case face_menu:  
+                        {
+                            INPUT_POW("4");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                        }
+                        case face_set:
+                        {
+                            INPUT_NUM("4");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on)
+                            {
+                                INPUT_C("4");
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                                break;
+                            }
+                        }
+                        case face_load:
+                        {
+                            INPUT_LOAD("4");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_cdc:
+                        {
+                            INPUT_CDC("4");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_sys_info:
+                        {
+                            if(admin == 1)
+                            {
+                                INPUT_INFO(4);    
+                            }else if(cal == 1){
+                                Rlow_cal(4);
+                            }else{
+                                pass += 4;
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                    }
+                }
+                break;
+                
+                case KEY_5 ://
+                {
+                    switch(page_sw){
+                        case face_menu:  
+                        {
+                            INPUT_POW("5");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                        }
+                        case face_set:
+                        {
+                            INPUT_NUM("5");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on)
+                            {
+                                INPUT_C("5");
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                                break;
+                            }
+                        }
+                        case face_load:
+                        {
+                            INPUT_LOAD("5");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_cdc:
+                        {
+                            INPUT_CDC("5");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_sys_info:
+                        {
+                            if(admin == 1)
+                            {
+                                INPUT_INFO(5);    
+                            }else if(cal == 1){
+                                Rlow_cal(5);
+                            }else{
+                                pass += 5;
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                    }
+                }
+                break;	
+                
+                case KEY_6 ://
+                {
+                    switch(page_sw){
+                        case face_menu:  
+                        {
+                            INPUT_POW("6");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                        }
+                        case face_set:
+                        {
+                            INPUT_NUM("6");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on)
+                            {
+                                INPUT_C("6");
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                                break;
+                            }
+                        }
+                        case face_load:
+                        {
+                            INPUT_LOAD("6");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_cdc:
+                        {
+                            INPUT_CDC("6");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        } 
+                        case face_sys_info:
+                        {
+                            if(admin == 1)
+                            {
+                                INPUT_INFO(6);    
+                            }else if(cal == 1){
+                                Rlow_cal(6);
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                    }
+                }
+                break;
+                
+                case KEY_7 ://
+                {
+                    switch(page_sw){
+                        case face_menu:  
+                        {
+                            INPUT_POW("7");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                        }
+                        case face_set:
+                        {
+                            INPUT_NUM("7");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on)
+                            {
+                                INPUT_C("7");
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                                break;
+                            }
+                        }
+                        case face_load:
+                        {
+                            INPUT_LOAD("7");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_cdc:
+                        {
+                            INPUT_CDC("7");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_sys_info:
+                        {
+                            if(admin == 1)
+                            {
+                                INPUT_INFO(7);    
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                    }
+                }
+                break;
+                
+                case KEY_8 ://
+                {
+                    switch(page_sw){
+                        case face_menu:  
+                        {
+                            INPUT_POW("8");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                        }
+                        case face_set:
+                        {
+                            INPUT_NUM("8");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on)
+                            {
+                                INPUT_C("8");
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                                break;
+                            }
+                        }
+                        case face_load:
+                        {
+                            INPUT_LOAD("8");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_cdc:
+                        {
+                            INPUT_CDC("8");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_sys_info:
+                        {
+                            if(admin == 1)
+                            {
+                                INPUT_INFO(8);    
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                    }
+                }
+                break;
+                
+                case KEY_9 ://
+                {
+                    switch(page_sw){
+                        case face_menu:  
+                        {
+                            INPUT_POW("9");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                        }
+                        case face_set:
+                        {
+                            INPUT_NUM("9");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on)
+                            {
+                                INPUT_C("9");
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                                break;
+                            }
+                        }
+                        case face_load:
+                        {
+                            INPUT_LOAD("9");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_cdc:
+                        {
+                            INPUT_CDC("9");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_sys_info:
+                        {
+                            if(admin == 1)
+                            {
+                                INPUT_INFO(9);    
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                    }
+                }
+                break;
+                
+                case KEY_0 ://
+                {
+                    switch(page_sw){
+                        case face_menu:  
+                        {
+                            INPUT_POW("0");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                        }
+                        case face_set:
+                        {
+                            INPUT_NUM("0");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on)
+                            {
+                                INPUT_C("0");
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                                break;
+                            }
+                        }
+                        case face_load:
+                        {
+                            INPUT_LOAD("0");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_cdc:
+                        {
+                            INPUT_CDC("0");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_sys_info:
+                        {
+                            if(admin == 1)
+                            {
+                                INPUT_INFO(0);    
+                            }else{
+                                pass += 1;
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }                    
+                    }
+                }
+                break;
+                
+                case KEY_dian ://
+                {
+                    switch(page_sw){
+                        case face_menu:
+                        {
+                            INPUT_POW(".");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_set:
+                        {
+                            INPUT_NUM(".");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_load:
+                        {
+                            INPUT_LOAD(".");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on)
+                            {
+                                INPUT_C(".");
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                                break;
+                            }
+                        }
+                        case face_cdc:
+                        {
+                            INPUT_CDC(".");
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }                     
+                    }
+                }
+                break;
+                
+                case KEY_ESC :
+                {
+                  sLCD_WR_REG(0x01);
+    //                main();
+    //				timer_sw = 0;
+                    KeyCounter = 0;
+                   BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô
+    //                switch(page_sw){
+    //                    case face_r:
+    //                    {
+    //                         if(oc_mode == 0)
+    //                         {
+    //                             oc_mode = 1;
+    //                         }else{
+    //                             oc_mode = 0;
+    //                         }
+    //                    }break;
+    //                    default:sLCD_WR_REG(0x01);
+    //                    break;
+    //                }
+                }
+                break;
+                
+                case PUSH_Lift :
+                {
+                    switch(page_sw){
+                        case face_set:  //Á≥ªÁªüËÆæÁΩÆ
+                        {
+                            SET_OP_LEFT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_sys_info:
+                        {
+                            if(admin == 1)
+                            {
+                                SYS_INFO_LEFT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+                            } 
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_cdc:  //Á≥ªÁªüËÆæÁΩÆ
+                        {
+                            CDC_OP_LEFT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                    }
+                }
+                break;
+                case PUSH_Right :
+                {
+                    switch(page_sw){
+                        case face_set:  //Á≥ªÁªüËÆæÁΩÆ
+                        {
+                            SET_OP_RIGHT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_sys_info:
+                        {
+                            if(admin == 1)
+                            {
+                                SYS_INFO_RIGHT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+                            } 
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_cdc:  //Á≥ªÁªüËÆæÁΩÆ
+                        {
+                            CDC_OP_RIGHT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                    }
+                }
+                break;
+                case PUSH_Up :
+                {
+                    switch(page_sw){
+                        case face_menu:
+                        {
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            MENU_OP_UP();
+                            break;
+                        }                    
+                        case face_load:
+                        {
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            LOAD_OP_UP();
+                            break;
+                        }
+                        case face_set:
+                        {
+                            SET_OP_UP();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on && oc_mode ==0)
+                            {
+                                OC_OP_UP();
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                                break;
+                            }
 
+                        }
+                        case face_cdc:
+                        {
+                            CDC_OP_UP();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_sys_info:
+                        {
+                            if(admin == 1)
+                            {
+                                SYS_INFO_UP();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+                            }                        
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+
+                    }
+                }
+                break;
+                case PUSH_Down :
+                {
+                    switch(page_sw){
+                        case face_menu:
+                        {
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            MENU_OP_DOWN();
+                            break;
+                        }  
+                        case face_load:
+                        {
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            LOAD_OP_DOWN();
+                            break;
+                        }
+                        case face_set:  //Á≥ªÁªüËÆæÁΩÆ
+                        {
+                            SET_OP_DOWN();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on && oc_mode ==0)
+                            {
+                                OC_OP_DOWN();
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                                break;
+                            }
+                        }
+                        case face_cdc:
+                        {
+                            CDC_OP_DOWN();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_sys_info:
+                        {
+                            if(admin == 1)
+                            {
+                                SYS_INFO_DOWN();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+                            } 
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+       
+                    }
+                }
+                break;
+                
+                case ENTER ://
+                {
+                    switch(page_sw){
+                        case face_menu:
+                        {
+                            MENU_SET();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }  
+                        case face_set:
+                        {
+                            PARA_SET();  //ÂèÇÊï∞ËÆæÁΩÆ
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;                        
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on)
+                            {
+                                OC_SET();
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                                break;
+                            }
+                        }
+                        case face_load:
+                        {
+                            LOAD_SET();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_cdc:
+                        {
+                            CDC_SET();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_sys_info:
+                        {
+                            CFM_PASS();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                    }
+                }
+                break;
+                case PUSH_DISP :
+                {
+                    switch(track)
+                    {
+                        case face_r:
+                        {
+                            WM_DeleteWindow(hWinR);
+                            WM_DeleteWindow(hWinWind);
+                            WM_DeleteWindow(hWinG);
+                            WM_DeleteWindow(load_wind);
+                            WM_DeleteWindow(hWinsysinfo);
+                            WM_DeleteWindow(hWincdc);
+                            WM_DeleteWindow(hWinset);                       
+                            CreateR();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_load:
+                        {
+                            WM_DeleteWindow(hWinR);
+                            WM_DeleteWindow(hWinWind);
+                            WM_DeleteWindow(hWinG);
+                            WM_DeleteWindow(load_wind);
+                            WM_DeleteWindow(hWinsysinfo);
+                            WM_DeleteWindow(hWincdc);
+                            WM_DeleteWindow(hWinset);
+                            CreateWindow2();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_menu:
+                        {
+                            WM_DeleteWindow(hWinR);
+                            WM_DeleteWindow(hWinWind);
+                            WM_DeleteWindow(hWinG);
+                            WM_DeleteWindow(load_wind);
+                            WM_DeleteWindow(hWinsysinfo);
+                            WM_DeleteWindow(hWincdc);
+                            WM_DeleteWindow(hWinset); 
+                            CreateWindow();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_graph:
+                        {
+                            WM_DeleteWindow(hWinR);
+                            WM_DeleteWindow(hWinWind);
+                            WM_DeleteWindow(hWinG);
+                            WM_DeleteWindow(load_wind);
+                            WM_DeleteWindow(hWinsysinfo);
+                            WM_DeleteWindow(hWincdc);
+                            WM_DeleteWindow(hWinset); 
+                            CreateG();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                        case face_cdc:
+                        {
+                            WM_DeleteWindow(hWinR);
+                            WM_DeleteWindow(hWinWind);
+                            WM_DeleteWindow(hWinG);
+                            WM_DeleteWindow(load_wind);
+                            WM_DeleteWindow(hWinsysinfo);
+                            WM_DeleteWindow(hWincdc);
+                            WM_DeleteWindow(hWinset);
+                            CreateCDC();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                            break;
+                        }
+                    }
+                }
+                break;
+                case PUSH_SETUP :
+                {
+    // 				KeyCounter = 0;
+    // 				BEEP_Tiggr();//
+    // 				t_MODE++;
+    // 				if(t_MODE>1)
+    // 				{
+    // 					t_MODE=0;
+    // 				}
+    // 				if(t_MODE==0)
+    // 				{
+    // 					flag_Load_CC=1;//CCƒ£ Ω
+    // 					GPIO_ResetBits(GPIOC,GPIO_Pin_12);//CC
+    // 					
+    // 				}
+    // 				else if(t_MODE==1)
+    // 				{
+    // 					flag_Load_CC=0;//CVƒ£ Ω
+    // 					GPIO_SetBits(GPIOC,GPIO_Pin_12);//CV
+    // 				}
+                    WM_DeleteWindow(hWinR);
+                    WM_DeleteWindow(hWinWind);
+                    WM_DeleteWindow(hWinG);
+                    WM_DeleteWindow(load_wind);
+                    WM_DeleteWindow(hWinsysinfo);
+                    WM_DeleteWindow(hWincdc);
+                    WM_DeleteWindow(hWinset); 
+                    CreateSET();
+                    KeyCounter = 0;
+                    BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô
+                }
+                break;
+                case KEY_TRIG://µÁ◊”∏∫‘ÿ/µÁ‘¥ON/OFF
+                {
+                    switch(page_sw)
+                    {
+                        case face_r:
+                        {
+    //                         if(para_set2 == set_2_on)
+    //                         {
+    // //                            static vu8 LOAD_t;
+    //                             Mode_SW_CONT(0x02);
+    //                             LOAD_t++;
+    //                             if(LOAD_t>1)
+    //                             {
+    //                                 LOAD_t=0;
+    //                             }
+    //                             if(LOAD_t==0)
+    //                             {
+    //                                 oct_sw = oct_off;
+    //                                 set_add_c = 0;
+    //                                 Flag_Swtich_ON=0;
+    //                                 GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
+    //                                  
+    //                             }
+    //                             else if(LOAD_t==1)
+    //                             {
+    //                                 oct_sw = oct_on;
+    //                                 Flag_Swtich_ON=1;
+    //                                 GPIO_ResetBits(GPIOC,GPIO_Pin_1);//On
+    //                             }
+    //                          }
+                             if(r_test == 0 && DISS_Voltage > gate_v)
+                             {
+                                r_test = 1;
+                             }else{
+                                 r_test = 0;
+                             }
+                             KeyCounter = 0;
+                             BEEP_Tiggr();//¥•∑¢∑‰√˘∆˜
+                             break;
+                        }
+                        case face_load:
+                        {
+    //                         t_onoff++;
+    //                         if(t_onoff>1)
+    //                         {
+    //                             t_onoff=0;
+    //                         }
+                            if(load_sw==load_on)
+                            {
+                                Flag_Swtich_ON=0;
+                                GPIO_SetBits(GPIOA,GPIO_Pin_15);//µÁ◊”∏∫‘ÿOFF
+                                c_rec = 0;
+                                mode_sw = 0;
+                                load_sw = load_off;
+                            }
+                            else if(load_sw==load_off)
+                            {
+                                Flag_Swtich_ON=1;
+                                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//µÁ◊”∏∫‘ÿOn
+                                if(flag_Load_CC == 0)
+                                {
+                                    c_rec = 1;
+                                }
+                                mode_sw = mode_load;
+                                load_sw = load_on;
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//
+                        }break;
+                        case face_menu:
+                        {
+    //                         static vu8 POW_t;
+    //                         POW_t++;
+    //                         if(POW_t>1)
+    //                         {
+    //                             POW_t=0;
+    //                         }
+                            if(pow_sw==pow_on)
+                            {
+                                GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
+                                GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
+                                mode_sw = 0;
+                                pow_sw = pow_off;
+                            }
+                            else if(pow_sw==pow_off)
+                            {
+                               GPIO_ResetBits(GPIOC,GPIO_Pin_13);//¥Úø™µÁ‘¥ ‰≥ˆºÃµÁ∆˜
+                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//¥Úø™µÁ‘¥ ‰≥ˆ                           
+                                mode_sw = mode_pow;
+                                pow_sw = pow_on;
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//
+                        }break;
+                         case face_cdc:
+                        {
+                            if(cdc_sw == cdc_off)
+                            {
+                               SET_Voltage = opv1;
+                               SET_Current = opc1;
+                               cutoff_flag = 0;
+    //                           Mode_SW_CONT(0x03);
+                               
+                               charge_step = 1;
+                               GPIO_ResetBits(GPIOC,GPIO_Pin_13);//¥Úø™µÁ‘¥ ‰≥ˆºÃµÁ∆˜
+                               GPIO_SetBits(GPIOC,GPIO_Pin_1);//¥Úø™µÁ‘¥ ‰≥ˆ
+                               mode_sw = mode_pow;
+                               cdc_sw = cdc_on;
+                            }else{
+                               
+                               GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
+                               GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
+                               GPIO_SetBits(GPIOA,GPIO_Pin_15);//µÁ◊”∏∫‘ÿOFF
+                               cdc_sw = cdc_off;
+                               paused = 0;
+                               mode_sw = 0;
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                           
+                        }break;
+                    }
                     
-            
-			default:
-			break;
-		}	
+                }
+                break;
+                case KEY_Reset://µÁ◊Ë∏ﬂµÕµµŒª«–ªª
+                {
+                    static vu8 at = 0;
+                    switch(page_sw)
+                    {
+                        case face_r:
+                        {
+                            if(at == 0)
+                            {
+                                GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
+                                GPIO_ResetBits(GPIOB,GPIO_Pin_13);//R_RALYµÕµµŒª                           
+                                at++;
+                                r_raly=0;
+                                manual = 1;// ÷∂Øªªµµ
+                            }else if(at == 1){
+                                GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
+                                GPIO_SetBits(GPIOB,GPIO_Pin_13);//R_RALY∏ﬂµµŒª
+                                r_raly=1;
+                                at++;
+                                manual = 1;// ÷∂Øªªµµ
+                            }else if(at == 2){
+                                at = 0;
+                                manual =0;
+                            }
+                        }
+                    }
+                    KeyCounter = 0;
+                    BEEP_Tiggr();//
+                }
+                break;
+    // 			case KEY_Powe :
+    // 			{
+    // 				
+    // 				KeyCounter = 0;
+    // 				BEEP_Tiggr();//
+    // 			}
+    // 			break;
+                case KEY_Lock :
+                {
+                    lock = 1;
+                    KeyCounter = 0;
+                    BEEP_Tiggr();//
+                }break;
+                case KEY_Face1 :
+                {
+                    WM_DeleteWindow(hWinR);
+                    WM_DeleteWindow(hWinWind);
+                    WM_DeleteWindow(hWinG);
+                    WM_DeleteWindow(load_wind);
+                    WM_DeleteWindow(hWinsysinfo);
+                    WM_DeleteWindow(hWincdc);
+                    WM_DeleteWindow(hWinset);
+                    GPIO_SetBits(GPIOA,GPIO_Pin_15);//µÁ◊”∏∫‘ÿOFF
+                    GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
+                    GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
+                    CreateR();
+                    KeyCounter = 0;
+                    BEEP_Tiggr();//
+                }
+                break;
+                case KEY_Face2 :
+                {
+                    WM_DeleteWindow(hWinR);
+                    WM_DeleteWindow(hWinWind);
+                    WM_DeleteWindow(hWinG);
+                    WM_DeleteWindow(load_wind);
+                    WM_DeleteWindow(hWinsysinfo);
+                    WM_DeleteWindow(hWincdc);
+                    WM_DeleteWindow(hWinset);
+                    CreateWindow2();
+                    t_onoff = 0;
+                    GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
+                    GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
+                    KeyCounter = 0;
+                    BEEP_Tiggr();//
+                }
+                break;
+                case KEY_Face3 :
+                {
+                    WM_DeleteWindow(hWinR);
+                    WM_DeleteWindow(hWinWind);
+                    WM_DeleteWindow(hWinG);
+                    WM_DeleteWindow(load_wind);
+                    WM_DeleteWindow(hWinsysinfo);
+                    WM_DeleteWindow(hWincdc);
+                    WM_DeleteWindow(hWinset);
+                    CreateWindow();
+                    GPIO_SetBits(GPIOA,GPIO_Pin_15);//µÁ◊”∏∫‘ÿOFF
+                    KeyCounter = 0;
+                    BEEP_Tiggr();//
+                }
+                break;
+                case KEY_Face4 :
+                {
+                    WM_DeleteWindow(hWinR);
+                    WM_DeleteWindow(hWinWind);
+                    WM_DeleteWindow(hWinG);
+                    WM_DeleteWindow(load_wind);
+                    WM_DeleteWindow(hWinsysinfo);
+                    WM_DeleteWindow(hWincdc);
+                    WM_DeleteWindow(hWinset);
+                    CreateCDC(); 
+                    KeyCounter = 0;
+                    BEEP_Tiggr();//
+                }
+                break;
+                case KEY_Face5 :
+                {
+                    WM_DeleteWindow(hWinR);
+                    WM_DeleteWindow(hWinWind);
+                    WM_DeleteWindow(hWinG);
+                    WM_DeleteWindow(load_wind);
+                    WM_DeleteWindow(hWinsysinfo);
+                    WM_DeleteWindow(hWincdc);
+                    WM_DeleteWindow(hWinset);
+                    CreateG();
+                    KeyCounter = 0;
+                    BEEP_Tiggr();//
+                }
+                break;
+                case KEY_BIAS :
+                {
+                    WM_DeleteWindow(hWinR);
+                    WM_DeleteWindow(hWinWind);
+                    WM_DeleteWindow(hWinG);
+                    WM_DeleteWindow(load_wind);
+                    WM_DeleteWindow(hWinsysinfo);
+                    WM_DeleteWindow(hWincdc);
+                    WM_DeleteWindow(hWinset);
+                    Createsysinfo();
+                    KeyCounter = 0;
+                    BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
+                }
+                break;
+
+                        
+                
+                default:
+                break;
+            }
+        }else{
+            switch(KeyValue)
+            {
+                case KEY_Lock :
+                {
+                    lock = 0;
+                    KeyCounter = 0;
+                    BEEP_Tiggr();//
+                }break;
+            }
+        } 
 	}
 }
 
@@ -1450,7 +1488,38 @@ void setmode_r(void)
     load_sw = load_off;
     mode_sw = mode_r;
 }
+const GUI_POINT aPoints[] = {
+{ 0, 0},
+{ 13, 0},
+{ 13, 9},
+{ 0, 9}
+};
 
+void DrawLock(void)
+{
+    if(lock == 1)
+    {
+        GUI_SetColor(GUI_RED);
+        GUI_SetPenSize(2);
+        GUI_DrawArc( 390,12,6,3,0, 180 );
+        GUI_DrawPolygon(aPoints,4,383,12);
+    }else{
+        
+    }
+}
+
+void DrawLockc(void)
+{
+    if(lock == 1)
+    {
+        GUI_SetColor(GUI_RED);
+        GUI_SetPenSize(2);
+        GUI_DrawArc( 405+60,12,6,3,0, 180 );
+        GUI_DrawPolygon(aPoints,4,398+60,12);
+    }else{
+        
+    }
+}
 void IO_OFF(void)
 {
     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
@@ -1459,3 +1528,4 @@ void IO_OFF(void)
     pow_sw = pow_off;
     load_sw = load_off;
 }
+

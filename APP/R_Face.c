@@ -78,7 +78,7 @@ extern vu8 clear_r;
 extern vu8 r_test;
 extern vu16 stepcount;
 vu8 manual = 0;
-
+u8 lockstat1,lockstat2;
 
 extern struct bitDefine
 {
@@ -212,7 +212,6 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     float dis_sbs_c = (float)set_sbs_c/1000;
     static vu8 led_sw = 0;
 
-
   // USER START (Optionally insert additional variables)
   // USER END
 //    int i;
@@ -240,6 +239,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     GUI_DispStringAt("°",342, 2);
     GUI_SetFont(&GUI_Font24_1);
     GUI_DispStringAt("C",350, 2);
+    DrawLock();
 //    GUI_DispDecAt(R_VLUE,50,140,4);//显示内阻值
 //      GUI_GotoXY(220,4);
 //      GUI_DispDec(short_time,6);
@@ -310,6 +310,12 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 	case WM_TIMER://定时模块消息
 	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime)
 	{
+        lockstat2 = lockstat1;
+        lockstat1 = lock;
+        if(lockstat1 != lockstat2)
+        {
+            WM_InvalidateWindow(hWinR);
+        }
         if(manual == 0)
         {
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_125);
@@ -616,6 +622,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 
                 oc_data = 0;
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
+                TEXT_SetTextColor(hItem, GUI_GREEN);
                 sprintf(buf,"%.3f",oc_data);
                 TEXT_SetText(hItem,buf);
             }else{
@@ -710,7 +717,12 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             TEXT_SetText(hItem,buf);
             
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_83);
-            sprintf(buf,"%.3f",DISS_Current);
+            if(DISS_Current < 0.2)
+            {
+                sprintf(buf,"%.3f",0.000);
+            }else{
+                sprintf(buf,"%.3f",DISS_Current);
+            }           
             TEXT_SetText(hItem,buf); 
         }else{
 //             GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
@@ -790,7 +802,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         if(para_set1 == set_1_on && oct_sw == oct_off && DISS_Voltage > 1)
         {
              test_r();
-        }else if(led_sw == 0)
+        }else
         {
             TM1650_SET_LED(0x68,0x70);
             GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
@@ -1129,7 +1141,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 TEXT_SetText(hItem,buf);
                 
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_83);
-                sprintf(buf,"%.3f",DISS_Current);
+                sprintf(buf,"%.3f",0.000);
                 TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
                 TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
                 GUI_UC_SetEncodeUTF8();        

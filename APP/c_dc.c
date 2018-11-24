@@ -21,15 +21,17 @@ WM_HWIN hWincdc;
 // extern void Mode_SW_CONT(vu8 mode);
 
 vu8 set_loop_count = 1;
-static vu8 second = 0;
-static vu8 minute = 0;
-static vu8 hour = 0;
+vu8 second = 0;
+vu8 minute = 0;
+vu8 hour = 0;
+vu8 second1 = 0;
+vu8 minute1 = 0;
+vu8 hour1 = 0;
 static vu16 cutoff_time;
 vu8 cutoff_flag = 0;
 vu8 cdc_sw = cdc_off;
 vu8 c_sw = c_on;
 vu8 timer_sw = 1;
-vu8 c_sum = 0;
 vu8 count = 1;
 vu8 status_flash = 0;
 vu8 pause_flag = 0;
@@ -109,6 +111,7 @@ extern struct bitDefine
 #define ID_TEXT_119     (GUI_ID_USER + 0x113)
 #define ID_TEXT_127     (GUI_ID_USER + 0x114)
 #define ID_TEXT_131     (GUI_ID_USER + 0x120)
+#define ID_TEXT_135     (GUI_ID_USER + 0x124)
 
 #define ID_TimerTime4    5
 
@@ -163,16 +166,17 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate4[] = {
   { TEXT_CreateIndirect,   "Text",   ID_TEXT_69, 270, 32, 33, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect,   "Text",   ID_TEXT_119, 260, 56, 50, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect,   "Text",   ID_TEXT_70, 270, 142, 33, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect,   "Text",   ID_TEXT_71, 400, 4, 50, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect,   "Text",   ID_TEXT_72, 220, 4, 33, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect,   "Text",   ID_TEXT_73, 250, 4, 33, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect,   "Text",   ID_TEXT_74, 280, 4, 33, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect,   "Text",   ID_TEXT_75, 245, 3, 10, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect,   "Text",   ID_TEXT_76, 275, 3, 10, 20, 0, 0x0, 0 },
+//  { TEXT_CreateIndirect,   "Text",   ID_TEXT_71, 400, 4, 50, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect,   "Text",   ID_TEXT_72, 295, 4, 33, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect,   "Text",   ID_TEXT_73, 325, 4, 33, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect,   "Text",   ID_TEXT_135,355, 4, 33, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect,   "Text",   ID_TEXT_74, 105+50, 4, 33, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect,   "Text",   ID_TEXT_75, 135+50, 4, 33, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect,   "Text",   ID_TEXT_76, 165+50, 4, 33, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect,   "Text",   ID_TEXT_77, 440, 203, 20, 23, 0, 0x0, 0 },
   { TEXT_CreateIndirect,   "Text",   ID_TEXT_78, 465, 203, 20, 23, 0, 0x0, 0 },
   { TEXT_CreateIndirect,   "Text",   ID_TEXT_79, 444, 205, 40, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect,   "Text",   ID_TEXT_127, 330, 2, 80, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect,   "Text",   ID_TEXT_127, 330+60, 4, 80, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect,   "Text",   ID_TEXT_131, 5, 225, 80, 30, 0, 0x0, 0 },
 
   // USER START (Optionally insert additional widgets)
@@ -206,7 +210,6 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   float dis_dc_cutoff_v = (float)set_dc_cutoff_v/1000;
   float dis_dc_cutoff_c = (float)set_dc_cutoff_c/100;
 
-
   // USER START (Optionally insert additional variables)
   // USER END
 
@@ -225,7 +228,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         GUI_SetFont(&GUI_FontHZ20S);
         GUI_UC_SetEncodeUTF8();
         GUI_SetTextMode(GUI_TM_TRANS);//ʨ׃τѾģʽΪ֗ɫ͸ķ
-        GUI_DispStringAt("测量显示", 130, 3);//SET
+//         GUI_DispStringAt("测量显示", 130, 3);//SET
         GUI_SetColor(GUI_WHITE);//ʨ׃ǰްɫΪїɫ
         GUI_SetFont(&GUI_Font24_1);
         
@@ -239,15 +242,74 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         
         GUI_SetColor(GUI_GREEN);
         GUI_SetFont(&GUI_Fontunit);
-        GUI_DispStringAt("°",372, 2);
+        GUI_DispStringAt("°",372+60, 2);
         GUI_SetFont(&GUI_Font24_1);
-        GUI_DispStringAt("C",380, 2);
-    
+        GUI_DispStringAt("C",380+60, 2);       
+        DrawLockc();
+        
+        GUI_SetColor(GUI_WHITE);
+        GUI_SetFont(&GUI_Fontset_font);
+        GUI_DispStringAt("充电",115, 4);
+        GUI_DispStringAt("放电",255, 4);
+        GUI_SetFont(&GUI_Font24_1);
+        GUI_DispStringAt(":",320, 3);
+        GUI_DispStringAt(":",350, 3);
+        GUI_DispStringAt(":",180, 3);
+        GUI_DispStringAt(":",210, 3);
     
 	break;
 	case WM_TIMER://֨ʱģࠩлϢ
 	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime4)
 	{
+        lockstat2 = lockstat1;
+        lockstat1 = lock; 
+        if(lockstat1 != lockstat2)
+        {
+            WM_InvalidateWindow(hWincdc);
+        }
+        
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);
+        sprintf(buf,"%02d",hour);
+        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        GUI_UC_SetEncodeUTF8();        
+        TEXT_SetText(hItem,buf);
+
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_75);
+        sprintf(buf,"%02d",minute);
+        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        GUI_UC_SetEncodeUTF8();        
+        TEXT_SetText(hItem,buf);
+        
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);
+        sprintf(buf,"%02d",second);
+        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        GUI_UC_SetEncodeUTF8();        
+        TEXT_SetText(hItem,buf);
+        
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_72);
+        sprintf(buf,"%02d",hour1);
+        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        GUI_UC_SetEncodeUTF8();        
+        TEXT_SetText(hItem,buf);
+
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_73);
+        sprintf(buf,"%02d",minute1);
+        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        GUI_UC_SetEncodeUTF8();        
+        TEXT_SetText(hItem,buf);
+        
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_135);
+        sprintf(buf,"%02d",second1);
+        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        GUI_UC_SetEncodeUTF8();        
+        TEXT_SetText(hItem,buf);
+        
         if(mode_sw == mode_pow && cdc_sw == cdc_on){
             
             
@@ -257,6 +319,11 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_67);
             sprintf(buf,"%.3f",DISS_POW_Current);
+            TEXT_SetText(hItem,buf);
+            
+            battery_c = cbc_raw;
+            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_68);
+            sprintf(buf,"%05d",battery_c);
             TEXT_SetText(hItem,buf);
             
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_77);
@@ -284,20 +351,20 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_70);
             TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
             
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_72);        
-            TEXT_SetText(hItem,"");
+//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_72);        
+//             TEXT_SetText(hItem,"");
 
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_73);     
-            TEXT_SetText(hItem,"");
-            
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);      
-            TEXT_SetText(hItem,"");
-            
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_75);      
-            TEXT_SetText(hItem,"");
-            
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);      
-            TEXT_SetText(hItem,"");
+//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_73);     
+//             TEXT_SetText(hItem,"");
+//             
+//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);      
+//             TEXT_SetText(hItem,"");
+//             
+//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_75);      
+//             TEXT_SetText(hItem,"");
+//             
+//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);      
+//             TEXT_SetText(hItem,"");
             
             if(charge_step == 1)
             {
@@ -519,49 +586,16 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             charge_step = 1;
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_119);
             TEXT_SetText(hItem,"");
-            if(paused == 0){
-                second = (GUI_GetTime()/500-start_time)%60;//秒
-                minute = ((GUI_GetTime()/500-start_time)/60)%60;//分
-                hour   = (GUI_GetTime()/500-start_time)/3600;//时
-            }else{
-                second = (GUI_GetTime()/500-restart_time + pause_time)%60;//秒 
-                minute = ((GUI_GetTime()/500-restart_time + pause_time)/60)%60;//分
-                hour = ((GUI_GetTime()/500-restart_time) + pause_time)/3600;//时
-            }
+//             if(paused == 0){
+//                 second = (GUI_GetTime()/500-start_time)%60;//秒
+//                 minute = ((GUI_GetTime()/500-start_time)/60)%60;//分
+//                 hour   = (GUI_GetTime()/500-start_time)/3600;//时
+//             }else{
+//                 second = (GUI_GetTime()/500-restart_time + pause_time)%60;//秒 
+//                 minute = ((GUI_GetTime()/500-restart_time + pause_time)/60)%60;//分
+//                 hour = ((GUI_GetTime()/500-restart_time) + pause_time)/3600;//时
+//             }
             
-            
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_72);
-            sprintf(buf,"%02d",hour);
-            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
-            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-            GUI_UC_SetEncodeUTF8();        
-            TEXT_SetText(hItem,buf);
-
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_73);
-            sprintf(buf,"%02d",minute);
-            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
-            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-            GUI_UC_SetEncodeUTF8();        
-            TEXT_SetText(hItem,buf);
-            
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);
-            sprintf(buf,"%02d",second);
-            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
-            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-            GUI_UC_SetEncodeUTF8();        
-            TEXT_SetText(hItem,buf);
-            
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_75);
-            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
-            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-            GUI_UC_SetEncodeUTF8();        
-            TEXT_SetText(hItem,":");
-            
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);
-            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
-            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
-            GUI_UC_SetEncodeUTF8();        
-            TEXT_SetText(hItem,":");
             
             
             
@@ -574,7 +608,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             sprintf(buf,"%.3f",DISS_Current);       
             TEXT_SetText(hItem,buf);
             
-            battery_c = (int)(((float)(second + minute*60 + hour * 3600)/3600 * dis_load_c)*1000);
+            battery_c = bc_raw;
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_68);
             sprintf(buf,"%05d",battery_c);
             TEXT_SetText(hItem,buf);
@@ -622,8 +656,8 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 //                GPIO_SetBits(GPIOC,GPIO_Pin_1);//关闭负载
                 GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
                 if(count > set_loop_count){
-                    cdc_sw = cdc_off;//关闭充放电模式
-                    battery_c = (c_sum + (int)(((float)(end_time - start_time)/3600 * dis_load_c)*1000))/set_loop_count;                    
+                    c_sum += bc_raw;
+                    battery_c = c_sum/set_loop_count;                     
                     count = 1;
                     
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_68);
@@ -633,20 +667,20 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_71);
                     TEXT_SetText(hItem,"");
                     
-                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_72);       
-                    TEXT_SetText(hItem,"");
+//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_72);       
+//                     TEXT_SetText(hItem,"");
 
-                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_73);     
-                    TEXT_SetText(hItem,"");
-                    
-                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);      
-                    TEXT_SetText(hItem,"");
-                    
-                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_75);       
-                    TEXT_SetText(hItem,"");
-                    
-                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);       
-                    TEXT_SetText(hItem,"");
+//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_73);     
+//                     TEXT_SetText(hItem,"");
+//                     
+//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);      
+//                     TEXT_SetText(hItem,"");
+//                     
+//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_75);       
+//                     TEXT_SetText(hItem,"");
+//                     
+//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);       
+//                     TEXT_SetText(hItem,"");
                     
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_77);
                     TEXT_SetText(hItem,"");
@@ -658,7 +692,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                     TEXT_SetText(hItem,"");
                     
                 }else{
-                    c_sum = c_sum + (int)(((float)(end_time - start_time)/3600 * dis_load_c)*1000);
+                    c_sum += bc_raw;
 //                     Mode_SW_CONT(0x03);//切换至电源模式
                     GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
                      hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_68);
@@ -952,6 +986,48 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         TEXT_SetTextColor(hItem, GUI_GREEN);//ʨ׃ؖͥҕɫ
         TEXT_SetFont(hItem,&GUI_Font24_1);//ʨ֨τѾؖͥ       
         sprintf(buf,"%.1f",temp);
+        TEXT_SetText(hItem,buf);
+        
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);
+        sprintf(buf,"%02d",hour);
+        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        GUI_UC_SetEncodeUTF8();        
+        TEXT_SetText(hItem,buf);
+
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_75);
+        sprintf(buf,"%02d",minute);
+        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        GUI_UC_SetEncodeUTF8();        
+        TEXT_SetText(hItem,buf);
+        
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);
+        sprintf(buf,"%02d",second);
+        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        GUI_UC_SetEncodeUTF8();        
+        TEXT_SetText(hItem,buf);
+        
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_72);
+        sprintf(buf,"%02d",hour1);
+        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        GUI_UC_SetEncodeUTF8();        
+        TEXT_SetText(hItem,buf);
+
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_73);
+        sprintf(buf,"%02d",minute1);
+        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        GUI_UC_SetEncodeUTF8();        
+        TEXT_SetText(hItem,buf);
+        
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_135);
+        sprintf(buf,"%02d",second1);
+        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        GUI_UC_SetEncodeUTF8();        
         TEXT_SetText(hItem,buf);
         
         

@@ -102,7 +102,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   // USER START (Optionally insert additional variables)
   // USER END
     char buf[5];
-
+    
   switch (pMsg->MsgId) {
 		
 	case WM_PAINT:
@@ -131,13 +131,18 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     GUI_DispStringAt("掳",342, 2);
     GUI_SetFont(&GUI_Font24_1);
     GUI_DispStringAt("C",350, 2);
-    
+    DrawLock();
     
 	break;
 	case WM_TIMER://定时模块消息
 	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime3)
 	{
-        
+        lockstat2 = lockstat1;
+        lockstat1 = lock; 
+        if(lockstat1 != lockstat2)
+        {
+            WM_InvalidateWindow(hWinG);
+        }
         DrawGraph();
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_128);       
         sprintf(buf,"%.1f",temp);

@@ -33,8 +33,8 @@ vu32 Modify_A_ACT;
 vu32 Modify_B_READ;
 vu32 Modify_D_READ;
 vu32 Modify_B_ACT;
-vu32 Correct_Parametet[12];//校准参数
-vu32 Correct_Strong[12];//校准系数
+vu32 Correct_Parametet[13];//校准参数
+vu32 Correct_Strong[13];//校准系数
 vu8  correct_por[6];
 /*************************变量定义***********************************/
 vu32 Run_Control[42];
@@ -696,60 +696,61 @@ void Transformation_ADC(void)
     if(r_raly == 1)
     {
         var32 = var32 * REG_CorrectionR;  
-        if ((Polar3 & 0x01) == 0x01)		  
-        {
-            if (var32 < REG_ReadR_Offset) 
-            {
-                var32 = 0;
-            }
-            else var32 = var32 - REG_ReadR_Offset;
-        }
-        else var32 = var32 + REG_ReadR_Offset;
+//         if ((Polar3 & 0x01) == 0x01)		  
+//         {
+//             if (var32 < REG_ReadR_Offset) 
+//             {
+//                 var32 = 0;
+//             }
+//             else var32 = var32 - REG_ReadR_Offset;
+//         }
+//        else
+            var32 = var32 - REG_ReadR_Offset;
         var32 = var32 >> 12;
         if (var32 < 1)
         {
-            var32 = 0;				  //?￡
+            var32 = 0;				  //去拢
         }
         R_VLUE = var32;
-//         if(rcount == 5)
-//         {
-//             rcount = 0;
-//              = rave/5;
-//             rave = 0;
-//         }else{
-//             rave += var32;
-//             rcount++;
-//         }
-        
         var32 = 0;
     }else{
         var32 = var32 * REG_CorrectionRL;  
-        if ((Polar3 & 0x01) == 0x01)		  
-        {
-            if (var32 < REG_ReadRL_Offset) 
-            {
-                var32 = 0;
-            }
-            else var32 = var32 - REG_ReadRL_Offset;
-        }
-        else var32 = var32 + REG_ReadRL_Offset;
+//         if ((Polar3 & 0x01) == 0x01)		  
+//         {
+//             if (var32 < REG_ReadRL_Offset) 
+//             {
+//                 var32 = 0;
+//             }
+//             else var32 = var32 - REG_ReadRL_Offset;
+//         }
+//        else
+            var32 = var32 - REG_ReadRL_Offset;
         var32 = var32 >> 12;
         if (var32 < 1)
         {
-            var32 = 0;				  //?￡
+            var32 = 0;				  //去拢
         }
         R_VLUE = var32;
-//         if(rcount == 5)
-//         {
-//             rcount = 0;
-//             R_VLUE = rave/5;
-//             rave = 0;
-//         }else{
-//             rave += var32;
-//             rcount++;
-//         }
+        if(R_VLUE > 100)
+        {
+            var32 = Rmon_value;
+            var32 = var32 * REG_CorrectionRH;  
+//             if ((Polar1 & 0x04) == 0x04)		  
+//             {
+//                 if (var32 < REG_ReadRH_Offset) 
+//                 {
+//                     var32 = 0;
+//                 }
+//                 else var32 = var32 - REG_ReadRH_Offset;
+//             }
+//            else
+                var32 = var32 + REG_ReadRH_Offset;
+            var32 = var32 >> 12;
+            if (var32 < 5) var32 = 0;				  //40mV訑袀去拢
+            R_VLUE = var32;
+        }
         var32 = 0;
-    }  	
+    }
 	/*****************************稳压电源测量电压转换*******************************************/
 	var32 = Vmon_value;
 	var32 = var32 * REG_POWERV;  

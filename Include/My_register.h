@@ -188,6 +188,8 @@ extern vu8 mode_sw;
 extern vu16 stepcount;
 extern vu16 battery_c;
 extern float bc_raw;
+extern float cbc_raw;
+extern float c_sum;
 extern vu8 track;
 extern vu8 clear_flag1;
 extern vu8 clear_flag2;
@@ -201,7 +203,9 @@ extern float clear_lv;
 extern float temp;
 extern vu8 set_loop_count;
 extern vu8 test_mode;
+extern vu8 lock;
 extern vu32 Run_Control[42];	
+extern u8 lockstat1,lockstat2;
 #define onoff_ch                    Run_Control[0]  //ON/OFF
 #define SET_Voltage 	    	        Run_Control[1]  //??????
 #define SET_Current	    	    		  Run_Control[2]  //?????，
@@ -389,7 +393,7 @@ extern vu16 coff[6];
 extern vu16 Contr_Voltage;//
 extern vu16 Contr_Current;//
 extern vu16 Contr_Laod;//
-extern vu32 Correct_Parametet[12];
+extern vu32 Correct_Parametet[13];
 #define  REG_CorrectionV   Correct_Parametet[0]//???????
 #define  REG_Load_A			   Correct_Parametet[1]//??CC???，???
 #define  SET_LoadA			   Correct_Parametet[2]//??CC?????，??
@@ -404,6 +408,7 @@ extern vu32 Correct_Parametet[12];
 #define  SET_POWERV				 Correct_Parametet[9]//??CV????????
 #define  CON_POWERA				 Correct_Parametet[10]//??CV???，???
 #define  REG_CorrectionRL    Correct_Parametet[11]//?????
+#define  REG_CorrectionRH    Correct_Parametet[12]
 
 
 
@@ -415,7 +420,7 @@ extern vu8  correct_por[6];
 #define  Polar4						 correct_por[4]//??CC???，????
 #define  Polar5						 correct_por[5]//??CV????????
 
-extern vu32 Correct_Strong[12];//У???
+extern vu32 Correct_Strong[13];//У???
 #define  REG_ReadV_Offset   Correct_Strong[0]//???????
 #define  REG_LoadA_Offset   Correct_Strong[1]//??CC???，???
 #define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????，??
@@ -430,6 +435,7 @@ extern vu32 Correct_Strong[12];//У???
 #define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 #define  CON_POWERA_Offset	Correct_Strong[10]//??CV???，???
 #define  REG_ReadRL_Offset   Correct_Strong[11]//?????
+#define  REG_ReadRH_Offset   Correct_Strong[12]
 
 //---------------------------
 extern vu16 ADC_NTC_Filt[50];

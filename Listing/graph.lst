@@ -48729,6 +48729,8 @@ Nextern vu8 mode_sw;
 Nextern vu16 stepcount;
 Nextern vu16 battery_c;
 Nextern float bc_raw;
+Nextern float cbc_raw;
+Nextern float c_sum;
 Nextern vu8 track;
 Nextern vu8 clear_flag1;
 Nextern vu8 clear_flag2;
@@ -48742,7 +48744,9 @@ Nextern float clear_lv;
 Nextern float temp;
 Nextern vu8 set_loop_count;
 Nextern vu8 test_mode;
+Nextern vu8 lock;
 Nextern vu32 Run_Control[42];	
+Nextern u8 lockstat1,lockstat2;
 N#define onoff_ch                    Run_Control[0]  //ON/OFF
 N#define SET_Voltage 	    	        Run_Control[1]  //??????
 N#define SET_Current	    	    		  Run_Control[2]  //?????·
@@ -48930,7 +48934,7 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu32 Correct_Parametet[12];
+Nextern vu32 Correct_Parametet[13];
 N#define  REG_CorrectionV   Correct_Parametet[0]//???????
 N#define  REG_Load_A			   Correct_Parametet[1]//??CC???·???
 N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????·??
@@ -48945,6 +48949,7 @@ N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 N#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
 N#define  CON_POWERA				 Correct_Parametet[10]//??CV???·???
 N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
+N#define  REG_CorrectionRH    Correct_Parametet[12]
 N
 N
 N
@@ -48956,7 +48961,7 @@ N#define  Polar3						 correct_por[3]//??????CV???·?
 N#define  Polar4						 correct_por[4]//??CC???·????
 N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[12];//У???
+Nextern vu32 Correct_Strong[13];//У???
 N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???·???
 N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????·??
@@ -48971,6 +48976,7 @@ N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???·???
 N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
+N#define  REG_ReadRH_Offset   Correct_Strong[12]
 N
 N//---------------------------
 Nextern vu16 ADC_NTC_Filt[50];
@@ -49181,6 +49187,8 @@ Sextern vu8 mode_sw;
 Sextern vu16 stepcount;
 Sextern vu16 battery_c;
 Sextern float bc_raw;
+Sextern float cbc_raw;
+Sextern float c_sum;
 Sextern vu8 track;
 Sextern vu8 clear_flag1;
 Sextern vu8 clear_flag2;
@@ -49194,7 +49202,9 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
+Sextern u8 lockstat1,lockstat2;
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????·
@@ -49382,7 +49392,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[12];
+Sextern vu32 Correct_Parametet[13];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???·???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????·??
@@ -49397,6 +49407,7 @@ S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???·???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
+S#define  REG_CorrectionRH    Correct_Parametet[12]
 S
 S
 S
@@ -49408,7 +49419,7 @@ S#define  Polar3						 correct_por[3]//??????CV???·?
 S#define  Polar4						 correct_por[4]//??CC???·????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[12];//У???
+Sextern vu32 Correct_Strong[13];//У???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???·???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????·??
@@ -49423,6 +49434,7 @@ S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???·???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
+S#define  REG_ReadRH_Offset   Correct_Strong[12]
 S
 S//---------------------------
 Sextern vu16 ADC_NTC_Filt[50];
@@ -51619,6 +51631,8 @@ Sextern vu8 mode_sw;
 Sextern vu16 stepcount;
 Sextern vu16 battery_c;
 Sextern float bc_raw;
+Sextern float cbc_raw;
+Sextern float c_sum;
 Sextern vu8 track;
 Sextern vu8 clear_flag1;
 Sextern vu8 clear_flag2;
@@ -51632,7 +51646,9 @@ Sextern float clear_lv;
 Sextern float temp;
 Sextern vu8 set_loop_count;
 Sextern vu8 test_mode;
+Sextern vu8 lock;
 Sextern vu32 Run_Control[42];	
+Sextern u8 lockstat1,lockstat2;
 S#define onoff_ch                    Run_Control[0]  //ON/OFF
 S#define SET_Voltage 	    	        Run_Control[1]  //??????
 S#define SET_Current	    	    		  Run_Control[2]  //?????·
@@ -51820,7 +51836,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[12];
+Sextern vu32 Correct_Parametet[13];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???·???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????·??
@@ -51835,6 +51851,7 @@ S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???·???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
+S#define  REG_CorrectionRH    Correct_Parametet[12]
 S
 S
 S
@@ -51846,7 +51863,7 @@ S#define  Polar3						 correct_por[3]//??????CV???·?
 S#define  Polar4						 correct_por[4]//??CC???·????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[12];//У???
+Sextern vu32 Correct_Strong[13];//У???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???·???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????·??
@@ -51861,6 +51878,7 @@ S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???·???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
+S#define  REG_ReadRH_Offset   Correct_Strong[12]
 S
 S//---------------------------
 Sextern vu16 ADC_NTC_Filt[50];
@@ -52545,7 +52563,7 @@ X  GUI_HWIN hItem;
 N  // USER START (Optionally insert additional variables)
 N  // USER END
 N    char buf[5];
-N
+N    
 N  switch (pMsg->MsgId) {
 N		
 N	case WM_PAINT:
@@ -52583,7 +52601,8 @@ N    GUI_SetFont(&GUI_Fontunit);
 N    GUI_DispStringAt("掳",342, 2);
 N    GUI_SetFont(&GUI_Font24_1);
 N    GUI_DispStringAt("C",350, 2);
-N    
+W "..\APP\graph.c" 134 5 function "DrawLock" declared implicitly
+N    DrawLock();
 N    
 N	break;
 N	case WM_TIMER://定时模块消息
@@ -52591,7 +52610,12 @@ X	case 0x0113:
 N	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime3)
 X	if(WM_GetTimerId(pMsg->Data.v) == 4)
 N	{
-N        
+N        lockstat2 = lockstat1;
+N        lockstat1 = lock; 
+N        if(lockstat1 != lockstat2)
+N        {
+N            WM_InvalidateWindow(hWinG);
+N        }
 N        DrawGraph();
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_128);       
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x11F));       
@@ -52755,7 +52779,7 @@ N        GRAPH_DATA_YT_AddValue(IData,DISS_POW_Current*10);
 N    }
 N    
 N//    GUI_Delay(50);
-W "..\APP\graph.c" 277 1 missing return statement at end of non-void function "DrawGraph"
+W "..\APP\graph.c" 282 1 missing return statement at end of non-void function "DrawGraph"
 N}
 N// USER START (Optionally insert additional public code)
 N// USER END
