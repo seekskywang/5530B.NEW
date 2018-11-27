@@ -8,6 +8,7 @@ Project File Date:  11/09/2018
 
 <h2>Output:</h2>
 Build target 'JK_BTSET'
+assembling startup_stm32f40_41xxx.s...
 compiling system_stm32f4xx.c...
 compiling misc.c...
 compiling stm32f4xx_adc.c...
@@ -50,18 +51,17 @@ compiling main.c...
 ..\User\main.c(55): warning:  #223-D: function "TIM5_Int_Init" declared implicitly
 ..\User\main.c(59): warning:  #223-D: function "USART3_Configuration" declared implicitly
 compiling stm32f4xx_it.c...
-..\User\stm32f4xx_it.c(340): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\User\stm32f4xx_it.c(354): warning:  #177-D: variable "crec" was declared but never referenced
-..\User\stm32f4xx_it.c(355): warning:  #177-D: variable "csend" was declared but never referenced
-..\User\stm32f4xx_it.c(356): warning:  #177-D: variable "sendbuf" was declared but never referenced
-..\User\stm32f4xx_it.c(357): warning:  #177-D: variable "sendlen" was declared but never referenced
-..\User\stm32f4xx_it.c(358): warning:  #177-D: variable "recrc" was declared but never referenced
-..\User\stm32f4xx_it.c(359): warning:  #177-D: variable "scrc" was declared but never referenced
-..\User\stm32f4xx_it.c(360): warning:  #177-D: variable "i" was declared but never referenced
-..\User\stm32f4xx_it.c(410): warning:  #223-D: function "IO_OFF" declared implicitly
-..\User\stm32f4xx_it.c(534): warning:  #223-D: function "memcpy" declared implicitly
-..\User\stm32f4xx_it.c(549): warning:  #177-D: function "MODS_06H" was declared but never referenced
-..\User\stm32f4xx_it.c(473): warning: C3017W: num may be used before being set
+..\User\stm32f4xx_it.c(382): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\stm32f4xx_it.c(396): warning:  #177-D: variable "crec" was declared but never referenced
+..\User\stm32f4xx_it.c(397): warning:  #177-D: variable "csend" was declared but never referenced
+..\User\stm32f4xx_it.c(398): warning:  #177-D: variable "sendbuf" was declared but never referenced
+..\User\stm32f4xx_it.c(399): warning:  #177-D: variable "sendlen" was declared but never referenced
+..\User\stm32f4xx_it.c(400): warning:  #177-D: variable "recrc" was declared but never referenced
+..\User\stm32f4xx_it.c(401): warning:  #177-D: variable "scrc" was declared but never referenced
+..\User\stm32f4xx_it.c(402): warning:  #177-D: variable "i" was declared but never referenced
+..\User\stm32f4xx_it.c(452): warning:  #223-D: function "IO_OFF" declared implicitly
+..\User\stm32f4xx_it.c(576): warning:  #223-D: function "memcpy" declared implicitly
+..\User\stm32f4xx_it.c(515): warning: C3017W: num may be used before being set
 compiling adc.c...
 compiling AT24C01.c...
 ..\drive\AT24C01.c(345): warning:  #177-D: function "ee_Delay" was declared but never referenced
@@ -99,29 +99,27 @@ compiling ssd1963.c...
 compiling TIM1.c...
 compiling TIM2.c...
 compiling TIM6.c...
-..\drive\TIM6.c(124): warning:  #223-D: function "ResetPow" declared implicitly
-..\drive\TIM6.c(126): warning:  #223-D: function "ResetCDC" declared implicitly
-..\drive\TIM6.c(128): warning:  #223-D: function "ResetR" declared implicitly
-..\drive\TIM6.c(130): warning:  #223-D: function "ResetLoad" declared implicitly
-..\drive\TIM6.c(132): warning:  #223-D: function "ResetG" declared implicitly
-..\drive\TIM6.c(134): warning:  #223-D: function "ResetSET" declared implicitly
-..\drive\TIM6.c(174): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(183): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\drive\TIM6.c(185): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(237): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\drive\TIM6.c(275): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(286): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\drive\TIM6.c(288): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(312): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(99): warning:  #177-D: variable "crec" was declared but never referenced
-..\drive\TIM6.c(100): warning:  #177-D: variable "csend" was declared but never referenced
-..\drive\TIM6.c(101): warning:  #177-D: variable "sendbuf" was declared but never referenced
-..\drive\TIM6.c(102): warning:  #177-D: variable "sendlen" was declared but never referenced
-..\drive\TIM6.c(103): warning:  #177-D: variable "recrc" was declared but never referenced
-..\drive\TIM6.c(104): warning:  #177-D: variable "scrc" was declared but never referenced
-..\drive\TIM6.c(105): warning:  #177-D: variable "i" was declared but never referenced
-..\drive\TIM6.c(631): warning:  #223-D: function "UART_Action" declared implicitly
-..\drive\TIM6.c(566): warning:  #177-D: variable "addr" was declared but never referenced
+..\drive\TIM6.c(125): warning:  #223-D: function "ResetPow" declared implicitly
+..\drive\TIM6.c(127): warning:  #223-D: function "ResetCDC" declared implicitly
+..\drive\TIM6.c(129): warning:  #223-D: function "ResetR" declared implicitly
+..\drive\TIM6.c(131): warning:  #223-D: function "ResetLoad" declared implicitly
+..\drive\TIM6.c(133): warning:  #223-D: function "ResetG" declared implicitly
+..\drive\TIM6.c(135): warning:  #223-D: function "ResetSET" declared implicitly
+..\drive\TIM6.c(175): warning:  #223-D: function "IO_OFF" declared implicitly
+..\drive\TIM6.c(191): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(232): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(294): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(296): warning:  #223-D: function "IO_OFF" declared implicitly
+..\drive\TIM6.c(320): warning:  #223-D: function "IO_OFF" declared implicitly
+..\drive\TIM6.c(100): warning:  #177-D: variable "crec" was declared but never referenced
+..\drive\TIM6.c(101): warning:  #177-D: variable "csend" was declared but never referenced
+..\drive\TIM6.c(102): warning:  #177-D: variable "sendbuf" was declared but never referenced
+..\drive\TIM6.c(103): warning:  #177-D: variable "sendlen" was declared but never referenced
+..\drive\TIM6.c(104): warning:  #177-D: variable "recrc" was declared but never referenced
+..\drive\TIM6.c(105): warning:  #177-D: variable "scrc" was declared but never referenced
+..\drive\TIM6.c(106): warning:  #177-D: variable "i" was declared but never referenced
+..\drive\TIM6.c(639): warning:  #223-D: function "UART_Action" declared implicitly
+..\drive\TIM6.c(574): warning:  #177-D: variable "addr" was declared but never referenced
 compiling usart.c...
 compiling TM1650.c...
 ..\drive\TM1650.c(242): warning:  #1-D: last line of file ends without a newline
@@ -225,281 +223,13 @@ compiling usb_bsp.c...
 compiling usbh_usr.c...
 ..\USB\USB_APP\usbh_usr.c(19): warning:  #177-D: variable "AppState" was declared but never referenced
 linking...
-Program Size: Code=163790 RO-data=118690 RW-data=2312 ZI-data=34192  
+Program Size: Code=164126 RO-data=118690 RW-data=2312 ZI-data=34192  
 FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 126 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.275V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 200 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
+"..\Output\JK_BTSET.axf" - 0 Error(s), 123 Warning(s).
 Build target 'JK_BTSET'
-compiling TIM6.c...
-..\drive\TIM6.c(124): warning:  #223-D: function "ResetPow" declared implicitly
-..\drive\TIM6.c(126): warning:  #223-D: function "ResetCDC" declared implicitly
-..\drive\TIM6.c(128): warning:  #223-D: function "ResetR" declared implicitly
-..\drive\TIM6.c(130): warning:  #223-D: function "ResetLoad" declared implicitly
-..\drive\TIM6.c(132): warning:  #223-D: function "ResetG" declared implicitly
-..\drive\TIM6.c(134): warning:  #223-D: function "ResetSET" declared implicitly
-..\drive\TIM6.c(174): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(183): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\drive\TIM6.c(237): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\drive\TIM6.c(275): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(286): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\drive\TIM6.c(288): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(312): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(99): warning:  #177-D: variable "crec" was declared but never referenced
-..\drive\TIM6.c(100): warning:  #177-D: variable "csend" was declared but never referenced
-..\drive\TIM6.c(101): warning:  #177-D: variable "sendbuf" was declared but never referenced
-..\drive\TIM6.c(102): warning:  #177-D: variable "sendlen" was declared but never referenced
-..\drive\TIM6.c(103): warning:  #177-D: variable "recrc" was declared but never referenced
-..\drive\TIM6.c(104): warning:  #177-D: variable "scrc" was declared but never referenced
-..\drive\TIM6.c(105): warning:  #177-D: variable "i" was declared but never referenced
-..\drive\TIM6.c(631): warning:  #223-D: function "UART_Action" declared implicitly
-..\drive\TIM6.c(566): warning:  #177-D: variable "addr" was declared but never referenced
+compiling usart.c...
 linking...
-Program Size: Code=163790 RO-data=118690 RW-data=2312 ZI-data=34192  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 22 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.275V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 200 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling TIM6.c...
-..\drive\TIM6.c(124): warning:  #223-D: function "ResetPow" declared implicitly
-..\drive\TIM6.c(126): warning:  #223-D: function "ResetCDC" declared implicitly
-..\drive\TIM6.c(128): warning:  #223-D: function "ResetR" declared implicitly
-..\drive\TIM6.c(130): warning:  #223-D: function "ResetLoad" declared implicitly
-..\drive\TIM6.c(132): warning:  #223-D: function "ResetG" declared implicitly
-..\drive\TIM6.c(134): warning:  #223-D: function "ResetSET" declared implicitly
-..\drive\TIM6.c(174): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(183): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\drive\TIM6.c(237): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\drive\TIM6.c(275): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(286): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\drive\TIM6.c(288): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(312): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(99): warning:  #177-D: variable "crec" was declared but never referenced
-..\drive\TIM6.c(100): warning:  #177-D: variable "csend" was declared but never referenced
-..\drive\TIM6.c(101): warning:  #177-D: variable "sendbuf" was declared but never referenced
-..\drive\TIM6.c(102): warning:  #177-D: variable "sendlen" was declared but never referenced
-..\drive\TIM6.c(103): warning:  #177-D: variable "recrc" was declared but never referenced
-..\drive\TIM6.c(104): warning:  #177-D: variable "scrc" was declared but never referenced
-..\drive\TIM6.c(105): warning:  #177-D: variable "i" was declared but never referenced
-..\drive\TIM6.c(631): warning:  #223-D: function "UART_Action" declared implicitly
-..\drive\TIM6.c(566): warning:  #177-D: variable "addr" was declared but never referenced
-linking...
-Program Size: Code=163782 RO-data=118690 RW-data=2312 ZI-data=34192  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 22 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.282V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 200 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling TIM6.c...
-..\drive\TIM6.c(124): warning:  #223-D: function "ResetPow" declared implicitly
-..\drive\TIM6.c(126): warning:  #223-D: function "ResetCDC" declared implicitly
-..\drive\TIM6.c(128): warning:  #223-D: function "ResetR" declared implicitly
-..\drive\TIM6.c(130): warning:  #223-D: function "ResetLoad" declared implicitly
-..\drive\TIM6.c(132): warning:  #223-D: function "ResetG" declared implicitly
-..\drive\TIM6.c(134): warning:  #223-D: function "ResetSET" declared implicitly
-..\drive\TIM6.c(174): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(183): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\drive\TIM6.c(238): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\drive\TIM6.c(276): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(287): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\drive\TIM6.c(289): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(313): warning:  #223-D: function "IO_OFF" declared implicitly
-..\drive\TIM6.c(99): warning:  #177-D: variable "crec" was declared but never referenced
-..\drive\TIM6.c(100): warning:  #177-D: variable "csend" was declared but never referenced
-..\drive\TIM6.c(101): warning:  #177-D: variable "sendbuf" was declared but never referenced
-..\drive\TIM6.c(102): warning:  #177-D: variable "sendlen" was declared but never referenced
-..\drive\TIM6.c(103): warning:  #177-D: variable "recrc" was declared but never referenced
-..\drive\TIM6.c(104): warning:  #177-D: variable "scrc" was declared but never referenced
-..\drive\TIM6.c(105): warning:  #177-D: variable "i" was declared but never referenced
-..\drive\TIM6.c(632): warning:  #223-D: function "UART_Action" declared implicitly
-..\drive\TIM6.c(567): warning:  #177-D: variable "addr" was declared but never referenced
-compiling R_Face.c...
-..\APP\R_Face.c(242): warning:  #223-D: function "DrawLock" declared implicitly
-..\APP\R_Face.c(394): warning:  #223-D: function "setmode_r" declared implicitly
-..\APP\R_Face.c(398): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(402): warning:  #223-D: function "setmode_r" declared implicitly
-..\APP\R_Face.c(419): warning:  #223-D: function "setmode_r" declared implicitly
-..\APP\R_Face.c(425): warning:  #223-D: function "setmode_r" declared implicitly
-..\APP\R_Face.c(443): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(463): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(481): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(500): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(563): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(594): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(723): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(746): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(777): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(822): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(822): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(836): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(836): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(850): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(850): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(864): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(864): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(878): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(878): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1269): warning:  #223-D: function "setmode_r" declared implicitly
-..\APP\R_Face.c(1640): warning:  #177-D: variable "hItem" was declared but never referenced
-..\APP\R_Face.c(1986): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1986): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(2029): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-linking...
-Program Size: Code=163790 RO-data=118690 RW-data=2312 ZI-data=34192  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 52 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.277V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 200 kHz
- 
-Erase Done.
-***JLink Error: Can not read register 15 (R15) while CPU is running
-***JLink Error: Can not read register 20 (CFBP) while CPU is running
-Programming Failed!
-***JLink Error: Could not read memory location 0x20000000 when trying to clear soft RAM BP
-Build target 'JK_BTSET'
-linking...
-Program Size: Code=163790 RO-data=118690 RW-data=2312 ZI-data=34192  
+Program Size: Code=164126 RO-data=118690 RW-data=2312 ZI-data=34192  
 FromELF: creating hex file...
 "..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
 Load "..\\Output\\JK_BTSET.AXF" 
@@ -529,7 +259,652 @@ ROMTableAddr = 0xE00FF003
 Target info:
 ------------
 Device: STM32F407VE
-VTarget = 3.277V
+VTarget = 3.267V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(125): warning:  #223-D: function "ResetPow" declared implicitly
+..\drive\TIM6.c(127): warning:  #223-D: function "ResetCDC" declared implicitly
+..\drive\TIM6.c(129): warning:  #223-D: function "ResetR" declared implicitly
+..\drive\TIM6.c(131): warning:  #223-D: function "ResetLoad" declared implicitly
+..\drive\TIM6.c(133): warning:  #223-D: function "ResetG" declared implicitly
+..\drive\TIM6.c(135): warning:  #223-D: function "ResetSET" declared implicitly
+..\drive\TIM6.c(175): warning:  #223-D: function "IO_OFF" declared implicitly
+..\drive\TIM6.c(191): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(232): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(294): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(296): warning:  #223-D: function "IO_OFF" declared implicitly
+..\drive\TIM6.c(320): warning:  #223-D: function "IO_OFF" declared implicitly
+..\drive\TIM6.c(100): warning:  #177-D: variable "crec" was declared but never referenced
+..\drive\TIM6.c(101): warning:  #177-D: variable "csend" was declared but never referenced
+..\drive\TIM6.c(102): warning:  #177-D: variable "sendbuf" was declared but never referenced
+..\drive\TIM6.c(103): warning:  #177-D: variable "sendlen" was declared but never referenced
+..\drive\TIM6.c(104): warning:  #177-D: variable "recrc" was declared but never referenced
+..\drive\TIM6.c(105): warning:  #177-D: variable "scrc" was declared but never referenced
+..\drive\TIM6.c(106): warning:  #177-D: variable "i" was declared but never referenced
+..\drive\TIM6.c(639): warning:  #223-D: function "UART_Action" declared implicitly
+..\drive\TIM6.c(574): warning:  #177-D: variable "addr" was declared but never referenced
+linking...
+Program Size: Code=164126 RO-data=118690 RW-data=2312 ZI-data=34192  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 21 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.253V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(125): warning:  #223-D: function "ResetPow" declared implicitly
+..\drive\TIM6.c(127): warning:  #223-D: function "ResetCDC" declared implicitly
+..\drive\TIM6.c(129): warning:  #223-D: function "ResetR" declared implicitly
+..\drive\TIM6.c(131): warning:  #223-D: function "ResetLoad" declared implicitly
+..\drive\TIM6.c(133): warning:  #223-D: function "ResetG" declared implicitly
+..\drive\TIM6.c(135): warning:  #223-D: function "ResetSET" declared implicitly
+..\drive\TIM6.c(175): warning:  #223-D: function "IO_OFF" declared implicitly
+..\drive\TIM6.c(191): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(232): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(294): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(296): warning:  #223-D: function "IO_OFF" declared implicitly
+..\drive\TIM6.c(321): warning:  #223-D: function "IO_OFF" declared implicitly
+..\drive\TIM6.c(100): warning:  #177-D: variable "crec" was declared but never referenced
+..\drive\TIM6.c(101): warning:  #177-D: variable "csend" was declared but never referenced
+..\drive\TIM6.c(102): warning:  #177-D: variable "sendbuf" was declared but never referenced
+..\drive\TIM6.c(103): warning:  #177-D: variable "sendlen" was declared but never referenced
+..\drive\TIM6.c(104): warning:  #177-D: variable "recrc" was declared but never referenced
+..\drive\TIM6.c(105): warning:  #177-D: variable "scrc" was declared but never referenced
+..\drive\TIM6.c(106): warning:  #177-D: variable "i" was declared but never referenced
+..\drive\TIM6.c(640): warning:  #223-D: function "UART_Action" declared implicitly
+..\drive\TIM6.c(575): warning:  #177-D: variable "addr" was declared but never referenced
+linking...
+Program Size: Code=164134 RO-data=118690 RW-data=2312 ZI-data=34192  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 21 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.258V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling key.c...
+..\drive\key.c(279): warning:  #223-D: function "Rlow_cal" declared implicitly
+..\drive\key.c(339): warning:  #223-D: function "Rlow_cal" declared implicitly
+..\drive\key.c(400): warning:  #223-D: function "Rlow_cal" declared implicitly
+..\drive\key.c(458): warning:  #223-D: function "Rlow_cal" declared implicitly
+..\drive\key.c(516): warning:  #223-D: function "Rlow_cal" declared implicitly
+..\drive\key.c(574): warning:  #223-D: function "Rlow_cal" declared implicitly
+..\drive\key.c(937): warning:  #223-D: function "MENU_OP_UP" declared implicitly
+..\drive\key.c(944): warning:  #223-D: function "LOAD_OP_UP" declared implicitly
+..\drive\key.c(958): warning:  #223-D: function "OC_OP_UP" declared implicitly
+..\drive\key.c(993): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
+..\drive\key.c(1000): warning:  #223-D: function "LOAD_OP_DOWN" declared implicitly
+..\drive\key.c(1014): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
+..\drive\key.c(1047): warning:  #223-D: function "MENU_SET" declared implicitly
+..\drive\key.c(1063): warning:  #223-D: function "OC_SET" declared implicitly
+..\drive\key.c(1071): warning:  #223-D: function "LOAD_SET" declared implicitly
+..\drive\key.c(1085): warning:  #223-D: function "CFM_PASS" declared implicitly
+..\drive\key.c(1162): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1428): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1456): warning:  #223-D: function "Createsysinfo" declared implicitly
+linking...
+Program Size: Code=164142 RO-data=118690 RW-data=2312 ZI-data=34192  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 19 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.258V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling R_Face.c...
+..\APP\R_Face.c(242): warning:  #223-D: function "DrawLock" declared implicitly
+..\APP\R_Face.c(394): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(398): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(402): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(419): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(425): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(443): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(463): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(481): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(500): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(563): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(594): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(723): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(747): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(778): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(823): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(823): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(837): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(837): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(851): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(851): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(865): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(865): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(879): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(879): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1270): warning:  #223-D: function "setmode_r" declared implicitly
+..\APP\R_Face.c(1641): warning:  #177-D: variable "hItem" was declared but never referenced
+..\APP\R_Face.c(1987): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1987): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(2030): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+linking...
+Program Size: Code=164146 RO-data=118690 RW-data=2312 ZI-data=34192  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 30 Warning(s).
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=164146 RO-data=118690 RW-data=2312 ZI-data=34192  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.256V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling stm32f4xx_it.c...
+..\User\stm32f4xx_it.c(382): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\stm32f4xx_it.c(396): warning:  #177-D: variable "crec" was declared but never referenced
+..\User\stm32f4xx_it.c(397): warning:  #177-D: variable "csend" was declared but never referenced
+..\User\stm32f4xx_it.c(398): warning:  #177-D: variable "sendbuf" was declared but never referenced
+..\User\stm32f4xx_it.c(399): warning:  #177-D: variable "sendlen" was declared but never referenced
+..\User\stm32f4xx_it.c(400): warning:  #177-D: variable "recrc" was declared but never referenced
+..\User\stm32f4xx_it.c(401): warning:  #177-D: variable "scrc" was declared but never referenced
+..\User\stm32f4xx_it.c(402): warning:  #177-D: variable "i" was declared but never referenced
+..\User\stm32f4xx_it.c(452): warning:  #223-D: function "IO_OFF" declared implicitly
+..\User\stm32f4xx_it.c(576): warning:  #223-D: function "memcpy" declared implicitly
+..\User\stm32f4xx_it.c(515): warning: C3017W: num may be used before being set
+linking...
+Program Size: Code=164146 RO-data=118690 RW-data=2312 ZI-data=34192  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 11 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.272V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling stm32f4xx_it.c...
+..\User\stm32f4xx_it.c(382): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\stm32f4xx_it.c(396): warning:  #177-D: variable "crec" was declared but never referenced
+..\User\stm32f4xx_it.c(397): warning:  #177-D: variable "csend" was declared but never referenced
+..\User\stm32f4xx_it.c(398): warning:  #177-D: variable "sendbuf" was declared but never referenced
+..\User\stm32f4xx_it.c(399): warning:  #177-D: variable "sendlen" was declared but never referenced
+..\User\stm32f4xx_it.c(400): warning:  #177-D: variable "recrc" was declared but never referenced
+..\User\stm32f4xx_it.c(401): warning:  #177-D: variable "scrc" was declared but never referenced
+..\User\stm32f4xx_it.c(402): warning:  #177-D: variable "i" was declared but never referenced
+..\User\stm32f4xx_it.c(452): warning:  #223-D: function "IO_OFF" declared implicitly
+..\User\stm32f4xx_it.c(576): warning:  #223-D: function "memcpy" declared implicitly
+..\User\stm32f4xx_it.c(515): warning: C3017W: num may be used before being set
+linking...
+Program Size: Code=164170 RO-data=118690 RW-data=2312 ZI-data=34192  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 11 Warning(s).
+Build target 'JK_BTSET'
+compiling stm32f4xx_it.c...
+..\User\stm32f4xx_it.c(382): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\stm32f4xx_it.c(396): warning:  #177-D: variable "crec" was declared but never referenced
+..\User\stm32f4xx_it.c(397): warning:  #177-D: variable "csend" was declared but never referenced
+..\User\stm32f4xx_it.c(398): warning:  #177-D: variable "sendbuf" was declared but never referenced
+..\User\stm32f4xx_it.c(399): warning:  #177-D: variable "sendlen" was declared but never referenced
+..\User\stm32f4xx_it.c(400): warning:  #177-D: variable "recrc" was declared but never referenced
+..\User\stm32f4xx_it.c(401): warning:  #177-D: variable "scrc" was declared but never referenced
+..\User\stm32f4xx_it.c(402): warning:  #177-D: variable "i" was declared but never referenced
+..\User\stm32f4xx_it.c(452): warning:  #223-D: function "IO_OFF" declared implicitly
+..\User\stm32f4xx_it.c(576): warning:  #223-D: function "memcpy" declared implicitly
+..\User\stm32f4xx_it.c(515): warning: C3017W: num may be used before being set
+linking...
+Program Size: Code=164194 RO-data=118690 RW-data=2312 ZI-data=34192  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 11 Warning(s).
+Build target 'JK_BTSET'
+compiling main.c...
+..\User\main.c(53): warning:  #223-D: function "TIM4_Int_Init" declared implicitly
+..\User\main.c(54): warning:  #223-D: function "TIM3_Int_Init" declared implicitly
+..\User\main.c(55): warning:  #223-D: function "TIM5_Int_Init" declared implicitly
+..\User\main.c(59): warning:  #223-D: function "USART3_Configuration" declared implicitly
+linking...
+Program Size: Code=164194 RO-data=118690 RW-data=2312 ZI-data=34192  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 4 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.259V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling stm32f4xx_it.c...
+..\User\stm32f4xx_it.c(382): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\User\stm32f4xx_it.c(396): warning:  #177-D: variable "crec" was declared but never referenced
+..\User\stm32f4xx_it.c(397): warning:  #177-D: variable "csend" was declared but never referenced
+..\User\stm32f4xx_it.c(398): warning:  #177-D: variable "sendbuf" was declared but never referenced
+..\User\stm32f4xx_it.c(399): warning:  #177-D: variable "sendlen" was declared but never referenced
+..\User\stm32f4xx_it.c(400): warning:  #177-D: variable "recrc" was declared but never referenced
+..\User\stm32f4xx_it.c(401): warning:  #177-D: variable "scrc" was declared but never referenced
+..\User\stm32f4xx_it.c(402): warning:  #177-D: variable "i" was declared but never referenced
+..\User\stm32f4xx_it.c(452): warning:  #223-D: function "IO_OFF" declared implicitly
+..\User\stm32f4xx_it.c(576): warning:  #223-D: function "memcpy" declared implicitly
+..\User\stm32f4xx_it.c(199): warning:  #177-D: function "MODS_SendAckErr" was declared but never referenced
+..\User\stm32f4xx_it.c(219): warning:  #177-D: function "MODS_SendAckOk" was declared but never referenced
+..\User\stm32f4xx_it.c(515): warning: C3017W: num may be used before being set
+linking...
+Program Size: Code=164098 RO-data=118690 RW-data=2312 ZI-data=34192  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 13 Warning(s).
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=164098 RO-data=118690 RW-data=2312 ZI-data=34192  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.258V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(125): warning:  #223-D: function "ResetPow" declared implicitly
+..\drive\TIM6.c(127): warning:  #223-D: function "ResetCDC" declared implicitly
+..\drive\TIM6.c(129): warning:  #223-D: function "ResetR" declared implicitly
+..\drive\TIM6.c(131): warning:  #223-D: function "ResetLoad" declared implicitly
+..\drive\TIM6.c(133): warning:  #223-D: function "ResetG" declared implicitly
+..\drive\TIM6.c(135): warning:  #223-D: function "ResetSET" declared implicitly
+..\drive\TIM6.c(175): warning:  #223-D: function "IO_OFF" declared implicitly
+..\drive\TIM6.c(191): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(232): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(294): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\drive\TIM6.c(296): warning:  #223-D: function "IO_OFF" declared implicitly
+..\drive\TIM6.c(321): warning:  #223-D: function "IO_OFF" declared implicitly
+..\drive\TIM6.c(100): warning:  #177-D: variable "crec" was declared but never referenced
+..\drive\TIM6.c(101): warning:  #177-D: variable "csend" was declared but never referenced
+..\drive\TIM6.c(102): warning:  #177-D: variable "sendbuf" was declared but never referenced
+..\drive\TIM6.c(103): warning:  #177-D: variable "sendlen" was declared but never referenced
+..\drive\TIM6.c(104): warning:  #177-D: variable "recrc" was declared but never referenced
+..\drive\TIM6.c(105): warning:  #177-D: variable "scrc" was declared but never referenced
+..\drive\TIM6.c(106): warning:  #177-D: variable "i" was declared but never referenced
+..\drive\TIM6.c(640): warning:  #223-D: function "UART_Action" declared implicitly
+..\drive\TIM6.c(575): warning:  #177-D: variable "addr" was declared but never referenced
+..\drive\TIM6.c(576): warning:  #177-D: variable "crc1" was declared but never referenced
+compiling AD7689.c...
+..\drive\AD7689.c(107): warning: C3017W: AD7689_Data may be used before being set
+..\drive\AD7689.c(184): warning: C3017W: var_chV1 may be used before being set
+..\drive\AD7689.c(184): warning: C3017W: var_chV may be used before being set
+..\drive\AD7689.c(184): warning: C3017W: var_chI may be used before being set
+linking...
+Program Size: Code=164090 RO-data=118690 RW-data=2312 ZI-data=34192  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 26 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.250V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+***JLink Error: Can not read register 15 (R15) while CPU is running
+***JLink Error: Can not read register 20 (CFBP) while CPU is running
+Programming Failed!
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.253V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 200 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling modbus.c...
+..\drive\modbus.c(49): error:  #20: identifier "g_tModS" is undefined
+..\drive\modbus.c(610): warning:  #177-D: variable "rave" was declared but never referenced
+..\drive\modbus.c(611): warning:  #177-D: variable "rcount" was declared but never referenced
+Target not created
+Build target 'JK_BTSET'
+compiling modbus.c...
+..\drive\modbus.c(611): warning:  #177-D: variable "rave" was declared but never referenced
+..\drive\modbus.c(612): warning:  #177-D: variable "rcount" was declared but never referenced
+linking...
+Program Size: Code=163962 RO-data=118690 RW-data=2312 ZI-data=34192  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 2 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530bnew\5530B.NEW\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.254V
 State of Pins: 
 TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6

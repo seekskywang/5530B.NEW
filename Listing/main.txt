@@ -32,9 +32,9 @@
 00002a  4621              MOV      r1,r4
 00002c  f242700f          MOV      r0,#0x270f
 000030  f7fffffe          BL       TIM3_Int_Init
-;;;55         TIM5_Int_Init(100-1,8400-1);
+;;;55         TIM5_Int_Init(90-1,8400-1);
 000034  4621              MOV      r1,r4
-000036  2063              MOVS     r0,#0x63
+000036  2059              MOVS     r0,#0x59
 000038  f7fffffe          BL       TIM5_Int_Init
 ;;;56     	TIM6_Config();
 00003c  f7fffffe          BL       TIM6_Config

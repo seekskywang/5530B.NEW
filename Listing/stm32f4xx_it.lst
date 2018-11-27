@@ -35811,6 +35811,8 @@ N
 Nextern __IO int32_t OS_TimeMS;
 Xextern volatile int32_t OS_TimeMS;
 Nstatic void MODS_03H(void);
+Nstatic void MODS_06H(void);
+Nstatic void MODS_SendAckErr(uint8_t _ucErrCode);
 Nextern struct bitDefine
 N{
 N	unsigned bit0: 1;
@@ -35965,6 +35967,46 @@ N		flag_Tim_USART=0;
 X		(flagD . bit0)=0;
 N		UART_Buffer_Size=0;	
 N	}
+N}
+N
+N/*
+N*********************************************************************************************************
+N*	函 数 名: MODS_SendAckErr
+N*	功能说明: 发送错误应答
+N*	形    参: _ucErrCode : 错误代码
+N*	返 回 值: 无
+N*********************************************************************************************************
+N*/
+Nstatic void MODS_SendAckErr(uint8_t _ucErrCode)
+N{
+N	uint8_t txbuf[3];
+N
+N	txbuf[0] = g_tModS.RxBuf[0];					/* 485地址 */
+N	txbuf[1] = g_tModS.RxBuf[1] | 0x80;				/* 异常的功能码 */
+N	txbuf[2] = _ucErrCode;							/* 错误代码(01,02,03,04) */
+N
+N	MODS_SendWithCRC(txbuf, 3);
+N}
+N
+N
+N/*
+N*********************************************************************************************************
+N*	函 数 名: MODS_SendAckOk
+N*	功能说明: 发送正确的应答.
+N*	形    参: 无
+N*	返 回 值: 无
+N*********************************************************************************************************
+N*/
+Nstatic void MODS_SendAckOk(void)
+N{
+N	uint8_t txbuf[6];
+N	uint8_t i;
+N
+N	for (i = 0; i < 6; i++)
+N	{
+N		txbuf[i] = g_tModS.RxBuf[i];
+N	}
+N	MODS_SendWithCRC(txbuf, 6);
 N}
 N
 N/*
@@ -36128,7 +36170,7 @@ N            if(i < 10)
 N            {
 N             sum += (UART_Buffer_Rece[2] * 256 + UART_Buffer_Rece[3])/10.0;
 N            }else{
-W "..\User\stm32f4xx_it.c" 340 24 single-precision operand implicitly converted to double-precision
+W "..\User\stm32f4xx_it.c" 382 24 single-precision operand implicitly converted to double-precision
 N                temp = sum/10.0;
 N                sum = 0;
 N                i = 0;
@@ -36160,17 +36202,17 @@ N            MODS_03H();
 N        }break;
 N        case 0x06:
 N        {
-N            
+N            MODS_06H();
 N        }break;
 N        default:break;
 N    }
-W "..\User\stm32f4xx_it.c" 354 8 variable "crec" was declared but never referenced
-W "..\User\stm32f4xx_it.c" 355 9 variable "csend" was declared but never referenced
-W "..\User\stm32f4xx_it.c" 356 16 variable "sendbuf" was declared but never referenced
-W "..\User\stm32f4xx_it.c" 357 8 variable "sendlen" was declared but never referenced
-W "..\User\stm32f4xx_it.c" 358 16 variable "recrc" was declared but never referenced
-W "..\User\stm32f4xx_it.c" 359 16 variable "scrc" was declared but never referenced
-W "..\User\stm32f4xx_it.c" 360 8 variable "i" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 396 8 variable "crec" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 397 9 variable "csend" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 398 16 variable "sendbuf" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 399 8 variable "sendlen" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 400 16 variable "recrc" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 401 16 variable "scrc" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 402 8 variable "i" was declared but never referenced
 N}
 N
 N/*
@@ -36185,7 +36227,7 @@ N*/
 Nstatic uint8_t MODS_ReadRegValue(uint16_t reg_addr, uint8_t *reg_value)
 N{
 N    uint16_t value;
-N	
+N	lock = 1;
 N	switch (reg_addr)									/* 判断寄存器地址 */
 N	{
 N        case SLAVE_REG_P00:
@@ -36214,7 +36256,7 @@ N			value =	(int)(DISS_POW_Current*1000);		/* 将寄存器值读出 */
 N			break;
 N		case SLAVE_REG_P05:
 X		case 0x0005:
-W "..\User\stm32f4xx_it.c" 410 4 function "IO_OFF" declared implicitly
+W "..\User\stm32f4xx_it.c" 452 4 function "IO_OFF" declared implicitly
 N			IO_OFF();
 N            SET_Current_Laod = 1000;
 X            Run_Control[4] = 1000;
@@ -36246,7 +36288,7 @@ N			break;
 N
 N		case SLAVE_REG_P11:
 X		case 0x000B:
-N			value =	0;							/* 将寄存器值读出 */
+N			value =	(int)temp;							/* 将寄存器值读出 */
 N			break;
 N		case SLAVE_REG_P12:
 X		case 0x000C:
@@ -36259,25 +36301,30 @@ N			value =	0;							/* 将寄存器值读出 */
 N			break;
 N		case SLAVE_REG_P14:
 X		case 0x000E:
-N			value =	0;	
+N			value =	!flag_Load_CC;	
+X			value =	!(flagD . bit7);	
 N			break;
 N
 N		case SLAVE_REG_P15:
 X		case 0x000F:
-N			value =	0;							/* 将寄存器值读出 */
+N			value =	load_v;							/* 将寄存器值读出 */
+X			value =	Run_Control[41];							 
 N			break;
 N		case SLAVE_REG_P16:
 X		case 0x0010:
-N			value =	0;	
+N			value =	load_c;	
+X			value =	Run_Control[37];	
 N			break;
 N
 N		case SLAVE_REG_P17:
 X		case 0x0011:
-N			value =	0;							/* 将寄存器值读出 */
+N			value =	pow_v*10;							/* 将寄存器值读出 */
+X			value =	Run_Control[38]*10;							 
 N			break;
 N		case SLAVE_REG_P18:
 X		case 0x0012:
-N			value =	0;							/* 将寄存器值读出 */
+N			value =	pow_c;							/* 将寄存器值读出 */
+X			value =	Run_Control[40];							 
 N			break;	
 N		default:
 N			return 0;
@@ -36359,7 +36406,7 @@ N{
 N	uint16_t crc;
 N	uint8_t buf[S_TX_BUF_SIZE];
 X	uint8_t buf[128];
-W "..\User\stm32f4xx_it.c" 534 2 function "memcpy" declared implicitly
+W "..\User\stm32f4xx_it.c" 576 2 function "memcpy" declared implicitly
 N	memcpy(buf, _pBuf, _ucLen);
 N	crc = CRC16(_pBuf, _ucLen);
 N	buf[_ucLen++] = crc >> 8;
@@ -36377,8 +36424,59 @@ N}
 N
 Nstatic void MODS_06H(void)
 N{
+N    uint16_t reg;
+N	uint16_t value;
+N
+N	g_tModS.RspCode = RSP_OK;
+X	g_tModS.RspCode = 0;
+N
+N	if (g_tModS.RxCount != 8)
+N	{
+N		g_tModS.RspCode = RSP_ERR_VALUE;		/* 数据值域错误 */
+X		g_tModS.RspCode = 0x03;		 
+N		goto err_ret;
+N	}
+N
+N	reg = BEBufToUint16(&g_tModS.RxBuf[2]); 	/* 寄存器号 */
+N	value = BEBufToUint16(&g_tModS.RxBuf[4]);	/* 寄存器值 */
 N    
+N    if(reg == 0x0E)
+N    {
+N        if(value == 00)
+N        {
+N            GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
+N            flag_Load_CC = 1;
+X            (flagD . bit7) = 1;
+N        }else if(value == 01){
+N            GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV
+X            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
+N            flag_Load_CC = 0;
+X            (flagD . bit7) = 0;
+N        }
+N    }
+N// 	if (MODS_WriteRegValue(reg, value) == 1)	/* 该函数会把写入的值存入寄存器 */
+N// 	{
+N// 		;
+N// 	}
+N// 	else
+N// 	{
+N// 		g_tModS.RspCode = RSP_ERR_REG_ADDR;		/* 寄存器地址错误 */
+N// 	}
+N
+Nerr_ret:
+N	if (g_tModS.RspCode == RSP_OK)				/* 正确应答 */
+X	if (g_tModS.RspCode == 0)				 
+N	{
+N//		MODS_SendAckOk();
+N	}
+N	else
+N	{
+N//		MODS_SendAckErr(g_tModS.RspCode);		/* 告诉主机命令错误 */
+N	}
 N}
+N
+N
 Nuint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen)
 N{    
 N    uint8_t ucCRCHi = 0xFF; /* 高CRC字节初始化 */
@@ -36416,4 +36514,5 @@ N  */
 N
 N
 N/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-W "..\User\stm32f4xx_it.c" 549 13 function "MODS_06H" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 199 13 function "MODS_SendAckErr" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 219 13 function "MODS_SendAckOk" was declared but never referenced

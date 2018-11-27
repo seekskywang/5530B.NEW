@@ -61,6 +61,7 @@ extern vu8 rpow;
 extern vu8 short_finish;
 extern vu8 short_flag;
 extern float v;
+extern vu8 oc_mode;
 //????? 3 ?????
 //arrú?????c pscú??????
 //???????????:Tout=((arr+1)*(psc+1))/Ft us.
@@ -176,10 +177,17 @@ void TIM4_IRQHandler(void)
             }
             if(short_flag == 1)
             {
-                SET_Current_Laod = (int)(oc_data*1000)+8000;
-//                flag_Load_CC = 1;
-                GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
-                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+                if(oc_mode == 0)
+                {
+                    SET_Current_Laod = (int)(oc_data*1000)+8000;
+                    flag_Load_CC = 1;
+                    GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+                    GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+                } else if(oc_mode == 1){
+                    GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV
+                    flag_Load_CC = 0;
+                    GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+                }
                 if((v - DISS_Voltage) > v*0.6)
                 {
                     GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
@@ -208,31 +216,17 @@ void TIM4_IRQHandler(void)
 //         }
         if(usartocflag == 1)
         {
-//             g_tModS.TxBuf[0] = g_tModS.RxBuf[0];
-//             g_tModS.TxBuf[1] = g_tModS.RxBuf[1];
-//             g_tModS.TxBuf[2] = 0x26;
-//             g_tModS.TxBuf[3] = R_VLUE>>8;
-//             g_tModS.TxBuf[4] = R_VLUE;
-//             g_tModS.TxBuf[5] = (int)(DISS_Voltage*1000)>>8;
-//             g_tModS.TxBuf[6] = (int)(DISS_Voltage*1000);
-//             g_tModS.TxBuf[7] = (int)(DISS_Current*1000)>>8;
-//             g_tModS.TxBuf[8] = (int)(DISS_Current*1000);
-//             g_tModS.TxBuf[9] = (int)(DISS_POW_Voltage*100)>>8;
-//             g_tModS.TxBuf[10] = (int)(DISS_POW_Voltage*100);
-//             g_tModS.TxBuf[11] = (int)(DISS_POW_Current*1000)>>8;
-//             g_tModS.TxBuf[12] = (int)(DISS_POW_Current*1000);
-//             
-//             for(i=15;i<41;i++)
-//             {
-//                 g_tModS.TxBuf[i] = 0;
-//             }
-//             g_tModS.TxBuf[15] = 0;
-//             g_tModS.TxBuf[16] = 0;
-            GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-            GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-            flag_Load_CC = 1;
-            GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
-            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+
+            if(flag_Load_CC == 1)
+            {              
+                GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+            }else if(flag_Load_CC == 0){
+                SET_Voltage_Laod = 0;
+                GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV
+                flag_Load_CC = 0;
+                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+            }
             crec2 = crec1;
             crec1 = DISS_Current;
             if(crec1 < crec2 && crec2 > 0.3)
@@ -242,7 +236,7 @@ void TIM4_IRQHandler(void)
                 g_tModS.TxBuf[14] = (int)(oc_data*1000);
                 SET_Current_Laod = set_init_c;
                 GPIO_SetBits(GPIOA,GPIO_Pin_15);//鍏抽棴璐熻浇 
-                MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);
+//                MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);
                 t_onoff = 0;
                 usartocflag = 0;
                 crec1 = 0;
@@ -250,12 +244,15 @@ void TIM4_IRQHandler(void)
                 powflag = 1;
                 
             }else{
-                if(uocount == 10)
+                if(flag_Load_CC == 1)
                 {
-                    SET_Current_Laod = SET_Current_Laod + 10;
-                    uocount = 0;
-                }else{
-                    uocount++;
+                    if(uocount == 10)
+                    {
+                        SET_Current_Laod = SET_Current_Laod + 10;
+                        uocount = 0;
+                    }else{
+                        uocount++;
+                    }
                 }                    
             }
         }
@@ -273,17 +270,27 @@ void TIM4_IRQHandler(void)
             }else{
                 powcount = 0;
                 powflag = 0;
-                IO_OFF();
+                GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+                GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器 
                 usartshortflag = 1;
                 
             }
         }
         if(usartshortflag == 1)
         {
-            SET_Current_Laod = (int)(oc_data*1000)+8000;
-            flag_Load_CC = 1;
-            GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
-            GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+            if(flag_Load_CC == 1)
+            {
+                SET_Current_Laod = (int)(oc_data*1000)+5000; 
+                GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+                flag_Load_CC = 1;                              
+                GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+            }else if(flag_Load_CC == 0){
+                SET_Voltage_Laod = 0;
+                GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV
+                flag_Load_CC = 0;
+                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+            }
             if((shortv - DISS_Voltage) > shortv*0.6)
             {
                 IO_OFF();
@@ -308,6 +315,7 @@ void TIM4_IRQHandler(void)
                 powcount++;
 //                 shortv = DISS_Voltage;
             }else{
+                SET_Current_Laod = 1000;
                 powcount = 0;
                 finishflag = 0;
                 IO_OFF();                
@@ -613,11 +621,11 @@ void MODS_Poll(void)
 	}
 
 	/* 计算CRC校验和 */
-	crc1 = CRC16(g_tModS.RxBuf, g_tModS.RxCount);
-	if (crc1 != 0)
-	{
-		goto err_ret;
-	}
+// 	crc1 = CRC16(g_tModS.RxBuf, g_tModS.RxCount);
+// 	if (crc1 != 0)
+// 	{
+// 		goto err_ret;
+// 	}
 
 // 	/* 站地址 (1字节） */
 // 	addr = g_tModS.RxBuf[0];				/* 第1字节 站号 */

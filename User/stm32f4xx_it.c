@@ -34,6 +34,8 @@
 
 extern __IO int32_t OS_TimeMS;
 static void MODS_03H(void);
+static void MODS_06H(void);
+static void MODS_SendAckErr(uint8_t _ucErrCode);
 extern struct bitDefine
 {
 	unsigned bit0: 1;
@@ -184,6 +186,46 @@ void SysTick_Handler(void)
 		flag_Tim_USART=0;
 		UART_Buffer_Size=0;	
 	}
+}
+
+/*
+*********************************************************************************************************
+*	函 数 名: MODS_SendAckErr
+*	功能说明: 发送错误应答
+*	形    参: _ucErrCode : 错误代码
+*	返 回 值: 无
+*********************************************************************************************************
+*/
+static void MODS_SendAckErr(uint8_t _ucErrCode)
+{
+	uint8_t txbuf[3];
+
+	txbuf[0] = g_tModS.RxBuf[0];					/* 485地址 */
+	txbuf[1] = g_tModS.RxBuf[1] | 0x80;				/* 异常的功能码 */
+	txbuf[2] = _ucErrCode;							/* 错误代码(01,02,03,04) */
+
+	MODS_SendWithCRC(txbuf, 3);
+}
+
+
+/*
+*********************************************************************************************************
+*	函 数 名: MODS_SendAckOk
+*	功能说明: 发送正确的应答.
+*	形    参: 无
+*	返 回 值: 无
+*********************************************************************************************************
+*/
+static void MODS_SendAckOk(void)
+{
+	uint8_t txbuf[6];
+	uint8_t i;
+
+	for (i = 0; i < 6; i++)
+	{
+		txbuf[i] = g_tModS.RxBuf[i];
+	}
+	MODS_SendWithCRC(txbuf, 6);
 }
 
 /*
@@ -367,7 +409,7 @@ void RecHandle(void)
         }break;
         case 0x06:
         {
-            
+            MODS_06H();
         }break;
         default:break;
     }
@@ -385,7 +427,7 @@ void RecHandle(void)
 static uint8_t MODS_ReadRegValue(uint16_t reg_addr, uint8_t *reg_value)
 {
     uint16_t value;
-	
+	lock = 1;
 	switch (reg_addr)									/* 判断寄存器地址 */
 	{
         case SLAVE_REG_P00:
@@ -431,7 +473,7 @@ static uint8_t MODS_ReadRegValue(uint16_t reg_addr, uint8_t *reg_value)
 			break;
 
 		case SLAVE_REG_P11:
-			value =	0;							/* 将寄存器值读出 */
+			value =	(int)temp;							/* 将寄存器值读出 */
 			break;
 		case SLAVE_REG_P12:
 			value =	0;	
@@ -441,21 +483,21 @@ static uint8_t MODS_ReadRegValue(uint16_t reg_addr, uint8_t *reg_value)
 			value =	0;							/* 将寄存器值读出 */
 			break;
 		case SLAVE_REG_P14:
-			value =	0;	
+			value =	!flag_Load_CC;	
 			break;
 
 		case SLAVE_REG_P15:
-			value =	0;							/* 将寄存器值读出 */
+			value =	load_v;							/* 将寄存器值读出 */
 			break;
 		case SLAVE_REG_P16:
-			value =	0;	
+			value =	load_c;	
 			break;
 
 		case SLAVE_REG_P17:
-			value =	0;							/* 将寄存器值读出 */
+			value =	pow_v*10;							/* 将寄存器值读出 */
 			break;
 		case SLAVE_REG_P18:
-			value =	0;							/* 将寄存器值读出 */
+			value =	pow_c;							/* 将寄存器值读出 */
 			break;	
 		default:
 			return 0;
@@ -548,8 +590,52 @@ void MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen)
 
 static void MODS_06H(void)
 {
+    uint16_t reg;
+	uint16_t value;
+
+	g_tModS.RspCode = RSP_OK;
+
+	if (g_tModS.RxCount != 8)
+	{
+		g_tModS.RspCode = RSP_ERR_VALUE;		/* 数据值域错误 */
+		goto err_ret;
+	}
+
+	reg = BEBufToUint16(&g_tModS.RxBuf[2]); 	/* 寄存器号 */
+	value = BEBufToUint16(&g_tModS.RxBuf[4]);	/* 寄存器值 */
     
+    if(reg == 0x0E)
+    {
+        if(value == 00)
+        {
+            GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+            flag_Load_CC = 1;
+        }else if(value == 01){
+            GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV
+            flag_Load_CC = 0;
+        }
+    }
+// 	if (MODS_WriteRegValue(reg, value) == 1)	/* 该函数会把写入的值存入寄存器 */
+// 	{
+// 		;
+// 	}
+// 	else
+// 	{
+// 		g_tModS.RspCode = RSP_ERR_REG_ADDR;		/* 寄存器地址错误 */
+// 	}
+
+err_ret:
+	if (g_tModS.RspCode == RSP_OK)				/* 正确应答 */
+	{
+//		MODS_SendAckOk();
+	}
+	else
+	{
+//		MODS_SendAckErr(g_tModS.RspCode);		/* 告诉主机命令错误 */
+	}
 }
+
+
 uint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen)
 {    
     uint8_t ucCRCHi = 0xFF; /* 高CRC字节初始化 */

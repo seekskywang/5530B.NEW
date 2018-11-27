@@ -1470,6 +1470,7 @@ void Key_Funtion(void)
                 case KEY_Lock :
                 {
                     lock = 0;
+                    usartocflag = 0;
                     KeyCounter = 0;
                     BEEP_Tiggr();//
                 }break;

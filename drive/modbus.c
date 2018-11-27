@@ -39,6 +39,7 @@ vu8  correct_por[6];
 /*************************变量定义***********************************/
 vu32 Run_Control[42];
 vu8 ADDR;
+extern struct MODS_T g_tModS;
 //============================函数声明===============================//
 vu16 Hardware_CRC(vu8 *p_buffer,vu8 count);
 //===========================MODBUS协议=============================//
@@ -46,26 +47,26 @@ void UART_Action(void)
 {//RUT??ú
 	//ADDR  ???  ??????????   ??????????  ?????????   ????????  CRC? CRC?
 	//????úADDR ??? ???????  ???  ??? ..... CRC?  CRC?
-	if (UART_Buffer_Rece[0] == ADDR)
+	if (g_tModS.RxBuf[0] == ADDR)
 	{
-		if (UART_Buffer_Rece[1] == (0x03))	//??3 ???   
+		if (g_tModS.RxBuf[1] == (0x03))	//??3 ???   
 		{																		 
 			vu8 i;
 			vu16 crc_result;
-			crc_result = (UART_Buffer_Rece[6] << 8) + UART_Buffer_Rece[7];
-			if ((crc_result == Hardware_CRC(UART_Buffer_Rece,6)) ||(crc_result == 0) )
+			crc_result = (g_tModS.RxBuf[6] << 8) + g_tModS.RxBuf[7];
+			if ((crc_result == Hardware_CRC(g_tModS.RxBuf,6)) ||(crc_result == 0) )
 			{
-				if (UART_Buffer_Rece[3] < 0x07)    								//?????????Χ?
+				if (g_tModS.RxBuf[3] < 0x07)    								//?????????Χ?
 				{
-					if ((UART_Buffer_Rece[3] + UART_Buffer_Rece[5]) < 0x0F)		//??????????????????Χ?
+					if ((g_tModS.RxBuf[3] + g_tModS.RxBuf[5]) < 0x0F)		//??????????????????Χ?
 					{							
 						UART_Buffer_Send[0] = ADDR;
 						UART_Buffer_Send[1] = 0x03;
-						UART_Buffer_Send[2] = UART_Buffer_Rece[5]*2;
+						UART_Buffer_Send[2] = g_tModS.RxBuf[5]*2;
 						for (i=0;i<UART_Buffer_Send[2];i++)
 						{
-							if ((i % 2) == 0) UART_Buffer_Send[3 + i] = Run_Control[UART_Buffer_Rece[3] + i / 2] >> 8;
-							else UART_Buffer_Send[3 + i] = Run_Control[UART_Buffer_Rece[3] + i / 2];														
+							if ((i % 2) == 0) UART_Buffer_Send[3 + i] = Run_Control[g_tModS.RxBuf[3] + i / 2] >> 8;
+							else UART_Buffer_Send[3 + i] = Run_Control[g_tModS.RxBuf[3] + i / 2];														
 						}
 						crc_result = Hardware_CRC(UART_Buffer_Send,UART_Buffer_Send[2] + 3);
 						UART_Buffer_Send[3 + UART_Buffer_Send[2]] = crc_result >> 8;
@@ -78,28 +79,28 @@ void UART_Action(void)
 		}
 	} 
 //===============================д???=================================
-	if ((UART_Buffer_Rece[0] == 0) || (UART_Buffer_Rece[0] == ADDR) || (UART_Buffer_Rece[0] == ((ADDR-1)/4+100)))	 
+	if ((g_tModS.RxBuf[0] == 0) || (g_tModS.RxBuf[0] == ADDR) || (g_tModS.RxBuf[0] == ((ADDR-1)/4+100)))	 
 	{
 		vu8 var8;
 		vu8 a=0;
 		vu16 var16;
 		vu16 crc_result;
 //=========================????6 д?????===========================
-		if (UART_Buffer_Rece[1] == 6)                                 //???????ˇ????6
+		if (g_tModS.RxBuf[1] == 6)                                 //???????ˇ????6
 		{
-			if (UART_Buffer_Rece[3] < 0x05)							  //????д???ˇ???д?Χ?
+			if (g_tModS.RxBuf[3] < 0x05)							  //????д???ˇ???д?Χ?
 			{
-				crc_result = (UART_Buffer_Rece[6] << 8) + UART_Buffer_Rece[7];
-				if ((crc_result == Hardware_CRC(UART_Buffer_Rece,6)) ||(crc_result == 0) )		  //??CRC
+				crc_result = (g_tModS.RxBuf[6] << 8) + g_tModS.RxBuf[7];
+				if ((crc_result == Hardware_CRC(g_tModS.RxBuf,6)) ||(crc_result == 0) )		  //??CRC
 				{
-					var16 = (UART_Buffer_Rece[4] << 8) + UART_Buffer_Rece[5];	//?5 6?????д????
-					var8 = UART_Buffer_Rece[3];	        						//?3 4?????д????
+					var16 = (g_tModS.RxBuf[4] << 8) + g_tModS.RxBuf[5];	//?5 6?????д????
+					var8 = g_tModS.RxBuf[3];	        						//?3 4?????д????
 					Run_Control[var8] = var16;			    //???д??????
 
-					if (UART_Buffer_Rece[0] == ADDR)							//??????????
+					if (g_tModS.RxBuf[0] == ADDR)							//??????????
 					{
 						for (a=0;a<8;a++)
-						{UART_Buffer_Send[a] = UART_Buffer_Rece[a];}
+						{UART_Buffer_Send[a] = g_tModS.RxBuf[a];}
 						Transmit_BUFFERsize = 8;						//??????ì???CRC
 						UART_SEND_flag=1;
 					}
@@ -111,23 +112,23 @@ void UART_Action(void)
 //     ?? ?? д??????  д?????? д????  д???? д????  ??? ??? ......CRC? CRC?
 //??????:
 //     ?? ?? д??????  д??????  д????? д?????  CRC?  CRC? 
-		if (UART_Buffer_Rece[1] == 16)										  
+		if (g_tModS.RxBuf[1] == 16)										  
 		{	
-			if ((UART_Buffer_Rece[6] == 6) && (UART_Buffer_Rece[3] == 0x00))	//??lд??????
+			if ((g_tModS.RxBuf[6] == 6) && (g_tModS.RxBuf[3] == 0x00))	//??lд??????
 			{
-				crc_result = (UART_Buffer_Rece[13] << 8) + UART_Buffer_Rece[14];
-				if ((crc_result == Hardware_CRC(UART_Buffer_Rece,13)) ||(crc_result == 0) )	   //??CRC
+				crc_result = (g_tModS.RxBuf[13] << 8) + g_tModS.RxBuf[14];
+				if ((crc_result == Hardware_CRC(g_tModS.RxBuf,13)) ||(crc_result == 0) )	   //??CRC
 				{												
-					for (var8=0;var8<3;var8++) Run_Control[var8] = (UART_Buffer_Rece[var8*2+7] << 8) + UART_Buffer_Rece[var8*2+8];
+					for (var8=0;var8<3;var8++) Run_Control[var8] = (g_tModS.RxBuf[var8*2+7] << 8) + g_tModS.RxBuf[var8*2+8];
 
-					if (UART_Buffer_Rece[0] == ADDR)					  //?????????
+					if (g_tModS.RxBuf[0] == ADDR)					  //?????????
 					{
 						UART_Buffer_Send[0] = ADDR;
 						UART_Buffer_Send[1] = 16;
-						UART_Buffer_Send[2] = UART_Buffer_Rece[2];
-						UART_Buffer_Send[3] = UART_Buffer_Rece[3];
-						UART_Buffer_Send[4] = UART_Buffer_Rece[4];
-						UART_Buffer_Send[5] = UART_Buffer_Rece[5];
+						UART_Buffer_Send[2] = g_tModS.RxBuf[2];
+						UART_Buffer_Send[3] = g_tModS.RxBuf[3];
+						UART_Buffer_Send[4] = g_tModS.RxBuf[4];
+						UART_Buffer_Send[5] = g_tModS.RxBuf[5];
 						crc_result = Hardware_CRC(UART_Buffer_Send,6);	 //??CRC?
 						UART_Buffer_Send[6] = crc_result>>8;
 						UART_Buffer_Send[7] = crc_result;				 
@@ -139,15 +140,15 @@ void UART_Action(void)
 		}
 	}
 /*************************************???У???**************************************************************************/
-	if (((UART_Buffer_Rece[0] == 0x01)&&(UART_Buffer_Rece[2] == 0xA5))||(flag_ADJ_ON==1))			   //??У?
+	if (((g_tModS.RxBuf[0] == 0x01)&&(g_tModS.RxBuf[2] == 0xA5))||(flag_ADJ_ON==1))			   //??У?
 	{ 
-		if(UART_Buffer_Rece[1] == 0x01)
+		if(g_tModS.RxBuf[1] == 0x01)
 		{
 			flag_ADJ_VL=0;
 			Modify_A_READ = Vmon1_value;//????
-			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//????
+			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//????
 		}
-		if (UART_Buffer_Rece[1] == 0x02)			   //???У???
+		if (g_tModS.RxBuf[1] == 0x02)			   //???У???
 		{
 			vu32 var16;
 			vu32 var32a;
@@ -157,7 +158,7 @@ void UART_Action(void)
 			vu32 var32c;
 			vu32 var32d;
 			Modify_B_READ =Vmon1_value;//????
-			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//????
+			Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//????
 			var32a = Modify_B_ACT;
 			var32a = var32a - Modify_A_ACT;
 			var32a = var32a << 12;
@@ -187,15 +188,15 @@ void UART_Action(void)
 		
 		
 /************************************???·????У?*****************************************************************/
-		if (UART_Buffer_Rece[1] == 0x03)			   //CC??У?
+		if (g_tModS.RxBuf[1] == 0x03)			   //CC??У?
 		{
 			Modify_A_READ = Imon1_value;//
 			Modify_C_READ = Contr_Laod;//
-			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
 			Flag_DAC_OFF=1;//
 		}
 
-		if (UART_Buffer_Rece[1] == 0x04)			   //
+		if (g_tModS.RxBuf[1] == 0x04)			   //
 		{
 			vu32 var16;
 			vu32 var32a;
@@ -207,7 +208,7 @@ void UART_Action(void)
 			
 			Modify_B_READ = Imon1_value;
 			Modify_D_READ = Contr_Laod;
-			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+			Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
 			
 			var32a = Modify_B_ACT;
 			var32a = var32a - Modify_A_ACT;
@@ -259,13 +260,13 @@ void UART_Action(void)
 			Flag_DAC_OFF =0;
 		}
 /*************************************??CV??????У?**************************************************************/
-		if(UART_Buffer_Rece[1] == 0x05)
+		if(g_tModS.RxBuf[1] == 0x05)
 		{
 			Modify_A_READ = Vmon1_value;//????
 			Modify_C_READ = Contr_Laod;//?????
-			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//????
+			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//????
 		}
-		if (UART_Buffer_Rece[1] == 0x06)			   //???У???
+		if (g_tModS.RxBuf[1] == 0x06)			   //???У???
 		{
 			vu32 var16;
 			vu32 var32a;
@@ -277,7 +278,7 @@ void UART_Action(void)
 			
 			Modify_B_READ =Vmon1_value;//????
 			Modify_D_READ =Contr_Laod;//?????
-			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//????
+			Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//????
 			var32a = Modify_B_ACT;
 			var32a = var32a - Modify_A_ACT;
 			var32a = var32a << 12;
@@ -330,12 +331,12 @@ void UART_Action(void)
 			DAC_Flag=0;
 		}
 /*************************************??У?**************************************************************************/
-		if(UART_Buffer_Rece[1] == 0x07||flag_ADJ_VL==1)
+		if(g_tModS.RxBuf[1] == 0x07||flag_ADJ_VL==1)
 		{
 			Modify_A_READ = Rmon_value;//????
-			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//????
+			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//????
 		}
-		if (UART_Buffer_Rece[1] == 0x08||flag_ADJ_VH==1)			   //???У???
+		if (g_tModS.RxBuf[1] == 0x08||flag_ADJ_VH==1)			   //???У???
 		{
 			vu16 var16;
 			vu32 var32a;
@@ -346,7 +347,7 @@ void UART_Action(void)
 			vu32 var32d;
 			Modify_B_READ =Rmon_value;//????
 			flag_OverV=1;
-			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//????
+			Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//????
 			if(flag_OverV==1)//??????д?????У???д?FLASH
 			{
 				var32a = Modify_B_ACT;
@@ -402,14 +403,14 @@ void UART_Action(void)
 			flag_ADJ_VH=0;//????λ??????
 		}		
 /*******************************??CC???·????У?******************************************/	
-		if (UART_Buffer_Rece[1] == 0x09||flag_ADJ_ALCC==1)			   //?·?У?
+		if (g_tModS.RxBuf[1] == 0x09||flag_ADJ_ALCC==1)			   //?·?У?
 		{
 			Modify_A_READ = Imon_value;//??·
 			Modify_C_READ = Contr_Current;//???·
-			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
 		}
 
-		if (UART_Buffer_Rece[1] == 0x0A||flag_ADJ_AHCC==1)			   //?·?У???
+		if (g_tModS.RxBuf[1] == 0x0A||flag_ADJ_AHCC==1)			   //?·?У???
 		{
 			vu16 var16;
 			vu32 var32a;
@@ -421,7 +422,7 @@ void UART_Action(void)
 			
 			Modify_D_READ = Contr_Current;
 			Modify_B_READ = Imon_value;
-			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+			Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
 			var32a = Modify_B_ACT;
 			var32a = var32a - Modify_A_ACT;
 			var32a = var32a << 14;
@@ -472,14 +473,14 @@ void UART_Action(void)
 			Flag_DAC_OFF=0;
 		}
 /*******************************????????У?******************************************/	
-		if (UART_Buffer_Rece[1] == 0x0B)			   //?·?У?
+		if (g_tModS.RxBuf[1] == 0x0B)			   //?·?У?
 		{
 			Modify_A_READ = Vmon_value;//??·
 			Modify_C_READ = Contr_Voltage;//???·
-			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
 		}
 
-		if (UART_Buffer_Rece[1] == 0x0C)			   //?·?У???
+		if (g_tModS.RxBuf[1] == 0x0C)			   //?·?У???
 		{
 			vu16 var16;
 			vu32 var32a;
@@ -491,7 +492,7 @@ void UART_Action(void)
 			
 			Modify_D_READ = Contr_Voltage;
 			Modify_B_READ = Vmon_value;
-			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+			Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
 			var32a = Modify_B_ACT;
 			var32a = var32a - Modify_A_ACT;
 			var32a = var32a << 14;
@@ -542,13 +543,13 @@ void UART_Action(void)
 			Flag_DAC_OFF=0;
 		}
 /****************???·?У?**********************************/
-		if (UART_Buffer_Rece[1] == 0x0D)			  
+		if (g_tModS.RxBuf[1] == 0x0D)			  
 		{ 
 			Modify_A_READ = Imon_value;
-			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
 		}
 
-		if (UART_Buffer_Rece[1] == 0x0E)			   
+		if (g_tModS.RxBuf[1] == 0x0E)			   
 		{
 			vu16 var16;
 			vu32 var32a;
@@ -559,7 +560,7 @@ void UART_Action(void)
 			vu32 var32d;
 			
 			Modify_B_READ = Imon_value;
-			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+			Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
 			var32a = Modify_B_ACT;
 			var32a = var32a - Modify_A_ACT;
 			var32a = var32a << 14;
@@ -586,19 +587,19 @@ void UART_Action(void)
 			Flag_DAC_OFF=0;
 		}
 /***********??DAC*******************************************/
-		if (UART_Buffer_Rece[1] == 0x0F)			   
+		if (g_tModS.RxBuf[1] == 0x0F)			   
 		{
-			Contr_Laod = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+			Contr_Laod = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
 			Flag_DAC_OFF=1;
 		}
-		if (UART_Buffer_Rece[1] == 0x20)			   
+		if (g_tModS.RxBuf[1] == 0x20)			   
 		{
-			Contr_Voltage = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+			Contr_Voltage = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
 			Flag_DAC_OFF=1;
 		}
-		if (UART_Buffer_Rece[1] == 0x21)			   
+		if (g_tModS.RxBuf[1] == 0x21)			   
 		{
-			Contr_Current = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];
+			Contr_Current = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
 			Flag_DAC_OFF=1;
 		}
 	}

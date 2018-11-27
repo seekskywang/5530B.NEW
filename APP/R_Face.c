@@ -730,6 +730,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         }else{
 //             GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
 //             GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
+            flag_Load_CC = 1;
             if(DISS_Voltage > 1 && r_stable == 0)
             {
                 r_stable = 1;
