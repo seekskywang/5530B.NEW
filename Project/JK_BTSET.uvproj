@@ -803,6 +803,11 @@
               <FileType>1</FileType>
               <FilePath>..\APP\sysinfo.c</FilePath>
             </File>
+            <File>
+              <FileName>cal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\cal.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

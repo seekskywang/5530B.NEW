@@ -23,6 +23,7 @@ extern vu16 menu_time;
 extern vu16 s_time;
 extern vu8 wait_flag;
 extern vu8 test_num;
+float overchargev;
 
 #define ID_WINDOW_0      	(GUI_ID_USER + 0x00)
 #define ID_BUTTON_0     	(GUI_ID_USER + 0x01)
@@ -44,6 +45,7 @@ extern vu8 test_num;
 #define ID_TEXT_88          (GUI_ID_USER + 0x95)
 #define ID_TEXT_115         (GUI_ID_USER + 0x10B)
 #define ID_TEXT_125         (GUI_ID_USER + 0x10C)
+#define ID_TEXT_144         (GUI_ID_USER + 0x012E)
 
 #define ID_TimerTime2    3
 
@@ -60,14 +62,15 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate1[] = {
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_15,  240, 50, 32, 30, 0, 0x0, 0 },
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_16,  240, 121, 32, 30, 0, 0x0, 0 },
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_33, 290, 75, 80, 20, 0, 0x0, 0 },
-    { TEXT_CreateIndirect,   "Text",   ID_TEXT_34, 290, 150, 80, 20, 0, 0x0, 0 },
+    { TEXT_CreateIndirect,   "Text",   ID_TEXT_34, 290, 100, 80, 20, 0, 0x0, 0 },
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_41, 380, 75, 53, 20, 0, 0x0, 0 },
-    { TEXT_CreateIndirect,   "Text",   ID_TEXT_42, 370, 150, 65, 20, 0, 0x0, 0 },
+    { TEXT_CreateIndirect,   "Text",   ID_TEXT_42, 370, 100, 65, 20, 0, 0x0, 0 },
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_86, 95, 48, 150, 40, 0, 0x0, 0 },
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_87, 95, 116, 150, 40, 0, 0x0, 0 },
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_88, 400, 4, 50, 20, 0, 0x0, 0 },
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_115, 95, 184, 150, 40, 0, 0x0, 0 },
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_125, 300, 2, 80, 20, 0, 0x0, 0 },
+    { TEXT_CreateIndirect,   "Text",   ID_TEXT_144, 370, 150, 65, 20, 0, 0x0, 0 },
   // USER START (Optionally insert additional widgets)
   // USER END
 };
@@ -81,7 +84,8 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   char buf[5];    
 
   float dis_output_v = (float)SET_Voltage/100;
-  float dis_output_c = (float)SET_Current/1000;  
+  float dis_output_c = (float)SET_Current/1000;
+  static u8 cdelay;
 
   
   // USER START (Optionally insert additional variables)
@@ -110,7 +114,8 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 // 		GUI_DispFloatFix(DISS_POW_Current,5,2);//显示电流值
         GUI_SetFont(&GUI_Font24_1);
         GUI_DispStringAt("V",435,75);
-        GUI_DispStringAt("A",435,150);
+        GUI_DispStringAt("A",435,100);
+        GUI_DispStringAt("V",435,150);
         
         GUI_SetFont(&GUI_FontEN40);
         GUI_SetColor(GUI_LIGHTGRAY);
@@ -125,6 +130,9 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         GUI_SetFont(&GUI_Font24_1);
         GUI_DispStringAt("C",350, 2);
         DrawLock();
+        GUI_SetColor(GUI_WHITE);
+        GUI_SetFont(&GUI_Fontset_font);
+        GUI_DispStringAt("过充电压",290, 150);
 		break;
     
 	case WM_TIMER://定时模块消息
@@ -179,7 +187,18 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 TEXT_SetText(hItem,"");
                 status_flash = 0;
            }
-            
+           if(DISS_POW_Current < 0.005 && cdelay > 20)
+           {
+              overchargev =  DISS_POW_Voltage;
+              GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+              GPIO_SetBits(GPIOC,GPIO_Pin_13);
+              mode_sw = 0;
+              pow_sw = pow_off;
+              cdelay = 0;
+           }else{
+               overchargev = 0;
+               cdelay++;
+           }
         }else{
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_88);
             TEXT_SetText(hItem,"");
@@ -187,11 +206,17 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_87);
             sprintf(buf,"%.3f",0);        
             TEXT_SetText(hItem,buf);
+            
+            cdelay = 0;
         }
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_144);       
+        sprintf(buf,"%.3f",overchargev);
+        TEXT_SetText(hItem,buf);
+        
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_125);       
         sprintf(buf,"%.1f",temp);
         TEXT_SetText(hItem,buf);
-
+        
 		WM_RestartTimer(pMsg->Data.v, 50);//复位定时器数值越大刷新时间越短
 	}
 	break;
@@ -330,6 +355,13 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体       
         sprintf(buf,"%.1f",temp);
         TEXT_SetText(hItem,buf);
+        
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_144);
+        sprintf(buf,"%.3f",0.000);
+		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+		GUI_UC_SetEncodeUTF8();     
+		TEXT_SetText(hItem,buf);
         
     // USER START (Optionally insert additional code for further widget initialization)
     // USER END

@@ -22,6 +22,7 @@ extern WM_HWIN CreateWindow2(void);
 extern WM_HWIN CreateWindow(void);
 extern WM_HWIN CreateG(void);
 extern WM_HWIN CreateSET(void);
+extern WM_HWIN Createcal(void);
 extern WM_HWIN hWinWind;
 extern WM_HWIN hWinR;
 extern WM_HWIN load_wind;//负载界面句柄
@@ -47,6 +48,7 @@ extern float gate_v;
 extern vu8 manual;
 extern vu8 oc_mode;
 extern vu8 cal;
+extern char inputv[10];
 vu8 t_MODE;
 vu8 pass = 0;
 vu8 LOAD_t;
@@ -64,6 +66,8 @@ vu8 clear_r = 0;
 vu8 r_raly=0;
 vu8 lock;
 vu8 c_rec;
+vu8 calstep;
+vu8 oldcal;
 
 //=================================================================
 extern struct bitDefine
@@ -107,6 +111,8 @@ vu32 Key_Scan(void);
 void Lift_Move(void);
 void Right_Move(void);
 void Setvalue_Add(void);
+void IO_OFF(void);
+extern u8 calmode;
 /* 键值定�?*/
 #define        KEY_1                		 0X4E     //
 #define        KEY_2                		 0X56     //
@@ -283,7 +289,41 @@ void Key_Funtion(void)
                             KeyCounter = 0;
                             BEEP_Tiggr();//触发蜂鸣�?
                             break;
-                        }  
+                        }
+                        case face_cal:
+                        {
+                            if(calmode == mode_load)
+                            {
+                                LoadVCal(1);
+                            }else if(calmode == mode_pow){
+                                IO_OFF();
+                                SET_Voltage = 100;
+                                SET_Current = 1000;  
+                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
+                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
+                                calstep = 1;
+                            }else if(calmode == mode_r ){
+                                Rlow_cal(1);
+                            }else if(calmode == mode_loadc){
+                                IO_OFF();
+                                SET_Current_Laod = 1000;
+                                GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+                                flag_Load_CC = 1;
+                                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+                                calstep = 1;
+                            }else if(calmode == mode_powc){
+                                IO_OFF();
+                                SET_Voltage = 1000;
+                                SET_Current = 1000;  
+                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
+                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
+                                calstep = 1;
+                            }else if(calmode == input){
+                                inputcal("1");
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//触发蜂鸣噿
+                        }break;
                     }
                     KeyCounter = 0;
                     BEEP_Tiggr();//
@@ -344,6 +384,40 @@ void Key_Funtion(void)
                             BEEP_Tiggr();//触发蜂鸣�?
                             break;
                         }
+                        case face_cal:
+                        {
+                            if(calmode == mode_load)
+                            {
+                                LoadVCal(2);
+                            }else if(calmode == mode_pow){
+                                IO_OFF();
+                                SET_Voltage = 1000;
+                                SET_Current = 1000;  
+                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
+                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
+                                calstep = 2;
+                            }else if(calmode == mode_r ){
+                                Rlow_cal(2);
+                            }else if(calmode == mode_loadc){
+                                IO_OFF();
+                                SET_Current_Laod = 5000;
+                                GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+                                flag_Load_CC = 1;
+                                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+                                calstep = 2;
+                            }else if(calmode == mode_powc){
+                                IO_OFF();
+                                SET_Voltage = 1000;
+                                SET_Current = 5000;  
+                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
+                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
+                                calstep = 2;
+                            }else if(calmode == input){
+                                inputcal("2");
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//触发蜂鸣噿
+                        }break;
        
                     }
                     KeyCounter = 0;
@@ -405,6 +479,26 @@ void Key_Funtion(void)
                             BEEP_Tiggr();//触发蜂鸣�?
                             break;
                         }
+                        case face_cal:
+                        {
+                            if(calmode == mode_load)
+                            {
+                                LoadVCal(3);
+                            }else if(calmode == mode_pow){
+                                IO_OFF();
+                                SET_Voltage = 1000;
+                                SET_Current = 1000;  
+                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
+                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
+                                calstep = 3;
+                            }else if(calmode == mode_r ){
+                                Rlow_cal(3);
+                            }else if(calmode == input){
+                                inputcal("3");
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//触发蜂鸣噿
+                        }break;
                     }
                 }
                 break;
@@ -463,6 +557,26 @@ void Key_Funtion(void)
                             BEEP_Tiggr();//触发蜂鸣�?
                             break;
                         }
+                        case face_cal:
+                        {
+                            if(calmode == mode_load)
+                            {
+                                LoadVCal(4);
+                            }else if(calmode == mode_pow){
+                                IO_OFF();
+                                SET_Voltage = 3000;
+                                SET_Current = 1000;  
+                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
+                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
+                                calstep = 4;
+                            }else if(calmode == mode_r ){
+                                Rlow_cal(4);
+                            }else if(calmode == input){
+                                inputcal("4");
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//触发蜂鸣噿
+                        }break;
                     }
                 }
                 break;
@@ -521,6 +635,26 @@ void Key_Funtion(void)
                             BEEP_Tiggr();//触发蜂鸣�?
                             break;
                         }
+                        case face_cal:
+                        {
+                            if(calmode == mode_load)
+                            {
+                                LoadVCal(5);
+                            }else if(calmode == mode_pow){
+                                IO_OFF();
+                                SET_Voltage = 3000;
+                                SET_Current = 1000;  
+                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
+                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
+                                calstep = 5;
+                            }else if(calmode == mode_r ){
+                                Rlow_cal(5);
+                            }else if(calmode == input){
+                                inputcal("5");
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//触发蜂鸣噿
+                        }break;
                     }
                 }
                 break;	
@@ -577,6 +711,26 @@ void Key_Funtion(void)
                             BEEP_Tiggr();//触发蜂鸣�?
                             break;
                         }
+                        case face_cal:
+                        {
+                            if(calmode == mode_load)
+                            {
+                                LoadVCal(6);
+                            }else if(calmode == mode_pow){
+                                IO_OFF();
+                                SET_Voltage = 6000;
+                                SET_Current = 1000;  
+                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
+                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
+                                calstep = 6;
+                            }else if(calmode == mode_r ){
+                                Rlow_cal(6);
+                            }else if(calmode == input){
+                                inputcal("6");
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//触发蜂鸣噿
+                        }break;
                     }
                 }
                 break;
@@ -631,6 +785,21 @@ void Key_Funtion(void)
                             BEEP_Tiggr();//触发蜂鸣�?
                             break;
                         }
+                        case face_cal:
+                        {
+                            if(calmode == mode_load)
+                            {
+                                LoadVCal(7);
+                            }else if(calmode == mode_pow){
+                                
+                            }else if(calmode == mode_r ){
+                                Rlow_cal(7);
+                            }else if(calmode == input){
+                                inputcal("7");
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//触发蜂鸣噿
+                        }break;
                     }
                 }
                 break;
@@ -685,6 +854,21 @@ void Key_Funtion(void)
                             BEEP_Tiggr();//触发蜂鸣�?
                             break;
                         }
+                         case face_cal:
+                        {
+                            if(calmode == mode_load)
+                            {
+                                LoadVCal(8);
+                            }else if(calmode == mode_pow){
+                                
+                            }else if(calmode == mode_r ){
+                                Rlow_cal(8);
+                            }else if(calmode == input){
+                                inputcal("8");
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//触发蜂鸣噿
+                        }break;
                     }
                 }
                 break;
@@ -739,6 +923,21 @@ void Key_Funtion(void)
                             BEEP_Tiggr();//触发蜂鸣�?
                             break;
                         }
+                         case face_cal:
+                        {
+                            if(calmode == mode_load)
+                            {
+                                LoadVCal(9);
+                            }else if(calmode == mode_pow){
+                                
+                            }else if(calmode == mode_r ){
+                                Rlow_cal(9);
+                            }else if(calmode == input){
+                                inputcal("9");
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//触发蜂鸣噿
+                        }break;
                     }
                 }
                 break;
@@ -794,7 +993,22 @@ void Key_Funtion(void)
                             KeyCounter = 0;
                             BEEP_Tiggr();//触发蜂鸣�?
                             break;
-                        }                    
+                        }
+                        case face_cal:
+                        {
+                            if(calmode == mode_load)
+                            {
+                                LoadVCal(0);
+                            }else if(calmode == mode_pow){
+                                
+                            }else if(calmode == mode_r ){
+                                Rlow_cal(0);
+                            }else if(calmode == input){
+                                inputcal("0");
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//触发蜂鸣噿
+                        }break;
                     }
                 }
                 break;
@@ -869,6 +1083,7 @@ void Key_Funtion(void)
                 
                 case PUSH_Lift :
                 {
+                    vu8 l;
                     switch(page_sw){
                         case face_set:  //系统设置
                         {
@@ -889,7 +1104,10 @@ void Key_Funtion(void)
                         }
                         case face_cdc:  //系统设置
                         {
-                            CDC_OP_LEFT();  //设置选项切换
+                            if(l != 0)
+                            {
+                                CDC_OP_LEFT();  //设置选项切换
+                            }
                             KeyCounter = 0;
                             BEEP_Tiggr();//触发蜂鸣�?
                             break;
@@ -899,6 +1117,7 @@ void Key_Funtion(void)
                 break;
                 case PUSH_Right :
                 {
+                    vu8 l;
                     switch(page_sw){
                         case face_set:  //系统设置
                         {
@@ -919,11 +1138,15 @@ void Key_Funtion(void)
                         }
                         case face_cdc:  //系统设置
                         {
-                            CDC_OP_RIGHT();  //设置选项切换
+                            if(l != 0)
+                            {
+                                CDC_OP_RIGHT();  //设置选项切换
+                            }
                             KeyCounter = 0;
                             BEEP_Tiggr();//触发蜂鸣�?
                             break;
                         }
+                        
                     }
                 }
                 break;
@@ -985,6 +1208,7 @@ void Key_Funtion(void)
                 break;
                 case PUSH_Down :
                 {
+                    u8 i;
                     switch(page_sw){
                         case face_menu:
                         {
@@ -1034,7 +1258,20 @@ void Key_Funtion(void)
                             BEEP_Tiggr();//触发蜂鸣�?
                             break;
                         }
-       
+                        case face_cal:
+                        {
+                            if(calmode != input)
+                            {
+                                oldcal = calmode;
+                                calmode = input;
+                                for(i=0;i<10;i++)
+                                {
+                                    inputv[i] = '\0';
+                                }
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//触发蜂鸣噿
+                        }break;
                     }
                 }
                 break;
@@ -1087,6 +1324,24 @@ void Key_Funtion(void)
                             BEEP_Tiggr();//触发蜂鸣�?
                             break;
                         }
+                        case face_cal:
+                        {
+                            if(calmode == mode_r)
+                            {
+                                if(r_raly == 1)
+                                {
+                                    GPIO_ResetBits(GPIOB,GPIO_Pin_13);//R_RALY低档位 
+                                    r_raly = 0;
+                                }else{
+                                     GPIO_SetBits(GPIOB,GPIO_Pin_13);//R_RALY高档位
+                                    r_raly = 1;
+                                }
+                            }else if(calmode == input){
+                                confirmcal();
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//触发蜂鸣噿
+                        }break;
                     }
                 }
                 break;
@@ -1320,6 +1575,42 @@ void Key_Funtion(void)
                             BEEP_Tiggr();//触发蜂鸣�?
                            
                         }break;
+                        case face_cal:
+                        {
+                            if(calmode == mode_pow)
+                            {
+                                if(calstep == 1)
+                                {
+                                    PowVCal(1);
+                                }else if(calstep == 2){
+                                    PowVCal(2);
+                                }else if(calstep == 3){
+                                    PowVCal(3);
+                                }else if(calstep == 4){
+                                    PowVCal(4);
+                                }else if(calstep == 5){
+                                    PowVCal(5);
+                                }else if(calstep == 6){
+                                    PowVCal(6);
+                                }
+                            }else if(calmode == mode_loadc){
+                                if(calstep == 1)
+                                {
+                                    LoadCCal(1);
+                                }else if(calstep == 2){
+                                    LoadCCal(2);
+                                }
+                            }else if(calmode == mode_powc){
+                                if(calstep == 1)
+                                {
+                                    PowCCal(1);
+                                }else if(calstep == 2){
+                                    PowCCal(2);
+                                }
+                            }
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//
+                        }break;
                     }
                     
                 }
@@ -1349,6 +1640,26 @@ void Key_Funtion(void)
                                 manual =0;
                             }
                         }
+                        case face_cal:
+                        {
+                            if(calmode == mode_load)
+                            {
+                                calmode = mode_loadc;
+                                IO_OFF();
+                            }else if(calmode == mode_loadc){ 
+                                calmode = mode_pow;
+                                IO_OFF();
+                            }else if(calmode == mode_pow){ 
+                                calmode = mode_powc;
+                                IO_OFF();
+                            }else if(calmode == mode_powc){ 
+                                calmode = mode_r;
+                                IO_OFF();
+                            }else if(calmode == mode_r){ 
+                                calmode = mode_load;
+                                IO_OFF();
+                            }
+                        }break;
                     }
                     KeyCounter = 0;
                     BEEP_Tiggr();//

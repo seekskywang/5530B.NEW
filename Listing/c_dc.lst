@@ -48588,6 +48588,7 @@ Nuint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 Nvoid RecHandle(void);
 Nvoid MODS_Poll(void);
 Nvoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+N
 N//=============================================================================
 N#define NOP   __nop();	  //???
 N
@@ -48853,6 +48854,7 @@ N#define face_load       4
 N#define face_set        5
 N#define face_starter    6
 N#define face_sys_info   7
+N#define face_cal        8
 N/*
 N************************************************************************
 N*						����ѡ��ʶ���
@@ -48956,6 +48958,9 @@ N#define c_off               0
 N#define mode_r              1
 N#define mode_load           2
 N#define mode_pow            3
+N#define mode_loadc          4
+N#define mode_powc           5
+N#define input               6
 N#define load_on             1
 N#define load_off            0
 N#define pow_on              1
@@ -48974,8 +48979,10 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu32 Correct_Parametet[13];
+Nextern vu32 Correct_Parametet[17];
 N#define  REG_CorrectionV   Correct_Parametet[0]//???????
+N#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+N#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 N#define  REG_Load_A			   Correct_Parametet[1]//??CC???��???
 N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????��??
 N#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -48986,7 +48993,9 @@ N
 N#define  REG_POWERA			   Correct_Parametet[6]//??CC???��???
 N#define  SET_POWERA			   Correct_Parametet[7]//??CC???��?????
 N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-N#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+N#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+N#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+N#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 N#define  CON_POWERA				 Correct_Parametet[10]//??CV???��???
 N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 N#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -49001,8 +49010,10 @@ N#define  Polar3						 correct_por[3]//??????CV???��?
 N#define  Polar4						 correct_por[4]//??CC???��????
 N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[13];//��???
+Nextern vu32 Correct_Strong[17];//��???
 N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+N#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+N#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???��???
 N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????��??
 N#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -49013,6 +49024,8 @@ N
 N#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???��???
 N#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???��?????
 N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+N#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+N#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???��???
 N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
@@ -49100,6 +49113,7 @@ Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 Svoid RecHandle(void);
 Svoid MODS_Poll(void);
 Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+S
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -49365,6 +49379,7 @@ S#define face_load       4
 S#define face_set        5
 S#define face_starter    6
 S#define face_sys_info   7
+S#define face_cal        8
 S/*
 S************************************************************************
 S*						����ѡ��ʶ���
@@ -49468,6 +49483,9 @@ S#define c_off               0
 S#define mode_r              1
 S#define mode_load           2
 S#define mode_pow            3
+S#define mode_loadc          4
+S#define mode_powc           5
+S#define input               6
 S#define load_on             1
 S#define load_off            0
 S#define pow_on              1
@@ -49486,8 +49504,10 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[13];
+Sextern vu32 Correct_Parametet[17];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
+S#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+S#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???��???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????��??
 S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -49498,7 +49518,9 @@ S
 S#define  REG_POWERA			   Correct_Parametet[6]//??CC???��???
 S#define  SET_POWERA			   Correct_Parametet[7]//??CC???��?????
 S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+S#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+S#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+S#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???��???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -49513,8 +49535,10 @@ S#define  Polar3						 correct_por[3]//??????CV???��?
 S#define  Polar4						 correct_por[4]//??CC???��????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[13];//��???
+Sextern vu32 Correct_Strong[17];//��???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+S#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+S#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???��???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????��??
 S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -49525,6 +49549,8 @@ S
 S#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???��???
 S#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???��?????
 S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+S#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+S#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???��???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
@@ -51596,6 +51622,7 @@ Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 Svoid RecHandle(void);
 Svoid MODS_Poll(void);
 Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+S
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -51861,6 +51888,7 @@ S#define face_load       4
 S#define face_set        5
 S#define face_starter    6
 S#define face_sys_info   7
+S#define face_cal        8
 S/*
 S************************************************************************
 S*						����ѡ��ʶ���
@@ -51964,6 +51992,9 @@ S#define c_off               0
 S#define mode_r              1
 S#define mode_load           2
 S#define mode_pow            3
+S#define mode_loadc          4
+S#define mode_powc           5
+S#define input               6
 S#define load_on             1
 S#define load_off            0
 S#define pow_on              1
@@ -51982,8 +52013,10 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[13];
+Sextern vu32 Correct_Parametet[17];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
+S#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+S#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???��???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????��??
 S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -51994,7 +52027,9 @@ S
 S#define  REG_POWERA			   Correct_Parametet[6]//??CC???��???
 S#define  SET_POWERA			   Correct_Parametet[7]//??CC???��?????
 S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+S#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+S#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+S#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???��???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -52009,8 +52044,10 @@ S#define  Polar3						 correct_por[3]//??????CV???��?
 S#define  Polar4						 correct_por[4]//??CC???��????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[13];//��???
+Sextern vu32 Correct_Strong[17];//��???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+S#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+S#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???��???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????��??
 S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -52021,6 +52058,8 @@ S
 S#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???��???
 S#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???��?????
 S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+S#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+S#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???��???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
@@ -53067,20 +53106,17 @@ N//
 N//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_76);      
 N//             TEXT_SetText(hItem,"");
 N            
-N            if(charge_step == 1)
-N            {
-N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_119);
-X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x113));
-N                TEXT_SetText(hItem,"步骤1");
-N            }else if(charge_step == 2){
-N                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_119);
-X                 hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x113));
-N                TEXT_SetText(hItem,"步骤2");
-N            }else if(charge_step == 3){
-N                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_119);
-X                 hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x113));
-N                TEXT_SetText(hItem,"步骤3");
-N            }
+N//             if(charge_step == 1)
+N//             {
+N//                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_119);
+N//                 TEXT_SetText(hItem,"步骤1");
+N//             }else if(charge_step == 2){
+N//                  hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_119);
+N//                 TEXT_SetText(hItem,"步骤2");
+N//             }else if(charge_step == 3){
+N//                  hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_119);
+N//                 TEXT_SetText(hItem,"步骤3");
+N//             }
 N            
 N            if(status_flash == 0){
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_71);
@@ -53097,265 +53133,221 @@ X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x84));
 N                TEXT_SetText(hItem,"");
 N                status_flash = 0;
 N            }
-N            if(opv2 == 0 && opv3 == 0 && opc2 == 0 && opc3 == 0)
-X            if(Run_Control[32] == 0 && Run_Control[33] == 0 && Run_Control[35] == 0 && Run_Control[36] == 0)
+N//             if(opv2 == 0 && opv3 == 0 && opc2 == 0 && opc3 == 0)
+N//             {
+N//                 if(cov1 == 0 || coc1 == 0)
+N//                 {
+N//                     if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
+N//                     cutoff_time = GUI_GetTime()/500;
+N//                     cutoff_flag = 1;
+N//                     }
+N//                     if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
+N//                     {
+N//                         if(mode_sw == mode_pow){
+N//                             start_time = GUI_GetTime()/500;//记录开始时间
+N//                         }
+N//                         cutoff_flag = 0;
+N//                         GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+N//                         GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器                  
+N//     //                     Mode_SW_CONT(0x02);//切换至负载模式
+N//     //                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+N//                         GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+N//                          GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+N//                         mode_sw = mode_load;
+N//                     }
+N//                 }else{
+N//                     if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
+N//                     cutoff_time = GUI_GetTime()/500;
+N//                     cutoff_flag = 1;
+N//                     }
+N//                     if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
+N//                     {
+N//                         if(mode_sw == mode_pow){
+N//                             start_time = GUI_GetTime()/500;//记录开始时间
+N//                         }
+N//                         cutoff_flag = 0;
+N//                         GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+N//                         GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器                   
+N//     //                     Mode_SW_CONT(0x02);//切换至负载模式
+N//     //                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+N//                         GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+N//                          GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+N//                         mode_sw = mode_load;
+N//                     }
+N//                 }
+N//                 
+N//             }else if(opv3 == 0 && opc3 == 0){
+N//                 if(cov1 == 0 || coc1 == 0)
+N//                 { 
+N//                     if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
+N//                     {//判断电流是否小于截止电流，并记录时间
+N//                         SET_Voltage = opv2;
+N//                         SET_Current = opc2;
+N//                         charge_step = 2;
+N//                     }
+N//                 }else{
+N//                     if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
+N//                     {//判断电流是否小于截止电流，并记录时间
+N//                         SET_Voltage = opv2;
+N//                         SET_Current = opc2;
+N//                         charge_step = 2;
+N//                     }
+N//                 }
+N//                 
+N//                 if(cov2 == 0 || coc2 == 0)
+N//                 {
+N//                     if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2){//判断电流是否小于截止电流，并记录时间
+N//                     cutoff_time = GUI_GetTime()/500;
+N//                     cutoff_flag = 1;
+N//                     }
+N//                     if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)//若测量电流小于截止电流
+N//                     {
+N//                         if(mode_sw == mode_pow){
+N//                             start_time = GUI_GetTime()/500;//记录开始时间
+N//                         }
+N//                         cutoff_flag = 0;
+N//                         GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+N//                         GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+N//     //                     Mode_SW_CONT(0x02);//切换至负载模式
+N//     //                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+N//                         GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+N//                         GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+N//                         mode_sw = mode_load;
+N//                     }
+N//                 }else{
+N//                     if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2){//判断电流是否小于截止电流，并记录时间
+N//                     cutoff_time = GUI_GetTime()/500;
+N//                     cutoff_flag = 1;
+N//                     }
+N//                     if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)//若测量电流小于截止电流
+N//                     {
+N//                         if(mode_sw == mode_pow){
+N//                             start_time = GUI_GetTime()/500;//记录开始时间
+N//                         }
+N//                         cutoff_flag = 0;
+N//                         GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+N//                         GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+N//     //                     Mode_SW_CONT(0x02);//切换至负载模式
+N//     //                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+N//                         GPIO_ResetBits(GPIOC,GPIO_Pin_12);//CC
+N//                         GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+N//                         mode_sw = mode_load;
+N//                     }
+N//                 }
+N//                 
+N//             }else if((opv1 != 0 || opc1 != 0) && (opv2 != 0 || opc2 != 0) && (opv3 != 0 || opc3 != 0)){
+N//                 if(cov1 == 0 || coc1 == 0)
+N//                 { 
+N//                     if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
+N//                     {//判断电流是否小于截止电流，并记录时间
+N//                         SET_Voltage = opv2;
+N//                         SET_Current = opc2;
+N//                         charge_step = 2;
+N//                     }
+N//                 }else{
+N//                     if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
+N//                     {//判断电流是否小于截止电流，并记录时间
+N//                         SET_Voltage = opv2;
+N//                         SET_Current = opc2;
+N//                         charge_step = 2;
+N//                     }
+N//                 }
+N//                 
+N//                 if(cov2 == 0 || coc2 == 0)
+N//                 {
+N//                     if(((DISS_POW_Voltage > (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2)
+N//                     {//判断电流是否小于截止电流，并记录时间
+N//                         SET_Voltage = opv3;
+N//                         SET_Current = opc3;
+N//                         charge_step = 3;
+N//                     }
+N//                 }else{
+N//                     if(((DISS_POW_Voltage > (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2)
+N//                     {//判断电流是否小于截止电流，并记录时间
+N//                         SET_Voltage = opv3;
+N//                         SET_Current = opc3;
+N//                         charge_step = 3;
+N//                     }
+N//                 }
+N//                 
+N//                 if(cov3 == 0 || coc3 == 0)
+N//                 {
+N//                     if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) || DISS_POW_Current < (float)coc3/1000) && cutoff_flag == 0 && charge_step == 3){//判断电流是否小于截止电流，并记录时间
+N//                         cutoff_time = GUI_GetTime()/500;
+N//                         cutoff_flag = 1;
+N//                     }
+N//                     if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) || DISS_POW_Current < (float)coc3/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)//若测量电流小于截止电流
+N//                     {
+N//                         if(mode_sw == mode_pow){
+N//                             start_time = GUI_GetTime()/500;//记录开始时间
+N//                         }
+N//                         cutoff_flag = 0;
+N//                         GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+N//                         GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+N//     //                     Mode_SW_CONT(0x02);//切换至负载模式
+N//     //                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+N//                         GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+N//                          GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+N//                         mode_sw = mode_load;
+N//                     }
+N//                 }else{
+N//                     if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) && DISS_POW_Current < (float)coc3/1000) && cutoff_flag == 0 && charge_step == 3){//判断电流是否小于截止电流，并记录时间
+N//                         cutoff_time = GUI_GetTime()/500;
+N//                         cutoff_flag = 1;
+N//                     }
+N//                     if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) && DISS_POW_Current < (float)coc3/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)//若测量电流小于截止电流
+N//                     {
+N//                         if(mode_sw == mode_pow){
+N//                             start_time = GUI_GetTime()/500;//记录开始时间
+N//                         }
+N//                         cutoff_flag = 0;
+N//                         GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+N//                         GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+N//     //                     Mode_SW_CONT(0x02);//切换至负载模式
+N//     //                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+N//                         GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+N//                          GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+N//                         mode_sw = mode_load;
+N//                     }
+N//                 }
+N//             }
+N            
+N            if(charge_step == 1)
 N            {
-N                if(cov1 == 0 || coc1 == 0)
-X                if(coff[0] == 0 || coff[3] == 0)
+N                if(DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0)//若测量电流小于截止电流
+X                if(DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0)
 N                {
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) || DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0){
-N                    cutoff_time = GUI_GetTime()/500;
-N                    cutoff_flag = 1;
-N                    }
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) || DISS_POW_Current < (float)coff[3]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )
-N                    {
-N                        if(mode_sw == mode_pow){
-X                        if(mode_sw == 3){
-N                            start_time = GUI_GetTime()/500;//记录开始时间
-X                            Run_Control[29] = GUI_GetTime()/500;
-N                        }
-N                        cutoff_flag = 0;
-N                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N                        GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器                  
-X                        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
-N    //                     Mode_SW_CONT(0x02);//切换至负载模式
-N    //                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
-N                        GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
-N                         GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
-X                         GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
-N                        mode_sw = mode_load;
-X                        mode_sw = 2;
-N                    }
-N                }else{
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) && DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0){
-N                    cutoff_time = GUI_GetTime()/500;
-N                    cutoff_flag = 1;
-N                    }
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) && DISS_POW_Current < (float)coff[3]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )
-N                    {
-N                        if(mode_sw == mode_pow){
-X                        if(mode_sw == 3){
-N                            start_time = GUI_GetTime()/500;//记录开始时间
-X                            Run_Control[29] = GUI_GetTime()/500;
-N                        }
-N                        cutoff_flag = 0;
-N                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N                        GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器                   
-X                        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
-N    //                     Mode_SW_CONT(0x02);//切换至负载模式
-N    //                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
-N                        GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
-N                         GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
-X                         GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
-N                        mode_sw = mode_load;
-X                        mode_sw = 2;
-N                    }
+N                    SET_Current = 100;
+X                    Run_Control[2] = 100;
+N                    charge_step =2;
 N                }
-N                
-N            }else if(opv3 == 0 && opc3 == 0){
-X            }else if(Run_Control[33] == 0 && Run_Control[36] == 0){
-N                if(cov1 == 0 || coc1 == 0)
-X                if(coff[0] == 0 || coff[3] == 0)
-N                { 
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) || DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0 && charge_step == 1)
-N                    {//判断电流是否小于截止电流，并记录时间
-N                        SET_Voltage = opv2;
-X                        Run_Control[1] = Run_Control[32];
-N                        SET_Current = opc2;
-X                        Run_Control[2] = Run_Control[35];
-N                        charge_step = 2;
-N                    }
-N                }else{
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) && DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0 && charge_step == 1)
-N                    {//判断电流是否小于截止电流，并记录时间
-N                        SET_Voltage = opv2;
-X                        Run_Control[1] = Run_Control[32];
-N                        SET_Current = opc2;
-X                        Run_Control[2] = Run_Control[35];
-N                        charge_step = 2;
-N                    }
-N                }
-N                
-N                if(cov2 == 0 || coc2 == 0)
-X                if(coff[1] == 0 || coff[4] == 0)
+N            }else if(charge_step == 2){
+N                if((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && (DISS_POW_Current <= 10))//若测量电流小于截止电流
+X                if((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) && (DISS_POW_Current <= 10))
 N                {
-N                    if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2){//判断电流是否小于截止电流，并记录时间
-X                    if(((DISS_POW_Voltage >= (float)coff[1]/100 && coff[1] != 0) || DISS_POW_Current < (float)coff[4]/1000) && cutoff_flag == 0 && charge_step == 2){
-N                    cutoff_time = GUI_GetTime()/500;
-N                    cutoff_flag = 1;
-N                    }
-N                    if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)//若测量电流小于截止电流
-X                    if(((DISS_POW_Voltage >= (float)coff[1]/100 && coff[1] != 0) || DISS_POW_Current < (float)coff[4]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)
-N                    {
-N                        if(mode_sw == mode_pow){
-X                        if(mode_sw == 3){
-N                            start_time = GUI_GetTime()/500;//记录开始时间
-X                            Run_Control[29] = GUI_GetTime()/500;
-N                        }
-N                        cutoff_flag = 0;
-N                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N                        GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-X                        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
-N    //                     Mode_SW_CONT(0x02);//切换至负载模式
-N    //                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
-N                        GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
-N                        GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
-N                        mode_sw = mode_load;
-X                        mode_sw = 2;
-N                    }
-N                }else{
-N                    if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2){//判断电流是否小于截止电流，并记录时间
-X                    if(((DISS_POW_Voltage >= (float)coff[1]/100 && coff[1] != 0) && DISS_POW_Current < (float)coff[4]/1000) && cutoff_flag == 0 && charge_step == 2){
-N                    cutoff_time = GUI_GetTime()/500;
-N                    cutoff_flag = 1;
-N                    }
-N                    if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)//若测量电流小于截止电流
-X                    if(((DISS_POW_Voltage >= (float)coff[1]/100 && coff[1] != 0) && DISS_POW_Current < (float)coff[4]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)
-N                    {
-N                        if(mode_sw == mode_pow){
-X                        if(mode_sw == 3){
-N                            start_time = GUI_GetTime()/500;//记录开始时间
-X                            Run_Control[29] = GUI_GetTime()/500;
-N                        }
-N                        cutoff_flag = 0;
-N                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N                        GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-X                        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
-N    //                     Mode_SW_CONT(0x02);//切换至负载模式
-N    //                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
-N                        GPIO_ResetBits(GPIOC,GPIO_Pin_12);//CC
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x1000));
-N                        GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
-N                        mode_sw = mode_load;
-X                        mode_sw = 2;
-N                    }
+N                    SET_Current = 10;
+X                    Run_Control[2] = 10;
+N                    charge_step =3;
 N                }
-N                
-N            }else if((opv1 != 0 || opc1 != 0) && (opv2 != 0 || opc2 != 0) && (opv3 != 0 || opc3 != 0)){
-X            }else if((Run_Control[31] != 0 || Run_Control[34] != 0) && (Run_Control[32] != 0 || Run_Control[35] != 0) && (Run_Control[33] != 0 || Run_Control[36] != 0)){
-N                if(cov1 == 0 || coc1 == 0)
-X                if(coff[0] == 0 || coff[3] == 0)
-N                { 
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) || DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0 && charge_step == 1)
-N                    {//判断电流是否小于截止电流，并记录时间
-N                        SET_Voltage = opv2;
-X                        Run_Control[1] = Run_Control[32];
-N                        SET_Current = opc2;
-X                        Run_Control[2] = Run_Control[35];
-N                        charge_step = 2;
-N                    }
-N                }else{
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) && DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0 && charge_step == 1)
-N                    {//判断电流是否小于截止电流，并记录时间
-N                        SET_Voltage = opv2;
-X                        Run_Control[1] = Run_Control[32];
-N                        SET_Current = opc2;
-X                        Run_Control[2] = Run_Control[35];
-N                        charge_step = 2;
-N                    }
-N                }
-N                
-N                if(cov2 == 0 || coc2 == 0)
-X                if(coff[1] == 0 || coff[4] == 0)
+N            }else if(charge_step == 3){
+N                if((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && (DISS_POW_Current <= 8))//若测量电流小于截止电流
+X                if((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) && (DISS_POW_Current <= 8))
 N                {
-N                    if(((DISS_POW_Voltage > (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2)
-X                    if(((DISS_POW_Voltage > (float)coff[1]/100 && coff[1] != 0) || DISS_POW_Current < (float)coff[4]/1000) && cutoff_flag == 0 && charge_step == 2)
-N                    {//判断电流是否小于截止电流，并记录时间
-N                        SET_Voltage = opv3;
-X                        Run_Control[1] = Run_Control[33];
-N                        SET_Current = opc3;
-X                        Run_Control[2] = Run_Control[36];
-N                        charge_step = 3;
-N                    }
-N                }else{
-N                    if(((DISS_POW_Voltage > (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2)
-X                    if(((DISS_POW_Voltage > (float)coff[1]/100 && coff[1] != 0) && DISS_POW_Current < (float)coff[4]/1000) && cutoff_flag == 0 && charge_step == 2)
-N                    {//判断电流是否小于截止电流，并记录时间
-N                        SET_Voltage = opv3;
-X                        Run_Control[1] = Run_Control[33];
-N                        SET_Current = opc3;
-X                        Run_Control[2] = Run_Control[36];
-N                        charge_step = 3;
-N                    }
-N                }
-N                
-N                if(cov3 == 0 || coc3 == 0)
-X                if(coff[2] == 0 || coff[5] == 0)
-N                {
-N                    if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) || DISS_POW_Current < (float)coc3/1000) && cutoff_flag == 0 && charge_step == 3){//判断电流是否小于截止电流，并记录时间
-X                    if(((DISS_POW_Voltage > (float)coff[2]/100 && coff[2] != 0) || DISS_POW_Current < (float)coff[5]/1000) && cutoff_flag == 0 && charge_step == 3){
-N                        cutoff_time = GUI_GetTime()/500;
-N                        cutoff_flag = 1;
-N                    }
-N                    if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) || DISS_POW_Current < (float)coc3/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)//若测量电流小于截止电流
-X                    if(((DISS_POW_Voltage > (float)coff[2]/100 && coff[2] != 0) || DISS_POW_Current < (float)coff[5]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)
-N                    {
-N                        if(mode_sw == mode_pow){
-X                        if(mode_sw == 3){
-N                            start_time = GUI_GetTime()/500;//记录开始时间
-X                            Run_Control[29] = GUI_GetTime()/500;
-N                        }
-N                        cutoff_flag = 0;
-N                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N                        GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-X                        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
-N    //                     Mode_SW_CONT(0x02);//切换至负载模式
-N    //                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
-N                        GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
-N                         GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
-X                         GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
-N                        mode_sw = mode_load;
-X                        mode_sw = 2;
-N                    }
-N                }else{
-N                    if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) && DISS_POW_Current < (float)coc3/1000) && cutoff_flag == 0 && charge_step == 3){//判断电流是否小于截止电流，并记录时间
-X                    if(((DISS_POW_Voltage > (float)coff[2]/100 && coff[2] != 0) && DISS_POW_Current < (float)coff[5]/1000) && cutoff_flag == 0 && charge_step == 3){
-N                        cutoff_time = GUI_GetTime()/500;
-N                        cutoff_flag = 1;
-N                    }
-N                    if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) && DISS_POW_Current < (float)coc3/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)//若测量电流小于截止电流
-X                    if(((DISS_POW_Voltage > (float)coff[2]/100 && coff[2] != 0) && DISS_POW_Current < (float)coff[5]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)
-N                    {
-N                        if(mode_sw == mode_pow){
-X                        if(mode_sw == 3){
-N                            start_time = GUI_GetTime()/500;//记录开始时间
-X                            Run_Control[29] = GUI_GetTime()/500;
-N                        }
-N                        cutoff_flag = 0;
-N                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N                        GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-X                        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
-N    //                     Mode_SW_CONT(0x02);//切换至负载模式
-N    //                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
-N                        GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
-N                         GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
-X                         GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
-N                        mode_sw = mode_load;
-X                        mode_sw = 2;
-N                    }
+N                    GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+X                    GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                    GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+X                    GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N//                     Mode_SW_CONT(0x02);//切换至负载模式
+N//                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+N                    GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+X                    GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
+N                     GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+X                     GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N                    mode_sw = mode_load;
+X                    mode_sw = 2;
 N                }
 N            }
+N            
 N            
 N//             if(DISS_POW_Current < dis_c_cutoff_c && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
 N//                 cutoff_time = GUI_GetTime()/500;
@@ -53673,7 +53665,7 @@ X		TEXT_SetTextColor(hItem, 0x00000000);
 N        TEXT_SetBkColor(hItem,0x00BFFFFF);
 N        TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
 N		GUI_UC_SetEncodeUTF8(); 
-N		TEXT_SetText(hItem,"输出电压1");        
+N		TEXT_SetText(hItem,"输出电压");        
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_51);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x70));
@@ -53681,7 +53673,7 @@ N		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X		TEXT_SetTextColor(hItem, 0x00FFFFFF);
 N        TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
 N		GUI_UC_SetEncodeUTF8();
-N		TEXT_SetText(hItem,"限制电流1");
+N		TEXT_SetText(hItem,"限制电流");
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_58);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x77));
@@ -53689,7 +53681,7 @@ N		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X		TEXT_SetTextColor(hItem, 0x00FFFFFF);
 N        TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
 N		GUI_UC_SetEncodeUTF8();
-N		TEXT_SetText(hItem,"截止电压1");
+N		TEXT_SetText(hItem,"截止电压");
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_59);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x78));
@@ -53697,7 +53689,7 @@ N		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X		TEXT_SetTextColor(hItem, 0x00FFFFFF);
 N        TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
 N		GUI_UC_SetEncodeUTF8();
-N		TEXT_SetText(hItem,"截止电流1");
+N		TEXT_SetText(hItem,"截止电流");
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_52);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x71));
@@ -53980,7 +53972,7 @@ X  track = 1;
 N  TM1650_SET_LED(0x68,0x70);
 N  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//İֆ+
 X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
-W "..\APP\c_dc.c" 1066 3 function "IO_OFF" declared implicitly
+W "..\APP\c_dc.c" 1093 3 function "IO_OFF" declared implicitly
 N  IO_OFF();//�
 N  GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
 X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));

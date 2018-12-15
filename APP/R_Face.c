@@ -329,7 +329,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             TEXT_SetText(hItem,"");
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_128);       
             TEXT_SetText(hItem,"");
-            if(R_VLUE < 180 && DISS_Voltage > 1)
+            if(R_VLUE < 200 && DISS_Voltage > 1)
             {
                 GPIO_ResetBits(GPIOB,GPIO_Pin_13);//R_RALY低档位 
                 r_raly = 0;
@@ -766,15 +766,15 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                     TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
                     TEXT_SetText(hItem,"");
                 }else{
-                    if(GUI_GetTime()/500 - stable_time == 1 && r_stable == 1)
-                    {
-                        r = R_VLUE;
-                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-                        TEXT_SetFont(hItem,&GUI_FontD24x32);
-                        sprintf(buf,"%4d",r);       
-                        TEXT_SetText(hItem,buf);
-                    }else if(r_stable == 0)
-                    {
+//                     if(GUI_GetTime()/500 - stable_time == 1 && r_stable == 1)
+//                     {
+//                         r = R_VLUE;
+//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+//                         TEXT_SetFont(hItem,&GUI_FontD24x32);
+//                         sprintf(buf,"%4d",r);       
+//                         TEXT_SetText(hItem,buf);
+//                     }else if(r_stable == 0)
+//                     {
                         if(DISS_Voltage < 0.3)
                             {
                                 if(para_set1 == set_1_on)
@@ -796,7 +796,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                                 sprintf(buf,"%4d",R_VLUE);       
                                 TEXT_SetText(hItem,buf);
                             }
-                    }
+//                     }
                 }
             
         }
@@ -896,7 +896,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         TEXT_SetText(hItem,buf);
 //         
 //        WM_InvalidateWindow(hWinR);
-		WM_RestartTimer(pMsg->Data.v, 50);//复位定时器数值越大刷新时间越短
+		WM_RestartTimer(pMsg->Data.v, 20);//复位定时器数值越大刷新时间越短
 	}
 	break;
     

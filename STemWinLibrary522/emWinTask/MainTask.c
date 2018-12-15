@@ -113,11 +113,11 @@ void MainTask(void)
 			ADC_CH_Scan();//ADC滤波
 		}
 		AD7689_Scan_CH();//读取AD7689各通道AD值
-		if(UART_Buffer_Rece_flag==1)
-		{
-			UART_Buffer_Rece_flag=0;
-			UART_Action();
-		}
+// 		if(UART_Buffer_Rece_flag==1)
+// 		{
+// 			UART_Buffer_Rece_flag=0;
+// 			UART_Action();
+// 		}
 		if(Flag_Key_Scan==1)
 		{
 			Flag_Key_Scan=0;

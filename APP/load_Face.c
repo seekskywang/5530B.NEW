@@ -25,7 +25,7 @@ extern vu16 battery_c;
 extern vu8 mode_sw;
 extern vu8 oc_mode;
 u8 load_mode;
-
+float overloadv;
 extern struct bitDefine
 {
     unsigned bit0: 1;
@@ -62,6 +62,7 @@ extern struct bitDefine
 #define ID_TEXT_122         (GUI_ID_USER + 0x110)
 #define ID_TEXT_123         (GUI_ID_USER + 0x111)
 #define ID_TEXT_126         (GUI_ID_USER + 0x112)
+#define ID_TEXT_143         (GUI_ID_USER + 0x012D)
 
 #define ID_TimerTime1    2
 
@@ -88,6 +89,7 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate2[] = {
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_89, 400, 4, 50, 20, 0, 0x0, 0 },
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_116, 95, 184, 150, 40, 0, 0x0, 0 },
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_126, 300, 2, 80, 20, 0, 0x0, 0 },
+    { TEXT_CreateIndirect,   "Text",   ID_TEXT_143, 380, 150, 65, 20, 0, 0x0, 0 },
   // USER START (Optionally insert additional widgets)
   // USER END
 };
@@ -101,6 +103,7 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
   static vu8 status_flash;
   float   dis_load_c = (float)SET_Current_Laod/1000;
   float   dis_load_v = (float)SET_Voltage_Laod/1000;
+  static float olvbuff,oldv;
   // USER START (Optionally insert additional variables)
   // USER END
 
@@ -128,6 +131,7 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
         GUI_SetFont(&GUI_Font24_1);
         GUI_DispStringAt("A",450,75);
         GUI_DispStringAt("V",450,100.);
+        GUI_DispStringAt("V",450,150);
     
         GUI_SetFont(&GUI_FontEN40);
         GUI_SetColor(GUI_LIGHTGRAY);
@@ -142,6 +146,9 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
         GUI_SetFont(&GUI_Font24_1);
         GUI_DispStringAt("C",350, 2);
         DrawLock();
+        GUI_SetColor(GUI_WHITE);
+        GUI_SetFont(&GUI_Fontset_font);
+        GUI_DispStringAt("过放电压",290, 150);
 		break;
 	case WM_KEY://接受按键消息来处理按键功能
 		switch (((WM_KEY_INFO*)(pMsg->Data.p))->Key) 
@@ -226,16 +233,33 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
                 TEXT_SetText(hItem,"");
                 status_flash = 0;
             }
-
+            
+            
+            if(olvbuff != 0 && olvbuff - DISS_Voltage > 0.3)
+            {
+                Flag_Swtich_ON=0;
+                GPIO_SetBits(GPIOA,GPIO_Pin_15);
+                mode_sw = 0;
+                load_sw = load_off;
+                overloadv = olvbuff;
+                olvbuff= 0;
+            }else{
+                olvbuff = DISS_Voltage;
+                overloadv = 0;
+            }
             
         }else{
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_89);
             TEXT_SetText(hItem,"");
             
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_85);
-            sprintf(buf,"%.3f",0);        
+            sprintf(buf,"%.3f",0.000);        
             TEXT_SetText(hItem,buf);
         }
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_143);       
+        sprintf(buf,"%.3f",overloadv);
+        TEXT_SetText(hItem,buf);
+        
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_126);       
         sprintf(buf,"%.1f",temp);
         TEXT_SetText(hItem,buf);
@@ -335,6 +359,13 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_49);
         sprintf(buf,"%.3f",dis_load_c);
+		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+		GUI_UC_SetEncodeUTF8();     
+		TEXT_SetText(hItem,buf);
+        
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_143);
+        sprintf(buf,"%.3f",0.000);
 		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
         TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
 		GUI_UC_SetEncodeUTF8();     

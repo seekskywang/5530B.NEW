@@ -439,7 +439,7 @@
 ;;;443    			break;
 000066  e059              B        |L9.284|
 ;;;444    		case SLAVE_REG_P03: 
-;;;445    			value =	(int)(DISS_POW_Voltage*100);	
+;;;445    			value =	(int)(DISS_POW_Voltage*100);
 000068  4837              LDR      r0,|L9.328|
 00006a  eddf0a38          VLDR     s1,|L9.332|
 00006e  ed900a00          VLDR     s0,[r0,#0]

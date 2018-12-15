@@ -198,6 +198,7 @@ HardFault_Handler\
                 ENDP
 MemManage_Handler\
                 PROC
+				
                 EXPORT  MemManage_Handler          [WEAK]
                 B       .
                 ENDP

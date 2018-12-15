@@ -34750,6 +34750,7 @@ Nuint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 Nvoid RecHandle(void);
 Nvoid MODS_Poll(void);
 Nvoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+N
 N//=============================================================================
 N#define NOP   __nop();	  //???
 N
@@ -35015,6 +35016,7 @@ N#define face_load       4
 N#define face_set        5
 N#define face_starter    6
 N#define face_sys_info   7
+N#define face_cal        8
 N/*
 N************************************************************************
 N*						…Ë÷√—°œÓ ∂±∑˚
@@ -35118,6 +35120,9 @@ N#define c_off               0
 N#define mode_r              1
 N#define mode_load           2
 N#define mode_pow            3
+N#define mode_loadc          4
+N#define mode_powc           5
+N#define input               6
 N#define load_on             1
 N#define load_off            0
 N#define pow_on              1
@@ -35136,8 +35141,10 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu32 Correct_Parametet[13];
+Nextern vu32 Correct_Parametet[17];
 N#define  REG_CorrectionV   Correct_Parametet[0]//???????
+N#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+N#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 N#define  REG_Load_A			   Correct_Parametet[1]//??CC???°§???
 N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????°§??
 N#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -35148,7 +35155,9 @@ N
 N#define  REG_POWERA			   Correct_Parametet[6]//??CC???°§???
 N#define  SET_POWERA			   Correct_Parametet[7]//??CC???°§?????
 N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-N#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+N#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+N#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+N#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 N#define  CON_POWERA				 Correct_Parametet[10]//??CV???°§???
 N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 N#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -35163,8 +35172,10 @@ N#define  Polar3						 correct_por[3]//??????CV???°§?
 N#define  Polar4						 correct_por[4]//??CC???°§????
 N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[13];//ßµ???
+Nextern vu32 Correct_Strong[17];//ßµ???
 N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+N#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+N#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???°§???
 N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????°§??
 N#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -35175,6 +35186,8 @@ N
 N#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???°§???
 N#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???°§?????
 N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+N#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+N#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???°§???
 N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
@@ -35284,6 +35297,7 @@ Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 Svoid RecHandle(void);
 Svoid MODS_Poll(void);
 Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+S
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -35549,6 +35563,7 @@ S#define face_load       4
 S#define face_set        5
 S#define face_starter    6
 S#define face_sys_info   7
+S#define face_cal        8
 S/*
 S************************************************************************
 S*						…Ë÷√—°œÓ ∂±∑˚
@@ -35652,6 +35667,9 @@ S#define c_off               0
 S#define mode_r              1
 S#define mode_load           2
 S#define mode_pow            3
+S#define mode_loadc          4
+S#define mode_powc           5
+S#define input               6
 S#define load_on             1
 S#define load_off            0
 S#define pow_on              1
@@ -35670,8 +35688,10 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[13];
+Sextern vu32 Correct_Parametet[17];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
+S#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+S#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???°§???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????°§??
 S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -35682,7 +35702,9 @@ S
 S#define  REG_POWERA			   Correct_Parametet[6]//??CC???°§???
 S#define  SET_POWERA			   Correct_Parametet[7]//??CC???°§?????
 S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+S#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+S#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+S#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???°§???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -35697,8 +35719,10 @@ S#define  Polar3						 correct_por[3]//??????CV???°§?
 S#define  Polar4						 correct_por[4]//??CC???°§????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[13];//ßµ???
+Sextern vu32 Correct_Strong[17];//ßµ???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+S#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+S#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???°§???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????°§??
 S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -35709,6 +35733,8 @@ S
 S#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???°§???
 S#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???°§?????
 S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+S#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+S#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???°§???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
@@ -35840,6 +35866,7 @@ Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 Svoid RecHandle(void);
 Svoid MODS_Poll(void);
 Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+S
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -36105,6 +36132,7 @@ S#define face_load       4
 S#define face_set        5
 S#define face_starter    6
 S#define face_sys_info   7
+S#define face_cal        8
 S/*
 S************************************************************************
 S*						…Ë÷√—°œÓ ∂±∑˚
@@ -36208,6 +36236,9 @@ S#define c_off               0
 S#define mode_r              1
 S#define mode_load           2
 S#define mode_pow            3
+S#define mode_loadc          4
+S#define mode_powc           5
+S#define input               6
 S#define load_on             1
 S#define load_off            0
 S#define pow_on              1
@@ -36226,8 +36257,10 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[13];
+Sextern vu32 Correct_Parametet[17];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
+S#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+S#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???°§???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????°§??
 S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -36238,7 +36271,9 @@ S
 S#define  REG_POWERA			   Correct_Parametet[6]//??CC???°§???
 S#define  SET_POWERA			   Correct_Parametet[7]//??CC???°§?????
 S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+S#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+S#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+S#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???°§???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -36253,8 +36288,10 @@ S#define  Polar3						 correct_por[3]//??????CV???°§?
 S#define  Polar4						 correct_por[4]//??CC???°§????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[13];//ßµ???
+Sextern vu32 Correct_Strong[17];//ßµ???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+S#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+S#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???°§???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????°§??
 S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -36265,6 +36302,8 @@ S
 S#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???°§???
 S#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???°§?????
 S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+S#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+S#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???°§???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
@@ -36365,6 +36404,7 @@ Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 Svoid RecHandle(void);
 Svoid MODS_Poll(void);
 Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+S
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -36630,6 +36670,7 @@ S#define face_load       4
 S#define face_set        5
 S#define face_starter    6
 S#define face_sys_info   7
+S#define face_cal        8
 S/*
 S************************************************************************
 S*						…Ë÷√—°œÓ ∂±∑˚
@@ -36733,6 +36774,9 @@ S#define c_off               0
 S#define mode_r              1
 S#define mode_load           2
 S#define mode_pow            3
+S#define mode_loadc          4
+S#define mode_powc           5
+S#define input               6
 S#define load_on             1
 S#define load_off            0
 S#define pow_on              1
@@ -36751,8 +36795,10 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[13];
+Sextern vu32 Correct_Parametet[17];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
+S#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+S#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???°§???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????°§??
 S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -36763,7 +36809,9 @@ S
 S#define  REG_POWERA			   Correct_Parametet[6]//??CC???°§???
 S#define  SET_POWERA			   Correct_Parametet[7]//??CC???°§?????
 S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+S#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+S#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+S#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???°§???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -36778,8 +36826,10 @@ S#define  Polar3						 correct_por[3]//??????CV???°§?
 S#define  Polar4						 correct_por[4]//??CC???°§????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[13];//ßµ???
+Sextern vu32 Correct_Strong[17];//ßµ???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+S#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+S#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???°§???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????°§??
 S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -36790,6 +36840,8 @@ S
 S#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???°§???
 S#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???°§?????
 S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+S#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+S#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???°§???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
@@ -50688,6 +50740,8 @@ Nextern WM_HWIN CreateG(void);
 Xextern GUI_HWIN CreateG(void);
 Nextern WM_HWIN CreateSET(void);
 Xextern GUI_HWIN CreateSET(void);
+Nextern WM_HWIN Createcal(void);
+Xextern GUI_HWIN Createcal(void);
 Nextern WM_HWIN hWinWind;
 Xextern GUI_HWIN hWinWind;
 Nextern WM_HWIN hWinR;
@@ -50720,6 +50774,7 @@ Nextern float gate_v;
 Nextern vu8 manual;
 Nextern vu8 oc_mode;
 Nextern vu8 cal;
+Nextern char inputv[10];
 Nvu8 t_MODE;
 Nvu8 pass = 0;
 Nvu8 LOAD_t;
@@ -50738,6 +50793,8 @@ Nvu8 clear_r = 0;
 Nvu8 r_raly=0;
 Nvu8 lock;
 Nvu8 c_rec;
+Nvu8 calstep;
+Nvu8 oldcal;
 N
 N//=================================================================
 Nextern struct bitDefine
@@ -50781,6 +50838,8 @@ Nvu32 Key_Scan(void);
 Nvoid Lift_Move(void);
 Nvoid Right_Move(void);
 Nvoid Setvalue_Add(void);
+Nvoid IO_OFF(void);
+Nextern u8 calmode;
 N/* ÈîÆÂÄºÂÆö‰π?*/
 N#define        KEY_1                		 0X4E     //
 N#define        KEY_2                		 0X56     //
@@ -50979,7 +51038,7 @@ N                            if(admin == 1)
 N                            {
 N                                INPUT_INFO(1);    
 N                            }else if(cal == 1){
-W "..\drive\key.c" 279 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 285 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(1);
 N                            }else{
 N                                pass += 1;
@@ -50987,7 +51046,63 @@ N                            }
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                            break;
-N                        }  
+N                        }
+N                        case face_cal:
+X                        case 8:
+N                        {
+N                            if(calmode == mode_load)
+X                            if(calmode == 2)
+N                            {
+W "..\drive\key.c" 297 33 function "LoadVCal" declared implicitly
+N                                LoadVCal(1);
+N                            }else if(calmode == mode_pow){
+X                            }else if(calmode == 3){
+N                                IO_OFF();
+N                                SET_Voltage = 100;
+X                                Run_Control[1] = 100;
+N                                SET_Current = 1000;  
+X                                Run_Control[2] = 1000;  
+N                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫ÁªßÁîµÂô®
+X                                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫
+X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                                calstep = 1;
+N                            }else if(calmode == mode_r ){
+X                            }else if(calmode == 1 ){
+W "..\drive\key.c" 306 33 function "Rlow_cal" declared implicitly
+N                                Rlow_cal(1);
+N                            }else if(calmode == mode_loadc){
+X                            }else if(calmode == 4){
+N                                IO_OFF();
+N                                SET_Current_Laod = 1000;
+X                                Run_Control[4] = 1000;
+N                                GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+X                                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
+N                                flag_Load_CC = 1;
+X                                (flagD . bit7) = 1;
+N                                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//ÁîµÂ≠êË¥üËΩΩOn
+X                                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N                                calstep = 1;
+N                            }else if(calmode == mode_powc){
+X                            }else if(calmode == 5){
+N                                IO_OFF();
+N                                SET_Voltage = 1000;
+X                                Run_Control[1] = 1000;
+N                                SET_Current = 1000;  
+X                                Run_Control[2] = 1000;  
+N                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫ÁªßÁîµÂô®
+X                                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫
+X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                                calstep = 1;
+N                            }else if(calmode == input){
+X                            }else if(calmode == 6){
+W "..\drive\key.c" 322 33 function "inputcal" declared implicitly
+N                                inputcal("1");
+N                            }
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        }break;
 N                    }
 N                    KeyCounter = 0;
 N                    BEEP_Tiggr();//
@@ -51048,7 +51163,7 @@ N                            if(admin == 1)
 N                            {
 N                                INPUT_INFO(2);    
 N                            }else if(cal == 1){
-W "..\drive\key.c" 339 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 379 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(2);
 N                            }else{
 N                                pass += 2;
@@ -51057,6 +51172,62 @@ N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                            break;
 N                        }
+N                        case face_cal:
+X                        case 8:
+N                        {
+N                            if(calmode == mode_load)
+X                            if(calmode == 2)
+N                            {
+W "..\drive\key.c" 391 33 function "LoadVCal" declared implicitly
+N                                LoadVCal(2);
+N                            }else if(calmode == mode_pow){
+X                            }else if(calmode == 3){
+N                                IO_OFF();
+N                                SET_Voltage = 1000;
+X                                Run_Control[1] = 1000;
+N                                SET_Current = 1000;  
+X                                Run_Control[2] = 1000;  
+N                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫ÁªßÁîµÂô®
+X                                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫
+X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                                calstep = 2;
+N                            }else if(calmode == mode_r ){
+X                            }else if(calmode == 1 ){
+W "..\drive\key.c" 400 33 function "Rlow_cal" declared implicitly
+N                                Rlow_cal(2);
+N                            }else if(calmode == mode_loadc){
+X                            }else if(calmode == 4){
+N                                IO_OFF();
+N                                SET_Current_Laod = 5000;
+X                                Run_Control[4] = 5000;
+N                                GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+X                                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
+N                                flag_Load_CC = 1;
+X                                (flagD . bit7) = 1;
+N                                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//ÁîµÂ≠êË¥üËΩΩOn
+X                                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N                                calstep = 2;
+N                            }else if(calmode == mode_powc){
+X                            }else if(calmode == 5){
+N                                IO_OFF();
+N                                SET_Voltage = 1000;
+X                                Run_Control[1] = 1000;
+N                                SET_Current = 5000;  
+X                                Run_Control[2] = 5000;  
+N                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫ÁªßÁîµÂô®
+X                                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫
+X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                                calstep = 2;
+N                            }else if(calmode == input){
+X                            }else if(calmode == 6){
+W "..\drive\key.c" 416 33 function "inputcal" declared implicitly
+N                                inputcal("2");
+N                            }
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        }break;
 N       
 N                    }
 N                    KeyCounter = 0;
@@ -51118,7 +51289,7 @@ N                            if(admin == 1)
 N                            {
 N                                INPUT_INFO(3);    
 N                            }else if(cal == 1){
-W "..\drive\key.c" 400 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 474 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(3);
 N                            }else{
 N                                pass += 3;
@@ -51127,6 +51298,38 @@ N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                            break;
 N                        }
+N                        case face_cal:
+X                        case 8:
+N                        {
+N                            if(calmode == mode_load)
+X                            if(calmode == 2)
+N                            {
+W "..\drive\key.c" 486 33 function "LoadVCal" declared implicitly
+N                                LoadVCal(3);
+N                            }else if(calmode == mode_pow){
+X                            }else if(calmode == 3){
+N                                IO_OFF();
+N                                SET_Voltage = 1000;
+X                                Run_Control[1] = 1000;
+N                                SET_Current = 1000;  
+X                                Run_Control[2] = 1000;  
+N                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫ÁªßÁîµÂô®
+X                                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫
+X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                                calstep = 3;
+N                            }else if(calmode == mode_r ){
+X                            }else if(calmode == 1 ){
+W "..\drive\key.c" 495 33 function "Rlow_cal" declared implicitly
+N                                Rlow_cal(3);
+N                            }else if(calmode == input){
+X                            }else if(calmode == 6){
+W "..\drive\key.c" 497 33 function "inputcal" declared implicitly
+N                                inputcal("3");
+N                            }
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        }break;
 N                    }
 N                }
 N                break;
@@ -51185,7 +51388,7 @@ N                            if(admin == 1)
 N                            {
 N                                INPUT_INFO(4);    
 N                            }else if(cal == 1){
-W "..\drive\key.c" 458 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 552 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(4);
 N                            }else{
 N                                pass += 4;
@@ -51194,6 +51397,38 @@ N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                            break;
 N                        }
+N                        case face_cal:
+X                        case 8:
+N                        {
+N                            if(calmode == mode_load)
+X                            if(calmode == 2)
+N                            {
+W "..\drive\key.c" 564 33 function "LoadVCal" declared implicitly
+N                                LoadVCal(4);
+N                            }else if(calmode == mode_pow){
+X                            }else if(calmode == 3){
+N                                IO_OFF();
+N                                SET_Voltage = 3000;
+X                                Run_Control[1] = 3000;
+N                                SET_Current = 1000;  
+X                                Run_Control[2] = 1000;  
+N                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫ÁªßÁîµÂô®
+X                                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫
+X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                                calstep = 4;
+N                            }else if(calmode == mode_r ){
+X                            }else if(calmode == 1 ){
+W "..\drive\key.c" 573 33 function "Rlow_cal" declared implicitly
+N                                Rlow_cal(4);
+N                            }else if(calmode == input){
+X                            }else if(calmode == 6){
+W "..\drive\key.c" 575 33 function "inputcal" declared implicitly
+N                                inputcal("4");
+N                            }
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        }break;
 N                    }
 N                }
 N                break;
@@ -51252,7 +51487,7 @@ N                            if(admin == 1)
 N                            {
 N                                INPUT_INFO(5);    
 N                            }else if(cal == 1){
-W "..\drive\key.c" 516 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 630 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(5);
 N                            }else{
 N                                pass += 5;
@@ -51261,6 +51496,38 @@ N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                            break;
 N                        }
+N                        case face_cal:
+X                        case 8:
+N                        {
+N                            if(calmode == mode_load)
+X                            if(calmode == 2)
+N                            {
+W "..\drive\key.c" 642 33 function "LoadVCal" declared implicitly
+N                                LoadVCal(5);
+N                            }else if(calmode == mode_pow){
+X                            }else if(calmode == 3){
+N                                IO_OFF();
+N                                SET_Voltage = 3000;
+X                                Run_Control[1] = 3000;
+N                                SET_Current = 1000;  
+X                                Run_Control[2] = 1000;  
+N                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫ÁªßÁîµÂô®
+X                                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫
+X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                                calstep = 5;
+N                            }else if(calmode == mode_r ){
+X                            }else if(calmode == 1 ){
+W "..\drive\key.c" 651 33 function "Rlow_cal" declared implicitly
+N                                Rlow_cal(5);
+N                            }else if(calmode == input){
+X                            }else if(calmode == 6){
+W "..\drive\key.c" 653 33 function "inputcal" declared implicitly
+N                                inputcal("5");
+N                            }
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        }break;
 N                    }
 N                }
 N                break;	
@@ -51319,13 +51586,45 @@ N                            if(admin == 1)
 N                            {
 N                                INPUT_INFO(6);    
 N                            }else if(cal == 1){
-W "..\drive\key.c" 574 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 708 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(6);
 N                            }
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                            break;
 N                        }
+N                        case face_cal:
+X                        case 8:
+N                        {
+N                            if(calmode == mode_load)
+X                            if(calmode == 2)
+N                            {
+W "..\drive\key.c" 718 33 function "LoadVCal" declared implicitly
+N                                LoadVCal(6);
+N                            }else if(calmode == mode_pow){
+X                            }else if(calmode == 3){
+N                                IO_OFF();
+N                                SET_Voltage = 6000;
+X                                Run_Control[1] = 6000;
+N                                SET_Current = 1000;  
+X                                Run_Control[2] = 1000;  
+N                                GPIO_ResetBits(GPIOC,GPIO_Pin_13);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫ÁªßÁîµÂô®
+X                                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N                                GPIO_SetBits(GPIOC,GPIO_Pin_1);//ÊâìÂºÄÁîµÊ∫êËæìÂá∫
+X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                                calstep = 6;
+N                            }else if(calmode == mode_r ){
+X                            }else if(calmode == 1 ){
+W "..\drive\key.c" 727 33 function "Rlow_cal" declared implicitly
+N                                Rlow_cal(6);
+N                            }else if(calmode == input){
+X                            }else if(calmode == 6){
+W "..\drive\key.c" 729 33 function "inputcal" declared implicitly
+N                                inputcal("6");
+N                            }
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        }break;
 N                    }
 N                }
 N                break;
@@ -51388,6 +51687,29 @@ N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                            break;
 N                        }
+N                        case face_cal:
+X                        case 8:
+N                        {
+N                            if(calmode == mode_load)
+X                            if(calmode == 2)
+N                            {
+W "..\drive\key.c" 792 33 function "LoadVCal" declared implicitly
+N                                LoadVCal(7);
+N                            }else if(calmode == mode_pow){
+X                            }else if(calmode == 3){
+N                                
+N                            }else if(calmode == mode_r ){
+X                            }else if(calmode == 1 ){
+W "..\drive\key.c" 796 33 function "Rlow_cal" declared implicitly
+N                                Rlow_cal(7);
+N                            }else if(calmode == input){
+X                            }else if(calmode == 6){
+W "..\drive\key.c" 798 33 function "inputcal" declared implicitly
+N                                inputcal("7");
+N                            }
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        }break;
 N                    }
 N                }
 N                break;
@@ -51450,6 +51772,29 @@ N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                            break;
 N                        }
+N                         case face_cal:
+X                         case 8:
+N                        {
+N                            if(calmode == mode_load)
+X                            if(calmode == 2)
+N                            {
+W "..\drive\key.c" 861 33 function "LoadVCal" declared implicitly
+N                                LoadVCal(8);
+N                            }else if(calmode == mode_pow){
+X                            }else if(calmode == 3){
+N                                
+N                            }else if(calmode == mode_r ){
+X                            }else if(calmode == 1 ){
+W "..\drive\key.c" 865 33 function "Rlow_cal" declared implicitly
+N                                Rlow_cal(8);
+N                            }else if(calmode == input){
+X                            }else if(calmode == 6){
+W "..\drive\key.c" 867 33 function "inputcal" declared implicitly
+N                                inputcal("8");
+N                            }
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        }break;
 N                    }
 N                }
 N                break;
@@ -51512,6 +51857,29 @@ N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                            break;
 N                        }
+N                         case face_cal:
+X                         case 8:
+N                        {
+N                            if(calmode == mode_load)
+X                            if(calmode == 2)
+N                            {
+W "..\drive\key.c" 930 33 function "LoadVCal" declared implicitly
+N                                LoadVCal(9);
+N                            }else if(calmode == mode_pow){
+X                            }else if(calmode == 3){
+N                                
+N                            }else if(calmode == mode_r ){
+X                            }else if(calmode == 1 ){
+W "..\drive\key.c" 934 33 function "Rlow_cal" declared implicitly
+N                                Rlow_cal(9);
+N                            }else if(calmode == input){
+X                            }else if(calmode == 6){
+W "..\drive\key.c" 936 33 function "inputcal" declared implicitly
+N                                inputcal("9");
+N                            }
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        }break;
 N                    }
 N                }
 N                break;
@@ -51575,7 +51943,30 @@ N                            }
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                            break;
-N                        }                    
+N                        }
+N                        case face_cal:
+X                        case 8:
+N                        {
+N                            if(calmode == mode_load)
+X                            if(calmode == 2)
+N                            {
+W "..\drive\key.c" 1001 33 function "LoadVCal" declared implicitly
+N                                LoadVCal(0);
+N                            }else if(calmode == mode_pow){
+X                            }else if(calmode == 3){
+N                                
+N                            }else if(calmode == mode_r ){
+X                            }else if(calmode == 1 ){
+W "..\drive\key.c" 1005 33 function "Rlow_cal" declared implicitly
+N                                Rlow_cal(0);
+N                            }else if(calmode == input){
+X                            }else if(calmode == 6){
+W "..\drive\key.c" 1007 33 function "inputcal" declared implicitly
+N                                inputcal("0");
+N                            }
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        }break;
 N                    }
 N                }
 N                break;
@@ -51659,6 +52050,7 @@ N
 N                case PUSH_Lift :
 X                case 0X45 :
 N                {
+N                    vu8 l;
 N                    switch(page_sw){
 N                        case face_set:  //Á≥ªÁªüËÆæÁΩÆ
 X                        case 5:  
@@ -51682,7 +52074,10 @@ N                        }
 N                        case face_cdc:  //Á≥ªÁªüËÆæÁΩÆ
 X                        case 1:  
 N                        {
-N                            CDC_OP_LEFT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+N                            if(l != 0)
+N                            {
+N                                CDC_OP_LEFT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+N                            }
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                            break;
@@ -51693,6 +52088,7 @@ N                break;
 N                case PUSH_Right :
 X                case 0X55 :
 N                {
+N                    vu8 l;
 N                    switch(page_sw){
 N                        case face_set:  //Á≥ªÁªüËÆæÁΩÆ
 X                        case 5:  
@@ -51716,11 +52112,15 @@ N                        }
 N                        case face_cdc:  //Á≥ªÁªüËÆæÁΩÆ
 X                        case 1:  
 N                        {
-N                            CDC_OP_RIGHT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+N                            if(l != 0)
+N                            {
+N                                CDC_OP_RIGHT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+N                            }
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                            break;
 N                        }
+N                        
 N                    }
 N                }
 N                break;
@@ -51733,7 +52133,7 @@ X                        case 2:
 N                        {
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-W "..\drive\key.c" 937 29 function "MENU_OP_UP" declared implicitly
+W "..\drive\key.c" 1160 29 function "MENU_OP_UP" declared implicitly
 N                            MENU_OP_UP();
 N                            break;
 N                        }                    
@@ -51742,7 +52142,7 @@ X                        case 4:
 N                        {
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-W "..\drive\key.c" 944 29 function "LOAD_OP_UP" declared implicitly
+W "..\drive\key.c" 1167 29 function "LOAD_OP_UP" declared implicitly
 N                            LOAD_OP_UP();
 N                            break;
 N                        }
@@ -51760,7 +52160,7 @@ N                        {
 N                            if(para_set2 == set_2_on && oc_mode ==0)
 X                            if(para_set2 == 0xff && oc_mode ==0)
 N                            {
-W "..\drive\key.c" 958 33 function "OC_OP_UP" declared implicitly
+W "..\drive\key.c" 1181 33 function "OC_OP_UP" declared implicitly
 N                                OC_OP_UP();
 N                                KeyCounter = 0;
 N                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
@@ -51794,13 +52194,14 @@ N                break;
 N                case PUSH_Down :
 X                case 0X74 :
 N                {
+N                    u8 i;
 N                    switch(page_sw){
 N                        case face_menu:
 X                        case 2:
 N                        {
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-W "..\drive\key.c" 993 29 function "MENU_OP_DOWN" declared implicitly
+W "..\drive\key.c" 1217 29 function "MENU_OP_DOWN" declared implicitly
 N                            MENU_OP_DOWN();
 N                            break;
 N                        }  
@@ -51809,7 +52210,7 @@ X                        case 4:
 N                        {
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
-W "..\drive\key.c" 1000 29 function "LOAD_OP_DOWN" declared implicitly
+W "..\drive\key.c" 1224 29 function "LOAD_OP_DOWN" declared implicitly
 N                            LOAD_OP_DOWN();
 N                            break;
 N                        }
@@ -51827,7 +52228,7 @@ N                        {
 N                            if(para_set2 == set_2_on && oc_mode ==0)
 X                            if(para_set2 == 0xff && oc_mode ==0)
 N                            {
-W "..\drive\key.c" 1014 33 function "OC_OP_DOWN" declared implicitly
+W "..\drive\key.c" 1238 33 function "OC_OP_DOWN" declared implicitly
 N                                OC_OP_DOWN();
 N                                KeyCounter = 0;
 N                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
@@ -51853,7 +52254,23 @@ N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                            break;
 N                        }
-N       
+N                        case face_cal:
+X                        case 8:
+N                        {
+N                            if(calmode != input)
+X                            if(calmode != 6)
+N                            {
+N                                oldcal = calmode;
+N                                calmode = input;
+X                                calmode = 6;
+N                                for(i=0;i<10;i++)
+N                                {
+N                                    inputv[i] = '\0';
+N                                }
+N                            }
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        }break;
 N                    }
 N                }
 N                break;
@@ -51865,7 +52282,7 @@ N                    switch(page_sw){
 N                        case face_menu:
 X                        case 2:
 N                        {
-W "..\drive\key.c" 1047 29 function "MENU_SET" declared implicitly
+W "..\drive\key.c" 1284 29 function "MENU_SET" declared implicitly
 N                            MENU_SET();
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
@@ -51885,7 +52302,7 @@ N                        {
 N                            if(para_set2 == set_2_on)
 X                            if(para_set2 == 0xff)
 N                            {
-W "..\drive\key.c" 1063 33 function "OC_SET" declared implicitly
+W "..\drive\key.c" 1300 33 function "OC_SET" declared implicitly
 N                                OC_SET();
 N                                KeyCounter = 0;
 N                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
@@ -51895,7 +52312,7 @@ N                        }
 N                        case face_load:
 X                        case 4:
 N                        {
-W "..\drive\key.c" 1071 29 function "LOAD_SET" declared implicitly
+W "..\drive\key.c" 1308 29 function "LOAD_SET" declared implicitly
 N                            LOAD_SET();
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
@@ -51912,12 +52329,36 @@ N                        }
 N                        case face_sys_info:
 X                        case 7:
 N                        {
-W "..\drive\key.c" 1085 29 function "CFM_PASS" declared implicitly
+W "..\drive\key.c" 1322 29 function "CFM_PASS" declared implicitly
 N                            CFM_PASS();
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                            break;
 N                        }
+N                        case face_cal:
+X                        case 8:
+N                        {
+N                            if(calmode == mode_r)
+X                            if(calmode == 1)
+N                            {
+N                                if(r_raly == 1)
+N                                {
+N                                    GPIO_ResetBits(GPIOB,GPIO_Pin_13);//R_RALY‰ΩéÊ°£‰Ωç 
+X                                    GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                                    r_raly = 0;
+N                                }else{
+N                                     GPIO_SetBits(GPIOB,GPIO_Pin_13);//R_RALYÈ´òÊ°£‰Ωç
+X                                     GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                                    r_raly = 1;
+N                                }
+N                            }else if(calmode == input){
+X                            }else if(calmode == 6){
+W "..\drive\key.c" 1340 33 function "confirmcal" declared implicitly
+N                                confirmcal();
+N                            }
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        }break;
 N                    }
 N                }
 N                break;
@@ -51996,7 +52437,7 @@ N                            WM_DeleteWindow(load_wind);
 N                            WM_DeleteWindow(hWinsysinfo);
 N                            WM_DeleteWindow(hWincdc);
 N                            WM_DeleteWindow(hWinset);
-W "..\drive\key.c" 1162 29 function "CreateCDC" declared implicitly
+W "..\drive\key.c" 1417 29 function "CreateCDC" declared implicitly
 N                            CreateCDC();
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
@@ -52194,6 +52635,56 @@ N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?
 N                           
 N                        }break;
+N                        case face_cal:
+X                        case 8:
+N                        {
+N                            if(calmode == mode_pow)
+X                            if(calmode == 3)
+N                            {
+N                                if(calstep == 1)
+N                                {
+W "..\drive\key.c" 1584 37 function "PowVCal" declared implicitly
+N                                    PowVCal(1);
+N                                }else if(calstep == 2){
+W "..\drive\key.c" 1586 37 function "PowVCal" declared implicitly
+N                                    PowVCal(2);
+N                                }else if(calstep == 3){
+W "..\drive\key.c" 1588 37 function "PowVCal" declared implicitly
+N                                    PowVCal(3);
+N                                }else if(calstep == 4){
+W "..\drive\key.c" 1590 37 function "PowVCal" declared implicitly
+N                                    PowVCal(4);
+N                                }else if(calstep == 5){
+W "..\drive\key.c" 1592 37 function "PowVCal" declared implicitly
+N                                    PowVCal(5);
+N                                }else if(calstep == 6){
+W "..\drive\key.c" 1594 37 function "PowVCal" declared implicitly
+N                                    PowVCal(6);
+N                                }
+N                            }else if(calmode == mode_loadc){
+X                            }else if(calmode == 4){
+N                                if(calstep == 1)
+N                                {
+W "..\drive\key.c" 1599 37 function "LoadCCal" declared implicitly
+N                                    LoadCCal(1);
+N                                }else if(calstep == 2){
+W "..\drive\key.c" 1601 37 function "LoadCCal" declared implicitly
+N                                    LoadCCal(2);
+N                                }
+N                            }else if(calmode == mode_powc){
+X                            }else if(calmode == 5){
+N                                if(calstep == 1)
+N                                {
+W "..\drive\key.c" 1606 37 function "PowCCal" declared implicitly
+N                                    PowCCal(1);
+N                                }else if(calstep == 2){
+W "..\drive\key.c" 1608 37 function "PowCCal" declared implicitly
+N                                    PowCCal(2);
+N                                }
+N                            }
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//
+N                        }break;
 N                    }
 N                    
 N                }
@@ -52229,6 +52720,37 @@ N                                at = 0;
 N                                manual =0;
 N                            }
 N                        }
+N                        case face_cal:
+X                        case 8:
+N                        {
+N                            if(calmode == mode_load)
+X                            if(calmode == 2)
+N                            {
+N                                calmode = mode_loadc;
+X                                calmode = 4;
+N                                IO_OFF();
+N                            }else if(calmode == mode_loadc){ 
+X                            }else if(calmode == 4){ 
+N                                calmode = mode_pow;
+X                                calmode = 3;
+N                                IO_OFF();
+N                            }else if(calmode == mode_pow){ 
+X                            }else if(calmode == 3){ 
+N                                calmode = mode_powc;
+X                                calmode = 5;
+N                                IO_OFF();
+N                            }else if(calmode == mode_powc){ 
+X                            }else if(calmode == 5){ 
+N                                calmode = mode_r;
+X                                calmode = 1;
+N                                IO_OFF();
+N                            }else if(calmode == mode_r){ 
+X                            }else if(calmode == 1){ 
+N                                calmode = mode_load;
+X                                calmode = 2;
+N                                IO_OFF();
+N                            }
+N                        }break;
 N                    }
 N                    KeyCounter = 0;
 N                    BEEP_Tiggr();//
@@ -52316,7 +52838,7 @@ N                    WM_DeleteWindow(load_wind);
 N                    WM_DeleteWindow(hWinsysinfo);
 N                    WM_DeleteWindow(hWincdc);
 N                    WM_DeleteWindow(hWinset);
-W "..\drive\key.c" 1428 21 function "CreateCDC" declared implicitly
+W "..\drive\key.c" 1739 21 function "CreateCDC" declared implicitly
 N                    CreateCDC(); 
 N                    KeyCounter = 0;
 N                    BEEP_Tiggr();//
@@ -52347,7 +52869,7 @@ N                    WM_DeleteWindow(load_wind);
 N                    WM_DeleteWindow(hWinsysinfo);
 N                    WM_DeleteWindow(hWincdc);
 N                    WM_DeleteWindow(hWinset);
-W "..\drive\key.c" 1456 21 function "Createsysinfo" declared implicitly
+W "..\drive\key.c" 1767 21 function "Createsysinfo" declared implicitly
 N                    Createsysinfo();
 N                    KeyCounter = 0;
 N                    BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?

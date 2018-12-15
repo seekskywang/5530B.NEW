@@ -48586,6 +48586,7 @@ Nuint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 Nvoid RecHandle(void);
 Nvoid MODS_Poll(void);
 Nvoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+N
 N//=============================================================================
 N#define NOP   __nop();	  //???
 N
@@ -48851,6 +48852,7 @@ N#define face_load       4
 N#define face_set        5
 N#define face_starter    6
 N#define face_sys_info   7
+N#define face_cal        8
 N/*
 N************************************************************************
 N*						…Ë÷√—°œÓ ∂±∑˚
@@ -48954,6 +48956,9 @@ N#define c_off               0
 N#define mode_r              1
 N#define mode_load           2
 N#define mode_pow            3
+N#define mode_loadc          4
+N#define mode_powc           5
+N#define input               6
 N#define load_on             1
 N#define load_off            0
 N#define pow_on              1
@@ -48972,8 +48977,10 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu32 Correct_Parametet[13];
+Nextern vu32 Correct_Parametet[17];
 N#define  REG_CorrectionV   Correct_Parametet[0]//???????
+N#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+N#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 N#define  REG_Load_A			   Correct_Parametet[1]//??CC???°§???
 N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????°§??
 N#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -48984,7 +48991,9 @@ N
 N#define  REG_POWERA			   Correct_Parametet[6]//??CC???°§???
 N#define  SET_POWERA			   Correct_Parametet[7]//??CC???°§?????
 N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-N#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+N#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+N#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+N#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 N#define  CON_POWERA				 Correct_Parametet[10]//??CV???°§???
 N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 N#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -48999,8 +49008,10 @@ N#define  Polar3						 correct_por[3]//??????CV???°§?
 N#define  Polar4						 correct_por[4]//??CC???°§????
 N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[13];//ßµ???
+Nextern vu32 Correct_Strong[17];//ßµ???
 N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+N#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+N#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???°§???
 N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????°§??
 N#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -49011,6 +49022,8 @@ N
 N#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???°§???
 N#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???°§?????
 N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+N#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+N#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???°§???
 N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
@@ -49098,6 +49111,7 @@ Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 Svoid RecHandle(void);
 Svoid MODS_Poll(void);
 Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+S
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -49363,6 +49377,7 @@ S#define face_load       4
 S#define face_set        5
 S#define face_starter    6
 S#define face_sys_info   7
+S#define face_cal        8
 S/*
 S************************************************************************
 S*						…Ë÷√—°œÓ ∂±∑˚
@@ -49466,6 +49481,9 @@ S#define c_off               0
 S#define mode_r              1
 S#define mode_load           2
 S#define mode_pow            3
+S#define mode_loadc          4
+S#define mode_powc           5
+S#define input               6
 S#define load_on             1
 S#define load_off            0
 S#define pow_on              1
@@ -49484,8 +49502,10 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[13];
+Sextern vu32 Correct_Parametet[17];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
+S#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+S#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???°§???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????°§??
 S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -49496,7 +49516,9 @@ S
 S#define  REG_POWERA			   Correct_Parametet[6]//??CC???°§???
 S#define  SET_POWERA			   Correct_Parametet[7]//??CC???°§?????
 S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+S#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+S#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+S#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???°§???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -49511,8 +49533,10 @@ S#define  Polar3						 correct_por[3]//??????CV???°§?
 S#define  Polar4						 correct_por[4]//??CC???°§????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[13];//ßµ???
+Sextern vu32 Correct_Strong[17];//ßµ???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+S#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+S#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???°§???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????°§??
 S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -49523,6 +49547,8 @@ S
 S#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???°§???
 S#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???°§?????
 S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+S#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+S#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???°§???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
@@ -51594,6 +51620,7 @@ Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 Svoid RecHandle(void);
 Svoid MODS_Poll(void);
 Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+S
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -51859,6 +51886,7 @@ S#define face_load       4
 S#define face_set        5
 S#define face_starter    6
 S#define face_sys_info   7
+S#define face_cal        8
 S/*
 S************************************************************************
 S*						…Ë÷√—°œÓ ∂±∑˚
@@ -51962,6 +51990,9 @@ S#define c_off               0
 S#define mode_r              1
 S#define mode_load           2
 S#define mode_pow            3
+S#define mode_loadc          4
+S#define mode_powc           5
+S#define input               6
 S#define load_on             1
 S#define load_off            0
 S#define pow_on              1
@@ -51980,8 +52011,10 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[13];
+Sextern vu32 Correct_Parametet[17];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
+S#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+S#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???°§???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????°§??
 S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -51992,7 +52025,9 @@ S
 S#define  REG_POWERA			   Correct_Parametet[6]//??CC???°§???
 S#define  SET_POWERA			   Correct_Parametet[7]//??CC???°§?????
 S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+S#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+S#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+S#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???°§???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -52007,8 +52042,10 @@ S#define  Polar3						 correct_por[3]//??????CV???°§?
 S#define  Polar4						 correct_por[4]//??CC???°§????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[13];//ßµ???
+Sextern vu32 Correct_Strong[17];//ßµ???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+S#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+S#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???°§???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????°§??
 S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -52019,6 +52056,8 @@ S
 S#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???°§???
 S#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???°§?????
 S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+S#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+S#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???°§???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
@@ -52633,6 +52672,7 @@ Nextern vu16 menu_time;
 Nextern vu16 s_time;
 Nextern vu8 wait_flag;
 Nextern vu8 test_num;
+Nfloat overchargev;
 N
 N#define ID_WINDOW_0      	(GUI_ID_USER + 0x00)
 N#define ID_BUTTON_0     	(GUI_ID_USER + 0x01)
@@ -52654,6 +52694,7 @@ N#define ID_TEXT_87          (GUI_ID_USER + 0x94)
 N#define ID_TEXT_88          (GUI_ID_USER + 0x95)
 N#define ID_TEXT_115         (GUI_ID_USER + 0x10B)
 N#define ID_TEXT_125         (GUI_ID_USER + 0x10C)
+N#define ID_TEXT_144         (GUI_ID_USER + 0x012E)
 N
 N#define ID_TimerTime2    3
 N
@@ -52681,12 +52722,12 @@ N    { TEXT_CreateIndirect,   "Text",   ID_TEXT_16,  240, 121, 32, 30, 0, 0x0, 0
 X    { TEXT_CreateIndirect,   "Text",   (0x800 + 0x21),  240, 121, 32, 30, 0, 0x0, 0 },
 N    { TEXT_CreateIndirect,   "Text",   ID_TEXT_33, 290, 75, 80, 20, 0, 0x0, 0 },
 X    { TEXT_CreateIndirect,   "Text",   (0x800 + 0x3D), 290, 75, 80, 20, 0, 0x0, 0 },
-N    { TEXT_CreateIndirect,   "Text",   ID_TEXT_34, 290, 150, 80, 20, 0, 0x0, 0 },
-X    { TEXT_CreateIndirect,   "Text",   (0x800 + 0x3E), 290, 150, 80, 20, 0, 0x0, 0 },
+N    { TEXT_CreateIndirect,   "Text",   ID_TEXT_34, 290, 100, 80, 20, 0, 0x0, 0 },
+X    { TEXT_CreateIndirect,   "Text",   (0x800 + 0x3E), 290, 100, 80, 20, 0, 0x0, 0 },
 N    { TEXT_CreateIndirect,   "Text",   ID_TEXT_41, 380, 75, 53, 20, 0, 0x0, 0 },
 X    { TEXT_CreateIndirect,   "Text",   (0x800 + 0x66), 380, 75, 53, 20, 0, 0x0, 0 },
-N    { TEXT_CreateIndirect,   "Text",   ID_TEXT_42, 370, 150, 65, 20, 0, 0x0, 0 },
-X    { TEXT_CreateIndirect,   "Text",   (0x800 + 0x67), 370, 150, 65, 20, 0, 0x0, 0 },
+N    { TEXT_CreateIndirect,   "Text",   ID_TEXT_42, 370, 100, 65, 20, 0, 0x0, 0 },
+X    { TEXT_CreateIndirect,   "Text",   (0x800 + 0x67), 370, 100, 65, 20, 0, 0x0, 0 },
 N    { TEXT_CreateIndirect,   "Text",   ID_TEXT_86, 95, 48, 150, 40, 0, 0x0, 0 },
 X    { TEXT_CreateIndirect,   "Text",   (0x800 + 0x93), 95, 48, 150, 40, 0, 0x0, 0 },
 N    { TEXT_CreateIndirect,   "Text",   ID_TEXT_87, 95, 116, 150, 40, 0, 0x0, 0 },
@@ -52697,6 +52738,8 @@ N    { TEXT_CreateIndirect,   "Text",   ID_TEXT_115, 95, 184, 150, 40, 0, 0x0, 0
 X    { TEXT_CreateIndirect,   "Text",   (0x800 + 0x10B), 95, 184, 150, 40, 0, 0x0, 0 },
 N    { TEXT_CreateIndirect,   "Text",   ID_TEXT_125, 300, 2, 80, 20, 0, 0x0, 0 },
 X    { TEXT_CreateIndirect,   "Text",   (0x800 + 0x10C), 300, 2, 80, 20, 0, 0x0, 0 },
+N    { TEXT_CreateIndirect,   "Text",   ID_TEXT_144, 370, 150, 65, 20, 0, 0x0, 0 },
+X    { TEXT_CreateIndirect,   "Text",   (0x800 + 0x012E), 370, 150, 65, 20, 0, 0x0, 0 },
 N  // USER START (Optionally insert additional widgets)
 N  // USER END
 N};
@@ -52712,8 +52755,9 @@ N  char buf[5];
 N
 N  float dis_output_v = (float)SET_Voltage/100;
 X  float dis_output_v = (float)Run_Control[1]/100;
-N  float dis_output_c = (float)SET_Current/1000;  
-X  float dis_output_c = (float)Run_Control[2]/1000;  
+N  float dis_output_c = (float)SET_Current/1000;
+X  float dis_output_c = (float)Run_Control[2]/1000;
+N  static u8 cdelay;
 N
 N  
 N  // USER START (Optionally insert additional variables)
@@ -52749,7 +52793,8 @@ N// 		GUI_GotoXY(95,140);//ËÆæÁΩÆÊòæÁ§∫ÂùêÊ†á
 N// 		GUI_DispFloatFix(DISS_POW_Current,5,2);//ÊòæÁ§∫ÁîµÊµÅÂÄº
 N        GUI_SetFont(&GUI_Font24_1);
 N        GUI_DispStringAt("V",435,75);
-N        GUI_DispStringAt("A",435,150);
+N        GUI_DispStringAt("A",435,100);
+N        GUI_DispStringAt("V",435,150);
 N        
 N        GUI_SetFont(&GUI_FontEN40);
 N        GUI_SetColor(GUI_LIGHTGRAY);
@@ -52766,8 +52811,12 @@ N        GUI_SetFont(&GUI_Fontunit);
 N        GUI_DispStringAt("¬∞",342, 2);
 N        GUI_SetFont(&GUI_Font24_1);
 N        GUI_DispStringAt("C",350, 2);
-W "..\APP\menu.c" 127 9 function "DrawLock" declared implicitly
+W "..\APP\menu.c" 132 9 function "DrawLock" declared implicitly
 N        DrawLock();
+N        GUI_SetColor(GUI_WHITE);
+X        GUI_SetColor(0x00FFFFFF);
+N        GUI_SetFont(&GUI_Fontset_font);
+N        GUI_DispStringAt("ËøáÂÖÖÁîµÂéã",290, 150);
 N		break;
 N    
 N	case WM_TIMER://ÂÆöÊó∂Ê®°ÂùóÊ∂àÊÅØ
@@ -52783,12 +52832,12 @@ N            WM_InvalidateWindow(hWinWind);
 N        }
 N//         if(clear_flag2 == 1)
 N//         {
-W "..\APP\menu.c" 141 16 single-precision operand implicitly converted to double-precision
+W "..\APP\menu.c" 149 16 single-precision operand implicitly converted to double-precision
 N            if(DISS_POW_Voltage < 0.1)
 N            {
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x93));
-W "..\APP\menu.c" 144 36 argument is incompatible with corresponding format string conversion
+W "..\APP\menu.c" 152 36 argument is incompatible with corresponding format string conversion
 N                sprintf(buf,"%.2f",0);       
 N                TEXT_SetText(hItem,buf);
 N            }else{
@@ -52834,7 +52883,22 @@ X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x95));
 N                TEXT_SetText(hItem,"");
 N                status_flash = 0;
 N           }
-N            
+W "..\APP\menu.c" 190 15 single-precision operand implicitly converted to double-precision
+N           if(DISS_POW_Current < 0.005 && cdelay > 20)
+N           {
+N              overchargev =  DISS_POW_Voltage;
+N              GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+X              GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N              GPIO_SetBits(GPIOC,GPIO_Pin_13);
+X              GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N              mode_sw = 0;
+N              pow_sw = pow_off;
+X              pow_sw = 0;
+N              cdelay = 0;
+N           }else{
+N               overchargev = 0;
+N               cdelay++;
+N           }
 N        }else{
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_88);
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x95));
@@ -52842,15 +52906,22 @@ N            TEXT_SetText(hItem,"");
 N            
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_87);
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x94));
-W "..\APP\menu.c" 188 32 argument is incompatible with corresponding format string conversion
+W "..\APP\menu.c" 207 32 argument is incompatible with corresponding format string conversion
 N            sprintf(buf,"%.3f",0);        
 N            TEXT_SetText(hItem,buf);
+N            
+N            cdelay = 0;
 N        }
+N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_144);       
+X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x012E));       
+N        sprintf(buf,"%.3f",overchargev);
+N        TEXT_SetText(hItem,buf);
+N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_125);       
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x10C));       
 N        sprintf(buf,"%.1f",temp);
 N        TEXT_SetText(hItem,buf);
-N
+N        
 N		WM_RestartTimer(pMsg->Data.v, 50);//Â§ç‰ΩçÂÆöÊó∂Âô®Êï∞ÂÄºË∂äÂ§ßÂà∑Êñ∞Êó∂Èó¥Ë∂äÁü≠
 N	}
 N	break;
@@ -52989,7 +53060,7 @@ N		TEXT_SetText(hItem,buf);
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x93));
-W "..\APP\menu.c" 308 28 argument is incompatible with corresponding format string conversion
+W "..\APP\menu.c" 333 28 argument is incompatible with corresponding format string conversion
 N        sprintf(buf,"%.2f",0);
 N		TEXT_SetTextColor(hItem, GUI_GREEN);//ËÆæÁΩÆÂ≠ó‰ΩìÈ¢úËâ≤
 X		TEXT_SetTextColor(hItem, 0x0000FF00);
@@ -52999,7 +53070,7 @@ N		TEXT_SetText(hItem,buf);
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_87);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x94));
-W "..\APP\menu.c" 315 28 argument is incompatible with corresponding format string conversion
+W "..\APP\menu.c" 340 28 argument is incompatible with corresponding format string conversion
 N        sprintf(buf,"%.3f",0);
 N		TEXT_SetTextColor(hItem, GUI_GREEN);//ËÆæÁΩÆÂ≠ó‰ΩìÈ¢úËâ≤
 X		TEXT_SetTextColor(hItem, 0x0000FF00);
@@ -53023,6 +53094,15 @@ X        TEXT_SetTextColor(hItem, 0x0000FF00);
 N        TEXT_SetFont(hItem,&GUI_Font24_1);//ËÆæÂÆöÊñáÊú¨Â≠ó‰Ωì       
 N        sprintf(buf,"%.1f",temp);
 N        TEXT_SetText(hItem,buf);
+N        
+N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_144);
+X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x012E));
+N        sprintf(buf,"%.3f",0.000);
+N		TEXT_SetTextColor(hItem, GUI_WHITE);//ËÆæÁΩÆÂ≠ó‰ΩìÈ¢úËâ≤
+X		TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N        TEXT_SetFont(hItem,&GUI_Font24_1);//ËÆæÂÆöÊñáÊú¨Â≠ó‰Ωì
+N		GUI_UC_SetEncodeUTF8();     
+N		TEXT_SetText(hItem,buf);
 N        
 N    // USER START (Optionally insert additional code for further widget initialization)
 N    // USER END
@@ -53153,7 +53233,7 @@ N  if(page_sw == face_graph)
 X  if(page_sw == 0)
 N  {      
 N  }else{
-W "..\APP\menu.c" 442 7 function "IO_OFF" declared implicitly
+W "..\APP\menu.c" 474 7 function "IO_OFF" declared implicitly
 N      IO_OFF();
 N  }
 N  page_sw = face_menu;

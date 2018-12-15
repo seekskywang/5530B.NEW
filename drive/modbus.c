@@ -33,8 +33,8 @@ vu32 Modify_A_ACT;
 vu32 Modify_B_READ;
 vu32 Modify_D_READ;
 vu32 Modify_B_ACT;
-vu32 Correct_Parametet[13];//校准参数
-vu32 Correct_Strong[13];//校准系数
+vu32 Correct_Parametet[17];//校准参数
+vu32 Correct_Strong[17];//校准系数
 vu8  correct_por[6];
 /*************************变量定义***********************************/
 vu32 Run_Control[42];
@@ -475,8 +475,8 @@ void UART_Action(void)
 /*******************************????????У?******************************************/	
 		if (g_tModS.RxBuf[1] == 0x0B)			   //?·?У?
 		{
-			Modify_A_READ = Vmon_value;//??·
-			Modify_C_READ = Contr_Voltage;//???·
+			Modify_A_READ = Vmon_value;//??d
+			Modify_C_READ = Contr_Voltage;//???d
 			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
 		}
 
@@ -613,7 +613,12 @@ void Transformation_ADC(void)
 	vu32 var32;
 	vu32 var32a;
 /*****************************内阻测量电压转换*******************************************/
-	var32 = Vmon1_value;
+	if(r_raly == 1)
+    {
+        var32 = Vmon1_value;
+    }else if(r_raly == 0){
+        var32 = Vmon1_value + 85;
+    }
 	var32 = var32 * REG_CorrectionV;  
 	if ((Polar & 0x01) == 0x01)		  
 	{
@@ -629,6 +634,78 @@ void Transformation_ADC(void)
 	Voltage = var32;
 	DISS_Voltage=Voltage;
 	DISS_Voltage=DISS_Voltage/1000;//计算显示电压
+    if(DISS_Voltage < 0.5)
+    {
+        if(r_raly == 1)
+        {
+            var32 = Vmon1_value;
+        }else if(r_raly == 0){
+            var32 = Vmon1_value - 63;
+        }
+        var32 = var32 * REG_CorrectionV;  
+        if ((Polar & 0x01) == 0x01)		  
+        {
+            if (var32 < REG_ReadV_Offset) 
+            {
+                var32 = 0;
+            }
+            else var32 = var32 - REG_ReadV_Offset;
+        }
+        else var32 = var32 + REG_ReadV_Offset;
+        var32 = var32 >> 12;
+        if (var32 < 30) var32 = 0;				  //40mV訑袀去拢
+        Voltage = var32;
+        DISS_Voltage=Voltage;
+        DISS_Voltage=DISS_Voltage/1000;//輪蹋袛示支压
+    }
+    if(DISS_Voltage >= 10)
+    {
+        if(r_raly == 1)
+        {
+            var32 = Vmon1_value;
+        }else if(r_raly == 0){
+            var32 = Vmon1_value + 85;
+        }
+        var32 = var32 * REG_CorrectionV1;  
+        if ((Polar & 0x01) == 0x01)		  
+        {
+            if (var32 < REG_ReadV_Offset1) 
+            {
+                var32 = 0;
+            }
+            else var32 = var32 - REG_ReadV_Offset1;
+        }
+        else var32 = var32 + REG_ReadV_Offset1;
+        var32 = var32 >> 12;
+        if (var32 < 30) var32 = 0;				  //40mV以下清零
+        Voltage = var32;
+        DISS_Voltage=Voltage;
+        DISS_Voltage=DISS_Voltage/1000;//计算显示电压
+    }
+    if(DISS_Voltage >= 30)
+    {
+        if(r_raly == 1)
+        {
+            var32 = Vmon1_value;
+        }else if(r_raly == 0){
+            var32 = Vmon1_value + 85;
+        }
+        var32 = var32 * REG_CorrectionV2;  
+        if ((Polar & 0x01) == 0x01)		  
+        {
+            if (var32 < REG_ReadV_Offset2) 
+            {
+                var32 = 0;
+            }
+            else var32 = var32 - REG_ReadV_Offset2;
+        }
+        else var32 = var32 + REG_ReadV_Offset2;
+        var32 = var32 >> 12;
+        if (var32 < 30) var32 = 0;				  //40mV以下清零
+        Voltage = var32;
+        DISS_Voltage=Voltage;
+        DISS_Voltage=DISS_Voltage/1000;//计算显示电压
+    }
 	var32 = 0;
 	/*******************负载测量电流转换**************************************/
 	var32 = Imon1_value;
@@ -769,6 +846,44 @@ void Transformation_ADC(void)
 	POW_Voltage = var32;
 	DISS_POW_Voltage=POW_Voltage;
 	DISS_POW_Voltage=DISS_POW_Voltage/100;//计算显示电压
+    if(DISS_POW_Voltage >= 10)
+    {
+        var32 = Vmon_value;
+        var32 = var32 * REG_POWERV1;  
+        if ((Polar5 & 0x01) == 0x01)		  
+        {
+            if (var32 < REG_POWERV_Offset1) 
+            {
+                var32 = 0;
+            }
+            else var32 = var32 - REG_POWERV_Offset1;
+        }
+        else var32 = var32 + REG_POWERV_Offset1;
+        var32 = var32 >> 14;
+        if (var32 < 40) var32 = 0;				  //40mV訑袀去拢
+        POW_Voltage = var32;
+        DISS_POW_Voltage=POW_Voltage;
+        DISS_POW_Voltage=DISS_POW_Voltage/100;//輪蹋袛示支压
+    }
+    if(DISS_POW_Voltage >= 30)
+    {
+        var32 = Vmon_value;
+        var32 = var32 * REG_POWERV2;  
+        if ((Polar5 & 0x01) == 0x01)		  
+        {
+            if (var32 < REG_POWERV_Offset2) 
+            {
+                var32 = 0;
+            }
+            else var32 = var32 - REG_POWERV_Offset2;
+        }
+        else var32 = var32 + REG_POWERV_Offset2;
+        var32 = var32 >> 14;
+        if (var32 < 40) var32 = 0;				  //40mV訑袀去拢
+        POW_Voltage = var32;
+        DISS_POW_Voltage=POW_Voltage;
+        DISS_POW_Voltage=DISS_POW_Voltage/100;//輪蹋袛示支压
+    }
 	var32 = 0;
 /*****************************稳压电源测量电流转换*******************************************/
 	var32 = Imon_value;

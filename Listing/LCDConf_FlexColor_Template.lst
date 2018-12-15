@@ -39554,6 +39554,7 @@ Nuint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 Nvoid RecHandle(void);
 Nvoid MODS_Poll(void);
 Nvoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+N
 N//=============================================================================
 N#define NOP   __nop();	  //???
 N
@@ -39819,6 +39820,7 @@ N#define face_load       4
 N#define face_set        5
 N#define face_starter    6
 N#define face_sys_info   7
+N#define face_cal        8
 N/*
 N************************************************************************
 N*						设置选项识别符
@@ -39922,6 +39924,9 @@ N#define c_off               0
 N#define mode_r              1
 N#define mode_load           2
 N#define mode_pow            3
+N#define mode_loadc          4
+N#define mode_powc           5
+N#define input               6
 N#define load_on             1
 N#define load_off            0
 N#define pow_on              1
@@ -39940,8 +39945,10 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu32 Correct_Parametet[13];
+Nextern vu32 Correct_Parametet[17];
 N#define  REG_CorrectionV   Correct_Parametet[0]//???????
+N#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+N#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 N#define  REG_Load_A			   Correct_Parametet[1]//??CC???·???
 N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????·??
 N#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -39952,7 +39959,9 @@ N
 N#define  REG_POWERA			   Correct_Parametet[6]//??CC???·???
 N#define  SET_POWERA			   Correct_Parametet[7]//??CC???·?????
 N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-N#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+N#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+N#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+N#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 N#define  CON_POWERA				 Correct_Parametet[10]//??CV???·???
 N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 N#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -39967,8 +39976,10 @@ N#define  Polar3						 correct_por[3]//??????CV???·?
 N#define  Polar4						 correct_por[4]//??CC???·????
 N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[13];//У???
+Nextern vu32 Correct_Strong[17];//У???
 N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+N#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+N#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???·???
 N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????·??
 N#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -39979,6 +39990,8 @@ N
 N#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???·???
 N#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???·?????
 N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+N#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+N#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???·???
 N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????

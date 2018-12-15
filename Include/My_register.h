@@ -47,6 +47,7 @@ uint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 void RecHandle(void);
 void MODS_Poll(void);
 void MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+
 //=============================================================================
 #define NOP   __nop();	  //???
 
@@ -312,6 +313,7 @@ extern vu16 coff[6];
 #define face_set        5
 #define face_starter    6
 #define face_sys_info   7
+#define face_cal        8
 /*
 ************************************************************************
 *						设置选项识别符
@@ -415,6 +417,9 @@ extern vu16 coff[6];
 #define mode_r              1
 #define mode_load           2
 #define mode_pow            3
+#define mode_loadc          4
+#define mode_powc           5
+#define input               6
 #define load_on             1
 #define load_off            0
 #define pow_on              1
@@ -433,8 +438,10 @@ extern vu16 coff[6];
 extern vu16 Contr_Voltage;//
 extern vu16 Contr_Current;//
 extern vu16 Contr_Laod;//
-extern vu32 Correct_Parametet[13];
+extern vu32 Correct_Parametet[17];
 #define  REG_CorrectionV   Correct_Parametet[0]//???????
+#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 #define  REG_Load_A			   Correct_Parametet[1]//??CC???·???
 #define  SET_LoadA			   Correct_Parametet[2]//??CC?????·??
 #define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -445,7 +452,9 @@ extern vu32 Correct_Parametet[13];
 #define  REG_POWERA			   Correct_Parametet[6]//??CC???·???
 #define  SET_POWERA			   Correct_Parametet[7]//??CC???·?????
 #define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 #define  CON_POWERA				 Correct_Parametet[10]//??CV???·???
 #define  REG_CorrectionRL    Correct_Parametet[11]//?????
 #define  REG_CorrectionRH    Correct_Parametet[12]
@@ -460,8 +469,10 @@ extern vu8  correct_por[6];
 #define  Polar4						 correct_por[4]//??CC???·????
 #define  Polar5						 correct_por[5]//??CV????????
 
-extern vu32 Correct_Strong[13];//У???
+extern vu32 Correct_Strong[17];//У???
 #define  REG_ReadV_Offset   Correct_Strong[0]//???????
+#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 #define  REG_LoadA_Offset   Correct_Strong[1]//??CC???·???
 #define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????·??
 #define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -472,6 +483,8 @@ extern vu32 Correct_Strong[13];//У???
 #define  REG_POWERA_Offset  Correct_Strong[6]//??CC???·???
 #define  SET_POWERA_Offset  Correct_Strong[7]//??CC???·?????
 #define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 #define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 #define  CON_POWERA_Offset	Correct_Strong[10]//??CV???·???
 #define  REG_ReadRL_Offset   Correct_Strong[11]//?????

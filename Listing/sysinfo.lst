@@ -48588,6 +48588,7 @@ Nuint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 Nvoid RecHandle(void);
 Nvoid MODS_Poll(void);
 Nvoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+N
 N//=============================================================================
 N#define NOP   __nop();	  //???
 N
@@ -48853,6 +48854,7 @@ N#define face_load       4
 N#define face_set        5
 N#define face_starter    6
 N#define face_sys_info   7
+N#define face_cal        8
 N/*
 N************************************************************************
 N*						…Ë÷√—°œÓ ∂±∑˚
@@ -48956,6 +48958,9 @@ N#define c_off               0
 N#define mode_r              1
 N#define mode_load           2
 N#define mode_pow            3
+N#define mode_loadc          4
+N#define mode_powc           5
+N#define input               6
 N#define load_on             1
 N#define load_off            0
 N#define pow_on              1
@@ -48974,8 +48979,10 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu32 Correct_Parametet[13];
+Nextern vu32 Correct_Parametet[17];
 N#define  REG_CorrectionV   Correct_Parametet[0]//???????
+N#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+N#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 N#define  REG_Load_A			   Correct_Parametet[1]//??CC???°§???
 N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????°§??
 N#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -48986,7 +48993,9 @@ N
 N#define  REG_POWERA			   Correct_Parametet[6]//??CC???°§???
 N#define  SET_POWERA			   Correct_Parametet[7]//??CC???°§?????
 N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-N#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+N#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+N#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+N#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 N#define  CON_POWERA				 Correct_Parametet[10]//??CV???°§???
 N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 N#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -49001,8 +49010,10 @@ N#define  Polar3						 correct_por[3]//??????CV???°§?
 N#define  Polar4						 correct_por[4]//??CC???°§????
 N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[13];//ßµ???
+Nextern vu32 Correct_Strong[17];//ßµ???
 N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+N#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+N#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???°§???
 N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????°§??
 N#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -49013,6 +49024,8 @@ N
 N#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???°§???
 N#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???°§?????
 N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+N#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+N#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???°§???
 N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
@@ -49100,6 +49113,7 @@ Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 Svoid RecHandle(void);
 Svoid MODS_Poll(void);
 Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+S
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -49365,6 +49379,7 @@ S#define face_load       4
 S#define face_set        5
 S#define face_starter    6
 S#define face_sys_info   7
+S#define face_cal        8
 S/*
 S************************************************************************
 S*						…Ë÷√—°œÓ ∂±∑˚
@@ -49468,6 +49483,9 @@ S#define c_off               0
 S#define mode_r              1
 S#define mode_load           2
 S#define mode_pow            3
+S#define mode_loadc          4
+S#define mode_powc           5
+S#define input               6
 S#define load_on             1
 S#define load_off            0
 S#define pow_on              1
@@ -49486,8 +49504,10 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[13];
+Sextern vu32 Correct_Parametet[17];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
+S#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+S#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???°§???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????°§??
 S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -49498,7 +49518,9 @@ S
 S#define  REG_POWERA			   Correct_Parametet[6]//??CC???°§???
 S#define  SET_POWERA			   Correct_Parametet[7]//??CC???°§?????
 S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+S#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+S#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+S#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???°§???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -49513,8 +49535,10 @@ S#define  Polar3						 correct_por[3]//??????CV???°§?
 S#define  Polar4						 correct_por[4]//??CC???°§????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[13];//ßµ???
+Sextern vu32 Correct_Strong[17];//ßµ???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+S#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+S#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???°§???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????°§??
 S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -49525,6 +49549,8 @@ S
 S#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???°§???
 S#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???°§?????
 S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+S#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+S#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???°§???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
@@ -51596,6 +51622,7 @@ Suint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
 Svoid RecHandle(void);
 Svoid MODS_Poll(void);
 Svoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+S
 S//=============================================================================
 S#define NOP   __nop();	  //???
 S
@@ -51861,6 +51888,7 @@ S#define face_load       4
 S#define face_set        5
 S#define face_starter    6
 S#define face_sys_info   7
+S#define face_cal        8
 S/*
 S************************************************************************
 S*						…Ë÷√—°œÓ ∂±∑˚
@@ -51964,6 +51992,9 @@ S#define c_off               0
 S#define mode_r              1
 S#define mode_load           2
 S#define mode_pow            3
+S#define mode_loadc          4
+S#define mode_powc           5
+S#define input               6
 S#define load_on             1
 S#define load_off            0
 S#define pow_on              1
@@ -51982,8 +52013,10 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[13];
+Sextern vu32 Correct_Parametet[17];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
+S#define  REG_CorrectionV1   Correct_Parametet[13]//???????
+S#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???°§???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????°§??
 S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
@@ -51994,7 +52027,9 @@ S
 S#define  REG_POWERA			   Correct_Parametet[6]//??CC???°§???
 S#define  SET_POWERA			   Correct_Parametet[7]//??CC???°§?????
 S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
-S#define  SET_POWERV				 Correct_Parametet[9]//??CV????????
+S#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
+S#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
+S#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???°§???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -52009,8 +52044,10 @@ S#define  Polar3						 correct_por[3]//??????CV???°§?
 S#define  Polar4						 correct_por[4]//??CC???°§????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[13];//ßµ???
+Sextern vu32 Correct_Strong[17];//ßµ???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
+S#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
+S#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???°§???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????°§??
 S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
@@ -52021,6 +52058,8 @@ S
 S#define  REG_POWERA_Offset  Correct_Strong[6]//??CC???°§???
 S#define  SET_POWERA_Offset  Correct_Strong[7]//??CC???°§?????
 S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
+S#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
+S#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???°§???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
@@ -52624,7 +52663,8 @@ N/******************************************************************/
 N#endif
 N/******************* (C) COPYRIGHT 2015 AVER *****END OF FILE***************************/
 L 19 "..\APP\sysinfo.c" 2
-N
+Nextern WM_HWIN Createcal(void);
+Xextern GUI_HWIN Createcal(void);
 NWM_HWIN hWinsysinfo;
 XGUI_HWIN hWinsysinfo;
 Nvu8 info_set = set_48;
@@ -52806,7 +52846,7 @@ N        GUI_DispStringAt("‰ª™Âô®ÁºñÂè∑", 30, 150);
 N        GUI_SetColor(0x00BFFFFF);
 N        GUI_SetFont(&GUI_Font24_1);
 N        GUI_DispStringAt("JK5530B", 140, 50);
-N        GUI_DispStringAt("Ver:1.7", 140, 75);
+N        GUI_DispStringAt("Ver:1.8", 140, 75);
 N       
 N        GUI_DispStringAt("Ver:1.2", 140, 100);
 N        GUI_DispStringAt("-", 191, 125);
@@ -54501,6 +54541,8 @@ X        hItem = WM_GetDialogItem(hWinsysinfo, (0x800 + 0x99));
 N        TEXT_SetBkColor(hItem,0x00BFFFFF);
 N        TEXT_SetTextColor(hItem, GUI_BLACK);
 X        TEXT_SetTextColor(hItem, 0x00000000);
+N    }else if(cal == 1){
+N        Createcal();
 N    }else{
 N        WM_HWIN hItem;
 X        GUI_HWIN hItem;
@@ -54514,175 +54556,4 @@ X        info_set = 47;
 N    }
 N}
 N
-Nvoid Rlow_cal(u8 step)
-N{
-N    if(step == 1)
-N    {
-N        Modify_A_READ = Rmon_value;//ÊµãÈáèÁîµÂéãÂÄº
-N		Modify_A_ACT = 0x0A;//ËØªÂèñ‰ΩéÊÆµ
-N    }else if(step == 2){
-N        vu16 var16;
-N        vu32 var32a;
-N        vu32 var32b;
-N        
-N        vu16 var16a;
-N        vu32 var32c;
-N        vu32 var32d;
-N        Modify_B_READ =Rmon_value;//ÊµãÈáèÁîµÂéãÂÄº
-N        flag_OverV=1;
-X        (flagG . bit1)=1;
-N        Modify_B_ACT = 0x64;//ËØªÂèñÈ´òÊÆµ
-N        if(flag_OverV==1)//Âè™ÊúâÂΩìÊúâÊï∞ÊçÆÂÜôÂÖ•Êó∂ÊâçËÉΩÂ∞ÜÊ†°ÂáÜÊï∞ÊçÆÂÜôÂÖ•FLASH
-X        if((flagG . bit1)==1)
-N        {
-N            var32a = Modify_B_ACT;
-N            var32a = var32a - Modify_A_ACT;
-N            var32a = var32a << 12;
-N            var16 = Modify_B_READ - Modify_A_READ;
-N            var32a = var32a / var16;
-N            REG_CorrectionRL = var32a;
-X            Correct_Parametet[11] = var32a;
-N            var32a=0;
-N            var32a = Modify_B_ACT;
-N            var32a = var32a << 12;
-N            var32b = Modify_B_READ;
-N            var32b = var32b * REG_CorrectionRL;
-X            var32b = var32b * Correct_Parametet[11];
-N            if (var32a < var32b)
-N            {
-N                var32b = var32b - var32a;
-N                REG_ReadRL_Offset = var32b;
-X                Correct_Strong[11] = var32b;
-N                Polar3 |= 0x01;
-X                correct_por[3] |= 0x01;
-N            }
-N            else 
-N            {
-N                var32a = var32a - var32b;
-N                REG_ReadRL_Offset = var32a;
-X                Correct_Strong[11] = var32a;
-N                Polar3 &= ~0x01;
-X                correct_por[3] &= ~0x01;
-N            }
-N//---------------------------------------------------------------------------------------//
-W "..\APP\sysinfo.c" 1464 13 function "Flash_Write_all" declared implicitly
-N            Flash_Write_all();	//ÂèÇÊï∞ÂÜôËøõFLASH
-N            flag_OverV=0;
-X            (flagG . bit1)=0;
-N            Flag_DAC_OFF=0;
-X            (flagB . bit3)=0;
-N        }
-N        flag_ADJ_VH=0;//Ê∏ÖÊéâÊ†áÂøó‰ΩçÈò≤Ê≠¢‰∏ÄÁõ¥ËøõÂÖ•
-X        (flagF . bit3)=0;
-N    }else if(step == 3){
-N        Modify_A_READ = Rmon_value;//ÊµãÈáèÁîµÂéãÂÄº
-N		Modify_A_ACT = 0x64;//ËØªÂèñ‰ΩéÊÆµ
-N    }else if(step == 4){
-N        vu16 var16;
-N        vu32 var32a;
-N        vu32 var32b;
-N        
-N        vu16 var16a;
-N        vu32 var32c;
-N        vu32 var32d;
-N        Modify_B_READ =Rmon_value;//ÊµãÈáèÁîµÂéãÂÄº
-N        flag_OverV=1;
-X        (flagG . bit1)=1;
-N        Modify_B_ACT = 0xC8;//ËØªÂèñÈ´òÊÆµ
-N        if(flag_OverV==1)//Âè™ÊúâÂΩìÊúâÊï∞ÊçÆÂÜôÂÖ•Êó∂ÊâçËÉΩÂ∞ÜÊ†°ÂáÜÊï∞ÊçÆÂÜôÂÖ•FLASH
-X        if((flagG . bit1)==1)
-N        {
-N            var32a = Modify_B_ACT;
-N            var32a = var32a - Modify_A_ACT;
-N            var32a = var32a << 12;
-N            var16 = Modify_B_READ - Modify_A_READ;
-N            var32a = var32a / var16;
-N            REG_CorrectionRH = var32a;
-X            Correct_Parametet[12] = var32a;
-N            var32a=0;
-N            var32a = Modify_B_ACT;
-N            var32a = var32a << 12;
-N            var32b = Modify_B_READ;
-N            var32b = var32b * REG_CorrectionRH;
-X            var32b = var32b * Correct_Parametet[12];
-N            if (var32a < var32b)
-N            {
-N                var32b = var32b - var32a;
-N                REG_ReadRH_Offset = var32b;
-X                Correct_Strong[12] = var32b;
-N                Polar3 |= 0x01;
-X                correct_por[3] |= 0x01;
-N            }
-N            else 
-N            {
-N                var32a = var32a - var32b;
-N                REG_ReadRH_Offset = var32a;
-X                Correct_Strong[12] = var32a;
-N                Polar3 &= ~0x01;
-X                correct_por[3] &= ~0x01;
-N            }
-N//---------------------------------------------------------------------------------------//
-W "..\APP\sysinfo.c" 1509 13 function "Flash_Write_all" declared implicitly
-N            Flash_Write_all();	//ÂèÇÊï∞ÂÜôËøõFLASH
-N            flag_OverV=0;
-X            (flagG . bit1)=0;
-N            Flag_DAC_OFF=0;
-X            (flagB . bit3)=0;
-N        }
-N    }else if(step == 5){
-N        Modify_A_READ = Rmon_value;//ÊµãÈáèÁîµÂéãÂÄº
-N		Modify_A_ACT = 0xC8;//ËØªÂèñ‰ΩéÊÆµ
-N    }else if(step == 6){
-N        vu16 var16;
-N        vu32 var32a;
-N        vu32 var32b;
-N        
-N        vu16 var16a;
-N        vu32 var32c;
-N        vu32 var32d;
-N        Modify_B_READ =Rmon_value;//ÊµãÈáèÁîµÂéãÂÄº
-N        flag_OverV=1;
-X        (flagG . bit1)=1;
-N        Modify_B_ACT = 0x01F4;//ËØªÂèñÈ´òÊÆµ
-N        if(flag_OverV==1)//Âè™ÊúâÂΩìÊúâÊï∞ÊçÆÂÜôÂÖ•Êó∂ÊâçËÉΩÂ∞ÜÊ†°ÂáÜÊï∞ÊçÆÂÜôÂÖ•FLASH
-X        if((flagG . bit1)==1)
-N        {
-N            var32a = Modify_B_ACT;
-N            var32a = var32a - Modify_A_ACT;
-N            var32a = var32a << 12;
-N            var16 = Modify_B_READ - Modify_A_READ;
-N            var32a = var32a / var16;
-N            REG_CorrectionR = var32a;
-X            Correct_Parametet[5] = var32a;
-N            var32a=0;
-N            var32a = Modify_B_ACT;
-N            var32a = var32a << 12;
-N            var32b = Modify_B_READ;
-N            var32b = var32b * REG_CorrectionR;
-X            var32b = var32b * Correct_Parametet[5];
-N            if (var32a < var32b)
-N            {
-N                var32b = var32b - var32a;
-N                REG_ReadR_Offset = var32b;
-X                Correct_Strong[5] = var32b;
-N                Polar3 |= 0x01;
-X                correct_por[3] |= 0x01;
-N            }
-N            else 
-N            {
-N                var32a = var32a - var32b;
-N                REG_ReadR_Offset = var32a;
-X                Correct_Strong[5] = var32a;
-N                Polar3 &= ~0x01;
-X                correct_por[3] &= ~0x01;
-N            }
-N//---------------------------------------------------------------------------------------//
-W "..\APP\sysinfo.c" 1553 13 function "Flash_Write_all" declared implicitly
-N            Flash_Write_all();	//ÂèÇÊï∞ÂÜôËøõFLASH
-N            flag_OverV=0;
-X            (flagG . bit1)=0;
-N            Flag_DAC_OFF=0;
-X            (flagB . bit3)=0;
-N        }
-N    }
-N}
+N

@@ -442,7 +442,7 @@ static uint8_t MODS_ReadRegValue(uint16_t reg_addr, uint8_t *reg_value)
 			value =	(int)(DISS_Current*1000);       /* ½«¼Ä´æÆ÷Öµ¶Á³ö */
 			break;
 		case SLAVE_REG_P03: 
-			value =	(int)(DISS_POW_Voltage*100);	
+			value =	(int)(DISS_POW_Voltage*100);
 			break;
 
 		case SLAVE_REG_P04:
