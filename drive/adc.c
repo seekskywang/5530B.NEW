@@ -297,7 +297,7 @@ void ADC1_DMA_Init(void)
 	
 	/*配置ADC时钟*/
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_84Cycles);
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_3Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_28Cycles);
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 3, ADC_SampleTime_3Cycles);
   /* ADC Calibration */
   ADC_Cmd(ADC1, ENABLE);//使能ADC
@@ -432,11 +432,11 @@ void ADC_CH_Scan(void)//婊ゆ尝
 	{
 		sum=0;
         Bubble_sort( Rmon_Filt_Doul,50);//排序从大到小
-		for(count=15;count<35;count++)
+		for(count=35;count<50;count++)
 		{
 			sum +=Rmon_Filt_Doul[count];
 		}
-		Rmon_value=sum/21;
+		Rmon_value=sum/15;
 		sum=0;//
 		t_dsoR=0;
 	}

@@ -412,7 +412,7 @@
         <Ww>
           <count>47</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Run_Control[13]</ItemText>
+          <ItemText>Run_Control[13],0x0A</ItemText>
         </Ww>
         <Ww>
           <count>48</count>
@@ -443,6 +443,16 @@
           <count>53</count>
           <WinNumber>1</WinNumber>
           <ItemText>calmode</ItemText>
+        </Ww>
+        <Ww>
+          <count>54</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>oldv</ItemText>
+        </Ww>
+        <Ww>
+          <count>55</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>olvbuff</ItemText>
         </Ww>
       </WatchWindow1>
       <DebugFlag>
@@ -515,10 +525,10 @@
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>16</ColumnNumber>
+      <ColumnNumber>17</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>168</TopLine>
-      <CurrentLine>201</CurrentLine>
+      <CurrentLine>206</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\Libraries\CMSIS\src\startup_stm32f40_41xxx.s</PathWithFileName>
       <FilenameWithoutPath>startup_stm32f40_41xxx.s</FilenameWithoutPath>
@@ -818,7 +828,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>427</TopLine>
+      <TopLine>430</TopLine>
       <CurrentLine>440</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\Libraries\FWlib\src\stm32f4xx_gpio.c</PathWithFileName>
@@ -1075,10 +1085,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>30</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>19</TopLine>
-      <CurrentLine>60</CurrentLine>
+      <CurrentLine>46</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\User\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -1119,7 +1129,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>246</TopLine>
+      <TopLine>249</TopLine>
       <CurrentLine>259</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\User\stm32f4xx_it.c</PathWithFileName>
@@ -1138,10 +1148,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>25</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>395</TopLine>
-      <CurrentLine>439</CurrentLine>
+      <TopLine>286</TopLine>
+      <CurrentLine>310</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\drive\adc.c</PathWithFileName>
       <FilenameWithoutPath>adc.c</FilenameWithoutPath>
@@ -1152,10 +1162,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>15</ColumnNumber>
+      <ColumnNumber>12</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>122</TopLine>
-      <CurrentLine>141</CurrentLine>
+      <TopLine>125</TopLine>
+      <CurrentLine>142</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\drive\AT24C01.c</PathWithFileName>
       <FilenameWithoutPath>AT24C01.c</FilenameWithoutPath>
@@ -1194,10 +1204,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>10</ColumnNumber>
+      <ColumnNumber>63</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>345</TopLine>
-      <CurrentLine>362</CurrentLine>
+      <TopLine>551</TopLine>
+      <CurrentLine>552</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\drive\flash.c</PathWithFileName>
       <FilenameWithoutPath>flash.c</FilenameWithoutPath>
@@ -1208,7 +1218,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>40</ColumnNumber>
+      <ColumnNumber>49</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>7</TopLine>
       <CurrentLine>33</CurrentLine>
@@ -1250,10 +1260,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>32</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1065</TopLine>
-      <CurrentLine>1100</CurrentLine>
+      <TopLine>1513</TopLine>
+      <CurrentLine>1536</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\drive\key.c</PathWithFileName>
       <FilenameWithoutPath>key.c</FilenameWithoutPath>
@@ -1264,10 +1274,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>9</ColumnNumber>
+      <ColumnNumber>45</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>741</TopLine>
-      <CurrentLine>767</CurrentLine>
+      <TopLine>604</TopLine>
+      <CurrentLine>636</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\drive\modbus.c</PathWithFileName>
       <FilenameWithoutPath>modbus.c</FilenameWithoutPath>
@@ -1320,10 +1330,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>28</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>430</TopLine>
-      <CurrentLine>459</CurrentLine>
+      <TopLine>145</TopLine>
+      <CurrentLine>146</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\drive\TIM6.c</PathWithFileName>
       <FilenameWithoutPath>TIM6.c</FilenameWithoutPath>
@@ -1390,10 +1400,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>5</ColumnNumber>
+      <ColumnNumber>39</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>412</TopLine>
-      <CurrentLine>449</CurrentLine>
+      <TopLine>424</TopLine>
+      <CurrentLine>452</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\drive\AD7689.c</PathWithFileName>
       <FilenameWithoutPath>AD7689.c</FilenameWithoutPath>
@@ -1411,10 +1421,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>70</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>69</TopLine>
-      <CurrentLine>95</CurrentLine>
+      <TopLine>64</TopLine>
+      <CurrentLine>79</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\STemWinLibrary522\Config\GUI_X.c</PathWithFileName>
       <FilenameWithoutPath>GUI_X.c</FilenameWithoutPath>
@@ -1441,7 +1451,7 @@
       <Focus>0</Focus>
       <ColumnNumber>15</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>777</TopLine>
+      <TopLine>780</TopLine>
       <CurrentLine>794</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\STemWinLibrary522\Config\GUIDRV_Template.c</PathWithFileName>
@@ -1467,10 +1477,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>9</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>51</TopLine>
-      <CurrentLine>122</CurrentLine>
+      <CurrentLine>74</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\STemWinLibrary522\emWinTask\MainTask.c</PathWithFileName>
       <FilenameWithoutPath>MainTask.c</FilenameWithoutPath>
@@ -1502,10 +1512,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>12</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>587</TopLine>
-      <CurrentLine>604</CurrentLine>
+      <TopLine>893</TopLine>
+      <CurrentLine>939</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\APP\menu.c</PathWithFileName>
       <FilenameWithoutPath>menu.c</FilenameWithoutPath>
@@ -1516,10 +1526,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>33</ColumnNumber>
+      <ColumnNumber>41</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>259</TopLine>
-      <CurrentLine>282</CurrentLine>
+      <TopLine>1970</TopLine>
+      <CurrentLine>1993</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\APP\R_Face.c</PathWithFileName>
       <FilenameWithoutPath>R_Face.c</FilenameWithoutPath>
@@ -1530,10 +1540,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>12</ColumnNumber>
+      <ColumnNumber>32</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>366</TopLine>
-      <CurrentLine>376</CurrentLine>
+      <TopLine>238</TopLine>
+      <CurrentLine>243</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\APP\load_Face.c</PathWithFileName>
       <FilenameWithoutPath>load_Face.c</FilenameWithoutPath>
@@ -1544,10 +1554,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>46</ColumnNumber>
+      <ColumnNumber>52</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>537</TopLine>
-      <CurrentLine>561</CurrentLine>
+      <TopLine>2295</TopLine>
+      <CurrentLine>2315</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\APP\c_dc.c</PathWithFileName>
       <FilenameWithoutPath>c_dc.c</FilenameWithoutPath>
@@ -1560,7 +1570,7 @@
       <Focus>0</Focus>
       <ColumnNumber>16</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>96</TopLine>
+      <TopLine>99</TopLine>
       <CurrentLine>104</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\APP\graph.c</PathWithFileName>
@@ -1600,10 +1610,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>36</ColumnNumber>
+      <ColumnNumber>29</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>1</CurrentLine>
+      <TopLine>211</TopLine>
+      <CurrentLine>234</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\APP\sysinfo.c</PathWithFileName>
       <FilenameWithoutPath>sysinfo.c</FilenameWithoutPath>
@@ -1614,10 +1624,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>40</ColumnNumber>
+      <ColumnNumber>48</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>449</TopLine>
-      <CurrentLine>470</CurrentLine>
+      <TopLine>52</TopLine>
+      <CurrentLine>53</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\APP\cal.c</PathWithFileName>
       <FilenameWithoutPath>cal.c</FilenameWithoutPath>

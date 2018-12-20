@@ -35546,8 +35546,8 @@ N
 N	/*配置ADC时钟*/
 N	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_84Cycles);
 X	ADC_RegularChannelConfig(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ((uint8_t)0x02), 1, ((uint8_t)0x04));
-N	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_3Cycles);
-X	ADC_RegularChannelConfig(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ((uint8_t)0x03), 2, ((uint8_t)0x00));
+N	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_28Cycles);
+X	ADC_RegularChannelConfig(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ((uint8_t)0x03), 2, ((uint8_t)0x02));
 N	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 3, ADC_SampleTime_3Cycles);
 X	ADC_RegularChannelConfig(((ADC_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x2000)), ((uint8_t)0x06), 3, ((uint8_t)0x00));
 N  /* ADC Calibration */
@@ -35704,11 +35704,11 @@ N	{
 N		sum=0;
 W "..\drive\adc.c" 434 9 function "Bubble_sort" declared implicitly
 N        Bubble_sort( Rmon_Filt_Doul,50);//排序从大到小
-N		for(count=15;count<35;count++)
+N		for(count=35;count<50;count++)
 N		{
 N			sum +=Rmon_Filt_Doul[count];
 N		}
-N		Rmon_value=sum/21;
+N		Rmon_value=sum/15;
 N		sum=0;//
 N		t_dsoR=0;
 N	}

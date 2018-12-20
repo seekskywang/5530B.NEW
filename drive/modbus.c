@@ -617,7 +617,7 @@ void Transformation_ADC(void)
     {
         var32 = Vmon1_value;
     }else if(r_raly == 0){
-        var32 = Vmon1_value + 85;
+        var32 = Vmon1_value + 100;
     }
 	var32 = var32 * REG_CorrectionV;  
 	if ((Polar & 0x01) == 0x01)		  
@@ -640,7 +640,7 @@ void Transformation_ADC(void)
         {
             var32 = Vmon1_value;
         }else if(r_raly == 0){
-            var32 = Vmon1_value - 63;
+            var32 = Vmon1_value + 100;
         }
         var32 = var32 * REG_CorrectionV;  
         if ((Polar & 0x01) == 0x01)		  

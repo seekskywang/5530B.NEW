@@ -106,9 +106,9 @@
 000088  2102              MOVS     r1,#2
 00008a  4628              MOV      r0,r5
 00008c  f7fffffe          BL       ADC_RegularChannelConfig
-;;;300    	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_3Cycles);
-000090  2300              MOVS     r3,#0
-000092  2202              MOVS     r2,#2
+;;;300    	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 2, ADC_SampleTime_28Cycles);
+000090  2302              MOVS     r3,#2
+000092  461a              MOV      r2,r3
 000094  2103              MOVS     r1,#3
 000096  4628              MOV      r0,r5
 000098  f7fffffe          BL       ADC_RegularChannelConfig
@@ -420,8 +420,8 @@
 000100  2132              MOVS     r1,#0x32
 000102  3028              ADDS     r0,r0,#0x28
 000104  f7fffffe          BL       Bubble_sort
-;;;435    		for(count=15;count<35;count++)
-000108  200f              MOVS     r0,#0xf
+;;;435    		for(count=35;count<50;count++)
+000108  2023              MOVS     r0,#0x23
 00010a  e004              B        |L2.278|
                   |L2.268|
 ;;;436    		{
@@ -431,11 +431,11 @@
 000112  1c40              ADDS     r0,r0,#1              ;435
 000114  b2c0              UXTB     r0,r0                 ;435
                   |L2.278|
-000116  2823              CMP      r0,#0x23              ;435
+000116  2832              CMP      r0,#0x32              ;435
 000118  d3f8              BCC      |L2.268|
 ;;;438    		}
-;;;439    		Rmon_value=sum/21;
-00011a  2015              MOVS     r0,#0x15
+;;;439    		Rmon_value=sum/15;
+00011a  200f              MOVS     r0,#0xf
 00011c  fbb4f0f0          UDIV     r0,r4,r0
 000120  8168              STRH     r0,[r5,#0xa]
 ;;;440    		sum=0;//

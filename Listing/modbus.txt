@@ -98,9 +98,9 @@
 000014  6811              LDR      r1,[r2,#0]            ;618  ; Vmon1_value
 000016  e001              B        |L2.28|
                   |L2.24|
-;;;620            var32 = Vmon1_value + 85;
+;;;620            var32 = Vmon1_value + 100;
 000018  6811              LDR      r1,[r2,#0]  ; Vmon1_value
-00001a  3155              ADDS     r1,r1,#0x55
+00001a  3164              ADDS     r1,r1,#0x64
                   |L2.28|
 ;;;621        }
 ;;;622    	var32 = var32 * REG_CorrectionV;  
@@ -173,9 +173,9 @@
 000080  6810              LDR      r0,[r2,#0]            ;641  ; Vmon1_value
 000082  e001              B        |L2.136|
                   |L2.132|
-;;;643                var32 = Vmon1_value - 63;
+;;;643                var32 = Vmon1_value + 100;
 000084  6810              LDR      r0,[r2,#0]  ; Vmon1_value
-000086  383f              SUBS     r0,r0,#0x3f
+000086  3064              ADDS     r0,r0,#0x64
                   |L2.136|
 ;;;644            }
 ;;;645            var32 = var32 * REG_CorrectionV;  

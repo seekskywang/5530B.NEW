@@ -437,7 +437,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 {
                     if(gate_v == 0)
                     {
-                        if(DISS_Voltage > 1 && R_VLUE > 50 && con_flag == 0 && finish == 0)
+                        if(DISS_Voltage > 1 && R_VLUE > 20 && con_flag == 0 && finish == 0)
                         {
                             con_flag = 1;
                             time1 = (float)GUI_GetTime()/500.0;
@@ -475,7 +475,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                             }
                         }
                     }else{
-                        if(DISS_Voltage > gate_v && R_VLUE > 50 && con_flag == 0 && finish == 0 && r_test == 1)
+                        if(DISS_Voltage > gate_v && R_VLUE > 20 && con_flag == 0 && finish == 0 && r_test == 1)
                         {
                             con_flag = 1;
                             time1 = (float)GUI_GetTime()/500.0;
@@ -595,9 +595,9 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                             {
                                 if(para_set1 == set_1_on)
                                 {
-                                    GPIO_ResetBits(GPIOD,GPIO_Pin_12);
-                                    TM1650_SET_LED(0x48,0x71);
-                                    TM1650_SET_LED(0x68,0xF2);//PASS灯
+//                                     GPIO_ResetBits(GPIOD,GPIO_Pin_12);
+//                                     TM1650_SET_LED(0x48,0x71);
+//                                     TM1650_SET_LED(0x68,0xF2);//PASS灯
                                 }
                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
@@ -777,12 +777,12 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 //                     {
                         if(DISS_Voltage < 0.3)
                             {
-                                if(para_set1 == set_1_on)
-                                {
-                                    GPIO_ResetBits(GPIOD,GPIO_Pin_12);
-                                    TM1650_SET_LED(0x48,0x71);
-                                    TM1650_SET_LED(0x68,0xF2);//PASS灯
-                                }
+//                                 if(para_set1 == set_1_on)
+//                                 {
+//                                     GPIO_ResetBits(GPIOD,GPIO_Pin_12);
+//                                     TM1650_SET_LED(0x48,0x71);
+//                                     TM1650_SET_LED(0x68,0xF2);//PASS灯
+//                                 }
                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
                                 TEXT_SetTextColor(hItem, GUI_GREEN);
@@ -1983,7 +1983,25 @@ void OC_CHECK(void){
     char sbs_c[6];
     float change_sbs_c;   
     crec2 = crec1;
-    crec1 = DISS_Current;         
+    crec1 = DISS_Current;    
+    if(DISS_Voltage * DISS_Current > 200)
+    {
+         oc_data = crec2;
+        SET_Current_Laod = set_init_c;
+        hItem = WM_GetDialogItem(hWinR, ID_TEXT_47);
+        change_sbs_c = (float)set_sbs_c/1000;
+        sprintf(sbs_c,"%.3f",change_sbs_c);
+        TEXT_SetText(hItem,sbs_c);
+        GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF   
+        t_onoff = 0;
+        stepcount = 0;
+        oct_sw = oct_off;
+        finish = 1;
+        oc_test = 0;
+        crec1 = 0;
+        crec2 = 0;
+        rpow = 1;
+    }
     if(((crec1 < crec2 && crec2 > 0.3) || v - /*DISS_Voltage*/DISS_Voltage > v*0.9) && para_set2 == set_2_on)
     {
         if(oc_mode == 0)

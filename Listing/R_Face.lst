@@ -53174,8 +53174,8 @@ X                if(para_set2 == 0xff)
 N                {
 N                    if(gate_v == 0)
 N                    {
-N                        if(DISS_Voltage > 1 && R_VLUE > 50 && con_flag == 0 && finish == 0)
-X                        if(DISS_Voltage > 1 && Run_Control[13] > 50 && con_flag == 0 && finish == 0)
+N                        if(DISS_Voltage > 1 && R_VLUE > 20 && con_flag == 0 && finish == 0)
+X                        if(DISS_Voltage > 1 && Run_Control[13] > 20 && con_flag == 0 && finish == 0)
 N                        {
 N                            con_flag = 1;
 W "..\APP\R_Face.c" 443 37 single-precision operand implicitly converted to double-precision
@@ -53220,8 +53220,8 @@ N                                }
 N                            }
 N                        }
 N                    }else{
-N                        if(DISS_Voltage > gate_v && R_VLUE > 50 && con_flag == 0 && finish == 0 && r_test == 1)
-X                        if(DISS_Voltage > gate_v && Run_Control[13] > 50 && con_flag == 0 && finish == 0 && r_test == 1)
+N                        if(DISS_Voltage > gate_v && R_VLUE > 20 && con_flag == 0 && finish == 0 && r_test == 1)
+X                        if(DISS_Voltage > gate_v && Run_Control[13] > 20 && con_flag == 0 && finish == 0 && r_test == 1)
 N                        {
 N                            con_flag = 1;
 W "..\APP\R_Face.c" 481 37 single-precision operand implicitly converted to double-precision
@@ -53369,10 +53369,9 @@ N                            {
 N                                if(para_set1 == set_1_on)
 X                                if(para_set1 == 0xff)
 N                                {
-N                                    GPIO_ResetBits(GPIOD,GPIO_Pin_12);
-X                                    GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
-N                                    TM1650_SET_LED(0x48,0x71);
-N                                    TM1650_SET_LED(0x68,0xF2);//PASS灯
+N//                                     GPIO_ResetBits(GPIOD,GPIO_Pin_12);
+N//                                     TM1650_SET_LED(0x48,0x71);
+N//                                     TM1650_SET_LED(0x68,0xF2);//PASS灯
 N                                }
 N                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
 X                                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
@@ -53578,14 +53577,12 @@ N//                     {
 W "..\APP\R_Face.c" 778 28 single-precision operand implicitly converted to double-precision
 N                        if(DISS_Voltage < 0.3)
 N                            {
-N                                if(para_set1 == set_1_on)
-X                                if(para_set1 == 0xff)
-N                                {
-N                                    GPIO_ResetBits(GPIOD,GPIO_Pin_12);
-X                                    GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
-N                                    TM1650_SET_LED(0x48,0x71);
-N                                    TM1650_SET_LED(0x68,0xF2);//PASS灯
-N                                }
+N//                                 if(para_set1 == set_1_on)
+N//                                 {
+N//                                     GPIO_ResetBits(GPIOD,GPIO_Pin_12);
+N//                                     TM1650_SET_LED(0x48,0x71);
+N//                                     TM1650_SET_LED(0x68,0xF2);//PASS灯
+N//                                 }
 N                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
 X                                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
 N                                TEXT_SetFont(hItem,&GUI_FontD24x32);
@@ -55134,9 +55131,32 @@ X    GUI_HWIN hItem;
 N    char sbs_c[6];
 N    float change_sbs_c;   
 N    crec2 = crec1;
-N    crec1 = DISS_Current;         
-W "..\APP\R_Face.c" 1987 27 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 1987 78 single-precision operand implicitly converted to double-precision
+N    crec1 = DISS_Current;    
+N    if(DISS_Voltage * DISS_Current > 200)
+N    {
+N         oc_data = crec2;
+N        SET_Current_Laod = set_init_c;
+X        Run_Control[4] = Run_Control[22];
+N        hItem = WM_GetDialogItem(hWinR, ID_TEXT_47);
+X        hItem = WM_GetDialogItem(hWinR, (0x800 + 0x6C));
+N        change_sbs_c = (float)set_sbs_c/1000;
+X        change_sbs_c = (float)Run_Control[23]/1000;
+N        sprintf(sbs_c,"%.3f",change_sbs_c);
+N        TEXT_SetText(hItem,sbs_c);
+N        GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF   
+X        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N        t_onoff = 0;
+N        stepcount = 0;
+N        oct_sw = oct_off;
+X        oct_sw = 0;
+N        finish = 1;
+N        oc_test = 0;
+N        crec1 = 0;
+N        crec2 = 0;
+N        rpow = 1;
+N    }
+W "..\APP\R_Face.c" 2005 27 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 2005 78 single-precision operand implicitly converted to double-precision
 N    if(((crec1 < crec2 && crec2 > 0.3) || v - /*DISS_Voltage*/DISS_Voltage > v*0.9) && para_set2 == set_2_on)
 X    if(((crec1 < crec2 && crec2 > 0.3) || v -  DISS_Voltage > v*0.9) && para_set2 == 0xff)
 N    {
@@ -55189,7 +55209,7 @@ N    char sbs_c[6];
 N    float change_sbs_c;
 N    static vu16 csum;
 N             
-W "..\APP\R_Face.c" 2030 43 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 2048 43 single-precision operand implicitly converted to double-precision
 N    if(v - /*DISS_Voltage*/DISS_Voltage > v*0.9 && para_set2 == set_2_on)
 X    if(v -  DISS_Voltage > v*0.9 && para_set2 == 0xff)
 N    {

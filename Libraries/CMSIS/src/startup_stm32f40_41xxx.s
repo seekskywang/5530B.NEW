@@ -202,6 +202,7 @@ MemManage_Handler\
                 EXPORT  MemManage_Handler          [WEAK]
                 B       .
                 ENDP
+				
 BusFault_Handler\
                 PROC
                 EXPORT  BusFault_Handler           [WEAK]

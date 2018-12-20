@@ -36523,7 +36523,7 @@ N	if(r_raly == 1)
 N    {
 N        var32 = Vmon1_value;
 N    }else if(r_raly == 0){
-N        var32 = Vmon1_value + 85;
+N        var32 = Vmon1_value + 100;
 N    }
 N	var32 = var32 * REG_CorrectionV;  
 X	var32 = var32 * Correct_Parametet[0];  
@@ -36554,7 +36554,7 @@ N        if(r_raly == 1)
 N        {
 N            var32 = Vmon1_value;
 N        }else if(r_raly == 0){
-N            var32 = Vmon1_value - 63;
+N            var32 = Vmon1_value + 100;
 N        }
 N        var32 = var32 * REG_CorrectionV;  
 X        var32 = var32 * Correct_Parametet[0];  
