@@ -35596,12 +35596,14 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu32 Correct_Parametet[17];
+Nextern vu32 Correct_Parametet[21];
 N#define  REG_CorrectionV   Correct_Parametet[0]//???????
 N#define  REG_CorrectionV1   Correct_Parametet[13]//???????
 N#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 N#define  REG_Load_A			   Correct_Parametet[1]//??CC???·???
 N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????·??
+N#define  REG_Load_A1			   Correct_Parametet[17]//??CC???d???
+N#define  SET_LoadA1			   Correct_Parametet[18]//??CC?????d??
 N#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
 N#define  SET_LoadV			   Correct_Parametet[4]//??CV??????????
 N
@@ -35613,6 +35615,8 @@ N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 N#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
 N#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
 N#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
+N#define  SET_POWERV1			 Correct_Parametet[19]//??CV????????
+N#define  SET_POWERV2			 Correct_Parametet[20]//??CV????????
 N#define  CON_POWERA				 Correct_Parametet[10]//??CV???·???
 N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 N#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -35620,19 +35624,21 @@ N
 N
 N
 Nextern vu8  correct_por[6];
-N#define  Polar             correct_por[0]//???????
-N#define  Polar1            correct_por[1]//???·????
+N#define  Polar                       correct_por[0]//???????
+N#define  Polar1                      correct_por[1]//???·????
 N#define  Polar2						 correct_por[2]//??CV????????
 N#define  Polar3						 correct_por[3]//??????CV???·?
 N#define  Polar4						 correct_por[4]//??CC???·????
 N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[17];//У???
+Nextern vu32 Correct_Strong[21];//У???
 N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 N#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
 N#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???·???
 N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????·??
+N#define  REG_LoadA_Offset1   Correct_Strong[17]//??CC???d???
+N#define  SET_LoadA_Offset1   Correct_Strong[18]//??CC?????d??
 N#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
 N#define  SET_LoadV_Offset   Correct_Strong[4]//??CV??????????
 N
@@ -35644,6 +35650,8 @@ N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 N#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
 N#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
+N#define  SET_POWERV_Offset1	Correct_Strong[19]//??CV????????
+N#define  SET_POWERV_Offset2	Correct_Strong[20]//??CV????????
 N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???·???
 N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
 N#define  REG_ReadRH_Offset   Correct_Strong[12]
@@ -35694,7 +35702,7 @@ N// Device operation Macro definition.
 N#define AD7689_CNV_0			GPIO_ResetBits(GPIOB,GPIO_Pin_6);
 N#define AD7689_CNV_1			GPIO_SetBits(GPIOB,GPIO_Pin_6);
 Nvu16 AD7689_Buffer[8];
-Nvu16 Ad7689_Fit_Imon[20];
+Nvu16 Ad7689_Fit_Imon[100];//璐熻浇鐢垫祦
 Nvu16 Ad7689_Fit_Imon1[20];
 Nvu16 Ad7689_Fit_Vmon[20];
 Nvoid Bubble_sort(vu16 *D_temp,vu8 num);
@@ -35918,17 +35926,17 @@ N	}
 N	Vmon1_value=sum1/14;
 N/***************负载电流滤波**********************/
 N	Ad7689_Fit_Imon[I_cont++]=var_chV1;
-N	if(I_cont==20)
+N	if(I_cont==30)
 N	{
 N		I_cont=0;
 N	}
-N	Bubble_sort( Ad7689_Fit_Imon,20);//排序从大到小
+N//	Bubble_sort( Ad7689_Fit_Imon,20);//排序从大到小
 N	sum1=0;
-N	for(f=2;f<16;f++)
+N	for(f=0;f<30;f++)
 N	{
 N		sum1 +=Ad7689_Fit_Imon[f];
 N	}
-N	Imon1_value=sum1/14;
+N	Imon1_value=sum1/30;
 N}
 N
 N/*

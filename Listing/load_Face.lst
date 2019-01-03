@@ -48977,12 +48977,14 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu32 Correct_Parametet[17];
+Nextern vu32 Correct_Parametet[21];
 N#define  REG_CorrectionV   Correct_Parametet[0]//???????
 N#define  REG_CorrectionV1   Correct_Parametet[13]//???????
 N#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 N#define  REG_Load_A			   Correct_Parametet[1]//??CC???¡¤???
 N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????¡¤??
+N#define  REG_Load_A1			   Correct_Parametet[17]//??CC???d???
+N#define  SET_LoadA1			   Correct_Parametet[18]//??CC?????d??
 N#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
 N#define  SET_LoadV			   Correct_Parametet[4]//??CV??????????
 N
@@ -48994,6 +48996,8 @@ N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 N#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
 N#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
 N#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
+N#define  SET_POWERV1			 Correct_Parametet[19]//??CV????????
+N#define  SET_POWERV2			 Correct_Parametet[20]//??CV????????
 N#define  CON_POWERA				 Correct_Parametet[10]//??CV???¡¤???
 N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 N#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -49001,19 +49005,21 @@ N
 N
 N
 Nextern vu8  correct_por[6];
-N#define  Polar             correct_por[0]//???????
-N#define  Polar1            correct_por[1]//???¡¤????
+N#define  Polar                       correct_por[0]//???????
+N#define  Polar1                      correct_por[1]//???¡¤????
 N#define  Polar2						 correct_por[2]//??CV????????
 N#define  Polar3						 correct_por[3]//??????CV???¡¤?
 N#define  Polar4						 correct_por[4]//??CC???¡¤????
 N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[17];//§µ???
+Nextern vu32 Correct_Strong[21];//§µ???
 N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 N#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
 N#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???¡¤???
 N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????¡¤??
+N#define  REG_LoadA_Offset1   Correct_Strong[17]//??CC???d???
+N#define  SET_LoadA_Offset1   Correct_Strong[18]//??CC?????d??
 N#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
 N#define  SET_LoadV_Offset   Correct_Strong[4]//??CV??????????
 N
@@ -49025,6 +49031,8 @@ N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 N#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
 N#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
+N#define  SET_POWERV_Offset1	Correct_Strong[19]//??CV????????
+N#define  SET_POWERV_Offset2	Correct_Strong[20]//??CV????????
 N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???¡¤???
 N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
 N#define  REG_ReadRH_Offset   Correct_Strong[12]
@@ -49502,12 +49510,14 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[17];
+Sextern vu32 Correct_Parametet[21];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
 S#define  REG_CorrectionV1   Correct_Parametet[13]//???????
 S#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???¡¤???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????¡¤??
+S#define  REG_Load_A1			   Correct_Parametet[17]//??CC???d???
+S#define  SET_LoadA1			   Correct_Parametet[18]//??CC?????d??
 S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
 S#define  SET_LoadV			   Correct_Parametet[4]//??CV??????????
 S
@@ -49519,6 +49529,8 @@ S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 S#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
 S#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
 S#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
+S#define  SET_POWERV1			 Correct_Parametet[19]//??CV????????
+S#define  SET_POWERV2			 Correct_Parametet[20]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???¡¤???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -49526,19 +49538,21 @@ S
 S
 S
 Sextern vu8  correct_por[6];
-S#define  Polar             correct_por[0]//???????
-S#define  Polar1            correct_por[1]//???¡¤????
+S#define  Polar                       correct_por[0]//???????
+S#define  Polar1                      correct_por[1]//???¡¤????
 S#define  Polar2						 correct_por[2]//??CV????????
 S#define  Polar3						 correct_por[3]//??????CV???¡¤?
 S#define  Polar4						 correct_por[4]//??CC???¡¤????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[17];//§µ???
+Sextern vu32 Correct_Strong[21];//§µ???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 S#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
 S#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???¡¤???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????¡¤??
+S#define  REG_LoadA_Offset1   Correct_Strong[17]//??CC???d???
+S#define  SET_LoadA_Offset1   Correct_Strong[18]//??CC?????d??
 S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
 S#define  SET_LoadV_Offset   Correct_Strong[4]//??CV??????????
 S
@@ -49550,6 +49564,8 @@ S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 S#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
 S#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
+S#define  SET_POWERV_Offset1	Correct_Strong[19]//??CV????????
+S#define  SET_POWERV_Offset2	Correct_Strong[20]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???¡¤???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
 S#define  REG_ReadRH_Offset   Correct_Strong[12]
@@ -52011,12 +52027,14 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[17];
+Sextern vu32 Correct_Parametet[21];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
 S#define  REG_CorrectionV1   Correct_Parametet[13]//???????
 S#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???¡¤???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????¡¤??
+S#define  REG_Load_A1			   Correct_Parametet[17]//??CC???d???
+S#define  SET_LoadA1			   Correct_Parametet[18]//??CC?????d??
 S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
 S#define  SET_LoadV			   Correct_Parametet[4]//??CV??????????
 S
@@ -52028,6 +52046,8 @@ S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 S#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
 S#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
 S#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
+S#define  SET_POWERV1			 Correct_Parametet[19]//??CV????????
+S#define  SET_POWERV2			 Correct_Parametet[20]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???¡¤???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -52035,19 +52055,21 @@ S
 S
 S
 Sextern vu8  correct_por[6];
-S#define  Polar             correct_por[0]//???????
-S#define  Polar1            correct_por[1]//???¡¤????
+S#define  Polar                       correct_por[0]//???????
+S#define  Polar1                      correct_por[1]//???¡¤????
 S#define  Polar2						 correct_por[2]//??CV????????
 S#define  Polar3						 correct_por[3]//??????CV???¡¤?
 S#define  Polar4						 correct_por[4]//??CC???¡¤????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[17];//§µ???
+Sextern vu32 Correct_Strong[21];//§µ???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 S#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
 S#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???¡¤???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????¡¤??
+S#define  REG_LoadA_Offset1   Correct_Strong[17]//??CC???d???
+S#define  SET_LoadA_Offset1   Correct_Strong[18]//??CC?????d??
 S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
 S#define  SET_LoadV_Offset   Correct_Strong[4]//??CV??????????
 S
@@ -52059,6 +52081,8 @@ S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 S#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
 S#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
+S#define  SET_POWERV_Offset1	Correct_Strong[19]//??CV????????
+S#define  SET_POWERV_Offset2	Correct_Strong[20]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???¡¤???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
 S#define  REG_ReadRH_Offset   Correct_Strong[12]
@@ -52778,6 +52802,8 @@ X  float   dis_load_c = (float)Run_Control[4]/1000;
 N  float   dis_load_v = (float)SET_Voltage_Laod/1000;
 X  float   dis_load_v = (float)Run_Control[3]/1000;
 N  static float olvbuff,oldv;
+N  static float testc1,testc2,testres;
+N  static vu8 testflag;
 N  // USER START (Optionally insert additional variables)
 N  // USER END
 N
@@ -52829,7 +52855,7 @@ N        GUI_SetFont(&GUI_Fontunit);
 N        GUI_DispStringAt("Â°",342, 2);
 N        GUI_SetFont(&GUI_Font24_1);
 N        GUI_DispStringAt("C",350, 2);
-W "..\APP\load_Face.c" 148 9 function "DrawLock" declared implicitly
+W "..\APP\load_Face.c" 150 9 function "DrawLock" declared implicitly
 N        DrawLock();
 N        GUI_SetColor(GUI_WHITE);
 X        GUI_SetColor(0x00FFFFFF);
@@ -52858,20 +52884,42 @@ X	if(WM_GetTimerId(pMsg->Data.v) == 2)
 N	{
 N        lockstat2 = lockstat1;
 N        lockstat1 = lock;
+N        
+N        if((vu32)(DISS_Current*1000) > SET_Current_Laod)
+X        if((vu32)(DISS_Current*1000) > Run_Control[4])
+N        {
+N            testflag = 1;
+N        }else{
+N            testflag = 0;
+N            testc1 = testc2 = 0;
+N        }
+N        if(testflag == 1)
+N        {
+N            testc2 = testc1;
+N            testc1 = DISS_Current;
+N            if(testc1 < testc2)
+N            {
+N                testres = testc2;
+N                testflag = 0;
+N                testc1 = testc2 = 0;
+N            }
+N        }
+N        
+N        
 N        if(lockstat1 != lockstat2)
 N        {
 N            WM_InvalidateWindow(load_wind);
 N        }
 N//         if(clear_flag3 == 1)
 N//         {
-W "..\APP\load_Face.c" 176 16 single-precision operand implicitly converted to double-precision
+W "..\APP\load_Face.c" 199 16 single-precision operand implicitly converted to double-precision
 N            if(DISS_Voltage < 0.1)
 N            {
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x91));
 N                sprintf(buf,"%.3f",0.000);       
 N                TEXT_SetText(hItem,buf);
-N            }else{
+N            }else{                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x91));
 N                sprintf(buf,"%.3f",DISS_Voltage);       
@@ -52944,7 +52992,7 @@ N                status_flash = 0;
 N            }
 N            
 N            
-W "..\APP\load_Face.c" 238 32 single-precision operand implicitly converted to double-precision
+W "..\APP\load_Face.c" 261 32 single-precision operand implicitly converted to double-precision
 N            if(olvbuff != 0 && olvbuff - DISS_Voltage > 0.3)
 N            {
 N                Flag_Swtich_ON=0;
@@ -53112,7 +53160,7 @@ N		TEXT_SetText(hItem,buf);
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x91));
-W "..\APP\load_Face.c" 375 28 argument is incompatible with corresponding format string conversion
+W "..\APP\load_Face.c" 398 28 argument is incompatible with corresponding format string conversion
 N        sprintf(buf,"%.3f",0);
 N		TEXT_SetTextColor(hItem, GUI_GREEN);//è®¾ç½®å­—ä½“é¢œè‰²
 X		TEXT_SetTextColor(hItem, 0x0000FF00);
@@ -53122,7 +53170,7 @@ N		TEXT_SetText(hItem,buf);
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_85);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x92));
-W "..\APP\load_Face.c" 382 28 argument is incompatible with corresponding format string conversion
+W "..\APP\load_Face.c" 405 28 argument is incompatible with corresponding format string conversion
 N        sprintf(buf,"%.3f",0);
 N		TEXT_SetTextColor(hItem, GUI_GREEN);//è®¾ç½®å­—ä½“é¢œè‰²
 X		TEXT_SetTextColor(hItem, 0x0000FF00);
@@ -53322,6 +53370,7 @@ N    WM_DefaultProc(pMsg);
 N    break;
 N  }
 W "..\APP\load_Face.c" 106 24 variable "oldv" was declared but never referenced
+W "..\APP\load_Face.c" 107 30 variable "testres" was set but never used
 N}
 N
 NWM_HWIN CreateWindow2(void) {
@@ -53330,7 +53379,7 @@ N  if(page_sw == face_graph)
 X  if(page_sw == 0)
 N  {      
 N  }else{
-W "..\APP\load_Face.c" 548 7 function "IO_OFF" declared implicitly
+W "..\APP\load_Face.c" 571 7 function "IO_OFF" declared implicitly
 N      IO_OFF();
 N  }
 N  page_sw = face_load;

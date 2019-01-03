@@ -35141,12 +35141,14 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu32 Correct_Parametet[17];
+Nextern vu32 Correct_Parametet[21];
 N#define  REG_CorrectionV   Correct_Parametet[0]//???????
 N#define  REG_CorrectionV1   Correct_Parametet[13]//???????
 N#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 N#define  REG_Load_A			   Correct_Parametet[1]//??CC???，???
 N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????，??
+N#define  REG_Load_A1			   Correct_Parametet[17]//??CC???d???
+N#define  SET_LoadA1			   Correct_Parametet[18]//??CC?????d??
 N#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
 N#define  SET_LoadV			   Correct_Parametet[4]//??CV??????????
 N
@@ -35158,6 +35160,8 @@ N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 N#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
 N#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
 N#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
+N#define  SET_POWERV1			 Correct_Parametet[19]//??CV????????
+N#define  SET_POWERV2			 Correct_Parametet[20]//??CV????????
 N#define  CON_POWERA				 Correct_Parametet[10]//??CV???，???
 N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 N#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -35165,19 +35169,21 @@ N
 N
 N
 Nextern vu8  correct_por[6];
-N#define  Polar             correct_por[0]//???????
-N#define  Polar1            correct_por[1]//???，????
+N#define  Polar                       correct_por[0]//???????
+N#define  Polar1                      correct_por[1]//???，????
 N#define  Polar2						 correct_por[2]//??CV????????
 N#define  Polar3						 correct_por[3]//??????CV???，?
 N#define  Polar4						 correct_por[4]//??CC???，????
 N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[17];//У???
+Nextern vu32 Correct_Strong[21];//У???
 N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 N#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
 N#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???，???
 N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????，??
+N#define  REG_LoadA_Offset1   Correct_Strong[17]//??CC???d???
+N#define  SET_LoadA_Offset1   Correct_Strong[18]//??CC?????d??
 N#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
 N#define  SET_LoadV_Offset   Correct_Strong[4]//??CV??????????
 N
@@ -35189,6 +35195,8 @@ N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 N#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
 N#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
+N#define  SET_POWERV_Offset1	Correct_Strong[19]//??CV????????
+N#define  SET_POWERV_Offset2	Correct_Strong[20]//??CV????????
 N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???，???
 N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
 N#define  REG_ReadRH_Offset   Correct_Strong[12]
@@ -35665,12 +35673,14 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[17];
+Sextern vu32 Correct_Parametet[21];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
 S#define  REG_CorrectionV1   Correct_Parametet[13]//???????
 S#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???，???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????，??
+S#define  REG_Load_A1			   Correct_Parametet[17]//??CC???d???
+S#define  SET_LoadA1			   Correct_Parametet[18]//??CC?????d??
 S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
 S#define  SET_LoadV			   Correct_Parametet[4]//??CV??????????
 S
@@ -35682,6 +35692,8 @@ S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 S#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
 S#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
 S#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
+S#define  SET_POWERV1			 Correct_Parametet[19]//??CV????????
+S#define  SET_POWERV2			 Correct_Parametet[20]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???，???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -35689,19 +35701,21 @@ S
 S
 S
 Sextern vu8  correct_por[6];
-S#define  Polar             correct_por[0]//???????
-S#define  Polar1            correct_por[1]//???，????
+S#define  Polar                       correct_por[0]//???????
+S#define  Polar1                      correct_por[1]//???，????
 S#define  Polar2						 correct_por[2]//??CV????????
 S#define  Polar3						 correct_por[3]//??????CV???，?
 S#define  Polar4						 correct_por[4]//??CC???，????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[17];//У???
+Sextern vu32 Correct_Strong[21];//У???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 S#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
 S#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???，???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????，??
+S#define  REG_LoadA_Offset1   Correct_Strong[17]//??CC???d???
+S#define  SET_LoadA_Offset1   Correct_Strong[18]//??CC?????d??
 S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
 S#define  SET_LoadV_Offset   Correct_Strong[4]//??CV??????????
 S
@@ -35713,6 +35727,8 @@ S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 S#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
 S#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
+S#define  SET_POWERV_Offset1	Correct_Strong[19]//??CV????????
+S#define  SET_POWERV_Offset2	Correct_Strong[20]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???，???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
 S#define  REG_ReadRH_Offset   Correct_Strong[12]
@@ -36101,6 +36117,7 @@ X	data_8bit = Correct_Strong[7] >> 8;
 N	EEPROM_WriteByte(0x3F, data_8bit);
 N	EEPROM_WriteByte(0x40, SET_POWERA_Offset);//??CC?????，
 X	EEPROM_WriteByte(0x40, Correct_Strong[7]);
+N
 N	
 N	
 N	data_8bit = REG_POWERV >> 24;
@@ -36201,6 +36218,54 @@ X	data_8bit = Correct_Strong[9] >> 8;
 N	EEPROM_WriteByte(0x4F, data_8bit);
 N	EEPROM_WriteByte(0x50, SET_POWERV_Offset);//??????
 X	EEPROM_WriteByte(0x50, Correct_Strong[9]);
+N    
+N    data_8bit = SET_POWERV1 >> 24;
+X    data_8bit = Correct_Parametet[19] >> 24;
+N	EEPROM_WriteByte(0xE0, data_8bit);
+N	data_8bit = SET_POWERV1 >> 16;
+X	data_8bit = Correct_Parametet[19] >> 16;
+N	EEPROM_WriteByte(0xE1, data_8bit);
+N	data_8bit = SET_POWERV1 >> 8;
+X	data_8bit = Correct_Parametet[19] >> 8;
+N	EEPROM_WriteByte(0xE2, data_8bit);
+N	EEPROM_WriteByte(0xE3, SET_POWERV1);//??????
+X	EEPROM_WriteByte(0xE3, Correct_Parametet[19]);
+N	
+N	data_8bit = SET_POWERV_Offset1 >> 24;
+X	data_8bit = Correct_Strong[19] >> 24;
+N	EEPROM_WriteByte(0xE4, data_8bit);
+N	data_8bit = SET_POWERV_Offset1 >> 16;
+X	data_8bit = Correct_Strong[19] >> 16;
+N	EEPROM_WriteByte(0xE5, data_8bit);
+N	data_8bit = SET_POWERV_Offset1 >> 8;
+X	data_8bit = Correct_Strong[19] >> 8;
+N	EEPROM_WriteByte(0xE6, data_8bit);
+N	EEPROM_WriteByte(0xE7, SET_POWERV_Offset1);//??????
+X	EEPROM_WriteByte(0xE7, Correct_Strong[19]);
+N    
+N    data_8bit = SET_POWERV2 >> 24;
+X    data_8bit = Correct_Parametet[20] >> 24;
+N	EEPROM_WriteByte(0xE8, data_8bit);
+N	data_8bit = SET_POWERV2 >> 16;
+X	data_8bit = Correct_Parametet[20] >> 16;
+N	EEPROM_WriteByte(0xE9, data_8bit);
+N	data_8bit = SET_POWERV2 >> 8;
+X	data_8bit = Correct_Parametet[20] >> 8;
+N	EEPROM_WriteByte(0xEA, data_8bit);
+N	EEPROM_WriteByte(0xEB, SET_POWERV2);//??????
+X	EEPROM_WriteByte(0xEB, Correct_Parametet[20]);
+N	
+N	data_8bit = SET_POWERV_Offset2 >> 24;
+X	data_8bit = Correct_Strong[20] >> 24;
+N	EEPROM_WriteByte(0xEC, data_8bit);
+N	data_8bit = SET_POWERV_Offset2 >> 16;
+X	data_8bit = Correct_Strong[20] >> 16;
+N	EEPROM_WriteByte(0xED, data_8bit);
+N	data_8bit = SET_POWERV_Offset2 >> 8;
+X	data_8bit = Correct_Strong[20] >> 8;
+N	EEPROM_WriteByte(0xEE, data_8bit);
+N	EEPROM_WriteByte(0xEF, SET_POWERV_Offset2);//??????
+X	EEPROM_WriteByte(0xEF, Correct_Strong[20]);
 N	
 N	data_8bit = CON_POWERA >> 24;
 X	data_8bit = Correct_Parametet[10] >> 24;
@@ -36732,6 +36797,66 @@ N	SET_POWERV_Offset=SET_POWERV_Offset<<8;
 X	Correct_Strong[9]=Correct_Strong[9]<<8;
 N	SET_POWERV_Offset=SET_POWERV_Offset+EEPROM_READ_Byte(0x50);//
 X	Correct_Strong[9]=Correct_Strong[9]+EEPROM_READ_Byte(0x50);
+N    
+N    SET_POWERV1=EEPROM_READ_Byte(0xE0);
+X    Correct_Parametet[19]=EEPROM_READ_Byte(0xE0);
+N	SET_POWERV1=SET_POWERV1<<8;
+X	Correct_Parametet[19]=Correct_Parametet[19]<<8;
+N	SET_POWERV1=SET_POWERV1+EEPROM_READ_Byte(0xE1);
+X	Correct_Parametet[19]=Correct_Parametet[19]+EEPROM_READ_Byte(0xE1);
+N	SET_POWERV1=SET_POWERV1<<8;
+X	Correct_Parametet[19]=Correct_Parametet[19]<<8;
+N	SET_POWERV1=SET_POWERV1+EEPROM_READ_Byte(0xE2);
+X	Correct_Parametet[19]=Correct_Parametet[19]+EEPROM_READ_Byte(0xE2);
+N	SET_POWERV1=SET_POWERV1<<8;
+X	Correct_Parametet[19]=Correct_Parametet[19]<<8;
+N	SET_POWERV1=SET_POWERV1+EEPROM_READ_Byte(0xE3);
+X	Correct_Parametet[19]=Correct_Parametet[19]+EEPROM_READ_Byte(0xE3);
+N
+N	SET_POWERV_Offset1=EEPROM_READ_Byte(0xE4);
+X	Correct_Strong[19]=EEPROM_READ_Byte(0xE4);
+N	SET_POWERV_Offset1=SET_POWERV_Offset1<<8;
+X	Correct_Strong[19]=Correct_Strong[19]<<8;
+N	SET_POWERV_Offset1=SET_POWERV_Offset1+EEPROM_READ_Byte(0xE5);
+X	Correct_Strong[19]=Correct_Strong[19]+EEPROM_READ_Byte(0xE5);
+N	SET_POWERV_Offset1=SET_POWERV_Offset1<<8;
+X	Correct_Strong[19]=Correct_Strong[19]<<8;
+N	SET_POWERV_Offset1=SET_POWERV_Offset1+EEPROM_READ_Byte(0xE6);
+X	Correct_Strong[19]=Correct_Strong[19]+EEPROM_READ_Byte(0xE6);
+N	SET_POWERV_Offset1=SET_POWERV_Offset1<<8;
+X	Correct_Strong[19]=Correct_Strong[19]<<8;
+N	SET_POWERV_Offset1=SET_POWERV_Offset1+EEPROM_READ_Byte(0xE7);//
+X	Correct_Strong[19]=Correct_Strong[19]+EEPROM_READ_Byte(0xE7);
+N    
+N    SET_POWERV2=EEPROM_READ_Byte(0xE8);
+X    Correct_Parametet[20]=EEPROM_READ_Byte(0xE8);
+N	SET_POWERV2=SET_POWERV2<<8;
+X	Correct_Parametet[20]=Correct_Parametet[20]<<8;
+N	SET_POWERV2=SET_POWERV2+EEPROM_READ_Byte(0xE9);
+X	Correct_Parametet[20]=Correct_Parametet[20]+EEPROM_READ_Byte(0xE9);
+N	SET_POWERV2=SET_POWERV2<<8;
+X	Correct_Parametet[20]=Correct_Parametet[20]<<8;
+N	SET_POWERV2=SET_POWERV2+EEPROM_READ_Byte(0xEA);
+X	Correct_Parametet[20]=Correct_Parametet[20]+EEPROM_READ_Byte(0xEA);
+N	SET_POWERV2=SET_POWERV2<<8;
+X	Correct_Parametet[20]=Correct_Parametet[20]<<8;
+N	SET_POWERV2=SET_POWERV2+EEPROM_READ_Byte(0xEB);
+X	Correct_Parametet[20]=Correct_Parametet[20]+EEPROM_READ_Byte(0xEB);
+N
+N	SET_POWERV_Offset2=EEPROM_READ_Byte(0xEC);
+X	Correct_Strong[20]=EEPROM_READ_Byte(0xEC);
+N	SET_POWERV_Offset2=SET_POWERV_Offset2<<8;
+X	Correct_Strong[20]=Correct_Strong[20]<<8;
+N	SET_POWERV_Offset2=SET_POWERV_Offset2+EEPROM_READ_Byte(0xED);
+X	Correct_Strong[20]=Correct_Strong[20]+EEPROM_READ_Byte(0xED);
+N	SET_POWERV_Offset2=SET_POWERV_Offset2<<8;
+X	Correct_Strong[20]=Correct_Strong[20]<<8;
+N	SET_POWERV_Offset2=SET_POWERV_Offset2+EEPROM_READ_Byte(0xEE);
+X	Correct_Strong[20]=Correct_Strong[20]+EEPROM_READ_Byte(0xEE);
+N	SET_POWERV_Offset2=SET_POWERV_Offset2<<8;
+X	Correct_Strong[20]=Correct_Strong[20]<<8;
+N	SET_POWERV_Offset2=SET_POWERV_Offset2+EEPROM_READ_Byte(0xEF);//
+X	Correct_Strong[20]=Correct_Strong[20]+EEPROM_READ_Byte(0xEF);
 N	
 N	CON_POWERA=EEPROM_READ_Byte(0x51);
 X	Correct_Parametet[10]=EEPROM_READ_Byte(0x51);

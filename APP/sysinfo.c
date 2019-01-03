@@ -170,7 +170,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         GUI_SetColor(0x00BFFFFF);
         GUI_SetFont(&GUI_Font24_1);
         GUI_DispStringAt("JK5530B", 140, 50);
-        GUI_DispStringAt("Ver:1.8", 140, 75);
+        GUI_DispStringAt("Ver:1.9", 140, 75);
        
         GUI_DispStringAt("Ver:1.2", 140, 100);
         GUI_DispStringAt("-", 191, 125);

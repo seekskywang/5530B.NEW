@@ -329,7 +329,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             TEXT_SetText(hItem,"");
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_128);       
             TEXT_SetText(hItem,"");
-            if(R_VLUE < 200 && DISS_Voltage > 1)
+            if(R_VLUE < 180 && DISS_Voltage > 1)
             {
                 GPIO_ResetBits(GPIOB,GPIO_Pin_13);//R_RALY低档位 
                 r_raly = 0;
@@ -405,6 +405,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                         short_finish = 0;
                         test_finish = 0;
                         r_test = 0;
+                        v = 0;
                         if(manual == 0)
                         {
                             GPIO_SetBits(GPIOB,GPIO_Pin_13);//R_RALY
@@ -430,6 +431,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                         r_test = 0;
                         GPIO_SetBits(GPIOB,GPIO_Pin_13);//R_RALY
                         r_raly=1;
+                        v = 0;
                     }
                 }                    
             }else{
@@ -529,8 +531,13 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 oc_test = 1;
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-                sprintf(buf,"%4d",r);       
+                sprintf(buf,"%4d",r);  
                 TEXT_SetText(hItem,buf);
+                
+                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+                sprintf(buf,"%.3f",v);       
+                TEXT_SetText(hItem,buf);
+                
                 
     //             if(status_flash == 0){
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);

@@ -29,13 +29,14 @@ extern struct bitDefine
     unsigned bit6: 1;
     unsigned bit7: 1;
 } flagA, flagB,flagC,flagD,flagE,flagF,flagG;
-
+void Slow_Start(void);
 extern vu8 resetflag;
 extern vu8 resdone;
 extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ16;
 extern WM_HWIN CreateWindow(void);
 extern WM_HWIN CreateR(void);
-
+extern vu8 load_sw;
+RCC_ClocksTypeDef rcc;
 static void ee_Delay( vu32 nCount)	 //莶榨謩覔时诏私
 {
 	for(; nCount != 0; nCount--);
@@ -52,6 +53,8 @@ void MainTask(void)
 //	unsigned char  ucKeyCode;
     static int read1963;
     static int scancount;
+
+    
 	GUI_Init();
 	WM_SetDesktopColor(GUI_BLUE);  
 	GUI_Clear();//清屏
@@ -77,7 +80,9 @@ void MainTask(void)
 	{
 		TIM_SetCompare1(TIM2,Contr_Current);//稳压电源电流DAC
 		TIM_SetCompare2(TIM2,Contr_Voltage);//稳压电源电压DAC
-		DAC8531_Send(Contr_Laod);//加载DAC值
+//		DAC8531_Send(Contr_Laod);//加载DAC值
+        Slow_Start();
+        RCC_GetClocksFreq(&rcc);
         if(page_sw != face_starter)
         {
             if(scancount == 9)
@@ -130,5 +135,30 @@ void MainTask(void)
 		GUI_Delay(2);//GUI刷新
 	}
   
+}
+
+//缓启动
+void Slow_Start(void)
+{
+    static vu16 sendload;
+    
+    if(page_sw == face_r)
+    {
+        DAC8531_Send(Contr_Laod);//加载DAC值
+    }else{
+        if(load_sw == load_on)
+        {
+            if(sendload < 250)
+            {
+                sendload = sendload + 10;
+            }else{
+                sendload = Contr_Laod;
+            }
+            DAC8531_Send(sendload);
+        }else{
+            sendload = 200;
+            DAC8531_Send(sendload);
+        }
+    }
 }
 /***************************** 安富莱电子 www.armfly.com (END OF FILE) *********************************/

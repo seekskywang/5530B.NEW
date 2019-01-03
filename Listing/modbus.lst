@@ -35141,12 +35141,14 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu32 Correct_Parametet[17];
+Nextern vu32 Correct_Parametet[21];
 N#define  REG_CorrectionV   Correct_Parametet[0]//???????
 N#define  REG_CorrectionV1   Correct_Parametet[13]//???????
 N#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 N#define  REG_Load_A			   Correct_Parametet[1]//??CC???·???
 N#define  SET_LoadA			   Correct_Parametet[2]//??CC?????·??
+N#define  REG_Load_A1			   Correct_Parametet[17]//??CC???d???
+N#define  SET_LoadA1			   Correct_Parametet[18]//??CC?????d??
 N#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
 N#define  SET_LoadV			   Correct_Parametet[4]//??CV??????????
 N
@@ -35158,6 +35160,8 @@ N#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 N#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
 N#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
 N#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
+N#define  SET_POWERV1			 Correct_Parametet[19]//??CV????????
+N#define  SET_POWERV2			 Correct_Parametet[20]//??CV????????
 N#define  CON_POWERA				 Correct_Parametet[10]//??CV???·???
 N#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 N#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -35165,19 +35169,21 @@ N
 N
 N
 Nextern vu8  correct_por[6];
-N#define  Polar             correct_por[0]//???????
-N#define  Polar1            correct_por[1]//???·????
+N#define  Polar                       correct_por[0]//???????
+N#define  Polar1                      correct_por[1]//???·????
 N#define  Polar2						 correct_por[2]//??CV????????
 N#define  Polar3						 correct_por[3]//??????CV???·?
 N#define  Polar4						 correct_por[4]//??CC???·????
 N#define  Polar5						 correct_por[5]//??CV????????
 N
-Nextern vu32 Correct_Strong[17];//У???
+Nextern vu32 Correct_Strong[21];//У???
 N#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 N#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
 N#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 N#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???·???
 N#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????·??
+N#define  REG_LoadA_Offset1   Correct_Strong[17]//??CC???d???
+N#define  SET_LoadA_Offset1   Correct_Strong[18]//??CC?????d??
 N#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
 N#define  SET_LoadV_Offset   Correct_Strong[4]//??CV??????????
 N
@@ -35189,6 +35195,8 @@ N#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 N#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
 N#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 N#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
+N#define  SET_POWERV_Offset1	Correct_Strong[19]//??CV????????
+N#define  SET_POWERV_Offset2	Correct_Strong[20]//??CV????????
 N#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???·???
 N#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
 N#define  REG_ReadRH_Offset   Correct_Strong[12]
@@ -35711,12 +35719,14 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu32 Correct_Parametet[17];
+Sextern vu32 Correct_Parametet[21];
 S#define  REG_CorrectionV   Correct_Parametet[0]//???????
 S#define  REG_CorrectionV1   Correct_Parametet[13]//???????
 S#define  REG_CorrectionV2   Correct_Parametet[14]//???????W
 S#define  REG_Load_A			   Correct_Parametet[1]//??CC???·???
 S#define  SET_LoadA			   Correct_Parametet[2]//??CC?????·??
+S#define  REG_Load_A1			   Correct_Parametet[17]//??CC???d???
+S#define  SET_LoadA1			   Correct_Parametet[18]//??CC?????d??
 S#define  REG_LoadV			   Correct_Parametet[3]//??CV????????
 S#define  SET_LoadV			   Correct_Parametet[4]//??CV??????????
 S
@@ -35728,6 +35738,8 @@ S#define  REG_POWERV			   Correct_Parametet[8]//??CV???????
 S#define  REG_POWERV1		   Correct_Parametet[15]//??CV???????
 S#define  REG_POWERV2		   Correct_Parametet[16]//??CV???????
 S#define  SET_POWERV			 Correct_Parametet[9]//??CV????????
+S#define  SET_POWERV1			 Correct_Parametet[19]//??CV????????
+S#define  SET_POWERV2			 Correct_Parametet[20]//??CV????????
 S#define  CON_POWERA				 Correct_Parametet[10]//??CV???·???
 S#define  REG_CorrectionRL    Correct_Parametet[11]//?????
 S#define  REG_CorrectionRH    Correct_Parametet[12]
@@ -35735,19 +35747,21 @@ S
 S
 S
 Sextern vu8  correct_por[6];
-S#define  Polar             correct_por[0]//???????
-S#define  Polar1            correct_por[1]//???·????
+S#define  Polar                       correct_por[0]//???????
+S#define  Polar1                      correct_por[1]//???·????
 S#define  Polar2						 correct_por[2]//??CV????????
 S#define  Polar3						 correct_por[3]//??????CV???·?
 S#define  Polar4						 correct_por[4]//??CC???·????
 S#define  Polar5						 correct_por[5]//??CV????????
 S
-Sextern vu32 Correct_Strong[17];//У???
+Sextern vu32 Correct_Strong[21];//У???
 S#define  REG_ReadV_Offset   Correct_Strong[0]//???????
 S#define  REG_ReadV_Offset1   Correct_Strong[13]//???????
 S#define  REG_ReadV_Offset2   Correct_Strong[14]//???????
 S#define  REG_LoadA_Offset   Correct_Strong[1]//??CC???·???
 S#define  SET_LoadA_Offset   Correct_Strong[2]//??CC?????·??
+S#define  REG_LoadA_Offset1   Correct_Strong[17]//??CC???d???
+S#define  SET_LoadA_Offset1   Correct_Strong[18]//??CC?????d??
 S#define  REG_LoadV_Offset   Correct_Strong[3]//??CV????????
 S#define  SET_LoadV_Offset   Correct_Strong[4]//??CV??????????
 S
@@ -35759,6 +35773,8 @@ S#define  REG_POWERV_Offset  Correct_Strong[8]//??CV???????
 S#define  REG_POWERV_Offset1  Correct_Strong[15]//??CV???????
 S#define  REG_POWERV_Offset2  Correct_Strong[16]//??CV???????
 S#define  SET_POWERV_Offset	Correct_Strong[9]//??CV????????
+S#define  SET_POWERV_Offset1	Correct_Strong[19]//??CV????????
+S#define  SET_POWERV_Offset2	Correct_Strong[20]//??CV????????
 S#define  CON_POWERA_Offset	Correct_Strong[10]//??CV???·???
 S#define  REG_ReadRL_Offset   Correct_Strong[11]//?????
 S#define  REG_ReadRH_Offset   Correct_Strong[12]
@@ -35841,8 +35857,8 @@ N
 Nvu32 Modify_B_READ;
 Nvu32 Modify_D_READ;
 Nvu32 Modify_B_ACT;
-Nvu32 Correct_Parametet[17];//校准参数
-Nvu32 Correct_Strong[17];//校准系数
+Nvu32 Correct_Parametet[21];//校准参数
+Nvu32 Correct_Strong[21];//校准系数
 Nvu8  correct_por[6];
 N/*************************变量定义***********************************/
 Nvu32 Run_Control[42];
@@ -36438,7 +36454,174 @@ N			Flash_Write_all ();
 N			Flag_DAC_OFF=0;
 X			(flagB . bit3)=0;
 N		}
+N/*******************************????????У?******************************************/	
+N		if (g_tModS.RxBuf[1] == 0x22)			   //?·?У?
+N		{
+N			Modify_A_READ = Vmon_value;//??d
+N			Modify_C_READ = Contr_Voltage;//???d
+N			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N		}
+N
+N		if (g_tModS.RxBuf[1] == 0x23)			   //?·?У???
+N		{
+N			vu16 var16;
+N			vu32 var32a;
+N			vu32 var32b;
+N			
+N			vu16 var16a;
+N			vu32 var32c;
+N			vu32 var32d;
+N			
+N			Modify_D_READ = Contr_Voltage;
+N			Modify_B_READ = Vmon_value;
+N			Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N			var32a = Modify_B_ACT;
+N			var32a = var32a - Modify_A_ACT;
+N			var32a = var32a << 14;
+N			var16 = Modify_B_READ - Modify_A_READ;
+N			var32a = var32a / var16;
+N			REG_POWERV1 = var32a;
+X			Correct_Parametet[15] = var32a;
+N			var32a = Modify_B_ACT;
+N			var32a = var32a << 14;
+N			var32b = Modify_B_READ;
+N			var32b = var32b * REG_POWERV1;
+X			var32b = var32b * Correct_Parametet[15];
+N			if (var32a < var32b)
+N			{
+N				var32b = var32b - var32a;
+N				REG_POWERV_Offset1 = var32b;
+X				Correct_Strong[15] = var32b;
+N				Polar5 |= 0x01;
+X				correct_por[5] |= 0x01;
+N			}
+N			else 
+N			{
+N				var32a = var32a - var32b;
+N				REG_POWERV_Offset1 = var32a;
+X				Correct_Strong[15] = var32a;
+N				Polar5 &= ~0x01;					
+X				correct_por[5] &= ~0x01;					
+N			}
+N	//---------------------------------------------------------------------------------//
+N			var32c = Modify_B_ACT; //????У?
+N			var32c = var32c - Modify_A_ACT;
+N			var32c = var32c << 14;
+N			var16a=Modify_D_READ-Modify_C_READ;
+N			var16a=var16a*2;
+N			var32c=var32c/var16a;
+N			SET_POWERV1 = var32c;
+X			Correct_Parametet[19] = var32c;
+N			var32c = Modify_B_ACT;
+N			var32c = var32c << 14;
+N			var32d = SET_POWERV1;
+X			var32d = Correct_Parametet[19];
+N			var32d = var32d * (Modify_D_READ*2);
+N			if (var32c < var32d)
+N			{
+N				var32d = var32d - var32c;
+N				SET_POWERV_Offset1 = var32d;
+X				Correct_Strong[19] = var32d;
+N				Polar5 |= 0x04;
+X				correct_por[5] |= 0x04;
+N			}
+N			else 
+N			{
+N				var32c = var32c - var32d;
+N				SET_POWERV_Offset1 = var32c;
+X				Correct_Strong[19] = var32c;
+N				Polar5 &= ~0x04;
+X				correct_por[5] &= ~0x04;
+N			}
+N			Flash_Write_all ();	
+N			Flag_DAC_OFF=0;
+X			(flagB . bit3)=0;
+N		}
+N/*******************************????????У?******************************************/	
+N		if (g_tModS.RxBuf[1] == 0x24)			   //?·?У?
+N		{
+N			Modify_A_READ = Vmon_value;//??d
+N			Modify_C_READ = Contr_Voltage;//???d
+N			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N		}
+N
+N		if (g_tModS.RxBuf[1] == 0x25)			   //?·?У???
+N		{
+N			vu16 var16;
+N			vu32 var32a;
+N			vu32 var32b;
+N			
+N			vu16 var16a;
+N			vu32 var32c;
+N			vu32 var32d;
+N			
+N			Modify_D_READ = Contr_Voltage;
+N			Modify_B_READ = Vmon_value;
+N			Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N			var32a = Modify_B_ACT;
+N			var32a = var32a - Modify_A_ACT;
+N			var32a = var32a << 14;
+N			var16 = Modify_B_READ - Modify_A_READ;
+N			var32a = var32a / var16;
+N			REG_POWERV2 = var32a;
+X			Correct_Parametet[16] = var32a;
+N			var32a = Modify_B_ACT;
+N			var32a = var32a << 14;
+N			var32b = Modify_B_READ;
+N			var32b = var32b * REG_POWERV2;
+X			var32b = var32b * Correct_Parametet[16];
+N			if (var32a < var32b)
+N			{
+N				var32b = var32b - var32a;
+N				REG_POWERV_Offset2 = var32b;
+X				Correct_Strong[16] = var32b;
+N				Polar5 |= 0x01;
+X				correct_por[5] |= 0x01;
+N			}
+N			else 
+N			{
+N				var32a = var32a - var32b;
+N				REG_POWERV_Offset2 = var32a;
+X				Correct_Strong[16] = var32a;
+N				Polar5 &= ~0x01;					
+X				correct_por[5] &= ~0x01;					
+N			}
+N	//---------------------------------------------------------------------------------//
+N			var32c = Modify_B_ACT; //????У?
+N			var32c = var32c - Modify_A_ACT;
+N			var32c = var32c << 14;
+N			var16a=Modify_D_READ-Modify_C_READ;
+N			var16a=var16a*2;
+N			var32c=var32c/var16a;
+N			SET_POWERV2 = var32c;
+X			Correct_Parametet[20] = var32c;
+N			var32c = Modify_B_ACT;
+N			var32c = var32c << 14;
+N			var32d = SET_POWERV2;
+X			var32d = Correct_Parametet[20];
+N			var32d = var32d * (Modify_D_READ*2);
+N			if (var32c < var32d)
+N			{
+N				var32d = var32d - var32c;
+N				SET_POWERV_Offset2 = var32d;
+X				Correct_Strong[20] = var32d;
+N				Polar5 |= 0x04;
+X				correct_por[5] |= 0x04;
+N			}
+N			else 
+N			{
+N				var32c = var32c - var32d;
+N				SET_POWERV_Offset2 = var32c;
+X				Correct_Strong[20] = var32c;
+N				Polar5 &= ~0x04;
+X				correct_por[5] &= ~0x04;
+N			}
+N			Flash_Write_all ();	
+N			Flag_DAC_OFF=0;
+X			(flagB . bit3)=0;
+N		}
 N/****************???·?У?**********************************/
+N
 N		if (g_tModS.RxBuf[1] == 0x0D)			  
 N		{ 
 N			Modify_A_READ = Imon_value;
@@ -36523,7 +36706,7 @@ N	if(r_raly == 1)
 N    {
 N        var32 = Vmon1_value;
 N    }else if(r_raly == 0){
-N        var32 = Vmon1_value + 100;
+N        var32 = Vmon1_value + 85;
 N    }
 N	var32 = var32 * REG_CorrectionV;  
 X	var32 = var32 * Correct_Parametet[0];  
@@ -36547,15 +36730,16 @@ X	Run_Control[10] = var32;
 N	DISS_Voltage=Voltage;
 X	DISS_Voltage=Run_Control[10];
 N	DISS_Voltage=DISS_Voltage/1000;//计算显示电压
-W "..\drive\modbus.c" 637 8 single-precision operand implicitly converted to double-precision
+W "..\drive\modbus.c" 778 8 single-precision operand implicitly converted to double-precision
 N    if(DISS_Voltage < 0.5)
 N    {
-N        if(r_raly == 1)
-N        {
-N            var32 = Vmon1_value;
-N        }else if(r_raly == 0){
-N            var32 = Vmon1_value + 100;
-N        }
+N//         if(r_raly == 1)
+N//         {
+N//             var32 = Vmon1_value;
+N//         }else if(r_raly == 0){
+N//             var32 = Vmon1_value + 85;
+N//         }
+N        var32 = Vmon1_value;
 N        var32 = var32 * REG_CorrectionV;  
 X        var32 = var32 * Correct_Parametet[0];  
 N        if ((Polar & 0x01) == 0x01)		  
@@ -36789,8 +36973,8 @@ N//                 }
 N//                 else var32 = var32 - REG_ReadRH_Offset;
 N//             }
 N//            else
-N                var32 = var32 + REG_ReadRH_Offset;
-X                var32 = var32 + Correct_Strong[12];
+N                var32 = var32 - REG_ReadRH_Offset;
+X                var32 = var32 - Correct_Strong[12];
 N            var32 = var32 >> 12;
 N            if (var32 < 5) var32 = 0;				  //40mV訑袀去拢
 N            R_VLUE = var32;
@@ -36802,19 +36986,17 @@ N	/*****************************稳压电源测量电压转换****************************
 N	var32 = Vmon_value;
 N	var32 = var32 * REG_POWERV;  
 X	var32 = var32 * Correct_Parametet[8];  
-N	if ((Polar5 & 0x01) == 0x01)		  
-X	if ((correct_por[5] & 0x01) == 0x01)		  
-N	{
-N		if (var32 < REG_POWERV_Offset) 
-X		if (var32 < Correct_Strong[8]) 
-N		{
-N			var32 = 0;
-N		}
-N		else var32 = var32 - REG_POWERV_Offset;
-X		else var32 = var32 - Correct_Strong[8];
-N	}
-N	else var32 = var32 + REG_POWERV_Offset;
-X	else var32 = var32 + Correct_Strong[8];
+N// 	if ((Polar5 & 0x01) == 0x01)		  
+N// 	{
+N// 		if (var32 < REG_POWERV_Offset) 
+N// 		{
+N// 			var32 = 0;
+N// 		}
+N// 		else var32 = var32 - REG_POWERV_Offset;
+N// 	}
+N// 	else 
+N        var32 = var32 - REG_POWERV_Offset;
+X        var32 = var32 - Correct_Strong[8];
 N	var32 = var32 >> 14;
 N	if (var32 < 40) var32 = 0;				  //40mV以下清零
 N	POW_Voltage = var32;
@@ -36822,24 +37004,23 @@ X	Run_Control[9] = var32;
 N	DISS_POW_Voltage=POW_Voltage;
 X	DISS_POW_Voltage=Run_Control[9];
 N	DISS_POW_Voltage=DISS_POW_Voltage/100;//计算显示电压
-N    if(DISS_POW_Voltage >= 10)
+N    if(POW_Voltage >= 1000)
+X    if(Run_Control[9] >= 1000)
 N    {
 N        var32 = Vmon_value;
 N        var32 = var32 * REG_POWERV1;  
 X        var32 = var32 * Correct_Parametet[15];  
-N        if ((Polar5 & 0x01) == 0x01)		  
-X        if ((correct_por[5] & 0x01) == 0x01)		  
-N        {
-N            if (var32 < REG_POWERV_Offset1) 
-X            if (var32 < Correct_Strong[15]) 
-N            {
-N                var32 = 0;
-N            }
-N            else var32 = var32 - REG_POWERV_Offset1;
-X            else var32 = var32 - Correct_Strong[15];
-N        }
-N        else var32 = var32 + REG_POWERV_Offset1;
-X        else var32 = var32 + Correct_Strong[15];
+N//         if ((Polar5 & 0x01) == 0x01)		  
+N//         {
+N//             if (var32 < REG_POWERV_Offset1) 
+N//             {
+N//                 var32 = 0;
+N//             }
+N//             else var32 = var32 - REG_POWERV_Offset1;
+N//         }
+N//         else 
+N            var32 = var32 - REG_POWERV_Offset1;
+X            var32 = var32 - Correct_Strong[15];
 N        var32 = var32 >> 14;
 N        if (var32 < 40) var32 = 0;				  //40mV訑袀去拢
 N        POW_Voltage = var32;
@@ -36848,24 +37029,23 @@ N        DISS_POW_Voltage=POW_Voltage;
 X        DISS_POW_Voltage=Run_Control[9];
 N        DISS_POW_Voltage=DISS_POW_Voltage/100;//輪蹋袛示支压
 N    }
-N    if(DISS_POW_Voltage >= 30)
+N    if(POW_Voltage >= 3000)
+X    if(Run_Control[9] >= 3000)
 N    {
 N        var32 = Vmon_value;
 N        var32 = var32 * REG_POWERV2;  
 X        var32 = var32 * Correct_Parametet[16];  
-N        if ((Polar5 & 0x01) == 0x01)		  
-X        if ((correct_por[5] & 0x01) == 0x01)		  
-N        {
-N            if (var32 < REG_POWERV_Offset2) 
-X            if (var32 < Correct_Strong[16]) 
-N            {
-N                var32 = 0;
-N            }
-N            else var32 = var32 - REG_POWERV_Offset2;
-X            else var32 = var32 - Correct_Strong[16];
-N        }
-N        else var32 = var32 + REG_POWERV_Offset2;
-X        else var32 = var32 + Correct_Strong[16];
+N//         if ((Polar5 & 0x01) == 0x01)		  
+N//         {
+N//             if (var32 < REG_POWERV_Offset2) 
+N//             {
+N//                 var32 = 0;
+N//             }
+N//             else var32 = var32 - REG_POWERV_Offset2;
+N//         }
+N//         else 
+N            var32 = var32 - REG_POWERV_Offset2;
+X            var32 = var32 - Correct_Strong[16];
 N        var32 = var32 >> 14;
 N        if (var32 < 40) var32 = 0;				  //40mV訑袀去拢
 N        POW_Voltage = var32;
@@ -36929,26 +37109,69 @@ N	}
 N/**************************稳压电源设置电压转换******************************************/
 N	var32 = SET_Voltage;
 X	var32 = Run_Control[1];
-N	var32=var32<<14;   
-N	if ((Polar5 & 0x04) == 0)			   
-X	if ((correct_por[5] & 0x04) == 0)			   
-N	{
-N		if (var32 < SET_POWERV_Offset) var32 = 0;
-X		if (var32 < Correct_Strong[9]) var32 = 0;
-N		else var32 = var32 - SET_POWERV_Offset;
-X		else var32 = var32 - Correct_Strong[9];
-N	}
-N	else var32 = var32 + SET_POWERV_Offset;
-X	else var32 = var32 + Correct_Strong[9];
-N	var32 = var32/SET_POWERV;
-X	var32 = var32/Correct_Parametet[9];
-N	var32=var32>>1;
-N	Contr_Voltage = var32;
-N	if(SET_Voltage==0)
-X	if(Run_Control[1]==0)
-N	{
-N		Contr_Voltage=0;
-N	}
+N    if(SET_Voltage < 1000)
+X    if(Run_Control[1] < 1000)
+N    {
+N        var32=var32<<14;   
+N//         if ((Polar5 & 0x04) == 0)			   
+N//         {
+N//             if (var32 < SET_POWERV_Offset) var32 = 0;
+N//             else var32 = var32 - SET_POWERV_Offset;
+N//         }
+N//         else 
+N            var32 = var32 + SET_POWERV_Offset;
+X            var32 = var32 + Correct_Strong[9];
+N        var32 = var32/SET_POWERV;
+X        var32 = var32/Correct_Parametet[9];
+N        var32=var32>>1;
+N        Contr_Voltage = var32;
+N        if(SET_Voltage==0)
+X        if(Run_Control[1]==0)
+N        {
+N            Contr_Voltage=0;
+N        }
+N    }else if(SET_Voltage >= 1000 && SET_Voltage < 3000){
+X    }else if(Run_Control[1] >= 1000 && Run_Control[1] < 3000){
+N        var32=var32<<14;   
+N//         if ((Polar5 & 0x04) == 0)			   
+N//         {
+N//             if (var32 < SET_POWERV_Offset1) var32 = 0;
+N//             else var32 = var32 - SET_POWERV_Offset1;
+N//         }
+N//         else 
+N            var32 = var32 + SET_POWERV_Offset1;
+X            var32 = var32 + Correct_Strong[19];
+N        var32 = var32/SET_POWERV1;
+X        var32 = var32/Correct_Parametet[19];
+N        var32=var32>>1;
+N        Contr_Voltage = var32;
+N        if(SET_Voltage==0)
+X        if(Run_Control[1]==0)
+N        {
+N            Contr_Voltage=0;
+N        }
+N    }else if(SET_Voltage >= 3000){
+X    }else if(Run_Control[1] >= 3000){
+N        var32=var32<<14;   
+N//         if ((Polar5 & 0x04) == 0)			   
+N//         {
+N//             if (var32 < SET_POWERV_Offset2) var32 = 0;
+N//             else var32 = var32 - SET_POWERV_Offset2;
+N//         }
+N//         else 
+N            var32 = var32 + SET_POWERV_Offset2;
+X            var32 = var32 + Correct_Strong[20];
+N        var32 = var32/SET_POWERV2;
+X        var32 = var32/Correct_Parametet[20];
+N        var32=var32>>1;
+N        Contr_Voltage = var32;
+N        if(SET_Voltage==0)
+X        if(Run_Control[1]==0)
+N        {
+N            Contr_Voltage=0;
+N        }
+N    }
+N	
 N	var32 = 0;
 N/**************************稳压电源设置电流转换**************************************/
 N	var32 = SET_Current;
@@ -36975,8 +37198,8 @@ N		Contr_Current=0;
 N	}
 N	
 N	var32 = 0;
-W "..\drive\modbus.c" 611 16 variable "rave" was declared but never referenced
-W "..\drive\modbus.c" 612 15 variable "rcount" was declared but never referenced
+W "..\drive\modbus.c" 752 16 variable "rave" was declared but never referenced
+W "..\drive\modbus.c" 753 15 variable "rcount" was declared but never referenced
 N}
 N/********************************************************************************
 N  * 名称 :   MODBUS_Conrtl

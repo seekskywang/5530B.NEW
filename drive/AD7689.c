@@ -274,7 +274,7 @@ extern struct bitDefine
 #define AD7689_CNV_0			GPIO_ResetBits(GPIOB,GPIO_Pin_6);
 #define AD7689_CNV_1			GPIO_SetBits(GPIOB,GPIO_Pin_6);
 vu16 AD7689_Buffer[8];
-vu16 Ad7689_Fit_Imon[20];
+vu16 Ad7689_Fit_Imon[100];//璐熻浇鐢垫祦
 vu16 Ad7689_Fit_Imon1[20];
 vu16 Ad7689_Fit_Vmon[20];
 void Bubble_sort(vu16 *D_temp,vu8 num);
@@ -471,17 +471,17 @@ void AD7689_Scan_CH(void)
 	Vmon1_value=sum1/14;
 /***************负载电流滤波**********************/
 	Ad7689_Fit_Imon[I_cont++]=var_chV1;
-	if(I_cont==20)
+	if(I_cont==30)
 	{
 		I_cont=0;
 	}
-	Bubble_sort( Ad7689_Fit_Imon,20);//排序从大到小
+//	Bubble_sort( Ad7689_Fit_Imon,20);//排序从大到小
 	sum1=0;
-	for(f=2;f<16;f++)
+	for(f=0;f<30;f++)
 	{
 		sum1 +=Ad7689_Fit_Imon[f];
 	}
-	Imon1_value=sum1/14;
+	Imon1_value=sum1/30;
 }
 
 /*
