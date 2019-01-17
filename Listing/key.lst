@@ -676,18 +676,40 @@ S  #endif
 N#endif
 N
 N#include <stdint.h>                      /* standard types definitions                      */
-L 1 "D:\Keil\ARM\RV31\Inc\stdint.h" 1
-N/* Copyright (C) ARM Ltd., 1999 */
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h" 1
+N/* Copyright (C) ARM Ltd., 1999,2014 */
 N/* All rights reserved */
 N
 N/*
-N * RCS $Revision: 137748 $
-N * Checkin $Date: 2008-09-11 17:34:24 +0100 (Thu, 11 Sep 2008) $
+N * RCS $Revision$
+N * Checkin $Date$
 N * Revising $Author: agrant $
 N */
 N
 N#ifndef __stdint_h
 N#define __stdint_h
+N#define __ARMCLIB_VERSION 5060037
+N
+N  #ifdef __INT64_TYPE__
+S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
+S    #define __INT64 __INT64_TYPE__
+N  #else
+N    /* armcc has builtin '__int64' which can be used in --strict mode */
+N    #define __INT64 __int64
+N    #define __INT64_C_SUFFIX__ ll
+N  #endif
+N  #define __PASTE2(x, y) x ## y
+N  #define __PASTE(x, y) __PASTE2(x, y)
+N  #define __INT64_C(x)  __ESCAPE__(__PASTE(x, __INT64_C_SUFFIX__))
+N  #define __UINT64_C(x)  __ESCAPE__(__PASTE(x ## u, __INT64_C_SUFFIX__))
+N  #if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
+X  #if 0L || (1L && !0L)
+N    /* armclang and non-strict armcc allow 'long long' in system headers */
+N    #define __LONGLONG long long
+N  #else
+S    /* strict armcc has '__int64' */
+S    #define __LONGLONG __int64
+N  #endif
 N
 N  #ifndef __STDINT_DECLS
 N  #define __STDINT_DECLS
@@ -706,8 +728,6 @@ N
 N/*
 N * 'signed' is redundant below, except for 'signed char' and if
 N * the typedef is used to declare a bitfield.
-N * '__int64' is used instead of 'long long' so that this header
-N * can be used in --strict mode.
 N */
 N
 N    /* 7.18.1.1 */
@@ -716,13 +736,15 @@ N    /* exact-width signed integer types */
 Ntypedef   signed          char int8_t;
 Ntypedef   signed short     int int16_t;
 Ntypedef   signed           int int32_t;
-Ntypedef   signed       __int64 int64_t;
+Ntypedef   signed       __INT64 int64_t;
+Xtypedef   signed       __int64 int64_t;
 N
 N    /* exact-width unsigned integer types */
 Ntypedef unsigned          char uint8_t;
 Ntypedef unsigned short     int uint16_t;
 Ntypedef unsigned           int uint32_t;
-Ntypedef unsigned       __int64 uint64_t;
+Ntypedef unsigned       __INT64 uint64_t;
+Xtypedef unsigned       __int64 uint64_t;
 N
 N    /* 7.18.1.2 */
 N
@@ -731,13 +753,15 @@ N    /* minimum-width signed integer types */
 Ntypedef   signed          char int_least8_t;
 Ntypedef   signed short     int int_least16_t;
 Ntypedef   signed           int int_least32_t;
-Ntypedef   signed       __int64 int_least64_t;
+Ntypedef   signed       __INT64 int_least64_t;
+Xtypedef   signed       __int64 int_least64_t;
 N
 N    /* minimum-width unsigned integer types */
 Ntypedef unsigned          char uint_least8_t;
 Ntypedef unsigned short     int uint_least16_t;
 Ntypedef unsigned           int uint_least32_t;
-Ntypedef unsigned       __int64 uint_least64_t;
+Ntypedef unsigned       __INT64 uint_least64_t;
+Xtypedef unsigned       __int64 uint_least64_t;
 N
 N    /* 7.18.1.3 */
 N
@@ -745,21 +769,31 @@ N    /* fastest minimum-width signed integer types */
 Ntypedef   signed           int int_fast8_t;
 Ntypedef   signed           int int_fast16_t;
 Ntypedef   signed           int int_fast32_t;
-Ntypedef   signed       __int64 int_fast64_t;
+Ntypedef   signed       __INT64 int_fast64_t;
+Xtypedef   signed       __int64 int_fast64_t;
 N
 N    /* fastest minimum-width unsigned integer types */
 Ntypedef unsigned           int uint_fast8_t;
 Ntypedef unsigned           int uint_fast16_t;
 Ntypedef unsigned           int uint_fast32_t;
-Ntypedef unsigned       __int64 uint_fast64_t;
+Ntypedef unsigned       __INT64 uint_fast64_t;
+Xtypedef unsigned       __int64 uint_fast64_t;
 N
 N    /* 7.18.1.4 integer types capable of holding object pointers */
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+Stypedef   signed       __INT64 intptr_t;
+Stypedef unsigned       __INT64 uintptr_t;
+N#else
 Ntypedef   signed           int intptr_t;
 Ntypedef unsigned           int uintptr_t;
+N#endif
 N
 N    /* 7.18.1.5 greatest-width integer types */
-Ntypedef   signed       __int64 intmax_t;
-Ntypedef unsigned       __int64 uintmax_t;
+Ntypedef   signed     __LONGLONG intmax_t;
+Xtypedef   signed     long long intmax_t;
+Ntypedef unsigned     __LONGLONG uintmax_t;
+Xtypedef unsigned     long long uintmax_t;
 N
 N
 N#if !defined(__cplusplus) || defined(__STDC_LIMIT_MACROS)
@@ -771,19 +805,19 @@ N    /* minimum values of exact-width signed integer types */
 N#define INT8_MIN                   -128
 N#define INT16_MIN                -32768
 N#define INT32_MIN          (~0x7fffffff)   /* -2147483648 is unsigned */
-N#define INT64_MIN  __ESCAPE__(~0x7fffffffffffffffll) /* -9223372036854775808 is unsigned */
+N#define INT64_MIN  __INT64_C(~0x7fffffffffffffff) /* -9223372036854775808 is unsigned */
 N
 N    /* maximum values of exact-width signed integer types */
 N#define INT8_MAX                    127
 N#define INT16_MAX                 32767
 N#define INT32_MAX            2147483647
-N#define INT64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of exact-width unsigned integer types */
 N#define UINT8_MAX                   255
 N#define UINT16_MAX                65535
 N#define UINT32_MAX           4294967295u
-N#define UINT64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.2 */
 N
@@ -791,19 +825,19 @@ N    /* minimum values of minimum-width signed integer types */
 N#define INT_LEAST8_MIN                   -128
 N#define INT_LEAST16_MIN                -32768
 N#define INT_LEAST32_MIN          (~0x7fffffff)
-N#define INT_LEAST64_MIN  __ESCAPE__(~0x7fffffffffffffffll)
+N#define INT_LEAST64_MIN  __INT64_C(~0x7fffffffffffffff)
 N
 N    /* maximum values of minimum-width signed integer types */
 N#define INT_LEAST8_MAX                    127
 N#define INT_LEAST16_MAX                 32767
 N#define INT_LEAST32_MAX            2147483647
-N#define INT_LEAST64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT_LEAST64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of minimum-width unsigned integer types */
 N#define UINT_LEAST8_MAX                   255
 N#define UINT_LEAST16_MAX                65535
 N#define UINT_LEAST32_MAX           4294967295u
-N#define UINT_LEAST64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT_LEAST64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.3 */
 N
@@ -811,30 +845,45 @@ N    /* minimum values of fastest minimum-width signed integer types */
 N#define INT_FAST8_MIN           (~0x7fffffff)
 N#define INT_FAST16_MIN          (~0x7fffffff)
 N#define INT_FAST32_MIN          (~0x7fffffff)
-N#define INT_FAST64_MIN  __ESCAPE__(~0x7fffffffffffffffll)
+N#define INT_FAST64_MIN  __INT64_C(~0x7fffffffffffffff)
 N
 N    /* maximum values of fastest minimum-width signed integer types */
 N#define INT_FAST8_MAX             2147483647
 N#define INT_FAST16_MAX            2147483647
 N#define INT_FAST32_MAX            2147483647
-N#define INT_FAST64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT_FAST64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of fastest minimum-width unsigned integer types */
 N#define UINT_FAST8_MAX            4294967295u
 N#define UINT_FAST16_MAX           4294967295u
 N#define UINT_FAST32_MAX           4294967295u
-N#define UINT_FAST64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT_FAST64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.4 */
 N
 N    /* minimum value of pointer-holding signed integer type */
-N#define INTPTR_MIN (~0x7fffffff)
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define INTPTR_MIN INT64_MIN
+N#else
+N#define INTPTR_MIN INT32_MIN
+N#endif
 N
 N    /* maximum value of pointer-holding signed integer type */
-N#define INTPTR_MAX   2147483647
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define INTPTR_MAX INT64_MAX
+N#else
+N#define INTPTR_MAX INT32_MAX
+N#endif
 N
 N    /* maximum value of pointer-holding unsigned integer type */
-N#define UINTPTR_MAX  4294967295u
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define UINTPTR_MAX UINT64_MAX
+N#else
+N#define UINTPTR_MAX UINT32_MAX
+N#endif
 N
 N    /* 7.18.2.5 */
 N
@@ -850,15 +899,26 @@ N
 N    /* 7.18.3 */
 N
 N    /* limits of ptrdiff_t */
-N#define PTRDIFF_MIN (~0x7fffffff)
-N#define PTRDIFF_MAX   2147483647
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define PTRDIFF_MIN INT64_MIN
+S#define PTRDIFF_MAX INT64_MAX
+N#else
+N#define PTRDIFF_MIN INT32_MIN
+N#define PTRDIFF_MAX INT32_MAX
+N#endif
 N
 N    /* limits of sig_atomic_t */
 N#define SIG_ATOMIC_MIN (~0x7fffffff)
 N#define SIG_ATOMIC_MAX   2147483647
 N
 N    /* limit of size_t */
-N#define SIZE_MAX 4294967295u
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define SIZE_MAX UINT64_MAX
+N#else
+N#define SIZE_MAX UINT32_MAX
+N#endif
 N
 N    /* limits of wchar_t */
 N    /* NB we have to undef and redef because they're defined in both
@@ -866,8 +926,8 @@ N     * stdint.h and wchar.h */
 N#undef WCHAR_MIN
 N#undef WCHAR_MAX
 N
-N#if defined(__WCHAR32)
-X#if 0L
+N#if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
+X#if 0L || (0L && __ARM_SIZEOF_WCHAR_T == 4)
 S  #define WCHAR_MIN   0
 S  #define WCHAR_MAX   0xffffffffU
 N#else
@@ -888,12 +948,12 @@ N    /* 7.18.4.1 macros for minimum-width integer constants */
 N#define INT8_C(x)   (x)
 N#define INT16_C(x)  (x)
 N#define INT32_C(x)  (x)
-N#define INT64_C(x)  __ESCAPE__(x ## ll)
+N#define INT64_C(x)  __INT64_C(x)
 N
 N#define UINT8_C(x)  (x ## u)
 N#define UINT16_C(x) (x ## u)
 N#define UINT32_C(x) (x ## u)
-N#define UINT64_C(x) __ESCAPE__(x ## ull)
+N#define UINT64_C(x) __UINT64_C(x)
 N
 N    /* 7.18.4.2 macros for greatest-width integer constants */
 N#define INTMAX_C(x)  __ESCAPE__(x ## ll)
@@ -937,39 +997,54 @@ S      using ::std::intptr_t;
 S      using ::std::uintptr_t;
 S      using ::std::intmax_t;
 S      using ::std::uintmax_t;
-S    #endif 
+S    #endif
 N  #endif /* __cplusplus */
+N
+N#undef __INT64
+N#undef __LONGLONG
 N
 N#endif /* __stdint_h */
 N
 N/* end of stdint.h */
-N
-N
 L 169 "..\Libraries\CMSIS\inc\core_cm4.h" 2
 N#include <core_cmInstr.h>                /* Core Instruction Access                         */
-L 1 "D:\Keil\ARM\CMSIS\Include\core_cmInstr.h" 1
+L 1 "D:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h" 1
 N/**************************************************************************//**
 N * @file     core_cmInstr.h
 N * @brief    CMSIS Cortex-M Core Instruction Access Header File
-N * @version  V3.01
-N * @date     06. March 2012
+N * @version  V3.30
+N * @date     17. February 2014
 N *
 N * @note
-N * Copyright (C) 2009-2012 ARM Limited. All rights reserved.
-N *
-N * @par
-N * ARM Limited (ARM) is supplying this software for use with Cortex-M
-N * processor based microcontrollers.  This file can be freely distributed
-N * within development tools that are supporting such ARM based processors.
-N *
-N * @par
-N * THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
-N * OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
-N * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
-N * ARM SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
-N * CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
 N *
 N ******************************************************************************/
+N/* Copyright (c) 2009 - 2014 ARM LIMITED
+N
+N   All rights reserved.
+N   Redistribution and use in source and binary forms, with or without
+N   modification, are permitted provided that the following conditions are met:
+N   - Redistributions of source code must retain the above copyright
+N     notice, this list of conditions and the following disclaimer.
+N   - Redistributions in binary form must reproduce the above copyright
+N     notice, this list of conditions and the following disclaimer in the
+N     documentation and/or other materials provided with the distribution.
+N   - Neither the name of ARM nor the names of its contributors may be used
+N     to endorse or promote products derived from this software without
+N     specific prior written permission.
+N   *
+N   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+N   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+N   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+N   ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+N   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+N   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+N   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+N   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+N   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+N   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+N   POSSIBILITY OF SUCH DAMAGE.
+N   ---------------------------------------------------------------------------*/
+N
 N
 N#ifndef __CORE_CMINSTR_H
 N#define __CORE_CMINSTR_H
@@ -986,7 +1061,7 @@ X#if   1L
 N/* ARM armcc specific functions */
 N
 N#if (__ARMCC_VERSION < 400677)
-X#if (410894 < 400677)
+X#if (5060750 < 400677)
 S  #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -1063,13 +1138,14 @@ N
 N    \param [in]    value  Value to reverse
 N    \return               Reversed value
 N */
+N#ifndef __NO_EMBEDDED_ASM
 N__attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(uint32_t value)
 X__attribute__((section(".rev16_text"))) static __inline __asm uint32_t __REV16(uint32_t value)
 N{
 N  rev16 r0, r0
 N  bx lr
 N}
-N
+N#endif
 N
 N/** \brief  Reverse byte order in signed short value
 N
@@ -1078,12 +1154,14 @@ N
 N    \param [in]    value  Value to reverse
 N    \return               Reversed value
 N */
+N#ifndef __NO_EMBEDDED_ASM
 N__attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(int32_t value)
 X__attribute__((section(".revsh_text"))) static __inline __asm int32_t __REVSH(int32_t value)
 N{
 N  revsh r0, r0
 N  bx lr
 N}
+N#endif
 N
 N
 N/** \brief  Rotate Right in unsigned value (32 bit)
@@ -1095,6 +1173,17 @@ N    \param [in]    value  Number of Bits to rotate
 N    \return               Rotated value
 N */
 N#define __ROR                             __ror
+N
+N
+N/** \brief  Breakpoint
+N
+N    This function causes the processor to enter Debug state.
+N    Debug tools can use this to investigate system state when the instruction at a particular address is reached.
+N
+N    \param [in]    value  is ignored by the processor.
+N                   If required, a debugger can use it to store additional information about the breakpoint.
+N */
+N#define __BKPT(value)                       __breakpoint(value)
 N
 N
 N#if       (__CORTEX_M >= 0x03)
@@ -1218,21 +1307,19 @@ N
 N#endif /* (__CORTEX_M >= 0x03) */
 N
 N
-N
-N#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
-S/* IAR iccarm specific functions */
-S
-S#include <cmsis_iar.h>
-S
-S
-S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
-S/* TI CCS specific functions */
-S
-S#include <cmsis_ccs.h>
-S
-S
-S#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+N#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
 S/* GNU gcc specific functions */
+S
+S/* Define macros for porting to both thumb1 and thumb2.
+S * For thumb1, use low register (r0-r7), specified by constrant "l"
+S * Otherwise, use general registers, specified by constrant "r" */
+S#if defined (__thumb__) && !defined (__thumb2__)
+S#define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+S#define __CMSIS_GCC_USE_REG(r) "l" (r)
+S#else
+S#define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+S#define __CMSIS_GCC_USE_REG(r) "r" (r)
+S#endif
 S
 S/** \brief  No Operation
 S
@@ -1319,10 +1406,14 @@ S    \return               Reversed value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __REV(uint32_t value)
 S{
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
+S  return __builtin_bswap32(value);
+S#else
 S  uint32_t result;
 S
-S  __ASM volatile ("rev %0, %1" : "=r" (result) : "r" (value) );
+S  __ASM volatile ("rev %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
 S  return(result);
+S#endif
 S}
 S
 S
@@ -1337,7 +1428,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __REV16(uint32_t va
 S{
 S  uint32_t result;
 S
-S  __ASM volatile ("rev16 %0, %1" : "=r" (result) : "r" (value) );
+S  __ASM volatile ("rev16 %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
 S  return(result);
 S}
 S
@@ -1351,10 +1442,14 @@ S    \return               Reversed value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE int32_t __REVSH(int32_t value)
 S{
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+S  return (short)__builtin_bswap16(value);
+S#else
 S  uint32_t result;
 S
-S  __ASM volatile ("revsh %0, %1" : "=r" (result) : "r" (value) );
+S  __ASM volatile ("revsh %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
 S  return(result);
+S#endif
 S}
 S
 S
@@ -1368,10 +1463,19 @@ S    \return               Rotated value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 S{
-S
-S  __ASM volatile ("ror %0, %0, %1" : "+r" (op1) : "r" (op2) );
-S  return(op1);
+S  return (op1 >> op2) | (op1 << (32 - op2)); 
 S}
+S
+S
+S/** \brief  Breakpoint
+S
+S    This function causes the processor to enter Debug state.
+S    Debug tools can use this to investigate system state when the instruction at a particular address is reached.
+S
+S    \param [in]    value  is ignored by the processor.
+S                   If required, a debugger can use it to store additional information about the breakpoint.
+S */
+S#define __BKPT(value)                       __ASM volatile ("bkpt "#value)
 S
 S
 S#if       (__CORTEX_M >= 0x03)
@@ -1401,10 +1505,17 @@ S    \return             value of type uint8_t at (*ptr)
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint8_t __LDREXB(volatile uint8_t *addr)
 S{
-S    uint8_t result;
+S    uint32_t result;
 S
-S   __ASM volatile ("ldrexb %0, [%1]" : "=r" (result) : "r" (addr) );
-S   return(result);
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+S   __ASM volatile ("ldrexb %0, %1" : "=r" (result) : "Q" (*addr) );
+S#else
+S    /* Prior to GCC 4.8, "Q" will be expanded to [rx, #0] which is not
+S       accepted by assembler. So has to use following less efficient pattern.
+S    */
+S   __ASM volatile ("ldrexb %0, [%1]" : "=r" (result) : "r" (addr) : "memory" );
+S#endif
+S   return ((uint8_t) result);    /* Add explicit type cast here */
 S}
 S
 S
@@ -1417,10 +1528,17 @@ S    \return        value of type uint16_t at (*ptr)
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint16_t __LDREXH(volatile uint16_t *addr)
 S{
-S    uint16_t result;
+S    uint32_t result;
 S
-S   __ASM volatile ("ldrexh %0, [%1]" : "=r" (result) : "r" (addr) );
-S   return(result);
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+S   __ASM volatile ("ldrexh %0, %1" : "=r" (result) : "Q" (*addr) );
+S#else
+S    /* Prior to GCC 4.8, "Q" will be expanded to [rx, #0] which is not
+S       accepted by assembler. So has to use following less efficient pattern.
+S    */
+S   __ASM volatile ("ldrexh %0, [%1]" : "=r" (result) : "r" (addr) : "memory" );
+S#endif
+S   return ((uint16_t) result);    /* Add explicit type cast here */
 S}
 S
 S
@@ -1435,7 +1553,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __LDREXW(volatile u
 S{
 S    uint32_t result;
 S
-S   __ASM volatile ("ldrex %0, [%1]" : "=r" (result) : "r" (addr) );
+S   __ASM volatile ("ldrex %0, %1" : "=r" (result) : "Q" (*addr) );
 S   return(result);
 S}
 S
@@ -1453,7 +1571,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __STREXB(uint8_t va
 S{
 S   uint32_t result;
 S
-S   __ASM volatile ("strexb %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+S   __ASM volatile ("strexb %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
 S   return(result);
 S}
 S
@@ -1471,7 +1589,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __STREXH(uint16_t v
 S{
 S   uint32_t result;
 S
-S   __ASM volatile ("strexh %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+S   __ASM volatile ("strexh %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
 S   return(result);
 S}
 S
@@ -1489,7 +1607,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __STREXW(uint32_t v
 S{
 S   uint32_t result;
 S
-S   __ASM volatile ("strex %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+S   __ASM volatile ("strex %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" (value) );
 S   return(result);
 S}
 S
@@ -1501,7 +1619,7 @@ S
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __CLREX(void)
 S{
-S  __ASM volatile ("clrex");
+S  __ASM volatile ("clrex" ::: "memory");
 S}
 S
 S
@@ -1548,25 +1666,37 @@ S    \return             number of leading zeros in value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint8_t __CLZ(uint32_t value)
 S{
-S  uint8_t result;
+S  uint32_t result;
 S
 S  __ASM volatile ("clz %0, %1" : "=r" (result) : "r" (value) );
-S  return(result);
+S   return ((uint8_t) result);    /* Add explicit type cast here */
 S}
 S
 S#endif /* (__CORTEX_M >= 0x03) */
 S
 S
+S#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
+S/* IAR iccarm specific functions */
+S#include <cmsis_iar.h>
+S
+S
+S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
+S/* TI CCS specific functions */
+S#include <cmsis_ccs.h>
 S
 S
 S#elif defined ( __TASKING__ ) /*------------------ TASKING Compiler --------------*/
 S/* TASKING carm specific functions */
-S
 S/*
 S * The CMSIS functions have been implemented as intrinsics in the compiler.
 S * Please use "carm -?i" to get an up to date list of all intrinsics,
 S * Including the CMSIS ones.
 S */
+S
+S
+S#elif defined ( __CSMC__ ) /*------------------ COSMIC Compiler -------------------*/
+S/* Cosmic specific functions */
+S#include <cmsis_csm.h>
 S
 N#endif
 N
@@ -1575,29 +1705,43 @@ N
 N#endif /* __CORE_CMINSTR_H */
 L 170 "..\Libraries\CMSIS\inc\core_cm4.h" 2
 N#include <core_cmFunc.h>                 /* Core Function Access                            */
-L 1 "D:\Keil\ARM\CMSIS\Include\core_cmFunc.h" 1
+L 1 "D:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h" 1
 N/**************************************************************************//**
 N * @file     core_cmFunc.h
 N * @brief    CMSIS Cortex-M Core Function Access Header File
-N * @version  V3.01
-N * @date     06. March 2012
+N * @version  V3.30
+N * @date     17. February 2014
 N *
 N * @note
-N * Copyright (C) 2009-2012 ARM Limited. All rights reserved.
-N *
-N * @par
-N * ARM Limited (ARM) is supplying this software for use with Cortex-M
-N * processor based microcontrollers.  This file can be freely distributed
-N * within development tools that are supporting such ARM based processors.
-N *
-N * @par
-N * THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
-N * OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
-N * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
-N * ARM SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
-N * CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
 N *
 N ******************************************************************************/
+N/* Copyright (c) 2009 - 2014 ARM LIMITED
+N
+N   All rights reserved.
+N   Redistribution and use in source and binary forms, with or without
+N   modification, are permitted provided that the following conditions are met:
+N   - Redistributions of source code must retain the above copyright
+N     notice, this list of conditions and the following disclaimer.
+N   - Redistributions in binary form must reproduce the above copyright
+N     notice, this list of conditions and the following disclaimer in the
+N     documentation and/or other materials provided with the distribution.
+N   - Neither the name of ARM nor the names of its contributors may be used
+N     to endorse or promote products derived from this software without
+N     specific prior written permission.
+N   *
+N   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+N   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+N   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+N   ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+N   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+N   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+N   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+N   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+N   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+N   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+N   POSSIBILITY OF SUCH DAMAGE.
+N   ---------------------------------------------------------------------------*/
+N
 N
 N#ifndef __CORE_CMFUNC_H
 N#define __CORE_CMFUNC_H
@@ -1614,7 +1758,7 @@ X#if   1L
 N/* ARM armcc specific functions */
 N
 N#if (__ARMCC_VERSION < 400677)
-X#if (410894 < 400677)
+X#if (5060750 < 400677)
 S  #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -1910,19 +2054,7 @@ N
 N#endif /* (__CORTEX_M == 0x04) */
 N
 N
-N#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
-S/* IAR iccarm specific functions */
-S
-S#include <cmsis_iar.h>
-S
-S
-S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
-S/* TI CCS specific functions */
-S
-S#include <cmsis_ccs.h>
-S
-S
-S#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+N#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
 S/* GNU gcc specific functions */
 S
 S/** \brief  Enable IRQ Interrupts
@@ -1932,7 +2064,7 @@ S  Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
 S{
-S  __ASM volatile ("cpsie i");
+S  __ASM volatile ("cpsie i" : : : "memory");
 S}
 S
 S
@@ -1943,7 +2075,7 @@ S  Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
 S{
-S  __ASM volatile ("cpsid i");
+S  __ASM volatile ("cpsid i" : : : "memory");
 S}
 S
 S
@@ -1970,7 +2102,7 @@ S    \param [in]    control  Control Register value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_CONTROL(uint32_t control)
 S{
-S  __ASM volatile ("MSR control, %0" : : "r" (control) );
+S  __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
 S}
 S
 S
@@ -2042,7 +2174,7 @@ S    \param [in]    topOfProcStack  Process Stack Pointer value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
 S{
-S  __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) );
+S  __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) : "sp");
 S}
 S
 S
@@ -2069,7 +2201,7 @@ S    \param [in]    topOfMainStack  Main Stack Pointer value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
 S{
-S  __ASM volatile ("MSR msp, %0\n" : : "r" (topOfMainStack) );
+S  __ASM volatile ("MSR msp, %0\n" : : "r" (topOfMainStack) : "sp");
 S}
 S
 S
@@ -2096,7 +2228,7 @@ S    \param [in]    priMask  Priority Mask
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
 S{
-S  __ASM volatile ("MSR primask, %0" : : "r" (priMask) );
+S  __ASM volatile ("MSR primask, %0" : : "r" (priMask) : "memory");
 S}
 S
 S
@@ -2109,7 +2241,7 @@ S    Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_fault_irq(void)
 S{
-S  __ASM volatile ("cpsie f");
+S  __ASM volatile ("cpsie f" : : : "memory");
 S}
 S
 S
@@ -2120,7 +2252,7 @@ S    Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_fault_irq(void)
 S{
-S  __ASM volatile ("cpsid f");
+S  __ASM volatile ("cpsid f" : : : "memory");
 S}
 S
 S
@@ -2147,7 +2279,7 @@ S    \param [in]    basePri  Base Priority value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_BASEPRI(uint32_t value)
 S{
-S  __ASM volatile ("MSR basepri, %0" : : "r" (value) );
+S  __ASM volatile ("MSR basepri, %0" : : "r" (value) : "memory");
 S}
 S
 S
@@ -2174,7 +2306,7 @@ S    \param [in]    faultMask  Fault Mask value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
 S{
-S  __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) );
+S  __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) : "memory");
 S}
 S
 S#endif /* (__CORTEX_M >= 0x03) */
@@ -2193,7 +2325,10 @@ S{
 S#if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
 S  uint32_t result;
 S
+S  /* Empty asm statement works as a scheduling barrier */
+S  __ASM volatile ("");
 S  __ASM volatile ("VMRS %0, fpscr" : "=r" (result) );
+S  __ASM volatile ("");
 S  return(result);
 S#else
 S   return(0);
@@ -2210,26 +2345,42 @@ S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 S{
 S#if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
-S  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) );
+S  /* Empty asm statement works as a scheduling barrier */
+S  __ASM volatile ("");
+S  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc");
+S  __ASM volatile ("");
 S#endif
 S}
 S
 S#endif /* (__CORTEX_M == 0x04) */
 S
 S
+S#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
+S/* IAR iccarm specific functions */
+S#include <cmsis_iar.h>
+S
+S
+S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
+S/* TI CCS specific functions */
+S#include <cmsis_ccs.h>
+S
+S
 S#elif defined ( __TASKING__ ) /*------------------ TASKING Compiler --------------*/
 S/* TASKING carm specific functions */
-S
 S/*
 S * The CMSIS functions have been implemented as intrinsics in the compiler.
-S * Please use "carm -?i" to get an up to date list of all instrinsics,
+S * Please use "carm -?i" to get an up to date list of all intrinsics,
 S * Including the CMSIS ones.
 S */
+S
+S
+S#elif defined ( __CSMC__ ) /*------------------ COSMIC Compiler -------------------*/
+S/* Cosmic specific functions */
+S#include <cmsis_csm.h>
 S
 N#endif
 N
 N/*@} end of CMSIS_Core_RegAccFunctions */
-N
 N
 N#endif /* __CORE_CMFUNC_H */
 L 171 "..\Libraries\CMSIS\inc\core_cm4.h" 2
@@ -34915,8 +35066,15 @@ Nextern u8 usartocflag;
 Nextern u8 usartshortflag;
 Nextern float oc_data;
 Nextern vu8 lock;
-Nextern vu32 Run_Control[42];	
+Nextern vu32 Run_Control[49];	
 Nextern u8 lockstat1,lockstat2;
+Nextern int16_t InFlashSave[20];
+N#define set_max_lv						InFlashSave[0]
+N#define set_min_lv						InFlashSave[1]
+N#define set_max_pc						InFlashSave[2]
+N#define set_min_pc						InFlashSave[3]
+N#define set_load_cutoffv				InFlashSave[4]
+N#define set_pow_cutoffc					InFlashSave[5]
 N
 N#define SLAVE_REG_P00		0x0000       //R_VOLU
 N#define SLAVE_REG_P01		0x0001      //Load_Voltage
@@ -34993,6 +35151,12 @@ N#define pow_v    					    Run_Control[38]
 N#define cdc_dc    					    Run_Control[39]
 N#define pow_c    					    Run_Control[40]
 N#define load_v    					    Run_Control[41]
+N#define set_static_pv					Run_Control[42]
+N#define set_static_pc					Run_Control[43]
+N#define set_static_lc					Run_Control[44]
+N
+N
+N
 N
 Nextern vu16 coff[6];
 N#define cov1    					    coff[0]
@@ -35097,6 +35261,21 @@ N#define set_71          70
 N#define set_72          71
 N#define set_73          72
 N#define set_74          73
+N#define set_75          74
+N#define set_76          75
+N#define set_77          76
+N#define set_78          77
+N#define set_79          78
+N#define set_80          79
+N#define set_81          80
+N#define set_82          81
+N#define set_83          82
+N#define set_84          83
+N#define set_85          84
+N#define set_86          85
+N#define set_87          86
+N#define set_88          87
+N#define set_89          88
 N/*
 N************************************************************************
 N*						参数设置识别符
@@ -35470,8 +35649,15 @@ Sextern u8 usartocflag;
 Sextern u8 usartshortflag;
 Sextern float oc_data;
 Sextern vu8 lock;
-Sextern vu32 Run_Control[42];	
+Sextern vu32 Run_Control[49];	
 Sextern u8 lockstat1,lockstat2;
+Sextern int16_t InFlashSave[20];
+S#define set_max_lv						InFlashSave[0]
+S#define set_min_lv						InFlashSave[1]
+S#define set_max_pc						InFlashSave[2]
+S#define set_min_pc						InFlashSave[3]
+S#define set_load_cutoffv				InFlashSave[4]
+S#define set_pow_cutoffc					InFlashSave[5]
 S
 S#define SLAVE_REG_P00		0x0000       //R_VOLU
 S#define SLAVE_REG_P01		0x0001      //Load_Voltage
@@ -35548,6 +35734,12 @@ S#define pow_v    					    Run_Control[38]
 S#define cdc_dc    					    Run_Control[39]
 S#define pow_c    					    Run_Control[40]
 S#define load_v    					    Run_Control[41]
+S#define set_static_pv					Run_Control[42]
+S#define set_static_pc					Run_Control[43]
+S#define set_static_lc					Run_Control[44]
+S
+S
+S
 S
 Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
@@ -35652,6 +35844,21 @@ S#define set_71          70
 S#define set_72          71
 S#define set_73          72
 S#define set_74          73
+S#define set_75          74
+S#define set_76          75
+S#define set_77          76
+S#define set_78          77
+S#define set_79          78
+S#define set_80          79
+S#define set_81          80
+S#define set_82          81
+S#define set_83          82
+S#define set_84          83
+S#define set_85          84
+S#define set_86          85
+S#define set_87          86
+S#define set_88          87
+S#define set_89          88
 S/*
 S************************************************************************
 S*						参数设置识别符
@@ -36047,8 +36254,15 @@ Sextern u8 usartocflag;
 Sextern u8 usartshortflag;
 Sextern float oc_data;
 Sextern vu8 lock;
-Sextern vu32 Run_Control[42];	
+Sextern vu32 Run_Control[49];	
 Sextern u8 lockstat1,lockstat2;
+Sextern int16_t InFlashSave[20];
+S#define set_max_lv						InFlashSave[0]
+S#define set_min_lv						InFlashSave[1]
+S#define set_max_pc						InFlashSave[2]
+S#define set_min_pc						InFlashSave[3]
+S#define set_load_cutoffv				InFlashSave[4]
+S#define set_pow_cutoffc					InFlashSave[5]
 S
 S#define SLAVE_REG_P00		0x0000       //R_VOLU
 S#define SLAVE_REG_P01		0x0001      //Load_Voltage
@@ -36125,6 +36339,12 @@ S#define pow_v    					    Run_Control[38]
 S#define cdc_dc    					    Run_Control[39]
 S#define pow_c    					    Run_Control[40]
 S#define load_v    					    Run_Control[41]
+S#define set_static_pv					Run_Control[42]
+S#define set_static_pc					Run_Control[43]
+S#define set_static_lc					Run_Control[44]
+S
+S
+S
 S
 Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
@@ -36229,6 +36449,21 @@ S#define set_71          70
 S#define set_72          71
 S#define set_73          72
 S#define set_74          73
+S#define set_75          74
+S#define set_76          75
+S#define set_77          76
+S#define set_78          77
+S#define set_79          78
+S#define set_80          79
+S#define set_81          80
+S#define set_82          81
+S#define set_83          82
+S#define set_84          83
+S#define set_85          84
+S#define set_86          85
+S#define set_87          86
+S#define set_88          87
+S#define set_89          88
 S/*
 S************************************************************************
 S*						参数设置识别符
@@ -36593,8 +36828,15 @@ Sextern u8 usartocflag;
 Sextern u8 usartshortflag;
 Sextern float oc_data;
 Sextern vu8 lock;
-Sextern vu32 Run_Control[42];	
+Sextern vu32 Run_Control[49];	
 Sextern u8 lockstat1,lockstat2;
+Sextern int16_t InFlashSave[20];
+S#define set_max_lv						InFlashSave[0]
+S#define set_min_lv						InFlashSave[1]
+S#define set_max_pc						InFlashSave[2]
+S#define set_min_pc						InFlashSave[3]
+S#define set_load_cutoffv				InFlashSave[4]
+S#define set_pow_cutoffc					InFlashSave[5]
 S
 S#define SLAVE_REG_P00		0x0000       //R_VOLU
 S#define SLAVE_REG_P01		0x0001      //Load_Voltage
@@ -36671,6 +36913,12 @@ S#define pow_v    					    Run_Control[38]
 S#define cdc_dc    					    Run_Control[39]
 S#define pow_c    					    Run_Control[40]
 S#define load_v    					    Run_Control[41]
+S#define set_static_pv					Run_Control[42]
+S#define set_static_pc					Run_Control[43]
+S#define set_static_lc					Run_Control[44]
+S
+S
+S
 S
 Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
@@ -36775,6 +37023,21 @@ S#define set_71          70
 S#define set_72          71
 S#define set_73          72
 S#define set_74          73
+S#define set_75          74
+S#define set_76          75
+S#define set_77          76
+S#define set_78          77
+S#define set_79          78
+S#define set_80          79
+S#define set_81          80
+S#define set_82          81
+S#define set_83          82
+S#define set_84          83
+S#define set_85          84
+S#define set_86          85
+S#define set_87          86
+S#define set_88          87
+S#define set_89          88
 S/*
 S************************************************************************
 S*						参数设置识别符
@@ -40901,6 +41164,8 @@ Nextern GUI_CONST_STORAGE GUI_FONT GUI_Fontset_font;
 Xextern const GUI_FONT GUI_Fontset_font;
 Nextern GUI_CONST_STORAGE GUI_FONT GUI_Fontunit;
 Xextern const GUI_FONT GUI_Fontunit;
+Nextern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ14;
+Xextern const GUI_FONT GUI_FontHZ14;
 N
 N//
 N// Proportional fonts, framed
@@ -43037,13 +43302,13 @@ N#ifndef GUI_DEBUG_H
 N#define GUI_DEBUG_H
 N
 N#include <stddef.h>
-L 1 "D:\Keil\ARM\RV31\Inc\stddef.h" 1
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h" 1
 N/* stddef.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.1.4 */
 N
 N/* Copyright (C) ARM Ltd., 1999
 N * All rights reserved
-N * RCS $Revision: 102466 $
-N * Checkin $Date: 2006-08-23 11:37:17 +0100 (Wed, 23 Aug 2006) $
+N * RCS $Revision$
+N * Checkin $Date$
 N * Revising $Author: agrant $
 N */
 N
@@ -43059,6 +43324,7 @@ N */
 N
 N#ifndef __stddef_h
 N#define __stddef_h
+N#define __ARMCLIB_VERSION 5060037
 N
 N  #ifndef __STDDEF_DECLS
 N  #define __STDDEF_DECLS
@@ -43071,15 +43337,29 @@ N    #else
 N      #define __CLIBNS
 N    #endif  /* __cplusplus */
 N
-Ntypedef signed int ptrdiff_t;
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S  typedef signed long ptrdiff_t;
+N#else
+N  typedef signed int ptrdiff_t;
+N#endif
 N
 N#if defined(__cplusplus) || !defined(__STRICT_ANSI__)
 X#if 0L || !0L
 N /* unconditional in C++ and non-strict C for consistency of debug info */
-N  typedef unsigned int size_t;
+N  #if __sizeof_ptr == 8
+X  #if 4 == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+N  #else
+N    typedef unsigned int size_t;   /* see <stddef.h> */
+N  #endif
 N#elif !defined(__size_t)
 S  #define __size_t 1
-S  typedef unsigned int size_t;   /* others (e.g. <stdio.h>) also define */
+S  #if __sizeof_ptr == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+S  #else
+S    typedef unsigned int size_t;   /* see <stddef.h> */
+S  #endif
 S   /* the unsigned integral type of the result of the sizeof operator. */
 N#endif
 N
@@ -43087,15 +43367,15 @@ N#ifndef __cplusplus  /* wchar_t is a builtin type for C++ */
 N  #if !defined(__STRICT_ANSI__)
 X  #if !0L
 N  /* unconditional in non-strict C for consistency of debug info */
-N    #if defined(__WCHAR32)
-X    #if 0L
+N    #if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
+X    #if 0L || (0L && __ARM_SIZEOF_WCHAR_T == 4)
 S      typedef unsigned int wchar_t; /* also in <stdlib.h> and <inttypes.h> */
 N    #else
 N      typedef unsigned short wchar_t; /* also in <stdlib.h> and <inttypes.h> */
 N    #endif
 N  #elif !defined(__wchar_t)
 S    #define __wchar_t 1
-S    #if defined(__WCHAR32)
+S    #if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
 S      typedef unsigned int wchar_t; /* also in <stdlib.h> and <inttypes.h> */
 S    #else
 S      typedef unsigned short wchar_t; /* also in <stdlib.h> and <inttypes.h> */
@@ -43114,8 +43394,17 @@ N#undef NULL  /* others (e.g. <stdio.h>) also define */
 N#define NULL 0
 N   /* null pointer constant. */
 N
+N#ifdef __clang__
+S  #define offsetof(t, d) __builtin_offsetof(t, d)
+N#else
 N  /* EDG uses __INTADDR__ to avoid errors when strict */
 N  #define offsetof(t, memb) ((__CLIBNS size_t)__INTADDR__(&(((t *)0)->memb)))
+N#endif
+N
+N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 201112L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X#if !0L || (1L && 201112L <= 199409L) || (0L && 201103L <= __cplusplus)
+N  typedef long double max_align_t;
+N#endif
 N
 N    #ifdef __cplusplus
 S         }  /* extern "C" */
@@ -43128,12 +43417,16 @@ N  #ifdef __cplusplus
 S    #ifndef __STDDEF_NO_EXPORTS
 S      using ::std::size_t;
 S      using ::std::ptrdiff_t;
+S      #if !defined(__STRICT_ANSI__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+S        using ::std::max_align_t;
+S      #endif
 S    #endif 
 N  #endif /* __cplusplus */
 N
 N#endif
 N
 N/* end of stddef.h */
+N
 L 61 "..\STemWinLibrary522\inc\GUI_Debug.h" 2
 N
 N#include "GUI.h"
@@ -50761,6 +51054,46 @@ N#endif
 N
 N/*****************************(END OF FILE) *********************************/
 L 19 "..\drive\key.c" 2
+N#include "internalflash.h"
+L 1 "..\Include\internalflash.h" 1
+N#ifndef __INTERNALFLASH_H__
+N#define __INTERNALFLASH_H__
+N
+N#include "stm32f4xx.h"
+N
+N/* Base address of the Flash sectors */
+N#define ADDR_FLASH_SECTOR_0     ((uint32_t)0x08000000) /* Base @ of Sector 0, 16 Kbytes */
+N#define ADDR_FLASH_SECTOR_1     ((uint32_t)0x08004000) /* Base @ of Sector 1, 16 Kbytes */
+N#define ADDR_FLASH_SECTOR_2     ((uint32_t)0x08008000) /* Base @ of Sector 2, 16 Kbytes */
+N#define ADDR_FLASH_SECTOR_3     ((uint32_t)0x0800C000) /* Base @ of Sector 3, 16 Kbytes */
+N#define ADDR_FLASH_SECTOR_4     ((uint32_t)0x08010000) /* Base @ of Sector 4, 64 Kbytes */
+N#define ADDR_FLASH_SECTOR_5     ((uint32_t)0x08020000) /* Base @ of Sector 5, 128 Kbytes */
+N#define ADDR_FLASH_SECTOR_6     ((uint32_t)0x08040000) /* Base @ of Sector 6, 128 Kbytes */
+N#define ADDR_FLASH_SECTOR_7     ((uint32_t)0x08060000) /* Base @ of Sector 7, 128 Kbytes */
+N#define ADDR_FLASH_SECTOR_8     ((uint32_t)0x08080000) /* Base @ of Sector 8, 128 Kbytes */
+N#define ADDR_FLASH_SECTOR_9     ((uint32_t)0x080A0000) /* Base @ of Sector 9, 128 Kbytes */
+N#define ADDR_FLASH_SECTOR_10    ((uint32_t)0x080C0000) /* Base @ of Sector 10, 128 Kbytes */
+N#define ADDR_FLASH_SECTOR_11    ((uint32_t)0x080E0000) /* Base @ of Sector 11, 128 Kbytes */
+N
+N#define FLASH_USER_START_ADDR ADDR_FLASH_SECTOR_11	//用户起始地址，暂定为第十个扇区的起始地址
+N
+N//API
+Nuint16_t Flash_GetSector(uint32_t Address);
+Nvoid Flash_EraseSector(uint16_t SectorNum);
+N
+Nvoid Flash_Write32BitDatas(uint32_t address, uint16_t length, int32_t* data_32);
+Nvoid Flash_Read32BitDatas(uint32_t address, uint16_t length, int32_t* data_32);
+N
+Nvoid Flash_Write16BitDatas(uint32_t address, uint16_t length, int16_t* data_16);
+Nvoid Flash_Read16BitDatas(uint32_t address, uint16_t length, int16_t* data_16);
+N
+Nvoid Flash_Write8BitDatas(uint32_t address, uint16_t length, int8_t* data_8);
+Nvoid Flash_Read8BitDatas(uint32_t address, uint16_t length, int8_t* data_8);
+N
+N
+W "..\Include\internalflash.h" 36 7 last line of file ends without a newline
+N#endif
+L 20 "..\drive\key.c" 2
 N
 Nextern WM_HWIN CreateR(void);
 Xextern GUI_HWIN CreateR(void);
@@ -50774,6 +51107,7 @@ Nextern WM_HWIN CreateSET(void);
 Xextern GUI_HWIN CreateSET(void);
 Nextern WM_HWIN Createcal(void);
 Xextern GUI_HWIN Createcal(void);
+Nvoid setmode_r(void);
 Nextern WM_HWIN hWinWind;
 Xextern GUI_HWIN hWinWind;
 Nextern WM_HWIN hWinR;
@@ -50807,6 +51141,9 @@ Nextern vu8 manual;
 Nextern vu8 oc_mode;
 Nextern vu8 cal;
 Nextern char inputv[10];
+Nextern vu8 con_flag;
+Nextern vu8 test_finish;
+Nextern float v;
 Nvu8 t_MODE;
 Nvu8 pass = 0;
 Nvu8 LOAD_t;
@@ -50827,6 +51164,10 @@ Nvu8 lock;
 Nvu8 c_rec;
 Nvu8 calstep;
 Nvu8 oldcal;
+Nextern vu8 test_start;
+Nextern vu8 step;
+Nextern vu16 r;
+Nextern vu8 staticcdc;
 N
 N//=================================================================
 Nextern struct bitDefine
@@ -51070,7 +51411,7 @@ N                            if(admin == 1)
 N                            {
 N                                INPUT_INFO(1);    
 N                            }else if(cal == 1){
-W "..\drive\key.c" 285 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 294 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(1);
 N                            }else{
 N                                pass += 1;
@@ -51085,7 +51426,7 @@ N                        {
 N                            if(calmode == mode_load)
 X                            if(calmode == 2)
 N                            {
-W "..\drive\key.c" 297 33 function "LoadVCal" declared implicitly
+W "..\drive\key.c" 306 33 function "LoadVCal" declared implicitly
 N                                LoadVCal(1);
 N                            }else if(calmode == mode_pow){
 X                            }else if(calmode == 3){
@@ -51101,7 +51442,7 @@ X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x4
 N                                calstep = 1;
 N                            }else if(calmode == mode_r ){
 X                            }else if(calmode == 1 ){
-W "..\drive\key.c" 306 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 315 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(1);
 N                            }else if(calmode == mode_loadc){
 X                            }else if(calmode == 4){
@@ -51129,7 +51470,7 @@ X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x4
 N                                calstep = 1;
 N                            }else if(calmode == input){
 X                            }else if(calmode == 6){
-W "..\drive\key.c" 322 33 function "inputcal" declared implicitly
+W "..\drive\key.c" 331 33 function "inputcal" declared implicitly
 N                                inputcal("1");
 N                            }
 N                            KeyCounter = 0;
@@ -51195,7 +51536,7 @@ N                            if(admin == 1)
 N                            {
 N                                INPUT_INFO(2);    
 N                            }else if(cal == 1){
-W "..\drive\key.c" 379 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 388 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(2);
 N                            }else{
 N                                pass += 2;
@@ -51210,7 +51551,7 @@ N                        {
 N                            if(calmode == mode_load)
 X                            if(calmode == 2)
 N                            {
-W "..\drive\key.c" 391 33 function "LoadVCal" declared implicitly
+W "..\drive\key.c" 400 33 function "LoadVCal" declared implicitly
 N                                LoadVCal(2);
 N                            }else if(calmode == mode_pow){
 X                            }else if(calmode == 3){
@@ -51226,7 +51567,7 @@ X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x4
 N                                calstep = 2;
 N                            }else if(calmode == mode_r ){
 X                            }else if(calmode == 1 ){
-W "..\drive\key.c" 400 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 409 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(2);
 N                            }else if(calmode == mode_loadc){
 X                            }else if(calmode == 4){
@@ -51254,7 +51595,7 @@ X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x4
 N                                calstep = 2;
 N                            }else if(calmode == input){
 X                            }else if(calmode == 6){
-W "..\drive\key.c" 416 33 function "inputcal" declared implicitly
+W "..\drive\key.c" 425 33 function "inputcal" declared implicitly
 N                                inputcal("2");
 N                            }
 N                            KeyCounter = 0;
@@ -51321,7 +51662,7 @@ N                            if(admin == 1)
 N                            {
 N                                INPUT_INFO(3);    
 N                            }else if(cal == 1){
-W "..\drive\key.c" 474 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 483 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(3);
 N                            }else{
 N                                pass += 3;
@@ -51336,7 +51677,7 @@ N                        {
 N                            if(calmode == mode_load)
 X                            if(calmode == 2)
 N                            {
-W "..\drive\key.c" 486 33 function "LoadVCal" declared implicitly
+W "..\drive\key.c" 495 33 function "LoadVCal" declared implicitly
 N                                LoadVCal(3);
 N                            }else if(calmode == mode_pow){
 X                            }else if(calmode == 3){
@@ -51352,11 +51693,11 @@ X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x4
 N                                calstep = 3;
 N                            }else if(calmode == mode_r ){
 X                            }else if(calmode == 1 ){
-W "..\drive\key.c" 495 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 504 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(3);
 N                            }else if(calmode == input){
 X                            }else if(calmode == 6){
-W "..\drive\key.c" 497 33 function "inputcal" declared implicitly
+W "..\drive\key.c" 506 33 function "inputcal" declared implicitly
 N                                inputcal("3");
 N                            }
 N                            KeyCounter = 0;
@@ -51420,7 +51761,7 @@ N                            if(admin == 1)
 N                            {
 N                                INPUT_INFO(4);    
 N                            }else if(cal == 1){
-W "..\drive\key.c" 552 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 561 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(4);
 N                            }else{
 N                                pass += 4;
@@ -51435,7 +51776,7 @@ N                        {
 N                            if(calmode == mode_load)
 X                            if(calmode == 2)
 N                            {
-W "..\drive\key.c" 564 33 function "LoadVCal" declared implicitly
+W "..\drive\key.c" 573 33 function "LoadVCal" declared implicitly
 N                                LoadVCal(4);
 N                            }else if(calmode == mode_pow){
 X                            }else if(calmode == 3){
@@ -51451,11 +51792,11 @@ X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x4
 N                                calstep = 4;
 N                            }else if(calmode == mode_r ){
 X                            }else if(calmode == 1 ){
-W "..\drive\key.c" 573 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 582 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(4);
 N                            }else if(calmode == input){
 X                            }else if(calmode == 6){
-W "..\drive\key.c" 575 33 function "inputcal" declared implicitly
+W "..\drive\key.c" 584 33 function "inputcal" declared implicitly
 N                                inputcal("4");
 N                            }
 N                            KeyCounter = 0;
@@ -51519,7 +51860,7 @@ N                            if(admin == 1)
 N                            {
 N                                INPUT_INFO(5);    
 N                            }else if(cal == 1){
-W "..\drive\key.c" 630 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 639 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(5);
 N                            }else{
 N                                pass += 5;
@@ -51534,7 +51875,7 @@ N                        {
 N                            if(calmode == mode_load)
 X                            if(calmode == 2)
 N                            {
-W "..\drive\key.c" 642 33 function "LoadVCal" declared implicitly
+W "..\drive\key.c" 651 33 function "LoadVCal" declared implicitly
 N                                LoadVCal(5);
 N                            }else if(calmode == mode_pow){
 X                            }else if(calmode == 3){
@@ -51550,11 +51891,11 @@ X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x4
 N                                calstep = 5;
 N                            }else if(calmode == mode_r ){
 X                            }else if(calmode == 1 ){
-W "..\drive\key.c" 651 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 660 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(5);
 N                            }else if(calmode == input){
 X                            }else if(calmode == 6){
-W "..\drive\key.c" 653 33 function "inputcal" declared implicitly
+W "..\drive\key.c" 662 33 function "inputcal" declared implicitly
 N                                inputcal("5");
 N                            }
 N                            KeyCounter = 0;
@@ -51618,7 +51959,7 @@ N                            if(admin == 1)
 N                            {
 N                                INPUT_INFO(6);    
 N                            }else if(cal == 1){
-W "..\drive\key.c" 708 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 717 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(6);
 N                            }
 N                            KeyCounter = 0;
@@ -51631,7 +51972,7 @@ N                        {
 N                            if(calmode == mode_load)
 X                            if(calmode == 2)
 N                            {
-W "..\drive\key.c" 718 33 function "LoadVCal" declared implicitly
+W "..\drive\key.c" 727 33 function "LoadVCal" declared implicitly
 N                                LoadVCal(6);
 N                            }else if(calmode == mode_pow){
 X                            }else if(calmode == 3){
@@ -51647,11 +51988,11 @@ X                                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x4
 N                                calstep = 6;
 N                            }else if(calmode == mode_r ){
 X                            }else if(calmode == 1 ){
-W "..\drive\key.c" 727 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 736 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(6);
 N                            }else if(calmode == input){
 X                            }else if(calmode == 6){
-W "..\drive\key.c" 729 33 function "inputcal" declared implicitly
+W "..\drive\key.c" 738 33 function "inputcal" declared implicitly
 N                                inputcal("6");
 N                            }
 N                            KeyCounter = 0;
@@ -51725,18 +52066,18 @@ N                        {
 N                            if(calmode == mode_load)
 X                            if(calmode == 2)
 N                            {
-W "..\drive\key.c" 792 33 function "LoadVCal" declared implicitly
+W "..\drive\key.c" 801 33 function "LoadVCal" declared implicitly
 N                                LoadVCal(7);
 N                            }else if(calmode == mode_pow){
 X                            }else if(calmode == 3){
 N                                
 N                            }else if(calmode == mode_r ){
 X                            }else if(calmode == 1 ){
-W "..\drive\key.c" 796 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 805 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(7);
 N                            }else if(calmode == input){
 X                            }else if(calmode == 6){
-W "..\drive\key.c" 798 33 function "inputcal" declared implicitly
+W "..\drive\key.c" 807 33 function "inputcal" declared implicitly
 N                                inputcal("7");
 N                            }
 N                            KeyCounter = 0;
@@ -51810,18 +52151,18 @@ N                        {
 N                            if(calmode == mode_load)
 X                            if(calmode == 2)
 N                            {
-W "..\drive\key.c" 861 33 function "LoadVCal" declared implicitly
+W "..\drive\key.c" 870 33 function "LoadVCal" declared implicitly
 N                                LoadVCal(8);
 N                            }else if(calmode == mode_pow){
 X                            }else if(calmode == 3){
 N                                
 N                            }else if(calmode == mode_r ){
 X                            }else if(calmode == 1 ){
-W "..\drive\key.c" 865 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 874 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(8);
 N                            }else if(calmode == input){
 X                            }else if(calmode == 6){
-W "..\drive\key.c" 867 33 function "inputcal" declared implicitly
+W "..\drive\key.c" 876 33 function "inputcal" declared implicitly
 N                                inputcal("8");
 N                            }
 N                            KeyCounter = 0;
@@ -51895,18 +52236,18 @@ N                        {
 N                            if(calmode == mode_load)
 X                            if(calmode == 2)
 N                            {
-W "..\drive\key.c" 930 33 function "LoadVCal" declared implicitly
+W "..\drive\key.c" 939 33 function "LoadVCal" declared implicitly
 N                                LoadVCal(9);
 N                            }else if(calmode == mode_pow){
 X                            }else if(calmode == 3){
 N                                
 N                            }else if(calmode == mode_r ){
 X                            }else if(calmode == 1 ){
-W "..\drive\key.c" 934 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 943 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(9);
 N                            }else if(calmode == input){
 X                            }else if(calmode == 6){
-W "..\drive\key.c" 936 33 function "inputcal" declared implicitly
+W "..\drive\key.c" 945 33 function "inputcal" declared implicitly
 N                                inputcal("9");
 N                            }
 N                            KeyCounter = 0;
@@ -51982,18 +52323,18 @@ N                        {
 N                            if(calmode == mode_load)
 X                            if(calmode == 2)
 N                            {
-W "..\drive\key.c" 1001 33 function "LoadVCal" declared implicitly
+W "..\drive\key.c" 1010 33 function "LoadVCal" declared implicitly
 N                                LoadVCal(0);
 N                            }else if(calmode == mode_pow){
 X                            }else if(calmode == 3){
 N                                
 N                            }else if(calmode == mode_r ){
 X                            }else if(calmode == 1 ){
-W "..\drive\key.c" 1005 33 function "Rlow_cal" declared implicitly
+W "..\drive\key.c" 1014 33 function "Rlow_cal" declared implicitly
 N                                Rlow_cal(0);
 N                            }else if(calmode == input){
 X                            }else if(calmode == 6){
-W "..\drive\key.c" 1007 33 function "inputcal" declared implicitly
+W "..\drive\key.c" 1016 33 function "inputcal" declared implicitly
 N                                inputcal("0");
 N                            }
 N                            KeyCounter = 0;
@@ -52058,7 +52399,9 @@ N
 N                case KEY_ESC :
 X                case 0X6D :
 N                {
-N                  sLCD_WR_REG(0x01);
+N					Flash_Read16BitDatas(FLASH_USER_START_ADDR,20,InFlashSave);
+X					Flash_Read16BitDatas(((uint32_t)0x080E0000),20,InFlashSave);
+N//                  sLCD_WR_REG(0x01);
 N    //                main();
 N    //				timer_sw = 0;
 N                    KeyCounter = 0;
@@ -52165,7 +52508,7 @@ X                        case 2:
 N                        {
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
-W "..\drive\key.c" 1160 29 function "MENU_OP_UP" declared implicitly
+W "..\drive\key.c" 1170 29 function "MENU_OP_UP" declared implicitly
 N                            MENU_OP_UP();
 N                            break;
 N                        }                    
@@ -52174,7 +52517,7 @@ X                        case 4:
 N                        {
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
-W "..\drive\key.c" 1167 29 function "LOAD_OP_UP" declared implicitly
+W "..\drive\key.c" 1177 29 function "LOAD_OP_UP" declared implicitly
 N                            LOAD_OP_UP();
 N                            break;
 N                        }
@@ -52189,10 +52532,10 @@ N                        }
 N                        case face_r:
 X                        case 3:
 N                        {
-N                            if(para_set2 == set_2_on && oc_mode ==0)
-X                            if(para_set2 == 0xff && oc_mode ==0)
+N                            if(para_set2 == set_2_on/* && oc_mode ==0*/)
+X                            if(para_set2 == 0xff )
 N                            {
-W "..\drive\key.c" 1181 33 function "OC_OP_UP" declared implicitly
+W "..\drive\key.c" 1191 33 function "OC_OP_UP" declared implicitly
 N                                OC_OP_UP();
 N                                KeyCounter = 0;
 N                                BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
@@ -52233,7 +52576,7 @@ X                        case 2:
 N                        {
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
-W "..\drive\key.c" 1217 29 function "MENU_OP_DOWN" declared implicitly
+W "..\drive\key.c" 1227 29 function "MENU_OP_DOWN" declared implicitly
 N                            MENU_OP_DOWN();
 N                            break;
 N                        }  
@@ -52242,7 +52585,7 @@ X                        case 4:
 N                        {
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
-W "..\drive\key.c" 1224 29 function "LOAD_OP_DOWN" declared implicitly
+W "..\drive\key.c" 1234 29 function "LOAD_OP_DOWN" declared implicitly
 N                            LOAD_OP_DOWN();
 N                            break;
 N                        }
@@ -52257,10 +52600,10 @@ N                        }
 N                        case face_r:
 X                        case 3:
 N                        {
-N                            if(para_set2 == set_2_on && oc_mode ==0)
-X                            if(para_set2 == 0xff && oc_mode ==0)
+N                            if(para_set2 == set_2_on/* && oc_mode ==0*/)
+X                            if(para_set2 == 0xff )
 N                            {
-W "..\drive\key.c" 1238 33 function "OC_OP_DOWN" declared implicitly
+W "..\drive\key.c" 1248 33 function "OC_OP_DOWN" declared implicitly
 N                                OC_OP_DOWN();
 N                                KeyCounter = 0;
 N                                BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
@@ -52314,7 +52657,7 @@ N                    switch(page_sw){
 N                        case face_menu:
 X                        case 2:
 N                        {
-W "..\drive\key.c" 1284 29 function "MENU_SET" declared implicitly
+W "..\drive\key.c" 1294 29 function "MENU_SET" declared implicitly
 N                            MENU_SET();
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
@@ -52334,7 +52677,7 @@ N                        {
 N                            if(para_set2 == set_2_on)
 X                            if(para_set2 == 0xff)
 N                            {
-W "..\drive\key.c" 1300 33 function "OC_SET" declared implicitly
+W "..\drive\key.c" 1310 33 function "OC_SET" declared implicitly
 N                                OC_SET();
 N                                KeyCounter = 0;
 N                                BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
@@ -52344,7 +52687,7 @@ N                        }
 N                        case face_load:
 X                        case 4:
 N                        {
-W "..\drive\key.c" 1308 29 function "LOAD_SET" declared implicitly
+W "..\drive\key.c" 1318 29 function "LOAD_SET" declared implicitly
 N                            LOAD_SET();
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
@@ -52361,7 +52704,7 @@ N                        }
 N                        case face_sys_info:
 X                        case 7:
 N                        {
-W "..\drive\key.c" 1322 29 function "CFM_PASS" declared implicitly
+W "..\drive\key.c" 1332 29 function "CFM_PASS" declared implicitly
 N                            CFM_PASS();
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
@@ -52385,7 +52728,7 @@ N                                    r_raly = 1;
 N                                }
 N                            }else if(calmode == input){
 X                            }else if(calmode == 6){
-W "..\drive\key.c" 1340 33 function "confirmcal" declared implicitly
+W "..\drive\key.c" 1350 33 function "confirmcal" declared implicitly
 N                                confirmcal();
 N                            }
 N                            KeyCounter = 0;
@@ -52469,7 +52812,7 @@ N                            WM_DeleteWindow(load_wind);
 N                            WM_DeleteWindow(hWinsysinfo);
 N                            WM_DeleteWindow(hWincdc);
 N                            WM_DeleteWindow(hWinset);
-W "..\drive\key.c" 1417 29 function "CreateCDC" declared implicitly
+W "..\drive\key.c" 1427 29 function "CreateCDC" declared implicitly
 N                            CreateCDC();
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//瑙﹀彂铚傞福鍣?
@@ -52519,35 +52862,26 @@ N                    {
 N                        case face_r:
 X                        case 3:
 N                        {
-N    //                         if(para_set2 == set_2_on)
-N    //                         {
-N    // //                            static vu8 LOAD_t;
-N    //                             Mode_SW_CONT(0x02);
-N    //                             LOAD_t++;
-N    //                             if(LOAD_t>1)
-N    //                             {
-N    //                                 LOAD_t=0;
-N    //                             }
-N    //                             if(LOAD_t==0)
-N    //                             {
-N    //                                 oct_sw = oct_off;
-N    //                                 set_add_c = 0;
-N    //                                 Flag_Swtich_ON=0;
-N    //                                 GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
-N    //                                  
-N    //                             }
-N    //                             else if(LOAD_t==1)
-N    //                             {
-N    //                                 oct_sw = oct_on;
-N    //                                 Flag_Swtich_ON=1;
-N    //                                 GPIO_ResetBits(GPIOC,GPIO_Pin_1);//On
-N    //                             }
-N    //                          }
-N                             if(r_test == 0 && DISS_Voltage > gate_v)
-N                             {
-N                                r_test = 1;
-N                             }else{
-N                                 r_test = 0;
+N                             if(test_start == 0 && DISS_Voltage > gate_v)
+N                             {								 
+N                                test_start = 1;
+N								r = R_VLUE;
+X								r = Run_Control[13];
+N								v = DISS_Voltage;
+N								if(staticcdc == 1)
+N								{
+N									step = 1;
+N								}else{
+N									step = 4;
+N									SET_Current_Laod = set_init_c;
+X									Run_Control[4] = Run_Control[22];
+N									GPIO_ResetBits(GPIOA,GPIO_Pin_15);
+X									GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N								}
+N                             }else if(test_start == 1){
+N                                test_start = 0;
+N								step = 0;
+N								con_flag = 0;
 N                             }
 N                             KeyCounter = 0;
 N                             BEEP_Tiggr();//触发蜂鸣器
@@ -52675,42 +53009,42 @@ X                            if(calmode == 3)
 N                            {
 N                                if(calstep == 1)
 N                                {
-W "..\drive\key.c" 1584 37 function "PowVCal" declared implicitly
+W "..\drive\key.c" 1582 37 function "PowVCal" declared implicitly
 N                                    PowVCal(1);
 N                                }else if(calstep == 2){
-W "..\drive\key.c" 1586 37 function "PowVCal" declared implicitly
+W "..\drive\key.c" 1584 37 function "PowVCal" declared implicitly
 N                                    PowVCal(2);
 N                                }else if(calstep == 3){
-W "..\drive\key.c" 1588 37 function "PowVCal" declared implicitly
+W "..\drive\key.c" 1586 37 function "PowVCal" declared implicitly
 N                                    PowVCal(3);
 N                                }else if(calstep == 4){
-W "..\drive\key.c" 1590 37 function "PowVCal" declared implicitly
+W "..\drive\key.c" 1588 37 function "PowVCal" declared implicitly
 N                                    PowVCal(4);
 N                                }else if(calstep == 5){
-W "..\drive\key.c" 1592 37 function "PowVCal" declared implicitly
+W "..\drive\key.c" 1590 37 function "PowVCal" declared implicitly
 N                                    PowVCal(5);
 N                                }else if(calstep == 6){
-W "..\drive\key.c" 1594 37 function "PowVCal" declared implicitly
+W "..\drive\key.c" 1592 37 function "PowVCal" declared implicitly
 N                                    PowVCal(6);
 N                                }
 N                            }else if(calmode == mode_loadc){
 X                            }else if(calmode == 4){
 N                                if(calstep == 1)
 N                                {
-W "..\drive\key.c" 1599 37 function "LoadCCal" declared implicitly
+W "..\drive\key.c" 1597 37 function "LoadCCal" declared implicitly
 N                                    LoadCCal(1);
 N                                }else if(calstep == 2){
-W "..\drive\key.c" 1601 37 function "LoadCCal" declared implicitly
+W "..\drive\key.c" 1599 37 function "LoadCCal" declared implicitly
 N                                    LoadCCal(2);
 N                                }
 N                            }else if(calmode == mode_powc){
 X                            }else if(calmode == 5){
 N                                if(calstep == 1)
 N                                {
-W "..\drive\key.c" 1606 37 function "PowCCal" declared implicitly
+W "..\drive\key.c" 1604 37 function "PowCCal" declared implicitly
 N                                    PowCCal(1);
 N                                }else if(calstep == 2){
-W "..\drive\key.c" 1608 37 function "PowCCal" declared implicitly
+W "..\drive\key.c" 1606 37 function "PowCCal" declared implicitly
 N                                    PowCCal(2);
 N                                }
 N                            }
@@ -52870,7 +53204,7 @@ N                    WM_DeleteWindow(load_wind);
 N                    WM_DeleteWindow(hWinsysinfo);
 N                    WM_DeleteWindow(hWincdc);
 N                    WM_DeleteWindow(hWinset);
-W "..\drive\key.c" 1739 21 function "CreateCDC" declared implicitly
+W "..\drive\key.c" 1737 21 function "CreateCDC" declared implicitly
 N                    CreateCDC(); 
 N                    KeyCounter = 0;
 N                    BEEP_Tiggr();//
@@ -52901,7 +53235,7 @@ N                    WM_DeleteWindow(load_wind);
 N                    WM_DeleteWindow(hWinsysinfo);
 N                    WM_DeleteWindow(hWincdc);
 N                    WM_DeleteWindow(hWinset);
-W "..\drive\key.c" 1767 21 function "Createsysinfo" declared implicitly
+W "..\drive\key.c" 1765 21 function "Createsysinfo" declared implicitly
 N                    Createsysinfo();
 N                    KeyCounter = 0;
 N                    BEEP_Tiggr();//瑙﹀彂铚傞福鍣?

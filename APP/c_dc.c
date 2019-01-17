@@ -1081,18 +1081,24 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 */
 WM_HWIN CreateCDC(void);
 WM_HWIN CreateCDC(void) {
+  
+  if(page_sw == face_graph)
+  {  
+	  
+  }else{
+	  SET_Voltage = opv1;
+	  SET_Current = opc1;
+	  SET_Current_Laod = cdc_dc;
+	  track = face_cdc;
+	  TM1650_SET_LED(0x68,0x70);
+	  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//İֆ+
+	  IO_OFF();//ȍ
+	  GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+	  flag_Load_CC = 1;
+  }
   page_sw = face_cdc;
   set_sw = set_26;
   pass = 0;
-  SET_Voltage = opv1;
-  SET_Current = opc1;
-  SET_Current_Laod = cdc_dc;
-  track = face_cdc;
-  TM1650_SET_LED(0x68,0x70);
-  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//İֆ+
-  IO_OFF();//�
-  GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
-  flag_Load_CC = 1;
 //  double_sw = face_cdc;
   hWincdc = GUI_CreateDialogBox(_aDialogCreate4, GUI_COUNTOF(_aDialogCreate4), _cbDialog, WM_HBKWIN, 0, 0);
   return hWincdc;

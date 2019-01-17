@@ -37,7 +37,7 @@ vu32 Correct_Parametet[21];//校准参数
 vu32 Correct_Strong[21];//校准系数
 vu8  correct_por[6];
 /*************************变量定义***********************************/
-vu32 Run_Control[42];
+vu32 Run_Control[49];
 vu8 ADDR;
 extern struct MODS_T g_tModS;
 //============================函数声明===============================//
@@ -758,7 +758,7 @@ void Transformation_ADC(void)
     {
         var32 = Vmon1_value;
     }else if(r_raly == 0){
-        var32 = Vmon1_value + 85;
+        var32 = Vmon1_value - 5;
     }
 	var32 = var32 * REG_CorrectionV;  
 	if ((Polar & 0x01) == 0x01)		  
@@ -806,7 +806,7 @@ void Transformation_ADC(void)
         {
             var32 = Vmon1_value;
         }else if(r_raly == 0){
-            var32 = Vmon1_value + 85;
+            var32 = Vmon1_value - 5;
         }
         var32 = var32 * REG_CorrectionV1;  
         if ((Polar & 0x01) == 0x01)		  
@@ -830,7 +830,7 @@ void Transformation_ADC(void)
         {
             var32 = Vmon1_value;
         }else if(r_raly == 0){
-            var32 = Vmon1_value + 85;
+            var32 = Vmon1_value - 5;
         }
         var32 = var32 * REG_CorrectionV2;  
         if ((Polar & 0x01) == 0x01)		  

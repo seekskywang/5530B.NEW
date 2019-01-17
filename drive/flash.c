@@ -29,6 +29,8 @@ extern vu8 code7;
 extern vu8 code8;
 extern vu8 oc_mode;
 extern vu8 load_mode;
+extern vu8 staticcdc;
+extern vu16 dis_gate_v;
 
 //================================================================//
 extern struct bitDefine
@@ -718,6 +720,7 @@ void EEPROM_READ_Coeff(void)
     load_mode = EEPROM_READ_Byte(0x8C);
     steptime = EEPROM_READ_Byte(0x8D);
     oc_mode = EEPROM_READ_Byte(0xB3);
+	staticcdc = EEPROM_READ_Byte(0xF6);
     
     set_max_v=EEPROM_READ_Byte(0x62);
 	set_max_v=set_max_v<<8;
@@ -766,7 +769,22 @@ void EEPROM_READ_Coeff(void)
     set_sbs_c=EEPROM_READ_Byte(0x76);
 	set_sbs_c=set_sbs_c<<8;
 	set_sbs_c=set_sbs_c+EEPROM_READ_Byte(0x77);
+	
+	set_static_pv=EEPROM_READ_Byte(0xF0);
+	set_static_pv=set_static_pv<<8;
+	set_static_pv=set_static_pv+EEPROM_READ_Byte(0xF1);
+	
+	set_static_pc=EEPROM_READ_Byte(0xF2);
+	set_static_pc=set_static_pc<<8;
+	set_static_pc=set_static_pc+EEPROM_READ_Byte(0xF3);
     
+	set_static_lc=EEPROM_READ_Byte(0xF4);
+	set_static_lc=set_static_lc<<8;
+	set_static_lc=set_static_lc+EEPROM_READ_Byte(0xF5);
+	
+	dis_gate_v=EEPROM_READ_Byte(0xF7);
+	dis_gate_v=dis_gate_v<<8;
+	dis_gate_v=dis_gate_v+EEPROM_READ_Byte(0xF8);
     
     
     opv1=EEPROM_READ_Byte(0x8E);
@@ -959,6 +977,24 @@ void Write_Limits(void)
     data_8bit = load_v >> 8;
 	EEPROM_WriteByte(0xB5, data_8bit);
 	EEPROM_WriteByte(0xB6, load_v);
+	
+	data_8bit = set_static_pv >> 8;
+	EEPROM_WriteByte(0xF0, data_8bit);
+	EEPROM_WriteByte(0xF1, set_static_pv);
+	
+	data_8bit = set_static_pc >> 8;
+	EEPROM_WriteByte(0xF2, data_8bit);
+	EEPROM_WriteByte(0xF3, set_static_pc);
+	
+	data_8bit = set_static_lc >> 8;
+	EEPROM_WriteByte(0xF4, data_8bit);
+	EEPROM_WriteByte(0xF5, set_static_lc);
+	
+	EEPROM_WriteByte(0xF6, staticcdc);
+	
+	data_8bit = dis_gate_v >> 8;
+	EEPROM_WriteByte(0xF7, data_8bit);
+	EEPROM_WriteByte(0xF8, dis_gate_v);
 }
 
 void Write_btype(void)

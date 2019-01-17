@@ -4004,6 +4004,8 @@ Nextern GUI_CONST_STORAGE GUI_FONT GUI_Fontset_font;
 Xextern const GUI_FONT GUI_Fontset_font;
 Nextern GUI_CONST_STORAGE GUI_FONT GUI_Fontunit;
 Xextern const GUI_FONT GUI_Fontunit;
+Nextern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ14;
+Xextern const GUI_FONT GUI_FontHZ14;
 N
 N//
 N// Proportional fonts, framed

@@ -62,6 +62,12 @@ extern vu8 short_finish;
 extern vu8 short_flag;
 extern float v;
 extern vu8 oc_mode;
+extern vu8 test_start;
+extern float static_pc;
+extern float static_lv;
+extern vu8 staticcdc;
+extern vu8 step;
+extern vu16 sendload;
 //????? 3 ?????
 //arrú?????c pscú??????
 //???????????:Tout=((arr+1)*(psc+1))/Ft us.
@@ -103,6 +109,7 @@ void TIM4_IRQHandler(void)
     u8 sendlen;
     static u16 recrc;
     static u16 scrc;
+	static vu8 staticloadflag,staticpowflag;
     u8 i;
 //     static float crec1,crec2;
     
@@ -142,78 +149,114 @@ void TIM4_IRQHandler(void)
                  }                
              }
          }
-         
-        if(page_sw == face_r)
-        {
-            if(oct_sw == oct_on)
-            {
-                OC_CHECK();
-                if(oct_sw == oct_on)
-                {
-                    stepcount ++;
-                    if(stepcount == steptime*10)
-                    {
-                        OC_ADD();
-                        stepcount = 0;
-                    }
-                }
-            }
-            if(rpow == 1)
-            {
-                if(powcount < 1000)
-                {
-                    SET_Voltage =3000;
-                    SET_Current = 1000;
-                    GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
-                    GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
-                    GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
-                    powcount++;
-                }else{
-                    powcount = 0;
-                    rpow = 0;
-                    short_flag = 1;
-                    IO_OFF();
-                }                    
-            }
-            if(short_flag == 1)
-            {
-                if(oc_mode == 0)
-                {
-                    SET_Current_Laod = (int)(oc_data*1000)+8000;
-                    flag_Load_CC = 1;
-                    GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
-                    GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
-                } else if(oc_mode == 1){
-                    GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV
-                    flag_Load_CC = 0;
-                    GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
-                }
-                if((v - DISS_Voltage) > v*0.6)
-                {
-                    GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
-                    short_flag = 0;
-                    short_finish = 1;
-                    SET_Current_Laod = set_init_c;
-                }else{
-                    short_time++;                
-                }
-            }
-            
-        }
-//         if(page_sw == face_load)
-//         {
-//             if(c_rec == 1)
-//             {
-//                 crec2 = crec1;
-//                 crec1 = DISS_Current;
-//                 if(crec2 > crec1)
-//                 {
-//                     watch = crec2;
-//                     c_rec = 0;
-//                     crec2 = crec1 = 0;
-//                 }
-//             }
-//         }
+         if(page_sw == face_r)
+		 {
+			 if(step == 1)
+			 {
+				if(powcount < 6000)
+				{
+					SET_Current_Laod = set_static_lc;
+					flag_Load_CC = 1;
+					GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+					GPIO_ResetBits(GPIOA,GPIO_Pin_15);//支負睾諛On
+					static_lv = DISS_Voltage;
+					powcount++;																		
+				}else{
+					powcount = 0;
+					step = 2;
+					IO_OFF();
+				}
+			 }else if(step == 2){
+				if(powcount < 10000)
+				{
+					SET_Voltage = set_static_pv;
+					SET_Current = set_static_pc;
+					GPIO_SetBits(GPIOA,GPIO_Pin_15);//支負睾諛OFF
+					GPIO_ResetBits(GPIOC,GPIO_Pin_13);//詹擢支源摔远輰支欠
+					GPIO_SetBits(GPIOC,GPIO_Pin_1);//詹擢支源摔远
+					powcount++;
+					static_pc = DISS_POW_Current;
+				}else{
+					step = 3;
+					powcount = 0;
+					IO_OFF();			
+				}
+			 }else if(step == 3){
+				if(powcount < 5000)
+				{
+					powcount++;
+				}else{
+					step = 4;
+					powcount = 0;	
+					sendload = 200;				
+					SET_Current_Laod = set_init_c;
+					GPIO_ResetBits(GPIOA,GPIO_Pin_15);//鎵撳紑璐熻浇
+				}
+			 }else if(step == 4){
+				OC_CHECK();
+				stepcount ++;
+				if(stepcount == steptime*10)
+				{
+					OC_ADD();
+					stepcount = 0;
+				}
+			 }else if(step == 5){
+				if(powcount < 1000)
+				{
+					SET_Voltage = 3000;
+					SET_Current = 1000;
+					GPIO_SetBits(GPIOA,GPIO_Pin_15);//支負睾諛OFF
+					GPIO_ResetBits(GPIOC,GPIO_Pin_13);//詹擢支源摔远輰支欠
+					GPIO_SetBits(GPIOC,GPIO_Pin_1);//詹擢支源摔远
+					powcount++;
+				}else{
+					step = 6;
+					powcount = 0;
+					IO_OFF();
+				}
+			 }else if(step == 6){
+				if(flag_Load_CC == 1)
+				{
+					SET_Current_Laod = (int)(oc_data*1000)+8000; 
+					GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+					flag_Load_CC = 1;                              
+					GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+					GPIO_ResetBits(GPIOA,GPIO_Pin_15);//支負睾諛On
+				}else if(flag_Load_CC == 0){
+					SET_Voltage_Laod = 0;
+					GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV
+					flag_Load_CC = 0;
+					GPIO_ResetBits(GPIOA,GPIO_Pin_15);//支負睾諛On
+				}
+				if(((v - DISS_Voltage) > v*0.6) || (DISS_Current < 0.05))
+				{
+					IO_OFF();
+					step = 7;
+				}else{
+					short_time++;                
+				}
+			 }else if(step == 7){
+				 if(powcount < 4000)
+				{
+					SET_Voltage =3000;
+					SET_Current = 1000;
+					GPIO_ResetBits(GPIOC,GPIO_Pin_13);//詹擢支源摔远輰支欠
+					GPIO_SetBits(GPIOC,GPIO_Pin_1);//詹擢支源摔远
+					powcount++;
+	//                 shortv = DISS_Voltage;
+				}else{
+					powcount = 0;
+					step = 0;
+					IO_OFF();                
+				}
+			 }else if(step == 0)
+			 {
+				 powcount = 0;
+				 IO_OFF();
+			 }
+		}
+        
+		
         if(usartocflag == 1)
         {
 
@@ -291,7 +334,7 @@ void TIM4_IRQHandler(void)
                 flag_Load_CC = 0;
                 GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
             }
-            if((shortv - DISS_Voltage) > shortv*0.6)
+            if(((shortv - DISS_Voltage) > shortv*0.6) || (DISS_Current < 0.05))
             {
                 IO_OFF();
                 usartshortflag = 0;               

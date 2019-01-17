@@ -1713,6 +1713,7 @@ extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ32;
 extern GUI_CONST_STORAGE GUI_FONT GUI_Fontsymbol;
 extern GUI_CONST_STORAGE GUI_FONT GUI_Fontset_font;
 extern GUI_CONST_STORAGE GUI_FONT GUI_Fontunit;
+extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ14;
 
 //
 // Proportional fonts, framed

@@ -4017,6 +4017,8 @@ Nextern GUI_CONST_STORAGE GUI_FONT GUI_Fontset_font;
 Xextern const GUI_FONT GUI_Fontset_font;
 Nextern GUI_CONST_STORAGE GUI_FONT GUI_Fontunit;
 Xextern const GUI_FONT GUI_Fontunit;
+Nextern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ14;
+Xextern const GUI_FONT GUI_FontHZ14;
 N
 N//
 N// Proportional fonts, framed
@@ -6119,13 +6121,13 @@ N#ifndef GUI_DEBUG_H
 N#define GUI_DEBUG_H
 N
 N#include <stddef.h>
-L 1 "D:\Keil\ARM\RV31\Inc\stddef.h" 1
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h" 1
 N/* stddef.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.1.4 */
 N
 N/* Copyright (C) ARM Ltd., 1999
 N * All rights reserved
-N * RCS $Revision: 102466 $
-N * Checkin $Date: 2006-08-23 11:37:17 +0100 (Wed, 23 Aug 2006) $
+N * RCS $Revision$
+N * Checkin $Date$
 N * Revising $Author: agrant $
 N */
 N
@@ -6141,6 +6143,7 @@ N */
 N
 N#ifndef __stddef_h
 N#define __stddef_h
+N#define __ARMCLIB_VERSION 5060037
 N
 N  #ifndef __STDDEF_DECLS
 N  #define __STDDEF_DECLS
@@ -6153,15 +6156,29 @@ N    #else
 N      #define __CLIBNS
 N    #endif  /* __cplusplus */
 N
-Ntypedef signed int ptrdiff_t;
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S  typedef signed long ptrdiff_t;
+N#else
+N  typedef signed int ptrdiff_t;
+N#endif
 N
 N#if defined(__cplusplus) || !defined(__STRICT_ANSI__)
 X#if 0L || !0L
 N /* unconditional in C++ and non-strict C for consistency of debug info */
-N  typedef unsigned int size_t;
+N  #if __sizeof_ptr == 8
+X  #if 4 == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+N  #else
+N    typedef unsigned int size_t;   /* see <stddef.h> */
+N  #endif
 N#elif !defined(__size_t)
 S  #define __size_t 1
-S  typedef unsigned int size_t;   /* others (e.g. <stdio.h>) also define */
+S  #if __sizeof_ptr == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+S  #else
+S    typedef unsigned int size_t;   /* see <stddef.h> */
+S  #endif
 S   /* the unsigned integral type of the result of the sizeof operator. */
 N#endif
 N
@@ -6169,15 +6186,15 @@ N#ifndef __cplusplus  /* wchar_t is a builtin type for C++ */
 N  #if !defined(__STRICT_ANSI__)
 X  #if !0L
 N  /* unconditional in non-strict C for consistency of debug info */
-N    #if defined(__WCHAR32)
-X    #if 0L
+N    #if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
+X    #if 0L || (0L && __ARM_SIZEOF_WCHAR_T == 4)
 S      typedef unsigned int wchar_t; /* also in <stdlib.h> and <inttypes.h> */
 N    #else
 N      typedef unsigned short wchar_t; /* also in <stdlib.h> and <inttypes.h> */
 N    #endif
 N  #elif !defined(__wchar_t)
 S    #define __wchar_t 1
-S    #if defined(__WCHAR32)
+S    #if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
 S      typedef unsigned int wchar_t; /* also in <stdlib.h> and <inttypes.h> */
 S    #else
 S      typedef unsigned short wchar_t; /* also in <stdlib.h> and <inttypes.h> */
@@ -6196,8 +6213,17 @@ N#undef NULL  /* others (e.g. <stdio.h>) also define */
 N#define NULL 0
 N   /* null pointer constant. */
 N
+N#ifdef __clang__
+S  #define offsetof(t, d) __builtin_offsetof(t, d)
+N#else
 N  /* EDG uses __INTADDR__ to avoid errors when strict */
 N  #define offsetof(t, memb) ((__CLIBNS size_t)__INTADDR__(&(((t *)0)->memb)))
+N#endif
+N
+N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 201112L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X#if !0L || (1L && 201112L <= 199409L) || (0L && 201103L <= __cplusplus)
+N  typedef long double max_align_t;
+N#endif
 N
 N    #ifdef __cplusplus
 S         }  /* extern "C" */
@@ -6210,12 +6236,16 @@ N  #ifdef __cplusplus
 S    #ifndef __STDDEF_NO_EXPORTS
 S      using ::std::size_t;
 S      using ::std::ptrdiff_t;
+S      #if !defined(__STRICT_ANSI__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+S        using ::std::max_align_t;
+S      #endif
 S    #endif 
 N  #endif /* __cplusplus */
 N
 N#endif
 N
 N/* end of stddef.h */
+N
 L 61 "..\STemWinLibrary522\inc\GUI_Debug.h" 2
 N
 N#include "GUI.h"
@@ -14514,18 +14544,40 @@ S  #endif
 N#endif
 N
 N#include <stdint.h>                      /* standard types definitions                      */
-L 1 "D:\Keil\ARM\RV31\Inc\stdint.h" 1
-N/* Copyright (C) ARM Ltd., 1999 */
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h" 1
+N/* Copyright (C) ARM Ltd., 1999,2014 */
 N/* All rights reserved */
 N
 N/*
-N * RCS $Revision: 137748 $
-N * Checkin $Date: 2008-09-11 17:34:24 +0100 (Thu, 11 Sep 2008) $
+N * RCS $Revision$
+N * Checkin $Date$
 N * Revising $Author: agrant $
 N */
 N
 N#ifndef __stdint_h
 N#define __stdint_h
+N#define __ARMCLIB_VERSION 5060037
+N
+N  #ifdef __INT64_TYPE__
+S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
+S    #define __INT64 __INT64_TYPE__
+N  #else
+N    /* armcc has builtin '__int64' which can be used in --strict mode */
+N    #define __INT64 __int64
+N    #define __INT64_C_SUFFIX__ ll
+N  #endif
+N  #define __PASTE2(x, y) x ## y
+N  #define __PASTE(x, y) __PASTE2(x, y)
+N  #define __INT64_C(x)  __ESCAPE__(__PASTE(x, __INT64_C_SUFFIX__))
+N  #define __UINT64_C(x)  __ESCAPE__(__PASTE(x ## u, __INT64_C_SUFFIX__))
+N  #if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
+X  #if 0L || (1L && !0L)
+N    /* armclang and non-strict armcc allow 'long long' in system headers */
+N    #define __LONGLONG long long
+N  #else
+S    /* strict armcc has '__int64' */
+S    #define __LONGLONG __int64
+N  #endif
 N
 N  #ifndef __STDINT_DECLS
 N  #define __STDINT_DECLS
@@ -14544,8 +14596,6 @@ N
 N/*
 N * 'signed' is redundant below, except for 'signed char' and if
 N * the typedef is used to declare a bitfield.
-N * '__int64' is used instead of 'long long' so that this header
-N * can be used in --strict mode.
 N */
 N
 N    /* 7.18.1.1 */
@@ -14554,13 +14604,15 @@ N    /* exact-width signed integer types */
 Ntypedef   signed          char int8_t;
 Ntypedef   signed short     int int16_t;
 Ntypedef   signed           int int32_t;
-Ntypedef   signed       __int64 int64_t;
+Ntypedef   signed       __INT64 int64_t;
+Xtypedef   signed       __int64 int64_t;
 N
 N    /* exact-width unsigned integer types */
 Ntypedef unsigned          char uint8_t;
 Ntypedef unsigned short     int uint16_t;
 Ntypedef unsigned           int uint32_t;
-Ntypedef unsigned       __int64 uint64_t;
+Ntypedef unsigned       __INT64 uint64_t;
+Xtypedef unsigned       __int64 uint64_t;
 N
 N    /* 7.18.1.2 */
 N
@@ -14569,13 +14621,15 @@ N    /* minimum-width signed integer types */
 Ntypedef   signed          char int_least8_t;
 Ntypedef   signed short     int int_least16_t;
 Ntypedef   signed           int int_least32_t;
-Ntypedef   signed       __int64 int_least64_t;
+Ntypedef   signed       __INT64 int_least64_t;
+Xtypedef   signed       __int64 int_least64_t;
 N
 N    /* minimum-width unsigned integer types */
 Ntypedef unsigned          char uint_least8_t;
 Ntypedef unsigned short     int uint_least16_t;
 Ntypedef unsigned           int uint_least32_t;
-Ntypedef unsigned       __int64 uint_least64_t;
+Ntypedef unsigned       __INT64 uint_least64_t;
+Xtypedef unsigned       __int64 uint_least64_t;
 N
 N    /* 7.18.1.3 */
 N
@@ -14583,21 +14637,31 @@ N    /* fastest minimum-width signed integer types */
 Ntypedef   signed           int int_fast8_t;
 Ntypedef   signed           int int_fast16_t;
 Ntypedef   signed           int int_fast32_t;
-Ntypedef   signed       __int64 int_fast64_t;
+Ntypedef   signed       __INT64 int_fast64_t;
+Xtypedef   signed       __int64 int_fast64_t;
 N
 N    /* fastest minimum-width unsigned integer types */
 Ntypedef unsigned           int uint_fast8_t;
 Ntypedef unsigned           int uint_fast16_t;
 Ntypedef unsigned           int uint_fast32_t;
-Ntypedef unsigned       __int64 uint_fast64_t;
+Ntypedef unsigned       __INT64 uint_fast64_t;
+Xtypedef unsigned       __int64 uint_fast64_t;
 N
 N    /* 7.18.1.4 integer types capable of holding object pointers */
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+Stypedef   signed       __INT64 intptr_t;
+Stypedef unsigned       __INT64 uintptr_t;
+N#else
 Ntypedef   signed           int intptr_t;
 Ntypedef unsigned           int uintptr_t;
+N#endif
 N
 N    /* 7.18.1.5 greatest-width integer types */
-Ntypedef   signed       __int64 intmax_t;
-Ntypedef unsigned       __int64 uintmax_t;
+Ntypedef   signed     __LONGLONG intmax_t;
+Xtypedef   signed     long long intmax_t;
+Ntypedef unsigned     __LONGLONG uintmax_t;
+Xtypedef unsigned     long long uintmax_t;
 N
 N
 N#if !defined(__cplusplus) || defined(__STDC_LIMIT_MACROS)
@@ -14609,19 +14673,19 @@ N    /* minimum values of exact-width signed integer types */
 N#define INT8_MIN                   -128
 N#define INT16_MIN                -32768
 N#define INT32_MIN          (~0x7fffffff)   /* -2147483648 is unsigned */
-N#define INT64_MIN  __ESCAPE__(~0x7fffffffffffffffll) /* -9223372036854775808 is unsigned */
+N#define INT64_MIN  __INT64_C(~0x7fffffffffffffff) /* -9223372036854775808 is unsigned */
 N
 N    /* maximum values of exact-width signed integer types */
 N#define INT8_MAX                    127
 N#define INT16_MAX                 32767
 N#define INT32_MAX            2147483647
-N#define INT64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of exact-width unsigned integer types */
 N#define UINT8_MAX                   255
 N#define UINT16_MAX                65535
 N#define UINT32_MAX           4294967295u
-N#define UINT64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.2 */
 N
@@ -14629,19 +14693,19 @@ N    /* minimum values of minimum-width signed integer types */
 N#define INT_LEAST8_MIN                   -128
 N#define INT_LEAST16_MIN                -32768
 N#define INT_LEAST32_MIN          (~0x7fffffff)
-N#define INT_LEAST64_MIN  __ESCAPE__(~0x7fffffffffffffffll)
+N#define INT_LEAST64_MIN  __INT64_C(~0x7fffffffffffffff)
 N
 N    /* maximum values of minimum-width signed integer types */
 N#define INT_LEAST8_MAX                    127
 N#define INT_LEAST16_MAX                 32767
 N#define INT_LEAST32_MAX            2147483647
-N#define INT_LEAST64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT_LEAST64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of minimum-width unsigned integer types */
 N#define UINT_LEAST8_MAX                   255
 N#define UINT_LEAST16_MAX                65535
 N#define UINT_LEAST32_MAX           4294967295u
-N#define UINT_LEAST64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT_LEAST64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.3 */
 N
@@ -14649,30 +14713,45 @@ N    /* minimum values of fastest minimum-width signed integer types */
 N#define INT_FAST8_MIN           (~0x7fffffff)
 N#define INT_FAST16_MIN          (~0x7fffffff)
 N#define INT_FAST32_MIN          (~0x7fffffff)
-N#define INT_FAST64_MIN  __ESCAPE__(~0x7fffffffffffffffll)
+N#define INT_FAST64_MIN  __INT64_C(~0x7fffffffffffffff)
 N
 N    /* maximum values of fastest minimum-width signed integer types */
 N#define INT_FAST8_MAX             2147483647
 N#define INT_FAST16_MAX            2147483647
 N#define INT_FAST32_MAX            2147483647
-N#define INT_FAST64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT_FAST64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of fastest minimum-width unsigned integer types */
 N#define UINT_FAST8_MAX            4294967295u
 N#define UINT_FAST16_MAX           4294967295u
 N#define UINT_FAST32_MAX           4294967295u
-N#define UINT_FAST64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT_FAST64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.4 */
 N
 N    /* minimum value of pointer-holding signed integer type */
-N#define INTPTR_MIN (~0x7fffffff)
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define INTPTR_MIN INT64_MIN
+N#else
+N#define INTPTR_MIN INT32_MIN
+N#endif
 N
 N    /* maximum value of pointer-holding signed integer type */
-N#define INTPTR_MAX   2147483647
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define INTPTR_MAX INT64_MAX
+N#else
+N#define INTPTR_MAX INT32_MAX
+N#endif
 N
 N    /* maximum value of pointer-holding unsigned integer type */
-N#define UINTPTR_MAX  4294967295u
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define UINTPTR_MAX UINT64_MAX
+N#else
+N#define UINTPTR_MAX UINT32_MAX
+N#endif
 N
 N    /* 7.18.2.5 */
 N
@@ -14688,15 +14767,26 @@ N
 N    /* 7.18.3 */
 N
 N    /* limits of ptrdiff_t */
-N#define PTRDIFF_MIN (~0x7fffffff)
-N#define PTRDIFF_MAX   2147483647
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define PTRDIFF_MIN INT64_MIN
+S#define PTRDIFF_MAX INT64_MAX
+N#else
+N#define PTRDIFF_MIN INT32_MIN
+N#define PTRDIFF_MAX INT32_MAX
+N#endif
 N
 N    /* limits of sig_atomic_t */
 N#define SIG_ATOMIC_MIN (~0x7fffffff)
 N#define SIG_ATOMIC_MAX   2147483647
 N
 N    /* limit of size_t */
-N#define SIZE_MAX 4294967295u
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define SIZE_MAX UINT64_MAX
+N#else
+N#define SIZE_MAX UINT32_MAX
+N#endif
 N
 N    /* limits of wchar_t */
 N    /* NB we have to undef and redef because they're defined in both
@@ -14704,8 +14794,8 @@ N     * stdint.h and wchar.h */
 N#undef WCHAR_MIN
 N#undef WCHAR_MAX
 N
-N#if defined(__WCHAR32)
-X#if 0L
+N#if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
+X#if 0L || (0L && __ARM_SIZEOF_WCHAR_T == 4)
 S  #define WCHAR_MIN   0
 S  #define WCHAR_MAX   0xffffffffU
 N#else
@@ -14726,12 +14816,12 @@ N    /* 7.18.4.1 macros for minimum-width integer constants */
 N#define INT8_C(x)   (x)
 N#define INT16_C(x)  (x)
 N#define INT32_C(x)  (x)
-N#define INT64_C(x)  __ESCAPE__(x ## ll)
+N#define INT64_C(x)  __INT64_C(x)
 N
 N#define UINT8_C(x)  (x ## u)
 N#define UINT16_C(x) (x ## u)
 N#define UINT32_C(x) (x ## u)
-N#define UINT64_C(x) __ESCAPE__(x ## ull)
+N#define UINT64_C(x) __UINT64_C(x)
 N
 N    /* 7.18.4.2 macros for greatest-width integer constants */
 N#define INTMAX_C(x)  __ESCAPE__(x ## ll)
@@ -14775,39 +14865,54 @@ S      using ::std::intptr_t;
 S      using ::std::uintptr_t;
 S      using ::std::intmax_t;
 S      using ::std::uintmax_t;
-S    #endif 
+S    #endif
 N  #endif /* __cplusplus */
+N
+N#undef __INT64
+N#undef __LONGLONG
 N
 N#endif /* __stdint_h */
 N
 N/* end of stdint.h */
-N
-N
 L 169 "..\Libraries\CMSIS\inc\core_cm4.h" 2
 N#include <core_cmInstr.h>                /* Core Instruction Access                         */
-L 1 "D:\Keil\ARM\CMSIS\Include\core_cmInstr.h" 1
+L 1 "D:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h" 1
 N/**************************************************************************//**
 N * @file     core_cmInstr.h
 N * @brief    CMSIS Cortex-M Core Instruction Access Header File
-N * @version  V3.01
-N * @date     06. March 2012
+N * @version  V3.30
+N * @date     17. February 2014
 N *
 N * @note
-N * Copyright (C) 2009-2012 ARM Limited. All rights reserved.
-N *
-N * @par
-N * ARM Limited (ARM) is supplying this software for use with Cortex-M
-N * processor based microcontrollers.  This file can be freely distributed
-N * within development tools that are supporting such ARM based processors.
-N *
-N * @par
-N * THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
-N * OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
-N * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
-N * ARM SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
-N * CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
 N *
 N ******************************************************************************/
+N/* Copyright (c) 2009 - 2014 ARM LIMITED
+N
+N   All rights reserved.
+N   Redistribution and use in source and binary forms, with or without
+N   modification, are permitted provided that the following conditions are met:
+N   - Redistributions of source code must retain the above copyright
+N     notice, this list of conditions and the following disclaimer.
+N   - Redistributions in binary form must reproduce the above copyright
+N     notice, this list of conditions and the following disclaimer in the
+N     documentation and/or other materials provided with the distribution.
+N   - Neither the name of ARM nor the names of its contributors may be used
+N     to endorse or promote products derived from this software without
+N     specific prior written permission.
+N   *
+N   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+N   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+N   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+N   ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+N   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+N   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+N   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+N   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+N   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+N   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+N   POSSIBILITY OF SUCH DAMAGE.
+N   ---------------------------------------------------------------------------*/
+N
 N
 N#ifndef __CORE_CMINSTR_H
 N#define __CORE_CMINSTR_H
@@ -14824,7 +14929,7 @@ X#if   1L
 N/* ARM armcc specific functions */
 N
 N#if (__ARMCC_VERSION < 400677)
-X#if (410894 < 400677)
+X#if (5060750 < 400677)
 S  #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -14901,13 +15006,14 @@ N
 N    \param [in]    value  Value to reverse
 N    \return               Reversed value
 N */
+N#ifndef __NO_EMBEDDED_ASM
 N__attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(uint32_t value)
 X__attribute__((section(".rev16_text"))) static __inline __asm uint32_t __REV16(uint32_t value)
 N{
 N  rev16 r0, r0
 N  bx lr
 N}
-N
+N#endif
 N
 N/** \brief  Reverse byte order in signed short value
 N
@@ -14916,12 +15022,14 @@ N
 N    \param [in]    value  Value to reverse
 N    \return               Reversed value
 N */
+N#ifndef __NO_EMBEDDED_ASM
 N__attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(int32_t value)
 X__attribute__((section(".revsh_text"))) static __inline __asm int32_t __REVSH(int32_t value)
 N{
 N  revsh r0, r0
 N  bx lr
 N}
+N#endif
 N
 N
 N/** \brief  Rotate Right in unsigned value (32 bit)
@@ -14933,6 +15041,17 @@ N    \param [in]    value  Number of Bits to rotate
 N    \return               Rotated value
 N */
 N#define __ROR                             __ror
+N
+N
+N/** \brief  Breakpoint
+N
+N    This function causes the processor to enter Debug state.
+N    Debug tools can use this to investigate system state when the instruction at a particular address is reached.
+N
+N    \param [in]    value  is ignored by the processor.
+N                   If required, a debugger can use it to store additional information about the breakpoint.
+N */
+N#define __BKPT(value)                       __breakpoint(value)
 N
 N
 N#if       (__CORTEX_M >= 0x03)
@@ -15056,21 +15175,19 @@ N
 N#endif /* (__CORTEX_M >= 0x03) */
 N
 N
-N
-N#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
-S/* IAR iccarm specific functions */
-S
-S#include <cmsis_iar.h>
-S
-S
-S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
-S/* TI CCS specific functions */
-S
-S#include <cmsis_ccs.h>
-S
-S
-S#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+N#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
 S/* GNU gcc specific functions */
+S
+S/* Define macros for porting to both thumb1 and thumb2.
+S * For thumb1, use low register (r0-r7), specified by constrant "l"
+S * Otherwise, use general registers, specified by constrant "r" */
+S#if defined (__thumb__) && !defined (__thumb2__)
+S#define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+S#define __CMSIS_GCC_USE_REG(r) "l" (r)
+S#else
+S#define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+S#define __CMSIS_GCC_USE_REG(r) "r" (r)
+S#endif
 S
 S/** \brief  No Operation
 S
@@ -15157,10 +15274,14 @@ S    \return               Reversed value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __REV(uint32_t value)
 S{
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
+S  return __builtin_bswap32(value);
+S#else
 S  uint32_t result;
 S
-S  __ASM volatile ("rev %0, %1" : "=r" (result) : "r" (value) );
+S  __ASM volatile ("rev %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
 S  return(result);
+S#endif
 S}
 S
 S
@@ -15175,7 +15296,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __REV16(uint32_t va
 S{
 S  uint32_t result;
 S
-S  __ASM volatile ("rev16 %0, %1" : "=r" (result) : "r" (value) );
+S  __ASM volatile ("rev16 %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
 S  return(result);
 S}
 S
@@ -15189,10 +15310,14 @@ S    \return               Reversed value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE int32_t __REVSH(int32_t value)
 S{
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+S  return (short)__builtin_bswap16(value);
+S#else
 S  uint32_t result;
 S
-S  __ASM volatile ("revsh %0, %1" : "=r" (result) : "r" (value) );
+S  __ASM volatile ("revsh %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
 S  return(result);
+S#endif
 S}
 S
 S
@@ -15206,10 +15331,19 @@ S    \return               Rotated value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 S{
-S
-S  __ASM volatile ("ror %0, %0, %1" : "+r" (op1) : "r" (op2) );
-S  return(op1);
+S  return (op1 >> op2) | (op1 << (32 - op2)); 
 S}
+S
+S
+S/** \brief  Breakpoint
+S
+S    This function causes the processor to enter Debug state.
+S    Debug tools can use this to investigate system state when the instruction at a particular address is reached.
+S
+S    \param [in]    value  is ignored by the processor.
+S                   If required, a debugger can use it to store additional information about the breakpoint.
+S */
+S#define __BKPT(value)                       __ASM volatile ("bkpt "#value)
 S
 S
 S#if       (__CORTEX_M >= 0x03)
@@ -15239,10 +15373,17 @@ S    \return             value of type uint8_t at (*ptr)
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint8_t __LDREXB(volatile uint8_t *addr)
 S{
-S    uint8_t result;
+S    uint32_t result;
 S
-S   __ASM volatile ("ldrexb %0, [%1]" : "=r" (result) : "r" (addr) );
-S   return(result);
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+S   __ASM volatile ("ldrexb %0, %1" : "=r" (result) : "Q" (*addr) );
+S#else
+S    /* Prior to GCC 4.8, "Q" will be expanded to [rx, #0] which is not
+S       accepted by assembler. So has to use following less efficient pattern.
+S    */
+S   __ASM volatile ("ldrexb %0, [%1]" : "=r" (result) : "r" (addr) : "memory" );
+S#endif
+S   return ((uint8_t) result);    /* Add explicit type cast here */
 S}
 S
 S
@@ -15255,10 +15396,17 @@ S    \return        value of type uint16_t at (*ptr)
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint16_t __LDREXH(volatile uint16_t *addr)
 S{
-S    uint16_t result;
+S    uint32_t result;
 S
-S   __ASM volatile ("ldrexh %0, [%1]" : "=r" (result) : "r" (addr) );
-S   return(result);
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+S   __ASM volatile ("ldrexh %0, %1" : "=r" (result) : "Q" (*addr) );
+S#else
+S    /* Prior to GCC 4.8, "Q" will be expanded to [rx, #0] which is not
+S       accepted by assembler. So has to use following less efficient pattern.
+S    */
+S   __ASM volatile ("ldrexh %0, [%1]" : "=r" (result) : "r" (addr) : "memory" );
+S#endif
+S   return ((uint16_t) result);    /* Add explicit type cast here */
 S}
 S
 S
@@ -15273,7 +15421,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __LDREXW(volatile u
 S{
 S    uint32_t result;
 S
-S   __ASM volatile ("ldrex %0, [%1]" : "=r" (result) : "r" (addr) );
+S   __ASM volatile ("ldrex %0, %1" : "=r" (result) : "Q" (*addr) );
 S   return(result);
 S}
 S
@@ -15291,7 +15439,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __STREXB(uint8_t va
 S{
 S   uint32_t result;
 S
-S   __ASM volatile ("strexb %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+S   __ASM volatile ("strexb %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
 S   return(result);
 S}
 S
@@ -15309,7 +15457,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __STREXH(uint16_t v
 S{
 S   uint32_t result;
 S
-S   __ASM volatile ("strexh %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+S   __ASM volatile ("strexh %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
 S   return(result);
 S}
 S
@@ -15327,7 +15475,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __STREXW(uint32_t v
 S{
 S   uint32_t result;
 S
-S   __ASM volatile ("strex %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+S   __ASM volatile ("strex %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" (value) );
 S   return(result);
 S}
 S
@@ -15339,7 +15487,7 @@ S
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __CLREX(void)
 S{
-S  __ASM volatile ("clrex");
+S  __ASM volatile ("clrex" ::: "memory");
 S}
 S
 S
@@ -15386,25 +15534,37 @@ S    \return             number of leading zeros in value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint8_t __CLZ(uint32_t value)
 S{
-S  uint8_t result;
+S  uint32_t result;
 S
 S  __ASM volatile ("clz %0, %1" : "=r" (result) : "r" (value) );
-S  return(result);
+S   return ((uint8_t) result);    /* Add explicit type cast here */
 S}
 S
 S#endif /* (__CORTEX_M >= 0x03) */
 S
 S
+S#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
+S/* IAR iccarm specific functions */
+S#include <cmsis_iar.h>
+S
+S
+S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
+S/* TI CCS specific functions */
+S#include <cmsis_ccs.h>
 S
 S
 S#elif defined ( __TASKING__ ) /*------------------ TASKING Compiler --------------*/
 S/* TASKING carm specific functions */
-S
 S/*
 S * The CMSIS functions have been implemented as intrinsics in the compiler.
 S * Please use "carm -?i" to get an up to date list of all intrinsics,
 S * Including the CMSIS ones.
 S */
+S
+S
+S#elif defined ( __CSMC__ ) /*------------------ COSMIC Compiler -------------------*/
+S/* Cosmic specific functions */
+S#include <cmsis_csm.h>
 S
 N#endif
 N
@@ -15413,29 +15573,43 @@ N
 N#endif /* __CORE_CMINSTR_H */
 L 170 "..\Libraries\CMSIS\inc\core_cm4.h" 2
 N#include <core_cmFunc.h>                 /* Core Function Access                            */
-L 1 "D:\Keil\ARM\CMSIS\Include\core_cmFunc.h" 1
+L 1 "D:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h" 1
 N/**************************************************************************//**
 N * @file     core_cmFunc.h
 N * @brief    CMSIS Cortex-M Core Function Access Header File
-N * @version  V3.01
-N * @date     06. March 2012
+N * @version  V3.30
+N * @date     17. February 2014
 N *
 N * @note
-N * Copyright (C) 2009-2012 ARM Limited. All rights reserved.
-N *
-N * @par
-N * ARM Limited (ARM) is supplying this software for use with Cortex-M
-N * processor based microcontrollers.  This file can be freely distributed
-N * within development tools that are supporting such ARM based processors.
-N *
-N * @par
-N * THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
-N * OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
-N * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
-N * ARM SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
-N * CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
 N *
 N ******************************************************************************/
+N/* Copyright (c) 2009 - 2014 ARM LIMITED
+N
+N   All rights reserved.
+N   Redistribution and use in source and binary forms, with or without
+N   modification, are permitted provided that the following conditions are met:
+N   - Redistributions of source code must retain the above copyright
+N     notice, this list of conditions and the following disclaimer.
+N   - Redistributions in binary form must reproduce the above copyright
+N     notice, this list of conditions and the following disclaimer in the
+N     documentation and/or other materials provided with the distribution.
+N   - Neither the name of ARM nor the names of its contributors may be used
+N     to endorse or promote products derived from this software without
+N     specific prior written permission.
+N   *
+N   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+N   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+N   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+N   ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+N   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+N   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+N   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+N   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+N   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+N   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+N   POSSIBILITY OF SUCH DAMAGE.
+N   ---------------------------------------------------------------------------*/
+N
 N
 N#ifndef __CORE_CMFUNC_H
 N#define __CORE_CMFUNC_H
@@ -15452,7 +15626,7 @@ X#if   1L
 N/* ARM armcc specific functions */
 N
 N#if (__ARMCC_VERSION < 400677)
-X#if (410894 < 400677)
+X#if (5060750 < 400677)
 S  #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -15748,19 +15922,7 @@ N
 N#endif /* (__CORTEX_M == 0x04) */
 N
 N
-N#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
-S/* IAR iccarm specific functions */
-S
-S#include <cmsis_iar.h>
-S
-S
-S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
-S/* TI CCS specific functions */
-S
-S#include <cmsis_ccs.h>
-S
-S
-S#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+N#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
 S/* GNU gcc specific functions */
 S
 S/** \brief  Enable IRQ Interrupts
@@ -15770,7 +15932,7 @@ S  Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
 S{
-S  __ASM volatile ("cpsie i");
+S  __ASM volatile ("cpsie i" : : : "memory");
 S}
 S
 S
@@ -15781,7 +15943,7 @@ S  Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
 S{
-S  __ASM volatile ("cpsid i");
+S  __ASM volatile ("cpsid i" : : : "memory");
 S}
 S
 S
@@ -15808,7 +15970,7 @@ S    \param [in]    control  Control Register value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_CONTROL(uint32_t control)
 S{
-S  __ASM volatile ("MSR control, %0" : : "r" (control) );
+S  __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
 S}
 S
 S
@@ -15880,7 +16042,7 @@ S    \param [in]    topOfProcStack  Process Stack Pointer value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
 S{
-S  __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) );
+S  __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) : "sp");
 S}
 S
 S
@@ -15907,7 +16069,7 @@ S    \param [in]    topOfMainStack  Main Stack Pointer value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
 S{
-S  __ASM volatile ("MSR msp, %0\n" : : "r" (topOfMainStack) );
+S  __ASM volatile ("MSR msp, %0\n" : : "r" (topOfMainStack) : "sp");
 S}
 S
 S
@@ -15934,7 +16096,7 @@ S    \param [in]    priMask  Priority Mask
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
 S{
-S  __ASM volatile ("MSR primask, %0" : : "r" (priMask) );
+S  __ASM volatile ("MSR primask, %0" : : "r" (priMask) : "memory");
 S}
 S
 S
@@ -15947,7 +16109,7 @@ S    Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_fault_irq(void)
 S{
-S  __ASM volatile ("cpsie f");
+S  __ASM volatile ("cpsie f" : : : "memory");
 S}
 S
 S
@@ -15958,7 +16120,7 @@ S    Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_fault_irq(void)
 S{
-S  __ASM volatile ("cpsid f");
+S  __ASM volatile ("cpsid f" : : : "memory");
 S}
 S
 S
@@ -15985,7 +16147,7 @@ S    \param [in]    basePri  Base Priority value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_BASEPRI(uint32_t value)
 S{
-S  __ASM volatile ("MSR basepri, %0" : : "r" (value) );
+S  __ASM volatile ("MSR basepri, %0" : : "r" (value) : "memory");
 S}
 S
 S
@@ -16012,7 +16174,7 @@ S    \param [in]    faultMask  Fault Mask value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
 S{
-S  __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) );
+S  __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) : "memory");
 S}
 S
 S#endif /* (__CORTEX_M >= 0x03) */
@@ -16031,7 +16193,10 @@ S{
 S#if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
 S  uint32_t result;
 S
+S  /* Empty asm statement works as a scheduling barrier */
+S  __ASM volatile ("");
 S  __ASM volatile ("VMRS %0, fpscr" : "=r" (result) );
+S  __ASM volatile ("");
 S  return(result);
 S#else
 S   return(0);
@@ -16048,26 +16213,42 @@ S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 S{
 S#if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
-S  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) );
+S  /* Empty asm statement works as a scheduling barrier */
+S  __ASM volatile ("");
+S  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc");
+S  __ASM volatile ("");
 S#endif
 S}
 S
 S#endif /* (__CORTEX_M == 0x04) */
 S
 S
+S#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
+S/* IAR iccarm specific functions */
+S#include <cmsis_iar.h>
+S
+S
+S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
+S/* TI CCS specific functions */
+S#include <cmsis_ccs.h>
+S
+S
 S#elif defined ( __TASKING__ ) /*------------------ TASKING Compiler --------------*/
 S/* TASKING carm specific functions */
-S
 S/*
 S * The CMSIS functions have been implemented as intrinsics in the compiler.
-S * Please use "carm -?i" to get an up to date list of all instrinsics,
+S * Please use "carm -?i" to get an up to date list of all intrinsics,
 S * Including the CMSIS ones.
 S */
+S
+S
+S#elif defined ( __CSMC__ ) /*------------------ COSMIC Compiler -------------------*/
+S/* Cosmic specific functions */
+S#include <cmsis_csm.h>
 S
 N#endif
 N
 N/*@} end of CMSIS_Core_RegAccFunctions */
-N
 N
 N#endif /* __CORE_CMFUNC_H */
 L 171 "..\Libraries\CMSIS\inc\core_cm4.h" 2
@@ -48753,8 +48934,15 @@ Nextern u8 usartocflag;
 Nextern u8 usartshortflag;
 Nextern float oc_data;
 Nextern vu8 lock;
-Nextern vu32 Run_Control[42];	
+Nextern vu32 Run_Control[49];	
 Nextern u8 lockstat1,lockstat2;
+Nextern int16_t InFlashSave[20];
+N#define set_max_lv						InFlashSave[0]
+N#define set_min_lv						InFlashSave[1]
+N#define set_max_pc						InFlashSave[2]
+N#define set_min_pc						InFlashSave[3]
+N#define set_load_cutoffv				InFlashSave[4]
+N#define set_pow_cutoffc					InFlashSave[5]
 N
 N#define SLAVE_REG_P00		0x0000       //R_VOLU
 N#define SLAVE_REG_P01		0x0001      //Load_Voltage
@@ -48831,6 +49019,12 @@ N#define pow_v    					    Run_Control[38]
 N#define cdc_dc    					    Run_Control[39]
 N#define pow_c    					    Run_Control[40]
 N#define load_v    					    Run_Control[41]
+N#define set_static_pv					Run_Control[42]
+N#define set_static_pc					Run_Control[43]
+N#define set_static_lc					Run_Control[44]
+N
+N
+N
 N
 Nextern vu16 coff[6];
 N#define cov1    					    coff[0]
@@ -48935,6 +49129,21 @@ N#define set_71          70
 N#define set_72          71
 N#define set_73          72
 N#define set_74          73
+N#define set_75          74
+N#define set_76          75
+N#define set_77          76
+N#define set_78          77
+N#define set_79          78
+N#define set_80          79
+N#define set_81          80
+N#define set_82          81
+N#define set_83          82
+N#define set_84          83
+N#define set_85          84
+N#define set_86          85
+N#define set_87          86
+N#define set_88          87
+N#define set_89          88
 N/*
 N************************************************************************
 N*						��������ʶ���
@@ -49286,8 +49495,15 @@ Sextern u8 usartocflag;
 Sextern u8 usartshortflag;
 Sextern float oc_data;
 Sextern vu8 lock;
-Sextern vu32 Run_Control[42];	
+Sextern vu32 Run_Control[49];	
 Sextern u8 lockstat1,lockstat2;
+Sextern int16_t InFlashSave[20];
+S#define set_max_lv						InFlashSave[0]
+S#define set_min_lv						InFlashSave[1]
+S#define set_max_pc						InFlashSave[2]
+S#define set_min_pc						InFlashSave[3]
+S#define set_load_cutoffv				InFlashSave[4]
+S#define set_pow_cutoffc					InFlashSave[5]
 S
 S#define SLAVE_REG_P00		0x0000       //R_VOLU
 S#define SLAVE_REG_P01		0x0001      //Load_Voltage
@@ -49364,6 +49580,12 @@ S#define pow_v    					    Run_Control[38]
 S#define cdc_dc    					    Run_Control[39]
 S#define pow_c    					    Run_Control[40]
 S#define load_v    					    Run_Control[41]
+S#define set_static_pv					Run_Control[42]
+S#define set_static_pc					Run_Control[43]
+S#define set_static_lc					Run_Control[44]
+S
+S
+S
 S
 Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
@@ -49468,6 +49690,21 @@ S#define set_71          70
 S#define set_72          71
 S#define set_73          72
 S#define set_74          73
+S#define set_75          74
+S#define set_76          75
+S#define set_77          76
+S#define set_78          77
+S#define set_79          78
+S#define set_80          79
+S#define set_81          80
+S#define set_82          81
+S#define set_83          82
+S#define set_84          83
+S#define set_85          84
+S#define set_86          85
+S#define set_87          86
+S#define set_88          87
+S#define set_89          88
 S/*
 S************************************************************************
 S*						��������ʶ���
@@ -49614,14 +49851,14 @@ Nvoid TM1650_SET_LED(vu8 addr,vu8 dat);
 N#endif
 L 14 "..\APP\R_Face.c" 2
 N#include "stdio.h"
-L 1 "D:\Keil\ARM\RV31\Inc\stdio.h" 1
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
 N/* Copyright (C) Codemist Ltd., 1988-1993                       */
 N/* Copyright 1991-1998 ARM Limited. All rights reserved.        */
 N
 N/*
-N * RCS $Revision: 137287 $
-N * Checkin $Date: 2008-08-27 13:36:52 +0100 (Wed, 27 Aug 2008) $
+N * RCS $Revision$
+N * Checkin $Date$
 N * Revising $Author: sdouglas $
 N */
 N
@@ -49634,6 +49871,19 @@ N */
 N
 N#ifndef __stdio_h
 N#define __stdio_h
+N#define __ARMCLIB_VERSION 5060037
+N
+N/*
+N * Depending on compiler version __int64 or __INT64_TYPE__ should be defined.
+N */
+N#ifndef __int64
+N  #ifdef __INT64_TYPE__
+S    #define __int64 __INT64_TYPE__
+N  #endif
+N  /* On some architectures neither of these may be defined - if so, fall
+N     through and error out if used. */
+N#endif
+N
 N
 N#define _ARMABI __declspec(__nothrow)
 N
@@ -49652,7 +49902,12 @@ N
 N#if defined(__cplusplus) || !defined(__STRICT_ANSI__) || !defined(__size_t)
 X#if 0L || !0L || !0L
 N /* always defined in C++ and non-strict C for consistency of debug info */
-N  typedef unsigned int size_t;   /* see <stddef.h> */
+N  #if __sizeof_ptr == 8
+X  #if 4 == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+N  #else
+N    typedef unsigned int size_t;   /* see <stddef.h> */
+N  #endif
 N  #if !defined(__cplusplus) && defined(__STRICT_ANSI__)
 X  #if !0L && 0L
 S    #define __size_t 1
@@ -49664,10 +49919,14 @@ N#define NULL 0                   /* see <stddef.h> */
 N
 N/* ANSI forbids va_list to be defined here */
 N/* keep in step with <stdarg.h> and <wchar.h> */
-N#if defined(__cplusplus) || !defined(__STRICT_ANSI__) || !defined(__va_list_defined)
-X#if 0L || !0L || !0L
+N#if !defined(__va_list) && (defined(__cplusplus) || !defined(__STRICT_ANSI__) || !defined(__va_list_defined))
+X#if !0L && (0L || !0L || !0L)
 N/* always defined in C++ and non-strict C for consistency of debug info */
-N  typedef struct __va_list __va_list;
+N  #ifdef __clang__
+S    typedef __builtin_va_list __va_list;
+N  #else
+N    typedef struct __va_list __va_list;
+N  #endif
 N  #if !defined(__cplusplus) && defined(__STRICT_ANSI__)
 X  #if !0L && 0L
 S    #define __va_list_defined 1
@@ -49715,6 +49974,27 @@ N    * error has occurred and an end-of-file indicator that records whether the
 N    * end-of-file has been reached.
 N    * Its structure is not made known to library clients.
 N    */
+N
+N#if defined(__STRICT_ANSI__) && !__FILE_INCOMPLETE
+X#if 0L && !__FILE_INCOMPLETE
+Sstruct __FILE {
+S    union {
+S        long __FILE_alignment;
+S#ifdef __TARGET_ARCH_AARCH64
+S        char __FILE_size[136];
+S#else /* __TARGET_ARCH_AARCH64 */
+S        char __FILE_size[84];
+S#endif /* __TARGET_ARCH_AARCH64 */
+S    } __FILE_opaque;
+S};
+S    /*
+S     * FILE must be an object type (C99 - 7.19.1) and an object type fully
+S     * describes an object [including its static size] (C99 - 6.2.5).
+S     * This definition is a placeholder which matches the struct __FILE in
+S     * size and alignment as used internally by libc.
+S     */
+N#endif
+N
 N
 Nextern FILE __stdin, __stdout, __stderr;
 Nextern FILE *__aeabi_stdin, *__aeabi_stdout, *__aeabi_stderr;
@@ -49799,9 +50079,9 @@ N     * file.
 N     */
 N#define _IOBIN            0x04     /* binary stream */
 N
-N#define STDIN_BUFSIZ  (64)  /* default stdin buffer size */
-N#define STDOUT_BUFSIZ (64)  /* default stdout buffer size */
-N#define STDERR_BUFSIZ (16)  /* default stderr buffer size */
+N#define __STDIN_BUFSIZ  (64)  /* default stdin buffer size */
+N#define __STDOUT_BUFSIZ (64)  /* default stdout buffer size */
+N#define __STDERR_BUFSIZ (16)  /* default stderr buffer size */
 N
 Nextern _ARMABI int remove(const char * /*filename*/) __attribute__((__nonnull__(1)));
 Xextern __declspec(__nothrow) int remove(const char *  ) __attribute__((__nonnull__(1)));
@@ -50028,8 +50308,14 @@ N    * is equivalent to sprintf, but does not support floating-point formats.
 N    * You can use instead of sprintf to improve code size.
 N    * Returns: as sprintf.
 N    */
-N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
-X#if !0L || (1L && 199901L <= 199409L)
+N
+N#pragma __printf_args
+Nextern _ARMABI int __ARM_snprintf(char * __restrict /*s*/, size_t /*n*/,
+Xextern __declspec(__nothrow) int __ARM_snprintf(char * __restrict  , size_t  ,
+N                     const char * __restrict /*format*/, ...) __attribute__((__nonnull__(3)));
+N
+N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X#if !0L || (1L && 199901L <= 199409L) || (0L && 201103L <= __cplusplus)
 N#pragma __printf_args
 Nextern _ARMABI int snprintf(char * __restrict /*s*/, size_t /*n*/,
 Xextern __declspec(__nothrow) int snprintf(char * __restrict  , size_t  ,
@@ -50148,8 +50434,8 @@ N    * is equivalent to sscanf, but does not support floating-point formats.
 N    * You can use instead of sscanf to improve code size.
 N    * Returns: as sscanf.
 N    */
-N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
-X#if !0L || (1L && 199901L <= 199409L)
+N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X#if !0L || (1L && 199901L <= 199409L) || (0L && 201103L <= __cplusplus)
 N/* C99 additions */
 Nextern _ARMABI int vfscanf(FILE * __restrict /*stream*/, const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1,2)));
 Xextern __declspec(__nothrow) int vfscanf(FILE * __restrict  , const char * __restrict  , __va_list) __attribute__((__nonnull__(1,2)));
@@ -50164,6 +50450,8 @@ Nextern _ARMABI int _vscanf(const char * __restrict /*format*/, __va_list) __att
 Xextern __declspec(__nothrow) int _vscanf(const char * __restrict  , __va_list) __attribute__((__nonnull__(1)));
 Nextern _ARMABI int _vsscanf(const char * __restrict /*s*/, const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1,2)));
 Xextern __declspec(__nothrow) int _vsscanf(const char * __restrict  , const char * __restrict  , __va_list) __attribute__((__nonnull__(1,2)));
+Nextern _ARMABI int __ARM_vsscanf(const char * __restrict /*s*/, const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) int __ARM_vsscanf(const char * __restrict  , const char * __restrict  , __va_list) __attribute__((__nonnull__(1,2)));
 N
 Nextern _ARMABI int vprintf(const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(1)));
 Xextern __declspec(__nothrow) int vprintf(const char * __restrict  , __va_list  ) __attribute__((__nonnull__(1)));
@@ -50203,8 +50491,11 @@ N    * va_end function.
 N    * Returns: the number of characters written in the array, not counting the
 N    *          terminating null character.
 N    */
-N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
-X#if !0L || (1L && 199901L <= 199409L)
+Nextern _ARMABI int __ARM_vsnprintf(char * __restrict /*s*/, size_t /*n*/,
+Xextern __declspec(__nothrow) int __ARM_vsnprintf(char * __restrict  , size_t  ,
+N                     const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(3)));
+N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X#if !0L || (1L && 199901L <= 199409L) || (0L && 201103L <= __cplusplus)
 Nextern _ARMABI int vsnprintf(char * __restrict /*s*/, size_t /*n*/,
 Xextern __declspec(__nothrow) int vsnprintf(char * __restrict  , size_t  ,
 N                     const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(3)));
@@ -50242,6 +50533,30 @@ N    * is equivalent to vsnprintf, but does not support floating-point formats.
 N    * You can use instead of vsnprintf to improve code size.
 N    * Returns: as vsnprintf.
 N    */
+N#if !defined(__STRICT_ANSI__)
+X#if !0L
+N#pragma __printf_args
+Nextern _ARMABI int asprintf(char ** /*strp*/, const char * __restrict /*format*/, ...) __attribute__((__nonnull__(2)));
+Xextern __declspec(__nothrow) int asprintf(char **  , const char * __restrict  , ...) __attribute__((__nonnull__(2)));
+Nextern _ARMABI int vasprintf(char ** /*strp*/, const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(2)));
+Xextern __declspec(__nothrow) int vasprintf(char **  , const char * __restrict  , __va_list  ) __attribute__((__nonnull__(2)));
+N#endif
+N#pragma __printf_args
+Nextern _ARMABI int __ARM_asprintf(char ** /*strp*/, const char * __restrict /*format*/, ...) __attribute__((__nonnull__(2)));
+Xextern __declspec(__nothrow) int __ARM_asprintf(char **  , const char * __restrict  , ...) __attribute__((__nonnull__(2)));
+Nextern _ARMABI int __ARM_vasprintf(char ** /*strp*/, const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(2)));
+Xextern __declspec(__nothrow) int __ARM_vasprintf(char **  , const char * __restrict  , __va_list  ) __attribute__((__nonnull__(2)));
+N   /*
+N    * dynamically allocates a buffer of the right size for the
+N    * formatted string, and returns it in (*strp). Formal return value
+N    * is the same as any other printf variant, except that it returns
+N    * -1 if the buffer could not be allocated.
+N    *
+N    * (The functions with __ARM_ prefixed names are identical to the
+N    * ones without, but are available in all compilation modes without
+N    * violating user namespace.)
+N    */
+N
 Nextern _ARMABI int fgetc(FILE * /*stream*/) __attribute__((__nonnull__(1)));
 Xextern __declspec(__nothrow) int fgetc(FILE *  ) __attribute__((__nonnull__(1)));
 N   /*
@@ -50582,7 +50897,7 @@ S    using ::std::printf;
 S    using ::std::_printf;
 S    using ::std::sprintf;
 S    using ::std::_sprintf;
-S    #if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
+S    #if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
 S      using ::std::snprintf;
 S      using ::std::vsnprintf;
 S      using ::std::vfscanf;
@@ -50591,6 +50906,15 @@ S      using ::std::vsscanf;
 S    #endif
 S    using ::std::_snprintf;
 S    using ::std::_vsnprintf;
+S#if !defined(__STRICT_ANSI__)
+S    using ::std::asprintf;
+S    using ::std::vasprintf;
+S#endif
+S    using ::std::__ARM_asprintf;
+S    using ::std::__ARM_vasprintf;
+S    using ::std::__ARM_vsnprintf;
+S    using ::std::__ARM_snprintf;
+S    using ::std::__ARM_vsscanf;
 S    using ::std::fscanf;
 S    using ::std::_fscanf;
 S    using ::std::scanf;
@@ -50637,15 +50961,16 @@ N
 N#endif /* ndef __stdio_h */
 N
 N/* end of stdio.h */
+N
 L 15 "..\APP\R_Face.c" 2
 N#include "stdlib.h"
-L 1 "D:\Keil\ARM\RV31\Inc\stdlib.h" 1
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h" 1
 N/* stdlib.h: ANSI draft (X3J11 May 88) library header, section 4.10 */
 N/* Copyright (C) Codemist Ltd., 1988-1993.                          */
-N/* Copyright 1991-1998 ARM Limited. All rights reserved.            */
+N/* Copyright 1991-1998,2014 ARM Limited. All rights reserved.       */
 N/*
-N * RCS $Revision: 152811 $
-N * Checkin $Date: 2010-03-04 09:02:00 +0000 (Thu, 04 Mar 2010) $
+N * RCS $Revision$
+N * Checkin $Date$
 N * Revising $Author: agrant $
 N */
 N 
@@ -50656,9 +50981,19 @@ N */
 N
 N#ifndef __stdlib_h
 N#define __stdlib_h
+N#define __ARMCLIB_VERSION 5060037
+N
+N#if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
+X#if 0L || (1L && !0L)
+N  /* armclang and non-strict armcc allow 'long long' in system headers */
+N  #define __LONGLONG long long
+N#else
+S  /* strict armcc has '__int64' */
+S  #define __LONGLONG __int64
+N#endif
 N
 N#define _ARMABI __declspec(__nothrow)
-N#define _ARMABI_PURE __declspec(__nothrow) __pure
+N#define _ARMABI_PURE __declspec(__nothrow) __attribute__((const))
 N#define _ARMABI_NORETURN __declspec(__nothrow) __declspec(__noreturn)
 N#define _ARMABI_THROW
 N
@@ -50670,8 +51005,8 @@ N   * Some of these declarations are new in C99.  To access them in C++
 N   * you can use -D__USE_C99_STDLIB (or -D__USE_C99ALL).
 N   */
 N  #ifndef __USE_C99_STDLIB
-N    #if defined(__USE_C99_ALL) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
-X    #if 0L || (1L && 199901L <= 199409L)
+N    #if defined(__USE_C99_ALL) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X    #if 0L || (1L && 199901L <= 199409L) || (0L && 201103L <= __cplusplus)
 S      #define __USE_C99_STDLIB 1
 N    #endif
 N  #endif
@@ -50689,10 +51024,19 @@ N
 N#if defined(__cplusplus) || !defined(__STRICT_ANSI__)
 X#if 0L || !0L
 N /* unconditional in C++ and non-strict C for consistency of debug info */
-N  typedef unsigned int size_t;
+N  #if __sizeof_ptr == 8
+X  #if 4 == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+N  #else
+N    typedef unsigned int size_t;   /* see <stddef.h> */
+N  #endif
 N#elif !defined(__size_t)
 S  #define __size_t 1
-S  typedef unsigned int size_t;   /* see <stddef.h> */
+S  #if __sizeof_ptr == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+S  #else
+S    typedef unsigned int size_t;   /* see <stddef.h> */
+S  #endif
 N#endif
 N
 N#undef NULL
@@ -50702,15 +51046,15 @@ N#ifndef __cplusplus  /* wchar_t is a builtin type for C++ */
 N  #if !defined(__STRICT_ANSI__)
 X  #if !0L
 N   /* unconditional in non-strict C for consistency of debug info */
-N   #if defined(__WCHAR32)
-X   #if 0L
+N   #if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
+X   #if 0L || (0L && __ARM_SIZEOF_WCHAR_T == 4)
 S    typedef unsigned int wchar_t; /* see <stddef.h> */
 N   #else
 N    typedef unsigned short wchar_t; /* see <stddef.h> */
 N   #endif
 N  #elif !defined(__wchar_t)
 S    #define __wchar_t 1
-S   #if defined(__WCHAR32)
+S   #if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
 S    typedef unsigned int wchar_t; /* see <stddef.h> */
 S   #else
 S    typedef unsigned short wchar_t; /* see <stddef.h> */
@@ -50724,7 +51068,8 @@ Ntypedef struct ldiv_t { long int quot, rem; } ldiv_t;
 N   /* type of the value returned by the ldiv function. */
 N#if !defined(__STRICT_ANSI__) || __USE_C99_STDLIB
 X#if !0L || __USE_C99_STDLIB
-Ntypedef struct lldiv_t { __int64 quot, rem; } lldiv_t;
+Ntypedef struct lldiv_t { __LONGLONG quot, rem; } lldiv_t;
+Xtypedef struct lldiv_t { long long quot, rem; } lldiv_t;
 N   /* type of the value returned by the lldiv function. */
 N#endif
 N
@@ -50806,8 +51151,8 @@ N    * Returns: the converted value.
 N    */
 N#if !defined(__STRICT_ANSI__) || __USE_C99_STDLIB
 X#if !0L || __USE_C99_STDLIB
-Nextern _ARMABI __int64 atoll(const char * /*nptr*/) __attribute__((__nonnull__(1)));
-Xextern __declspec(__nothrow) __int64 atoll(const char *  ) __attribute__((__nonnull__(1)));
+Nextern _ARMABI __LONGLONG atoll(const char * /*nptr*/) __attribute__((__nonnull__(1)));
+Xextern __declspec(__nothrow) long long atoll(const char *  ) __attribute__((__nonnull__(1)));
 N   /*
 N    * converts the initial part of the string pointed to by nptr to
 N    * long long int representation.
@@ -50911,18 +51256,20 @@ N    *          the macro ERANGE is stored in errno.
 N    */
 N
 N/* C90 reserves all names beginning with 'str' */
-Nextern _ARMABI __int64 strtoll(const char * __restrict /*nptr*/,
-Xextern __declspec(__nothrow) __int64 strtoll(const char * __restrict  ,
-N                               char ** __restrict /*endptr*/, int /*base*/) __attribute__((__nonnull__(1)));
+Nextern _ARMABI __LONGLONG strtoll(const char * __restrict /*nptr*/,
+Xextern __declspec(__nothrow) long long strtoll(const char * __restrict  ,
+N                                  char ** __restrict /*endptr*/, int /*base*/)
+N                          __attribute__((__nonnull__(1)));
 N   /*
 N    * as strtol but returns a long long int value.  If the correct value is
 N    * outside the range of representable values,  LLONG_MAX or LLONG_MIN is
 N    * returned (according to the sign of the value), and the value of the
 N    * macro ERANGE is stored in errno.
 N    */
-Nextern _ARMABI unsigned __int64 strtoull(const char * __restrict /*nptr*/,
-Xextern __declspec(__nothrow) unsigned __int64 strtoull(const char * __restrict  ,
-N                                         char ** __restrict /*endptr*/, int /*base*/) __attribute__((__nonnull__(1)));
+Nextern _ARMABI unsigned __LONGLONG strtoull(const char * __restrict /*nptr*/,
+Xextern __declspec(__nothrow) unsigned long long strtoull(const char * __restrict  ,
+N                                            char ** __restrict /*endptr*/, int /*base*/)
+N                                   __attribute__((__nonnull__(1)));
 N   /*
 N    * as strtoul but returns an unsigned long long int value.  If the correct
 N    * value is outside the range of representable values, ULLONG_MAX is returned,
@@ -51079,8 +51426,12 @@ N    * arguments at normal program termination. It is possible to register at
 N    * least 32 functions.
 N    * Returns: zero if the registration succeeds, nonzero if it fails.
 N    */
-N#if defined(__cplusplus) && !defined(__GNUC__)
-X#if 0L && !0L
+N#if defined(__EDG__) && !defined(__GNUC__)
+X#if 1L && !0L
+N#define __LANGUAGE_LINKAGE_CHANGES_FUNCTION_TYPE
+N#endif
+N#if defined(__cplusplus) && defined(__LANGUAGE_LINKAGE_CHANGES_FUNCTION_TYPE) 
+X#if 0L && 1L 
 S    /* atexit that takes a ptr to a function with C++ linkage 
 S     * but not in GNU mode  
 S     */
@@ -51167,8 +51518,8 @@ N    * Returns: a pointer to a matching member of the array, or a null pointer
 N    *          if no match is found. If two members compare as equal, which
 N    *          member is matched is unspecified.
 N    */
-N#if defined(__cplusplus) && !defined(__GNUC__)
-X#if 0L && !0L
+N#if defined(__cplusplus) && defined(__LANGUAGE_LINKAGE_CHANGES_FUNCTION_TYPE)
+X#if 0L && 1L
 S    /* bsearch that takes a ptr to a function with C++ linkage 
 S     * but not in GNU mode
 S     */
@@ -51201,8 +51552,8 @@ N    * than the second. If two members compare as equal, their order in the
 N    * sorted array is unspecified.
 N    */
 N
-N#if defined(__cplusplus) && !defined(__GNUC__)
-X#if 0L && !0L
+N#if defined(__cplusplus) && defined(__LANGUAGE_LINKAGE_CHANGES_FUNCTION_TYPE)
+X#if 0L && 1L
 S    /* qsort that takes a ptr to a function with C++ linkage 
 S     * but not in GNU mode
 S     */    
@@ -51217,7 +51568,7 @@ S    }
 N#endif
 N
 Nextern _ARMABI_PURE int abs(int /*j*/);
-Xextern __declspec(__nothrow) __pure int abs(int  );
+Xextern __declspec(__nothrow) __attribute__((const)) int abs(int  );
 N   /*
 N    * computes the absolute value of an integer j. If the result cannot be
 N    * represented, the behaviour is undefined.
@@ -51225,7 +51576,7 @@ N    * Returns: the absolute value.
 N    */
 N
 Nextern _ARMABI_PURE div_t div(int /*numer*/, int /*denom*/);
-Xextern __declspec(__nothrow) __pure div_t div(int  , int  );
+Xextern __declspec(__nothrow) __attribute__((const)) div_t div(int  , int  );
 N   /*
 N    * computes the quotient and remainder of the division of the numerator
 N    * numer by the denominator denom. If the division is inexact, the resulting
@@ -51238,7 +51589,7 @@ N    *          in either order.
 N    *          int quot; int rem;
 N    */
 Nextern _ARMABI_PURE long int labs(long int /*j*/);
-Xextern __declspec(__nothrow) __pure long int labs(long int  );
+Xextern __declspec(__nothrow) __attribute__((const)) long int labs(long int  );
 N   /*
 N    * computes the absolute value of an long integer j. If the result cannot be
 N    * represented, the behaviour is undefined.
@@ -51249,7 +51600,7 @@ S   extern "C++" inline _ARMABI_PURE long abs(long int x) { return labs(x); }
 N#endif
 N
 Nextern _ARMABI_PURE ldiv_t ldiv(long int /*numer*/, long int /*denom*/);
-Xextern __declspec(__nothrow) __pure ldiv_t ldiv(long int  , long int  );
+Xextern __declspec(__nothrow) __attribute__((const)) ldiv_t ldiv(long int  , long int  );
 N   /*
 N    * computes the quotient and remainder of the division of the numerator
 N    * numer by the denominator denom. If the division is inexact, the sign of
@@ -51271,19 +51622,19 @@ N#endif
 N
 N#if !defined(__STRICT_ANSI__) || __USE_C99_STDLIB
 X#if !0L || __USE_C99_STDLIB
-Nextern _ARMABI_PURE __int64 llabs(__int64 /*j*/);
-Xextern __declspec(__nothrow) __pure __int64 llabs(__int64  );
+Nextern _ARMABI_PURE __LONGLONG llabs(__LONGLONG /*j*/);
+Xextern __declspec(__nothrow) __attribute__((const)) long long llabs(long long  );
 N   /*
-N    * computes the absolute value of a __int64 integer j. If the
+N    * computes the absolute value of a long long integer j. If the
 N    * result cannot be represented, the behaviour is undefined.
 N    * Returns: the absolute value.
 N    */
 N#ifdef __cplusplus
-S   extern "C++" inline _ARMABI_PURE __int64 abs(__int64 x) { return llabs(x); }
+S   extern "C++" inline _ARMABI_PURE __LONGLONG abs(__LONGLONG x) { return llabs(x); }
 N#endif
 N
-Nextern _ARMABI_PURE lldiv_t lldiv(__int64 /*numer*/, __int64 /*denom*/);
-Xextern __declspec(__nothrow) __pure lldiv_t lldiv(__int64  , __int64  );
+Nextern _ARMABI_PURE lldiv_t lldiv(__LONGLONG /*numer*/, __LONGLONG /*denom*/);
+Xextern __declspec(__nothrow) __attribute__((const)) lldiv_t lldiv(long long  , long long  );
 N   /*
 N    * computes the quotient and remainder of the division of the numerator
 N    * numer by the denominator denom. If the division is inexact, the sign of
@@ -51298,12 +51649,13 @@ N    *          in either order.
 N    *          long long quot; long long rem;
 N    */
 N#ifdef __cplusplus
-S   extern "C++" inline _ARMABI_PURE lldiv_t div(__int64 __numer, __int64 __denom) {
+S   extern "C++" inline _ARMABI_PURE lldiv_t div(__LONGLONG __numer, __LONGLONG __denom) {
 S       return lldiv(__numer, __denom);
 S   }
 N#endif
 N#endif
 N
+N#if !(__ARM_NO_DEPRECATED_FUNCTIONS)
 N/*
 N * ARM real-time divide functions for guaranteed performance
 N */
@@ -51313,26 +51665,27 @@ N   /* used int so that values return in separate regs, although 16-bit */
 Ntypedef struct __sdiv64by32 { int rem, quot; } __sdiv64by32;
 N
 N__value_in_regs extern _ARMABI_PURE __sdiv32by16 __rt_sdiv32by16(
-X__value_in_regs extern __declspec(__nothrow) __pure __sdiv32by16 __rt_sdiv32by16(
+X__value_in_regs extern __declspec(__nothrow) __attribute__((const)) __sdiv32by16 __rt_sdiv32by16(
 N     int /*numer*/,
 N     short int /*denom*/);
 N   /*
 N    * Signed divide: (16-bit quot), (16-bit rem) = (32-bit) / (16-bit)
 N    */
 N__value_in_regs extern _ARMABI_PURE __udiv32by16 __rt_udiv32by16(
-X__value_in_regs extern __declspec(__nothrow) __pure __udiv32by16 __rt_udiv32by16(
+X__value_in_regs extern __declspec(__nothrow) __attribute__((const)) __udiv32by16 __rt_udiv32by16(
 N     unsigned int /*numer*/,
 N     unsigned short /*denom*/);
 N   /*
 N    * Unsigned divide: (16-bit quot), (16-bit rem) = (32-bit) / (16-bit)
 N    */
 N__value_in_regs extern _ARMABI_PURE __sdiv64by32 __rt_sdiv64by32(
-X__value_in_regs extern __declspec(__nothrow) __pure __sdiv64by32 __rt_sdiv64by32(
+X__value_in_regs extern __declspec(__nothrow) __attribute__((const)) __sdiv64by32 __rt_sdiv64by32(
 N     int /*numer_h*/, unsigned int /*numer_l*/,
 N     int /*denom*/);
 N   /*
 N    * Signed divide: (32-bit quot), (32-bit rem) = (64-bit) / (32-bit)
 N    */
+N#endif
 N
 N/*
 N * ARM floating-point mask/status function (for both hardfp and softfp)
@@ -51551,12 +51904,14 @@ S      #if !defined(__STRICT_ANSI__) || __USE_C99_STDLIB
 S        using ::std::llabs;
 S        using ::std::lldiv;
 S      #endif /* !defined(__STRICT_ANSI__) || __USE_C99_STDLIB */
+S#if !(__ARM_NO_DEPRECATED_FUNCTIONS)
 S      using ::std::__sdiv32by16;
 S      using ::std::__udiv32by16;
 S      using ::std::__sdiv64by32;
 S      using ::std::__rt_sdiv32by16;
 S      using ::std::__rt_udiv32by16;
 S      using ::std::__rt_sdiv64by32;
+S#endif
 S      using ::std::__fp_status;
 S      using ::std::mblen;
 S      using ::std::mbtowc;
@@ -51575,7 +51930,10 @@ S      using ::std::__aeabi_MB_CUR_MAX;
 S    #endif /* __STDLIB_NO_EXPORTS */
 N  #endif /* __cplusplus */
 N
-N#endif
+N#undef __LONGLONG
+N
+N#endif /* __stdlib_h */
+N
 N/* end of stdlib.h */
 L 16 "..\APP\R_Face.c" 2
 N#include "key.h"
@@ -51803,8 +52161,15 @@ Sextern u8 usartocflag;
 Sextern u8 usartshortflag;
 Sextern float oc_data;
 Sextern vu8 lock;
-Sextern vu32 Run_Control[42];	
+Sextern vu32 Run_Control[49];	
 Sextern u8 lockstat1,lockstat2;
+Sextern int16_t InFlashSave[20];
+S#define set_max_lv						InFlashSave[0]
+S#define set_min_lv						InFlashSave[1]
+S#define set_max_pc						InFlashSave[2]
+S#define set_min_pc						InFlashSave[3]
+S#define set_load_cutoffv				InFlashSave[4]
+S#define set_pow_cutoffc					InFlashSave[5]
 S
 S#define SLAVE_REG_P00		0x0000       //R_VOLU
 S#define SLAVE_REG_P01		0x0001      //Load_Voltage
@@ -51881,6 +52246,12 @@ S#define pow_v    					    Run_Control[38]
 S#define cdc_dc    					    Run_Control[39]
 S#define pow_c    					    Run_Control[40]
 S#define load_v    					    Run_Control[41]
+S#define set_static_pv					Run_Control[42]
+S#define set_static_pc					Run_Control[43]
+S#define set_static_lc					Run_Control[44]
+S
+S
+S
 S
 Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
@@ -51985,6 +52356,21 @@ S#define set_71          70
 S#define set_72          71
 S#define set_73          72
 S#define set_74          73
+S#define set_75          74
+S#define set_76          75
+S#define set_77          76
+S#define set_78          77
+S#define set_79          78
+S#define set_80          79
+S#define set_81          80
+S#define set_82          81
+S#define set_83          82
+S#define set_84          83
+S#define set_85          84
+S#define set_86          85
+S#define set_87          86
+S#define set_88          87
+S#define set_89          88
 S/*
 S************************************************************************
 S*						��������ʶ���
@@ -52130,15 +52516,15 @@ N#endif
 N/******************* (C) COPYRIGHT 2015 AVER *****END OF FILE***************************/
 L 17 "..\APP\R_Face.c" 2
 N#include "string.h"
-L 1 "D:\Keil\ARM\RV31\Inc\string.h" 1
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h" 1
 N/* string.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.11 */
 N/* Copyright (C) Codemist Ltd., 1988-1993.                        */
 N/* Copyright 1991-1993 ARM Limited. All rights reserved.          */
 N/* version 0.04 */
 N
 N/*
-N * RCS $Revision: 137748 $
-N * Checkin $Date: 2008-09-11 17:34:24 +0100 (Thu, 11 Sep 2008) $
+N * RCS $Revision$
+N * Checkin $Date$
 N */
 N
 N/*
@@ -52152,6 +52538,7 @@ N */
 N
 N#ifndef __string_h
 N#define __string_h
+N#define __ARMCLIB_VERSION 5060037
 N
 N#define _ARMABI __declspec(__nothrow)
 N
@@ -52171,10 +52558,19 @@ N
 N#if defined(__cplusplus) || !defined(__STRICT_ANSI__)
 X#if 0L || !0L
 N /* unconditional in C++ and non-strict C for consistency of debug info */
-N  typedef unsigned int size_t;
+N  #if __sizeof_ptr == 8
+X  #if 4 == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+N  #else
+N    typedef unsigned int size_t;   /* see <stddef.h> */
+N  #endif
 N#elif !defined(__size_t)
 S  #define __size_t 1
-S  typedef unsigned int size_t;   /* see <stddef.h> */
+S  #if __sizeof_ptr == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+S  #else
+S    typedef unsigned int size_t;   /* see <stddef.h> */
+S  #endif
 N#endif
 N
 N#undef NULL
@@ -52668,6 +53064,7 @@ N
 N#endif
 N
 N/* end of string.h */
+N
 L 18 "..\APP\R_Face.c" 2
 N#include "beep.h"
 L 1 "..\Include\beep.h" 1
@@ -52716,9 +53113,14 @@ Nvu8 buffer;
 Nvu8 set_sw;
 Nvu8 oc_mode;
 Nvu8 rpow;
+Nvu8 test_start = 0;
+Nfloat static_pc;
+Nfloat static_lv;
+Nvu8 staticcdc;
+Nvu8 step;
 N////////////////////////////////////
 N
-Nvu32 dis_gate_v;
+Nvu16 dis_gate_v;
 Nfloat DISS_R;//内阻
 Nextern vu8 page_sw;
 Nstatic vu8 oc_sw = set_20;
@@ -52807,8 +53209,15 @@ N#define ID_BUTTON_14    (GUI_ID_USER + 0x1A)
 N#define ID_BUTTON_15   	(GUI_ID_USER + 0x1B)
 N#define ID_BUTTON_16   	(GUI_ID_USER + 0x1C)
 N#define ID_BUTTON_17    (GUI_ID_USER + 0x1D)
-N
-N
+N#define ID_TEXT_145     (GUI_ID_USER + 0x012F)
+N#define ID_TEXT_146     (GUI_ID_USER + 0x0130)
+N#define ID_TEXT_147     (GUI_ID_USER + 0x0131)
+N#define ID_TEXT_148     (GUI_ID_USER + 0x0132)
+N#define ID_TEXT_149     (GUI_ID_USER + 0x0133)
+N#define ID_TEXT_150     (GUI_ID_USER + 0x0134)
+N#define ID_TEXT_151     (GUI_ID_USER + 0x0135)
+N#define ID_TEXT_152     (GUI_ID_USER + 0x0136)
+N#define ID_TEXT_153     (GUI_ID_USER + 0x0137)
 N
 N#define ID_TimerTime    1
 N// USER START (Optionally insert additional defines)
@@ -52833,48 +53242,48 @@ N  { WINDOW_CreateIndirect, "R", ID_WINDOW_1, 0, 0, 480, 272, 0, 0x0, 0 },
 X  { WINDOW_CreateIndirect, "R", (0x800 + 0x12), 0, 0, 480, 272, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_0, 28, 50, 64, 32, 0, 0x64, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x13), 28, 50, 64, 32, 0, 0x64, 0 },
-N  { TEXT_CreateIndirect, "Text", ID_TEXT_1, 300, 50, 100, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect, "Text", (0x800 + 0x14), 300, 50, 100, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_1, 270, 50+10, 60, 14, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x14), 270, 50+10, 60, 14, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_3, 240, 50, 32, 30, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x15), 240, 50, 32, 30, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_4, 239, 121, 32, 32, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x16), 239, 121, 32, 32, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_6, 217, 128, 32, 20, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x17), 217, 128, 32, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect, "Text", ID_TEXT_43, 300, 150, 100, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect, "Text", (0x800 + 0x68), 300, 150, 100, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect, "Text", ID_TEXT_44, 300, 75, 100, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect, "Text", (0x800 + 0x69), 300, 75, 100, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect, "Text", ID_TEXT_45, 300, 100, 100, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect, "Text", (0x800 + 0x6A), 300, 100, 100, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect, "Text", ID_TEXT_46, 400, 75, 57, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect, "Text", (0x800 + 0x6B), 400, 75, 57, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect, "Text", ID_TEXT_47, 400, 100, 57, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect, "Text", (0x800 + 0x6C), 400, 100, 57, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_43, 270, 130+10, 60, 14, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x68), 270, 130+10, 60, 14, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_44, 270, 70+10, 60, 14, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x69), 270, 70+10, 60, 14, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_45, 270, 90+10, 60, 14, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x6A), 270, 90+10, 60, 14, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_46, 335, 70+10, 40, 15, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x6B), 335, 70+10, 40, 15, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_47, 335, 90+10, 40, 15, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x6C), 335, 90+10, 40, 15, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_80, 95, 48, 150, 40, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x8D), 95, 48, 150, 40, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_81, 95, 116, 150, 40, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x8E), 95, 116, 150, 40, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_82, 95, 184, 150, 40, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x8F), 95, 184, 150, 40, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect, "Text", ID_TEXT_83, 400, 175, 57, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect, "Text", (0x800 + 0x90), 400, 175, 57, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_83, 400, 130, 40, 15, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x90), 400, 130, 40, 15, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_96, 240, 5, 120, 20, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0104), 240, 5, 120, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect, "Text", ID_TEXT_97, 400, 125, 60, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0105), 400, 125, 60, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_97, 335, 110+10, 40, 14, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0105), 335, 110+10, 40, 14, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_98, 405, 5, 80, 20, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0106), 405, 5, 80, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect, "Text", ID_TEXT_117, 400, 200, 60, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0107), 400, 200, 60, 20, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect, "Text", ID_TEXT_118, 300, 125, 100, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0108), 300, 125, 100, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_117, 400, 90, 60, 14, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0107), 400, 90, 60, 14, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_118, 270, 110+10, 60, 14, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0108), 270, 110+10, 60, 14, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_124, 300, 2, 80, 20, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0109), 300, 2, 80, 20, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_125, 5, 225, 80, 30, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x010A), 5, 225, 80, 30, 0, 0x0, 0 },
-N  { TEXT_CreateIndirect, "Text", ID_TEXT_130, 400, 150, 60, 20, 0, 0x0, 0 },
-X  { TEXT_CreateIndirect, "Text", (0x800 + 0x010E), 400, 150, 60, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_130, 335, 130+10, 40, 15, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x010E), 335, 130+10, 40, 15, 0, 0x0, 0 },
 N//   { BUTTON_CreateIndirect, "Button", ID_BUTTON_12, 3, 226, 77, 45, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_126, 5, 255, 50, 20, 20, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x010B), 5, 255, 50, 20, 20, 0x0, 0 },
@@ -52882,8 +53291,26 @@ N  { TEXT_CreateIndirect, "Text", ID_TEXT_127, 54, 255, 20, 20, 20, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x010C), 54, 255, 20, 20, 20, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_128, 68, 254, 20, 20, 20, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x010D), 68, 254, 20, 20, 20, 0x0, 0 },
-N  { TEXT_CreateIndirect, "Text", ID_TEXT_132, 400, 50, 40, 20, 20, 0x0, 0 },
-X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0121), 400, 50, 40, 20, 20, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_132, 335, 50+10, 40, 15, 20, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0121), 335, 50+10, 40, 15, 20, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_145, 270, 150+10, 60, 14, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x012F), 270, 150+10, 60, 14, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_146, 270, 170+10, 60, 14, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0130), 270, 170+10, 60, 14, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_147, 270, 190+10, 60, 14, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0131), 270, 190+10, 60, 14, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_148, 335, 150+10, 40, 15, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0132), 335, 150+10, 40, 15, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_149, 335, 170+10, 40, 15, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0133), 335, 170+10, 40, 15, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_150, 335, 190+10, 40, 15, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0134), 335, 190+10, 40, 15, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_151, 400, 170, 40, 15, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0135), 400, 170, 40, 15, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_152, 270, 40, 60, 15, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0136), 270, 40, 60, 15, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_153, 335, 40, 40, 15, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x0137), 335, 40, 40, 15, 0, 0x0, 0 },
 N  { BUTTON_CreateIndirect, "Button", ID_BUTTON_13, 83, 226, 77, 45, 0, 0x0, 0 },
 X  { BUTTON_CreateIndirect, "Button", (0x800 + 0x19), 83, 226, 77, 45, 0, 0x0, 0 },
 N  { BUTTON_CreateIndirect, "Button", ID_BUTTON_14, 163, 226, 77, 45, 0, 0x0, 0 },
@@ -52924,6 +53351,7 @@ N    float dis_sbs_c = (float)set_sbs_c/1000;
 X    float dis_sbs_c = (float)Run_Control[23]/1000;
 N    static vu8 led_sw = 0;
 N
+N
 N  // USER START (Optionally insert additional variables)
 N  // USER END
 N//    int i;
@@ -52958,7 +53386,7 @@ N    GUI_SetFont(&GUI_Fontunit);
 N    GUI_DispStringAt("°",342, 2);
 N    GUI_SetFont(&GUI_Font24_1);
 N    GUI_DispStringAt("C",350, 2);
-W "..\APP\R_Face.c" 242 5 function "DrawLock" declared implicitly
+W "..\APP\R_Face.c" 264 5 function "DrawLock" declared implicitly
 N    DrawLock();
 N//    GUI_DispDecAt(R_VLUE,50,140,4);//显示内阻值
 N//      GUI_GotoXY(220,4);
@@ -52997,19 +53425,28 @@ N                GUI_DispStringAt("R:", 28, 120);
 N                GUI_SetColor(GUI_LIGHTGRAY);
 X                GUI_SetColor(0x00D3D3D3);
 N                GUI_DispStringAt("A", 240, 187);
-N                GUI_SetFont(&GUI_Font24_1);
+N                GUI_SetFont(&GUI_Font16_1);
 N                GUI_SetColor(GUI_WHITE);
 X                GUI_SetColor(0x00FFFFFF);
-N                GUI_DispStringAt("A",460,75);
-N                GUI_DispStringAt("A",460,100);
-N                GUI_DispStringAt("V",460,125);
-N                GUI_DispStringAt("ms",450,150);
-N                GUI_DispStringAt("A",460,175);
-N                GUI_DispStringAt("ms",450,200);
-N                GUI_SetFont(&GUI_Fontset_font);
-N                GUI_DispStringAt("负载电流", 300, 175);
-N                GUI_DispStringAt("短路时间", 300, 200);//SET
-N//                GUI_DispStringAt("过流测试", 340, 30);//SET
+N                GUI_DispStringAt("A",375+10,70+10);
+N                GUI_DispStringAt("A",375+10,90+10);
+N                GUI_DispStringAt("V",375+10,110+10);
+N                GUI_DispStringAt("ms",365+10,130+10);
+N				GUI_DispStringAt("V",375+10,150+10);
+N                GUI_DispStringAt("A",375+10,170+10);
+N                GUI_DispStringAt("A",375+10,190+10);
+N//                GUI_DispStringAt("A",400,110);
+N                GUI_DispStringAt("ms",430,90);
+N				GUI_DispStringAt("V",440,130);
+N                GUI_DispStringAt("A",440,170);
+N				
+N                GUI_SetFont(&GUI_FontHZ14);
+N				GUI_SetColor(GUI_GREEN);
+X				GUI_SetColor(0x0000FF00);
+N                GUI_DispStringAt("测试结果", 400, 50);
+N                GUI_DispStringAt("短路时间", 400, 70);//SET
+N                GUI_DispStringAt("负载电压", 400, 110);//SET
+N				GUI_DispStringAt("充电电流", 400, 150);//SET
 N//                 if(oc_data == 0)
 N//                 {
 N//                     GUI_SetFont(&GUI_Font24_1);
@@ -53038,13 +53475,12 @@ X	case 0x0113:
 N	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime)
 X	if(WM_GetTimerId(pMsg->Data.v) == 1)
 N	{
-N        lockstat2 = lockstat1;
 N        lockstat1 = lock;
 N        if(lockstat1 != lockstat2)
 N        {
 N            WM_InvalidateWindow(hWinR);
-N        }
-N        if(manual == 0)
+N        }//锁屏处理
+N		if(manual == 0)
 N        {
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_125);
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x010A));
@@ -53083,6 +53519,8 @@ N            GUI_UC_SetEncodeUTF8();
 N            TEXT_SetText(hItem,"Range");
 N            if(r_raly == 1)
 N            {
+N				GPIO_SetBits(GPIOB,GPIO_Pin_13);//R_RALY高档位
+X				GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_126);       
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x010B));       
 N                TEXT_SetText(hItem,"2000");
@@ -53093,6 +53531,8 @@ N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_128);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x010D));       
 N                TEXT_SetText(hItem,"Ω");
 N            }else{
+N				GPIO_ResetBits(GPIOB,GPIO_Pin_13);//R_RALY低档位 
+X				GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_126);       
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x010B));       
 N                TEXT_SetText(hItem,"200");
@@ -53104,14 +53544,11 @@ X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x010D));
 N                TEXT_SetText(hItem,"Ω");
 N            }
 N        }
-N        
-N        
-N       
-N        
-N        if(para_set2 == set_2_on)
-X        if(para_set2 == 0xff)
+N         
+N		if(para_set2 == set_2_on)
+X		if(para_set2 == 0xff)
 N        {
-N            if(oc_mode == 0)
+N			if(oc_mode == 0)
 N            {
 N                GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
 X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));
@@ -53121,7 +53558,7 @@ N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_132);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0121));
 N                TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N                TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
 N                GUI_UC_SetEncodeUTF8();        
 N                TEXT_SetText(hItem,"CC");
 N            }else if(oc_mode == 1){
@@ -53133,302 +53570,122 @@ N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_132);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0121));
 N                TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N                TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
 N                GUI_UC_SetEncodeUTF8();        
 N                TEXT_SetText(hItem,"CV");
 N            }
-N        
-N            if(short_finish == 1)
-N            {
-N                if(gate_v == 0)
-N                {
-N                    if(GUI_GetTime()/500 - test_ftime == 1)
-N                    {
-W "..\APP\R_Face.c" 394 25 function "setmode_r" declared implicitly
-N                        setmode_r();
-N//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-N//                         Mode_SW_CONT(0x01);
-N                    }
-W "..\APP\R_Face.c" 398 51 single-precision operand implicitly converted to double-precision
-N                    if(/*mode_sw == mode_pow && */DISS_Voltage < 0.3  && GUI_GetTime()/500 - test_ftime > 2 /*&& R_VLUE < 50*/)
-N                    {
-N//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-N//                         Mode_SW_CONT(0x01);
-W "..\APP\R_Face.c" 402 25 function "setmode_r" declared implicitly
-N                        setmode_r();
-N                        finish = 0;
-N                        con_flag = 0;
-N                        short_finish = 0;
-N                        test_finish = 0;
-N                        r_test = 0;
-N                        v = 0;
-N                        if(manual == 0)
-N                        {
-N                            GPIO_SetBits(GPIOB,GPIO_Pin_13);//R_RALY
-X                            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
-N                            r_raly=1;
-N                        }
-N                    }
-N                }else{
-N                    if(GUI_GetTime()/500 - test_ftime == 2)
-N                    {
-N//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-N//                         Mode_SW_CONT(0x01);
-W "..\APP\R_Face.c" 420 25 function "setmode_r" declared implicitly
-N                        setmode_r();
-N                    }
-N                    if(/* mode_sw == mode_pow && */(r_test == 0 || DISS_Voltage < gate_v) && GUI_GetTime()/500 - test_ftime > 1/*&& R_VLUE < 50*/)
-N                    { 
-N//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-N//                         Mode_SW_CONT(0x01);
-W "..\APP\R_Face.c" 426 25 function "setmode_r" declared implicitly
-N                        setmode_r();
-N                        finish = 0;
-N                        con_flag = 0;
-N                        short_finish = 0;
-N                        test_finish = 0;
-N                        r_test = 0;
-N                        GPIO_SetBits(GPIOB,GPIO_Pin_13);//R_RALY
-X                        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
-N                        r_raly=1;
-N                        v = 0;
-N                    }
-N                }                    
-N            }else{
-N                if(para_set2 == set_2_on)
-X                if(para_set2 == 0xff)
-N                {
-N                    if(gate_v == 0)
-N                    {
-N                        if(DISS_Voltage > 1 && R_VLUE > 20 && con_flag == 0 && finish == 0)
-X                        if(DISS_Voltage > 1 && Run_Control[13] > 20 && con_flag == 0 && finish == 0)
-N                        {
-N                            con_flag = 1;
-W "..\APP\R_Face.c" 445 37 single-precision operand implicitly converted to double-precision
-N                            time1 = (float)GUI_GetTime()/500.0;
-N                        }
-N                        
-N                        if(con_flag == 1 && oct_sw == oct_off && finish == 0)
-X                        if(con_flag == 1 && oct_sw == 0 && finish == 0)
-N                        {
-N                            if(test_mode == 0)
-N                            {
-N                                if((float)(GUI_GetTime()/500.0 - time1) > 1)
-N                                {
-N                                    r = R_VLUE;
-X                                    r = Run_Control[13];
-N    //                                v = DISS_Voltage;
-N                                    oct_sw = oct_on;
-X                                    oct_sw = 1;
-N                                    clear_flag1 = 0;
-N                                }else{
-N                                    if(v < DISS_Voltage)
-N                                    {
-N                                        v = DISS_Voltage;
-N                                    }
-N                                }
-N                            }else if(test_mode == 1){
-W "..\APP\R_Face.c" 465 36 single-precision operand implicitly converted to double-precision
-N                                if((float)(GUI_GetTime()/500.0 - time1) > 2.5)
-N                                {
-N                                    r = R_VLUE;
-X                                    r = Run_Control[13];
-N    //                                v = DISS_Voltage;
-N                                    oct_sw = oct_on;
-X                                    oct_sw = 1;
-N                                    clear_flag1 = 0;
-N                                }else{
-N                                    if(v < DISS_Voltage)
-N                                    {
-N                                        v = DISS_Voltage;
-N                                    }
-N                                }
-N                            }
-N                        }
-N                    }else{
-N                        if(DISS_Voltage > gate_v && R_VLUE > 20 && con_flag == 0 && finish == 0 && r_test == 1)
-X                        if(DISS_Voltage > gate_v && Run_Control[13] > 20 && con_flag == 0 && finish == 0 && r_test == 1)
-N                        {
-N                            con_flag = 1;
-W "..\APP\R_Face.c" 483 37 single-precision operand implicitly converted to double-precision
-N                            time1 = (float)GUI_GetTime()/500.0;
-N                        }                       
-N                        if(con_flag == 1 && oct_sw == oct_off && finish == 0)
-X                        if(con_flag == 1 && oct_sw == 0 && finish == 0)
-N                        {
-N                            if(test_mode == 0)
-N                            {
-N                                if((float)(GUI_GetTime()/500.0 - time1) > 1)
-N                                {
-N                                    r = R_VLUE;
-X                                    r = Run_Control[13];
-N    //                                v = DISS_Voltage;
-N                                    oct_sw = oct_on;
-X                                    oct_sw = 1;
-N                                    clear_flag1 = 0;
-N                                }else{
-N                                    if(v < DISS_Voltage)
-N                                    {
-N                                        v = DISS_Voltage;
-N                                    }
-N                                }
-N                            }else if(test_mode == 1){
-W "..\APP\R_Face.c" 502 36 single-precision operand implicitly converted to double-precision
-N                                if((float)(GUI_GetTime()/500.0 - time1) > 2.5)
-N                                {
-N                                    r = R_VLUE;
-X                                    r = Run_Control[13];
-N    //                                v = DISS_Voltage;
-N                                    oct_sw = oct_on;
-X                                    oct_sw = 1;
-N                                    clear_flag1 = 0;
-N                                }else{
-N                                    if(v < DISS_Voltage)
-N                                    {
-N                                        v = DISS_Voltage;
-N                                    }
-N                                }
-N                            }
-N                        }
-N                    }
-N                }
-N                
-N            }
-N            
-N            
-N            
-N            if(oct_sw == oct_on && para_set2 == set_2_on)
-X            if(oct_sw == 1 && para_set2 == 0xff)
-N            {
-N//                 Mode_SW_CONT(0x02);
-N//                 GPIO_ResetBits(GPIOC,GPIO_Pin_1);
-N                GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N                GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-X                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
-N//                GPIO_ResetBits(GPIOC,GPIO_Pin_12);//CC
-N                GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
-X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
-N                oc_test = 1;
-N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
-N                TEXT_SetFont(hItem,&GUI_FontD24x32);
-N                sprintf(buf,"%4d",r);  
-N                TEXT_SetText(hItem,buf);
-N                
-N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
-N                sprintf(buf,"%.3f",v);       
-N                TEXT_SetText(hItem,buf);
-N                
-N                
-N    //             if(status_flash == 0){
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0106));
-N                    TEXT_SetTextColor(hItem, GUI_RED);
-X                    TEXT_SetTextColor(hItem, 0x000000FF);
-N                    TEXT_SetText(hItem, "测试中");
-N//                    status_flash = 1;
-N                    
-N    //             }else{
-N    //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
-N    //                 TEXT_SetText(hItem,"");
-N    //                 status_flash = 0;
-N    //             }
-N                
-N            }else
-N            {
-N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
-X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0106));
+N			
+N			if(staticcdc == 1)
+N			{
+N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_153);
+X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0137));
+N				TEXT_SetText(hItem, "开");
+N			}else{
+N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_153);
+X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0137));
+N				TEXT_SetText(hItem, "关");
+N			}
+N			
+N			
+N			
+N			if(test_start == 0)
+N			{
+N				if(DISS_Voltage > 1 && DISS_Voltage > gate_v && R_VLUE > 20 && con_flag == 0)
+X				if(DISS_Voltage > 1 && DISS_Voltage > gate_v && Run_Control[13] > 20 && con_flag == 0)
+N				{
+N					con_flag = 1;
+W "..\APP\R_Face.c" 432 14 single-precision operand implicitly converted to double-precision
+N					time1 = (float)GUI_GetTime()/500.0;
+N				}
+N				if(con_flag == 1)
+N				{
+N					if(test_mode == 0)
+N					{
+N						if((float)(GUI_GetTime()/500.0 - time1) > 1)
+N						{
+N							if(staticcdc == 1)
+N							{
+N								step = 1;
+N							}else{
+N								step = 4;
+N								SET_Current_Laod = set_init_c;
+X								Run_Control[4] = Run_Control[22];
+N								GPIO_ResetBits(GPIOA,GPIO_Pin_15);
+X								GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N							}
+N							test_start = 1;
+N							r = R_VLUE;
+X							r = Run_Control[13];
+N							v = DISS_Voltage;
+N						}
+N					}else if(test_mode == 1){
+W "..\APP\R_Face.c" 453 10 single-precision operand implicitly converted to double-precision
+N						if((float)(GUI_GetTime()/500.0 - time1) > 2.5)
+N						{
+N							if(staticcdc == 1)
+N							{
+N								step = 1;
+N							}else{
+N								step = 4;
+N								SET_Current_Laod = set_init_c;
+X								Run_Control[4] = Run_Control[22];
+N								GPIO_ResetBits(GPIOA,GPIO_Pin_15);
+X								GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N							}
+N							test_start = 1;
+N							r = R_VLUE;
+X							r = Run_Control[13];
+N							v = DISS_Voltage;
+N						}
+N					}
+N				}
+N			
+N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
+X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0106));
 N                TEXT_SetTextColor(hItem, GUI_WHITE);
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
 N                TEXT_SetText(hItem, "未测试");
-N            }
-N            
-N            if(oct_sw == oct_off && finish == 0)
-X            if(oct_sw == 0 && finish == 0)
-N            {
-N                if(DISS_Voltage > 1 && r_stable == 0)
-N                {
-N                    r_stable = 1;
-N                    stable_time = GUI_GetTime()/500;
-N                }else if(DISS_Voltage < 1){
-N                    r_stable = 0;
-N                }                    
-W "..\APP\R_Face.c" 570 20 single-precision operand implicitly converted to double-precision
-N                if(DISS_Voltage < 0.1)
+N				
+W "..\APP\R_Face.c" 474 8 single-precision operand implicitly converted to double-precision
+N				if(DISS_Voltage < 0.1)
 N                {
 N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
 X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
 N                    sprintf(buf,"%.3f",0.000);
 N                    TEXT_SetText(hItem,buf);
+N					
+N					hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);					
+X					hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));					
+N					sprintf(buf,"%04d",0);       
+N					TEXT_SetText(hItem,buf);
 N                }else{
 N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
 X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
 N                    sprintf(buf,"%.3f",DISS_Voltage);       
 N                    TEXT_SetText(hItem,buf);
+N					
+N					if(R_VLUE >= 2000)
+X					if(Run_Control[13] >= 2000)
+N					{
+N//						hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+N//						TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
+N//						TEXT_SetText(hItem,"OVER");
+N					}else{
+N						hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);					
+X						hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));					
+N						sprintf(buf,"%04d",R_VLUE);       
+X						sprintf(buf,"%04d",Run_Control[13]);       
+N						TEXT_SetText(hItem,buf);
+N					}
 N                }
-N                if(clear_flag1 == 1 && R_VLUE <= clear_r)
-X                if(clear_flag1 == 1 && Run_Control[13] <= clear_r)
-N                {
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
-N                    sprintf(buf,"%4d",0);       
-N                    TEXT_SetText(hItem,buf);
-N                }
-N                else if(R_VLUE >= 2000)
-X                else if(Run_Control[13] >= 2000)
-N                {
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
-N                    TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
-N                    TEXT_SetText(hItem,"");
-N                }else{
-N                        if(GUI_GetTime()/500 - stable_time == 1 && r_stable == 1)
-N                        {
-N                            r = R_VLUE;
-X                            r = Run_Control[13];
-N                            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-X                            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
-N                            TEXT_SetFont(hItem,&GUI_FontD24x32);
-N                            sprintf(buf,"%4d",r);       
-N                            TEXT_SetText(hItem,buf);
-N                        }else if(r_stable == 0)
-N                        {
-W "..\APP\R_Face.c" 601 32 single-precision operand implicitly converted to double-precision
-N                            if(DISS_Voltage < 0.3)
-N                            {
-N                                if(para_set1 == set_1_on)
-X                                if(para_set1 == 0xff)
-N                                {
-N//                                     GPIO_ResetBits(GPIOD,GPIO_Pin_12);
-N//                                     TM1650_SET_LED(0x48,0x71);
-N//                                     TM1650_SET_LED(0x68,0xF2);//PASS灯
-N                                }
-N                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-X                                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
-N                                TEXT_SetFont(hItem,&GUI_FontD24x32);
-N                                TEXT_SetTextColor(hItem, GUI_GREEN);
-X                                TEXT_SetTextColor(hItem, 0x0000FF00);
-N                                sprintf(buf,"%4d",0);       
-N                                TEXT_SetText(hItem,buf);
-N                            }else{
-N                                
-N                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-X                                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
-N                                TEXT_SetFont(hItem,&GUI_FontD24x32);
-N                                
-N                                sprintf(buf,"%4d",R_VLUE);       
-X                                sprintf(buf,"%4d",Run_Control[13]);       
-N                                TEXT_SetText(hItem,buf);
-N                            }
-N                        }                        
-N                }
-N                short_time = 0;
+N				
+N				
+N				
+N				short_time = 0;
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0107));
 N                sprintf(buf,"%4d",short_time);
-N                TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体      
+N                TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体      
 N                TEXT_SetText(hItem,buf);
 N                
 N                oc_data = 0;
@@ -53438,344 +53695,123 @@ N                TEXT_SetTextColor(hItem, GUI_GREEN);
 X                TEXT_SetTextColor(hItem, 0x0000FF00);
 N                sprintf(buf,"%.3f",oc_data);
 N                TEXT_SetText(hItem,buf);
-N            }
-N//             else{
-N//                 if(para_set2 == set_2_on)
-N//                 {
-N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-N//                     sprintf(buf,"%.3f",v);       
-N//                     TEXT_SetText(hItem,buf);
-N//                     
-N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N//                     TEXT_SetFont(hItem,&GUI_FontD24x32);
-N//                     sprintf(buf,"%4d",r);       
-N//                     TEXT_SetText(hItem,buf);
-N//                     
-N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-N//                     sprintf(buf,"%4d",short_time);
-N//                     TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体      
-N//                     TEXT_SetText(hItem,buf);
-N//                     
-N//                     if(short_finish == 0 ){
-N//                         if(DISS_Voltage < 1 && short_flag == 0 && oct_sw == oct_off)
-N//                         {
-N//                             SET_Voltage =3000;
-N//                             SET_Current = 1000;
-N// //                             Mode_SW_CONT(0x03);
-N//                             GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
-N//                             GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
-N//                             GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
-N// //                             //GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-N//                         }else if(DISS_Voltage > 1 && oct_sw == oct_off && short_flag == 0){
-N//                             
-N// //                             Mode_SW_CONT(0x02);
-N//                             SET_Current_Laod = (int)(oc_data*1000) + 5000;
-N//                             short_flag =1;
-N//                             short_start = GUI_GetTime()*2;
-N//                         }
-N//                         if(short_flag == 1)
-N//                         {
-N//                             GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-N//                             GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-N//                             GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
-N// //                             GPIO_ResetBits(GPIOC,GPIO_Pin_1);
-N//                             if(DISS_Voltage < 1){
-N//                                 SET_Current_Laod = set_init_c;
-N//                                 short_time = GUI_GetTime()*2 - short_start;
-N//                                 short_flag = 0;
-N//                                 short_finish = 1;
-N//                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-N//                                 sprintf(buf,"%4d",short_time);     
-N//                                 TEXT_SetText(hItem,buf);
-N//                             }
-N//                         }
-N//                     }
-N                    if(short_finish == 1 && test_finish == 0)
-N                    {
-N                        GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
-X                        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
-N                        //GPIO_SetBits(GPIOC,GPIO_Pin_1);
-N//                         Mode_SW_CONT(0x03);
-N                        SET_Voltage = 3000;
-X                        Run_Control[1] = 3000;
-N                        SET_Current = 1000;
-X                        Run_Control[2] = 1000;
-N                        GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
-X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
-N                        GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
-X                        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0107));
-N                        sprintf(buf,"%4d",short_time/10);     
-N                        TEXT_SetText(hItem,buf);
-N                        
-N//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);                                                
-N// //                         Mode_SW_CONT(0x01);
-N                        
-N                        test_ftime = GUI_GetTime()/500;
-N                        test_finish = 1;
-N                    } 
-N//                     
-N//                 }
-N//                 
-N//                 
-N//                 
-N//     //             if(R_VLUE >= 1000)
-N//     //             {
-N//     //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N//     //                 TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
-N//     //                 TEXT_SetText(hItem,"");
-N//     //             }else{
-N//                     
-N//     //             }
-N//             }
-N            
-N            
-N            
-N            
-N                    
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8F));
-N            sprintf(buf,"%.3f",oc_data);
-N            TEXT_SetText(hItem,buf);
-N            
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_83);
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x90));
-W "..\APP\R_Face.c" 730 16 single-precision operand implicitly converted to double-precision
-N            if(DISS_Current < 0.2)
-N            {
-N                sprintf(buf,"%.3f",0.000);
-N            }else{
-N                sprintf(buf,"%.3f",DISS_Current);
-N            }           
-N            TEXT_SetText(hItem,buf); 
-N        }else{
-N//             GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-N//             GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
-N            flag_Load_CC = 1;
-X            (flagD . bit7) = 1;
-N            if(DISS_Voltage > 1 && r_stable == 0)
-N            {
-N                r_stable = 1;
-N                stable_time = GUI_GetTime()/500;
-N            }else if(DISS_Voltage < 1){
-N                r_stable = 0;
-N                if(manual == 0)
-N                {
-N                    GPIO_SetBits(GPIOB,GPIO_Pin_13);//R_RALY高档位
-X                    GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
-N                    r_raly = 1;
-N                }
-N            }
-N                
-W "..\APP\R_Face.c" 754 16 single-precision operand implicitly converted to double-precision
-N            if(DISS_Voltage < 0.1)
-N                {
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
-N                    sprintf(buf,"%.3f",0.000);       
+N				
+N				static_lv = 0;
+N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_83);  
+X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x90));  
+N				sprintf(buf,"%.3f",static_lv);
+N				TEXT_SetText(hItem,buf); 
+N				
+N				static_pc = 0;
+N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_151);
+X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0135));
+N				sprintf(buf,"%.3f",static_pc);       
+N				TEXT_SetText(hItem,buf);
+N				
+N			}else if(test_start == 1){
+N				if(step == 0)
+N				{
+N					hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
+X					hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0106));
+N					TEXT_SetTextColor(hItem, GUI_WHITE);
+X					TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N					TEXT_SetText(hItem, "未测试");
+N					
+N					hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);					
+X					hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));					
+N					sprintf(buf,"%04d",r);       
+N					TEXT_SetText(hItem,buf);
+N					
+N					hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+X					hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
+N                    sprintf(buf,"%.3f",v);       
 N                    TEXT_SetText(hItem,buf);
-N                }else{
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
-N                    sprintf(buf,"%.3f",DISS_Voltage);       
-N                    TEXT_SetText(hItem,buf);
-N                }
-N                if(clear_flag1 == 1 && R_VLUE <= clear_r)
-X                if(clear_flag1 == 1 && Run_Control[13] <= clear_r)
-N                {
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
-N                    sprintf(buf,"%4d",0);       
-N                    TEXT_SetText(hItem,buf);
-N                }
-N                else if(R_VLUE >= 2000)
-X                else if(Run_Control[13] >= 2000)
-N                {
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
-N                    TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
-N                    TEXT_SetText(hItem,"");
-N                }else{
-N//                     if(GUI_GetTime()/500 - stable_time == 1 && r_stable == 1)
-N//                     {
-N//                         r = R_VLUE;
-N//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N//                         TEXT_SetFont(hItem,&GUI_FontD24x32);
-N//                         sprintf(buf,"%4d",r);       
-N//                         TEXT_SetText(hItem,buf);
-N//                     }else if(r_stable == 0)
-N//                     {
-W "..\APP\R_Face.c" 785 28 single-precision operand implicitly converted to double-precision
-N                        if(DISS_Voltage < 0.3)
-N                            {
-N//                                 if(para_set1 == set_1_on)
-N//                                 {
-N//                                     GPIO_ResetBits(GPIOD,GPIO_Pin_12);
-N//                                     TM1650_SET_LED(0x48,0x71);
-N//                                     TM1650_SET_LED(0x68,0xF2);//PASS灯
-N//                                 }
-N                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-X                                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
-N                                TEXT_SetFont(hItem,&GUI_FontD24x32);
-N                                TEXT_SetTextColor(hItem, GUI_GREEN);
-X                                TEXT_SetTextColor(hItem, 0x0000FF00);
-N                                sprintf(buf,"%4d",0);       
-N                                TEXT_SetText(hItem,buf);
-N                            }else{
-N                                
-N                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-X                                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
-N                                TEXT_SetFont(hItem,&GUI_FontD24x32);
-N                                
-N                                sprintf(buf,"%4d",R_VLUE);       
-X                                sprintf(buf,"%4d",Run_Control[13]);       
-N                                TEXT_SetText(hItem,buf);
-N                            }
-N//                     }
-N                }
-N            
-N        }
-N               
-N
-N
-N        if(para_set1 == set_1_on && oct_sw == oct_off && DISS_Voltage > 1)
-X        if(para_set1 == 0xff && oct_sw == 0 && DISS_Voltage > 1)
-N        {
-N             test_r();
-N        }else
-N        {
-N            TM1650_SET_LED(0x68,0x70);
-N            GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
-X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
-N            led_sw = 1;
-N        }
-N
-N        
-N        if(oct_sw == oct_off)
-X        if(oct_sw == 0)
-N        {
-N            switch(b_type)
-N            {
-N                case Lion:
-X                case 1:
-N                {
-W "..\APP\R_Face.c" 830 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 830 63 single-precision operand implicitly converted to double-precision
-N                    if(R_VLUE != 0  && DISS_Voltage >= 3.4 && DISS_Voltage <= 4.2)
-X                    if(Run_Control[13] != 0  && DISS_Voltage >= 3.4 && DISS_Voltage <= 4.2)
-N                    {
-N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
-N                        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
-X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                        TEXT_SetText(hItem,"锂电池");
-N                    }else{
-N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
-N                        TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
-X                        TEXT_SetTextColor(hItem, 0x000000FF);
-N                        TEXT_SetText(hItem,"");
-N                    }
-N                    break;
-N                }
-N                case NiMH:
-X                case 2:
-N                {
-W "..\APP\R_Face.c" 844 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 844 63 single-precision operand implicitly converted to double-precision
-N                    if(R_VLUE != 0  && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
-X                    if(Run_Control[13] != 0  && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
-N                    {
-N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
-N                        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
-X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                        TEXT_SetText(hItem,"镍氢电池");
-N                    }else{
-N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
-N                        TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
-X                        TEXT_SetTextColor(hItem, 0x000000FF);
-N                        TEXT_SetText(hItem,"");
-N                    }
-N                    break;
-N                }
-N                case NiCd:
-X                case 3:
-N                {
-W "..\APP\R_Face.c" 858 39 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 858 62 single-precision operand implicitly converted to double-precision
-N                    if(R_VLUE != 0 && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
-X                    if(Run_Control[13] != 0 && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
-N                    {
-N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
-N                        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
-X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                        TEXT_SetText(hItem,"镍镉电池");
-N                    }else{
-N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
-N                        TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
-X                        TEXT_SetTextColor(hItem, 0x000000FF);
-N                        TEXT_SetText(hItem,"");
-N                    }
-N                    break;
-N                }
-N                case SLA:
-X                case 4:
-N                {
-W "..\APP\R_Face.c" 872 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 872 63 single-precision operand implicitly converted to double-precision
-N                    if(R_VLUE != 0  && DISS_Voltage >= 1.8 && DISS_Voltage <= 2.4)
-X                    if(Run_Control[13] != 0  && DISS_Voltage >= 1.8 && DISS_Voltage <= 2.4)
-N                    {
-N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
-N                        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
-X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                        TEXT_SetText(hItem,"小型铅酸电池");
-N                    }else{
-N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
-N                        TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
-X                        TEXT_SetTextColor(hItem, 0x000000FF);
-N                        TEXT_SetText(hItem,"");
-N                    }
-N                    break;
-N                }
-N                case LiMH:
-X                case 5:
-N                {
-W "..\APP\R_Face.c" 886 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 886 63 single-precision operand implicitly converted to double-precision
-N                    if(R_VLUE != 0  && DISS_Voltage >= 2.8 && DISS_Voltage <= 3.3)
-X                    if(Run_Control[13] != 0  && DISS_Voltage >= 2.8 && DISS_Voltage <= 3.3)
-N                    {
-N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
-N                        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
-X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                        TEXT_SetText(hItem,"锂锰电池");
-N                    }else{
-N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
-N                        TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
-X                        TEXT_SetTextColor(hItem, 0x000000FF);
-N                        TEXT_SetText(hItem,"");
-N                    }
-N                    break;
-N                }
-N            }
-N        }
-N
-N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_124);       
-X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0109));       
+N					
+N					hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+X					hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0107));
+N					sprintf(buf,"%4d",short_time/10);
+N					TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体      
+N					TEXT_SetText(hItem,buf);
+N					
+N					hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
+X					hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8F));
+N					TEXT_SetTextColor(hItem, GUI_GREEN);
+X					TEXT_SetTextColor(hItem, 0x0000FF00);
+N					sprintf(buf,"%.3f",oc_data);
+N					TEXT_SetText(hItem,buf);
+N					
+N					hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_83);  
+X					hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x90));  
+N					sprintf(buf,"%.3f",static_lv);
+N					TEXT_SetText(hItem,buf); 
+N					
+N					hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_151);
+X					hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0135));
+N					sprintf(buf,"%.3f",static_pc);       
+N					TEXT_SetText(hItem,buf);
+N					//分选
+N					if(para_set1 == set_1_on)
+X					if(para_set1 == 0xff)
+N					{
+N						test_r();
+N					}
+N					//归零
+N					if(DISS_Voltage < gate_v || DISS_Voltage < 1)
+N					{
+N						test_start = 0;
+N						con_flag = 0;
+N						v = 0;
+N						r= 0;
+N					}
+N				}else{
+N					hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
+X					hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0106));
+N                    TEXT_SetTextColor(hItem, GUI_RED);
+X                    TEXT_SetTextColor(hItem, 0x000000FF);
+N                    TEXT_SetText(hItem, "测试中");
+N				}
+N			}
+N			
+N			
+N		}else{
+W "..\APP\R_Face.c" 578 7 single-precision operand implicitly converted to double-precision
+N			if(DISS_Voltage < 0.1)
+N			{
+N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
+N				sprintf(buf,"%.3f",0.000);
+N				TEXT_SetText(hItem,buf);
+N				
+N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);					
+X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));					
+N				sprintf(buf,"%04d",0);       
+N				TEXT_SetText(hItem,buf);
+N			}else{
+N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
+N				sprintf(buf,"%.3f",DISS_Voltage);       
+N				TEXT_SetText(hItem,buf);
+N				
+N				if(R_VLUE >= 2000)
+X				if(Run_Control[13] >= 2000)
+N				{
+N//						hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+N//						TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
+N//						TEXT_SetText(hItem,"OVER");
+N				}else{
+N					hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);					
+X					hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));					
+N					sprintf(buf,"%04d",R_VLUE);       
+X					sprintf(buf,"%04d",Run_Control[13]);       
+N					TEXT_SetText(hItem,buf);
+N				}
+N			}
+N		}
+N		//显示温度
+N		hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_124);       
+X		hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0109));       
 N        sprintf(buf,"%.1f",temp);
 N        TEXT_SetText(hItem,buf);
-N//         
-N//        WM_InvalidateWindow(hWinR);
 N		WM_RestartTimer(pMsg->Data.v, 20);//复位定时器数值越大刷新时间越短
 N	}
 N	break;
@@ -54009,10 +54045,9 @@ N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_1);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x14));
 N                GUI_UC_SetEncodeUTF8();
 N                TEXT_SetText(hItem, "过流模式");
-N                TEXT_SetBkColor(hItem,0x00BFFFFF);
-N                TEXT_SetTextColor(hItem, GUI_BLACK);
-X                TEXT_SetTextColor(hItem, 0x00000000);
-N                TEXT_SetFont(hItem, &GUI_Fontset_font);
+N                TEXT_SetTextColor(hItem, GUI_WHITE);
+X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N                TEXT_SetFont(hItem, &GUI_FontHZ14);
 N                
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_43);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x68));
@@ -54020,7 +54055,7 @@ N                GUI_UC_SetEncodeUTF8();
 N                TEXT_SetText(hItem, "步进时间");
 N                TEXT_SetTextColor(hItem, GUI_WHITE);
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                TEXT_SetFont(hItem, &GUI_Fontset_font);
+N                TEXT_SetFont(hItem, &GUI_FontHZ14);
 N                
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_44);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x69));
@@ -54028,7 +54063,7 @@ N                GUI_UC_SetEncodeUTF8();
 N                TEXT_SetText(hItem, "起始电流");
 N                TEXT_SetTextColor(hItem, GUI_WHITE);
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                TEXT_SetFont(hItem, &GUI_Fontset_font);
+N                TEXT_SetFont(hItem, &GUI_FontHZ14);
 N                
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_45);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x6A));
@@ -54036,7 +54071,7 @@ N                GUI_UC_SetEncodeUTF8();
 N                TEXT_SetText(hItem, "步进电流");
 N                TEXT_SetTextColor(hItem, GUI_WHITE);
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                TEXT_SetFont(hItem, &GUI_Fontset_font);
+N                TEXT_SetFont(hItem, &GUI_FontHZ14);
 N                
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_118);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0108));
@@ -54044,12 +54079,65 @@ N                GUI_UC_SetEncodeUTF8();
 N                TEXT_SetText(hItem, "门槛电压");
 N                TEXT_SetTextColor(hItem, GUI_WHITE);
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                TEXT_SetFont(hItem, &GUI_Fontset_font);
+N                TEXT_SetFont(hItem, &GUI_FontHZ14);
+N				
+N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_145);
+X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x012F));
+N                GUI_UC_SetEncodeUTF8();
+N                TEXT_SetText(hItem, "充电电压");
+N                TEXT_SetTextColor(hItem, GUI_WHITE);
+X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N                TEXT_SetFont(hItem, &GUI_FontHZ14);
+N                
+N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_146);
+X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0130));
+N                GUI_UC_SetEncodeUTF8();
+N                TEXT_SetText(hItem, "充电电流");
+N                TEXT_SetTextColor(hItem, GUI_WHITE);
+X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N                TEXT_SetFont(hItem, &GUI_FontHZ14);
+N                
+N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_147);
+X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0131));
+N                GUI_UC_SetEncodeUTF8();
+N                TEXT_SetText(hItem, "负载电流");
+N                TEXT_SetTextColor(hItem, GUI_WHITE);
+X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N                TEXT_SetFont(hItem, &GUI_FontHZ14);
+N				
+N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_152);
+X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0136));
+N                GUI_UC_SetEncodeUTF8();
+N                TEXT_SetText(hItem, "充放测试");
+N                TEXT_SetBkColor(hItem,0x00BFFFFF);
+N                TEXT_SetTextColor(hItem, GUI_BLACK);
+X                TEXT_SetTextColor(hItem, 0x00000000);
+N                TEXT_SetFont(hItem, &GUI_FontHZ14);
+N				
+N				if(staticcdc == 1)
+N				{
+N					hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_153);
+X					hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0137));
+N					GUI_UC_SetEncodeUTF8();
+N					TEXT_SetText(hItem, "开");
+N					TEXT_SetTextColor(hItem, GUI_WHITE);
+X					TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N					TEXT_SetFont(hItem, &GUI_FontHZ14);
+N				}else{
+N					hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_153);
+X					hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0137));
+N					GUI_UC_SetEncodeUTF8();
+N					TEXT_SetText(hItem, "关");
+N					TEXT_SetTextColor(hItem, GUI_WHITE);
+X					TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N					TEXT_SetFont(hItem, &GUI_FontHZ14);
+N				}
+N				
 N                
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_97);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0105));
 N                sprintf(buf,"%.3f",gate_v);
-N                TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N                TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
 N                TEXT_SetText(hItem,buf);
 N                TEXT_SetTextColor(hItem, GUI_WHITE);
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
@@ -54068,7 +54156,7 @@ X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x6B));
 N                sprintf(buf,"%.3f",dis_init_c);
 N                TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N                TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
 N                GUI_UC_SetEncodeUTF8();        
 N                TEXT_SetText(hItem,buf);
 N//                SET_Current_Laod = set_init_c;
@@ -54078,7 +54166,7 @@ X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x6C));
 N                sprintf(buf,"%.3f",dis_sbs_c);
 N                TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N                TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
 N                GUI_UC_SetEncodeUTF8();        
 N                TEXT_SetText(hItem,buf);
 N                
@@ -54096,16 +54184,55 @@ X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x90));
 N                sprintf(buf,"%.3f",0.000);
 N                TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N                TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
+N                GUI_UC_SetEncodeUTF8();        
+N                TEXT_SetText(hItem,buf);
+N				
+N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_151);
+X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0135));
+N                sprintf(buf,"%.3f",0.000);
+N                TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N                TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
+N                GUI_UC_SetEncodeUTF8();        
+N                TEXT_SetText(hItem,buf);
+N				
+N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_148);
+X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0132));
+N                sprintf(buf,"%.2f",(float)set_static_pv/100);
+X                sprintf(buf,"%.2f",(float)Run_Control[42]/100);
+N                TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N                TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
+N                GUI_UC_SetEncodeUTF8();        
+N                TEXT_SetText(hItem,buf);
+N                
+N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_149);
+X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0133));
+N                sprintf(buf,"%.3f",(float)set_static_pc/1000);
+X                sprintf(buf,"%.3f",(float)Run_Control[43]/1000);
+N                TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N                TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
+N                GUI_UC_SetEncodeUTF8();        
+N                TEXT_SetText(hItem,buf);
+N                
+N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_150);
+X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0134));
+N                sprintf(buf,"%.3f",(float)set_static_lc/1000);
+X                sprintf(buf,"%.3f",(float)Run_Control[44]/1000);
+N                TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N                TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
 N                GUI_UC_SetEncodeUTF8();        
 N                TEXT_SetText(hItem,buf);
 N                
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0107));
-N                sprintf(buf,"%4d",short_time);
+N                sprintf(buf,"%4d",short_time/10);
 N                TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N                TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
 N                GUI_UC_SetEncodeUTF8();        
 N                TEXT_SetText(hItem,buf);
 N                
@@ -54114,7 +54241,7 @@ X                hItem = WM_GetDialogItem(pMsg->hWin,(0x800 + 0x010E));
 N                sprintf(buf,"%4d",steptime);
 N                TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N                TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
 N                GUI_UC_SetEncodeUTF8();        
 N                TEXT_SetText(hItem,buf);
 N                
@@ -54124,7 +54251,7 @@ N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_132);
 X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0121));
 N                    TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X                    TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                    TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N                    TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
 N                    GUI_UC_SetEncodeUTF8();        
 N                    TEXT_SetText(hItem,"CC");
 N                }else if(oc_mode == 1){
@@ -54132,7 +54259,7 @@ N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_132);
 X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0121));
 N                    TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
 X                    TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                    TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N                    TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
 N                    GUI_UC_SetEncodeUTF8();        
 N                    TEXT_SetText(hItem,"CV");
 N                }
@@ -54247,21 +54374,22 @@ NWM_HWIN CreateR(void);
 XGUI_HWIN CreateR(void);
 NWM_HWIN CreateR(void) {
 XGUI_HWIN CreateR(void) {
-N  oc_sw = set_72;
-X  oc_sw = 71;
+N  oc_sw = set_81;
+X  oc_sw = 80;
 N  page_sw = face_r;
 X  page_sw = 3;
 N  track = face_r;
 X  track = 3;
 N    con_flag = 0;
-W "..\APP\R_Face.c" 1277 5 function "setmode_r" declared implicitly
+W "..\APP\R_Face.c" 1047 5 function "setmode_r" declared implicitly
 N    setmode_r();
 N//    GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF
 N//    GPIO_SetBits(GPIOB,GPIO_Pin_13);
 N//    r_raly = 1;
 N//  set_init_c = SET_Current_Laod;
-N    r_raly = 1;
+N//    r_raly = 1;
 N  pass = 0;
+N	gate_v = (float)dis_gate_v/1000;
 N  hWinR = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), _cbDialog, WM_HBKWIN, 0, 0);
 X  hWinR = GUI_CreateDialogBox(_aDialogCreate, (sizeof(_aDialogCreate) / sizeof(_aDialogCreate[0])), _cbDialog, WM_GetDesktopWindow(), 0, 0);
 N  return hWinR;
@@ -54280,6 +54408,30 @@ Nvoid OC_OP_DOWN(void)
 N{
 N    switch(oc_sw)
 N    {
+N		case set_81:
+X		case 80:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinR);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_152);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0136));
+N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+X            TEXT_SetBkColor(hItem,0xFFFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_WHITE);
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N            
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_1);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x14));
+N            TEXT_SetBkColor(hItem,0x00BFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_BLACK);
+X            TEXT_SetTextColor(hItem, 0x00000000);
+N            
+N            oc_sw = set_72;
+X            oc_sw = 71;
+N            break;
+N        }
+N		
 N        case set_72:
 X        case 71:
 N        {
@@ -54386,17 +54538,85 @@ X            TEXT_SetBkColor(hItem,0xFFFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_WHITE);
 X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
 N            
-N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_1);
-X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x14));
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_145);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x012F));
 N            TEXT_SetBkColor(hItem,0x00BFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
 N            
-N            oc_sw = set_72;
-X            oc_sw = 71;
+N            oc_sw = set_75;
+X            oc_sw = 74;
 N            break;
 N        }
-N        
+N		case set_75:
+X		case 74:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinR);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_145);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x012F));
+N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+X            TEXT_SetBkColor(hItem,0xFFFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_WHITE);
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N            
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_146);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0130));
+N            TEXT_SetBkColor(hItem,0x00BFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_BLACK);
+X            TEXT_SetTextColor(hItem, 0x00000000);
+N            
+N            oc_sw = set_76;
+X            oc_sw = 75;
+N            break;
+N        }
+N        case set_76:
+X        case 75:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinR);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_146);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0130));
+N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+X            TEXT_SetBkColor(hItem,0xFFFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_WHITE);
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N            
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_147);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0131));
+N            TEXT_SetBkColor(hItem,0x00BFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_BLACK);
+X            TEXT_SetTextColor(hItem, 0x00000000);
+N            
+N            oc_sw = set_77;
+X            oc_sw = 76;
+N            break;
+N        }
+N		case set_77:
+X		case 76:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinR);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_147);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0131));
+N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+X            TEXT_SetBkColor(hItem,0xFFFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_WHITE);
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N            
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_152);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0136));
+N            TEXT_SetBkColor(hItem,0x00BFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_BLACK);
+X            TEXT_SetTextColor(hItem, 0x00000000);
+N            
+N            oc_sw = set_81;
+X            oc_sw = 80;
+N            break;
+N        }
 N    }
 N    
 N}
@@ -54406,6 +54626,30 @@ Nvoid OC_OP_UP(void)
 N{
 N    switch(oc_sw)
 N    {
+N		case set_81:
+X		case 80:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinR);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_152);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0136));
+N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+X            TEXT_SetBkColor(hItem,0xFFFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_WHITE);
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N            
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_147);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0131));
+N            TEXT_SetBkColor(hItem,0x00BFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_BLACK);
+X            TEXT_SetTextColor(hItem, 0x00000000);
+N            
+N            oc_sw = set_77;
+X            oc_sw = 76;
+N            break;
+N        }
+N		
 N        case set_72:
 X        case 71:
 N        {
@@ -54419,14 +54663,14 @@ X            TEXT_SetBkColor(hItem,0xFFFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_WHITE);
 X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
 N            
-N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_43);
-X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x68));
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_152);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0136));
 N            TEXT_SetBkColor(hItem,0x00BFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
 N            
-N            oc_sw = set_70;
-X            oc_sw = 69;
+N            oc_sw = set_81;
+X            oc_sw = 80;
 N            break;
 N        }
 N        
@@ -54521,6 +54765,75 @@ X            TEXT_SetTextColor(hItem, 0x00000000);
 N            
 N            oc_sw = set_64;
 X            oc_sw = 63;
+N            break;
+N        }
+N		case set_75:
+X		case 74:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinR);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_145);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x012F));
+N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+X            TEXT_SetBkColor(hItem,0xFFFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_WHITE);
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N            
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_43);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x68));
+N            TEXT_SetBkColor(hItem,0x00BFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_BLACK);
+X            TEXT_SetTextColor(hItem, 0x00000000);
+N            
+N            oc_sw = set_70;
+X            oc_sw = 69;
+N            break;
+N        }
+N		case set_76:
+X		case 75:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinR);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_146);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0130));
+N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+X            TEXT_SetBkColor(hItem,0xFFFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_WHITE);
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N            
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_145);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x012F));
+N            TEXT_SetBkColor(hItem,0x00BFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_BLACK);
+X            TEXT_SetTextColor(hItem, 0x00000000);
+N            
+N            oc_sw = set_75;
+X            oc_sw = 74;
+N            break;
+N        }
+N		case set_77:
+X		case 76:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinR);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_147);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0131));
+N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+X            TEXT_SetBkColor(hItem,0xFFFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_WHITE);
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N            
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_146);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0130));
+N            TEXT_SetBkColor(hItem,0x00BFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_BLACK);
+X            TEXT_SetTextColor(hItem, 0x00000000);
+N            
+N            oc_sw = set_76;
+X            oc_sw = 75;
 N            break;
 N        }
 N        
@@ -54536,6 +54849,9 @@ N    char  buf[6];
 N
 N    float dis_init_c;
 N    float dis_sbs_c;
+N	float dis_setv;
+N	float dis_setc;
+N	float dis_setlc;
 N    vu16 dis_steptime = steptime;
 N    switch(oc_sw)
 N    {
@@ -54789,9 +55105,199 @@ N                oc_mode = 0;
 N            }
 N            Write_Limits();
 N            break;
-W "..\APP\R_Face.c" 1648 21 variable "hItem" was declared but never referenced
+W "..\APP\R_Face.c" 1543 21 variable "hItem"  was declared but never referenced
+N        }
+N		
+N		case set_81:
+X		case 80:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N            if(staticcdc == 0)
+N            {
+N                staticcdc = 1;
+N            }else{
+N                staticcdc = 0;
+N            }
+N            Write_Limits();
+N            break;
+W "..\APP\R_Face.c" 1556 21 variable "hItem"  was declared but never referenced
 N        }
 N        
+N		case set_75:
+X		case 74:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinR);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_145);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x012F));
+N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+X            TEXT_SetBkColor(hItem,0xFFFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_WHITE);
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N            
+N            
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_148);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0132));
+N            TEXT_SetBkColor(hItem,0x00BFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_BLACK);
+X            TEXT_SetTextColor(hItem, 0x00000000);
+N            for(i=0;i<5;i++)
+N            {
+N                set_limit[i] = '\0';
+N            }
+N            
+N            oc_sw = set_78;
+X            oc_sw = 77;
+N            break;
+N        }
+N        case set_78:
+X        case 77:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinR);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_148);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0132));
+N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+X            TEXT_SetBkColor(hItem,0xFFFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_WHITE);
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N			dis_setv = (float)set_static_pv/100;
+X			dis_setv = (float)Run_Control[42]/100;
+N            sprintf(buf,"%.2f",dis_setv);
+N            TEXT_SetText(hItem,buf);
+N            
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_145);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x012F));
+N            TEXT_SetBkColor(hItem,0x00BFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_BLACK);
+X            TEXT_SetTextColor(hItem, 0x00000000);
+N            Write_Limits();
+N            
+N            oc_sw = set_75;
+X            oc_sw = 74;
+N            bit = 1;
+N            dot_flag = 0;
+N            break;
+N        }
+N		case set_76:
+X		case 75:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinR);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_146);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0130));
+N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+X            TEXT_SetBkColor(hItem,0xFFFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_WHITE);
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N            
+N            
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_149);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0133));
+N            TEXT_SetBkColor(hItem,0x00BFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_BLACK);
+X            TEXT_SetTextColor(hItem, 0x00000000);
+N            for(i=0;i<5;i++)
+N            {
+N                set_limit[i] = '\0';
+N            }
+N            
+N            oc_sw = set_79;
+X            oc_sw = 78;
+N            break;
+N        }
+N        case set_79:
+X        case 78:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinR);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_149);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0133));
+N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+X            TEXT_SetBkColor(hItem,0xFFFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_WHITE);
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N			dis_setc = (float)set_static_pc/1000;
+X			dis_setc = (float)Run_Control[43]/1000;
+N            sprintf(buf,"%.3f",dis_setc);
+N            TEXT_SetText(hItem,buf);
+N            
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_146);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0130));
+N            TEXT_SetBkColor(hItem,0x00BFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_BLACK);
+X            TEXT_SetTextColor(hItem, 0x00000000);
+N            Write_Limits();
+N            
+N            oc_sw = set_76;
+X            oc_sw = 75;
+N            bit = 1;
+N            dot_flag = 0;
+N            break;
+N        }
+N		case set_77:
+X		case 76:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinR);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_147);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0131));
+N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+X            TEXT_SetBkColor(hItem,0xFFFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_WHITE);
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N            
+N            
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_150);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0134));
+N            TEXT_SetBkColor(hItem,0x00BFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_BLACK);
+X            TEXT_SetTextColor(hItem, 0x00000000);
+N            for(i=0;i<5;i++)
+N            {
+N                set_limit[i] = '\0';
+N            }
+N            
+N            oc_sw = set_80;
+X            oc_sw = 79;
+N            break;
+N        }
+N        case set_80:
+X        case 79:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinR);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_150);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0134));
+N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
+X            TEXT_SetBkColor(hItem,0xFFFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_WHITE);
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N			dis_setlc = (float)set_static_lc/1000;
+X			dis_setlc = (float)Run_Control[44]/1000;
+N            sprintf(buf,"%.3f",dis_setlc);
+N            TEXT_SetText(hItem,buf);
+N            
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_147);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0131));
+N            TEXT_SetBkColor(hItem,0x00BFFFFF);
+N            TEXT_SetTextColor(hItem, GUI_BLACK);
+X            TEXT_SetTextColor(hItem, 0x00000000);
+N            Write_Limits();
+N            
+N            oc_sw = set_77;
+X            oc_sw = 76;
+N            bit = 1;
+N            dot_flag = 0;
+N            break;
+N        }
 N    }
 N}
 N
@@ -55153,7 +55659,365 @@ N                }
 N            }
 N            break;           
 N        }
-N        
+N		case set_78:
+X		case 77:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinWind);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_148);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0132));
+N            switch(bit){
+N                case 1:
+N                {
+N                    set_static_pv = atoi(num) * 100;
+X                    Run_Control[42] = atoi(num) * 100;
+N                    strcat(set_limit,num);            
+N                    TEXT_SetText(hItem,set_limit);
+N                    bit = 2;
+N                    break;
+N                }
+N                case 2:
+N                {
+N                    strcat(set_limit,num);            
+N                    TEXT_SetText(hItem,set_limit);
+N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
+N                    {
+N                        dot_flag = 1;
+N                    }else{
+N                        set_static_pv = set_static_pv * 10 + atoi(num) * 100;
+X                        Run_Control[42] = Run_Control[42] * 10 + atoi(num) * 100;
+N                    }
+N                    bit = 3;
+N                    break;
+N                }
+N                case 3:
+N                {
+N                    strcat(set_limit,num);
+N                    TEXT_SetText(hItem,set_limit);
+N                    if(dot_flag == 0)
+N                    {
+N                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
+N                        {                            
+N                            dot_flag = 2;
+N                        }else{
+N                            set_static_pv = /*3000*/ 6200;
+X                            Run_Control[42] =   6200;
+N                        }
+N                    }else{
+N                        set_static_pv = set_static_pv + atoi(num) * 10;
+X                        Run_Control[42] = Run_Control[42] + atoi(num) * 10;
+N                    }
+N                                       
+N                    bit = 4;
+N                    break;
+N                }
+N                case 4:
+N                {
+N                    strcat(set_limit,num);
+N                    TEXT_SetText(hItem,set_limit);
+N                    if(dot_flag == 0)
+N                    {
+N                        set_static_pv = /*3000*/ 6200;
+X                        Run_Control[42] =   6200;
+N                    }else if(dot_flag == 2){
+N                        set_static_pv = set_static_pv + atoi(num) * 10;
+X                        Run_Control[42] = Run_Control[42] + atoi(num) * 10;
+N                    }else{
+N                        set_static_pv = set_static_pv + atoi(num);
+X                        Run_Control[42] = Run_Control[42] + atoi(num);
+N                    }
+N                                       
+N                    bit = 5;
+N                    break;
+N                }
+N                case 5:
+N                {
+N                    strcat(set_limit,num);
+N                    TEXT_SetText(hItem,set_limit);
+N                    if(dot_flag == 0)
+N                    {
+N                        set_static_pv = /*3000*/ 6200;
+X                        Run_Control[42] =   6200;
+N                    }else if(dot_flag == 1){
+N                        set_static_pv = set_static_pv;
+X                        Run_Control[42] = Run_Control[42];
+N                    }else{
+N                        set_static_pv = set_static_pv + atoi(num);
+X                        Run_Control[42] = Run_Control[42] + atoi(num);
+N                    }
+N                                       
+N                    bit = 1;
+N                    break;
+N                }
+N            }
+N            break;
+N        }
+N        case set_79:
+X        case 78:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinWind);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_149);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0133));
+N            switch(bit){
+N//                 case 1:
+N//                 {
+N//                     SET_Current = atoi(num) * 1000;
+N//                     strcat(set_limit,num);            
+N//                     TEXT_SetText(hItem,set_limit);
+N//                     bit = 2;
+N//                     break;
+N//                 }
+N//                 case 2:
+N//                 {
+N//                     strcat(set_limit,num);            
+N//                     TEXT_SetText(hItem,set_limit);
+N//                     if(set_limit[1] == 0x2e)//判断输入是否为小数点
+N//                     {
+N//                         dot_flag = 1;
+N//                     }else{
+N//                         SET_Current = 15000;
+N//                     }
+N//                     bit = 3;
+N//                     break;
+N//                 }
+N//                 case 3:
+N//                 {
+N//                     strcat(set_limit,num);
+N//                     TEXT_SetText(hItem,set_limit);
+N//                     if(dot_flag == 0)
+N//                     {                                                                       
+N//                         SET_Current = 15000;
+N//                     }else{
+N//                         SET_Current = SET_Current + atoi(num) * 100;
+N//                     }                                       
+N//                     bit = 4;
+N//                     break;
+N//                 }
+N//                 case 4:
+N//                 {
+N//                     strcat(set_limit,num);
+N//                     TEXT_SetText(hItem,set_limit);
+N//                     if(dot_flag == 0)
+N//                     {
+N//                         SET_Current = 15000;
+N//                     }else{
+N//                         SET_Current = SET_Current + atoi(num) * 10;
+N//                     }
+N//                                        
+N//                     bit = 1;
+N//                     break;
+N//                 }
+N                case 1:
+N                {
+N                    set_static_pc = atoi(num) * 1000;
+X                    Run_Control[43] = atoi(num) * 1000;
+N                    strcat(set_limit,num);            
+N                    TEXT_SetText(hItem,set_limit);
+N                    bit = 2;
+N                    break;
+N                }
+N                case 2:
+N                {
+N                    strcat(set_limit,num);            
+N                    TEXT_SetText(hItem,set_limit);
+N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
+N                    {
+N                        dot_flag = 1;
+N                    }else{
+N                        set_static_pc = set_static_pc * 10 + atoi(num) * 1000;
+X                        Run_Control[43] = Run_Control[43] * 10 + atoi(num) * 1000;
+N                    }
+N                    bit = 3;
+N                    break;
+N                }
+N                case 3:
+N                {
+N                    strcat(set_limit,num);
+N                    TEXT_SetText(hItem,set_limit);
+N                    if(dot_flag == 0)
+N                    {
+N                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
+N                        {                            
+N                            dot_flag = 2;
+N                        }else{
+N                            set_static_pc = 5000;
+X                            Run_Control[43] = 5000;
+N                        }
+N                    }else{
+N                        set_static_pc = set_static_pc + atoi(num) * 100;
+X                        Run_Control[43] = Run_Control[43] + atoi(num) * 100;
+N                    }
+N                                       
+N                    bit = 4;
+N                    break;
+N                }
+N                case 4:
+N                {
+N                    strcat(set_limit,num);
+N                    TEXT_SetText(hItem,set_limit);
+N                    if(dot_flag == 0)
+N                    {
+N                        set_static_pc = 5000;
+X                        Run_Control[43] = 5000;
+N                    }else if(dot_flag == 2){
+N                        set_static_pc = set_static_pc + atoi(num) * 100;
+X                        Run_Control[43] = Run_Control[43] + atoi(num) * 100;
+N                    }else{
+N                        set_static_pc = set_static_pc + atoi(num) * 10;
+X                        Run_Control[43] = Run_Control[43] + atoi(num) * 10;
+N                    }
+N                                       
+N                    bit = 5;
+N                    break;
+N                }
+N                case 5:
+N                {
+N                    strcat(set_limit,num);
+N                    TEXT_SetText(hItem,set_limit);
+N                    if(dot_flag == 0)
+N                    {
+N                        set_static_pc = 5000;
+X                        Run_Control[43] = 5000;
+N                    }else if(dot_flag == 1){
+N                        set_static_pc = set_static_pc + atoi(num);
+X                        Run_Control[43] = Run_Control[43] + atoi(num);
+N                    }else{
+N                        set_static_pc = set_static_pc + atoi(num) * 10;
+X                        Run_Control[43] = Run_Control[43] + atoi(num) * 10;
+N                    }
+N                                       
+N                    bit = 6;
+N                    break;
+N                }
+N                case 6:
+N                {
+N                    strcat(set_limit,num);
+N                    TEXT_SetText(hItem,set_limit);
+N                    if(dot_flag == 0)
+N                    {
+N                        set_static_pc = 0;
+X                        Run_Control[43] = 0;
+N                    }else if(dot_flag == 2){
+N                        set_static_pc = set_static_pc + atoi(num);
+X                        Run_Control[43] = Run_Control[43] + atoi(num);
+N                    }                 
+N                    bit = 1;
+N                    break;
+N                }
+N            }
+N        }
+N        break;
+N        case set_80:
+X        case 79:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N //           WM_InvalidateWindow(load_wind);
+N            hItem = WM_GetDialogItem(hWinR, ID_TEXT_150);
+X            hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0134));
+N            switch(bit){
+N                case 1:
+N                {
+N                    set_static_lc = atoi(num) * 1000;
+X                    Run_Control[44] = atoi(num) * 1000;
+N                    strcat(set_limit,num);            
+N                    TEXT_SetText(hItem,set_limit);
+N                    
+N                    bit = 2;
+N                    break;
+N                }
+N                case 2:
+N                {
+N                    strcat(set_limit,num);            
+N                    TEXT_SetText(hItem,set_limit);
+N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
+N                    {
+N                        dot_flag = 1;
+N                    }else{
+N                        set_static_lc = set_static_lc * 10 + atoi(num) * 1000;
+X                        Run_Control[44] = Run_Control[44] * 10 + atoi(num) * 1000;
+N                    }
+N                    bit = 3;
+N                    break;
+N                }
+N                case 3:
+N                {
+N                    strcat(set_limit,num);
+N                    TEXT_SetText(hItem,set_limit);
+N                    if(dot_flag == 0)
+N                    {
+N                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
+N                        {                            
+N                            dot_flag = 2;
+N                        }else{
+N                            set_static_lc = 0;
+X                            Run_Control[44] = 0;
+N                        }
+N                    }else{
+N                        set_static_lc = set_static_lc + atoi(num) * 100;
+X                        Run_Control[44] = Run_Control[44] + atoi(num) * 100;
+N                    }                  
+N                    bit = 4;
+N                    break;
+N                }
+N                case 4:
+N                {
+N                    strcat(set_limit,num);
+N                    TEXT_SetText(hItem,set_limit);
+N                    if(dot_flag == 0)
+N                    {
+N                        set_static_lc = 0;
+X                        Run_Control[44] = 0;
+N                    }else if(dot_flag == 2){
+N                        set_static_lc = set_static_lc + atoi(num) * 100;
+X                        Run_Control[44] = Run_Control[44] + atoi(num) * 100;
+N                    }else{
+N                        set_static_lc = set_static_lc + atoi(num) * 10;
+X                        Run_Control[44] = Run_Control[44] + atoi(num) * 10;
+N                    }                  
+N                    bit = 5;
+N                    break;
+N                }
+N                case 5:
+N                {
+N                    strcat(set_limit,num);
+N                    TEXT_SetText(hItem,set_limit);
+N                    if(dot_flag == 0)
+N                    {
+N                        set_static_lc = 0;
+X                        Run_Control[44] = 0;
+N                    }else if(dot_flag == 1){
+N                        set_static_lc = set_static_lc + atoi(num);
+X                        Run_Control[44] = Run_Control[44] + atoi(num);
+N                    }else{
+N                        set_static_lc = set_static_lc + atoi(num) * 10;
+X                        Run_Control[44] = Run_Control[44] + atoi(num) * 10;
+N                    }                 
+N                    bit = 6;
+N                    break;
+N                }
+N                case 6:
+N                {
+N                    strcat(set_limit,num);
+N                    TEXT_SetText(hItem,set_limit);
+N                    if(dot_flag == 0)
+N                    {
+N                        set_static_lc = 0;
+X                        Run_Control[44] = 0;
+N                    }else if(dot_flag == 2){
+N                        set_static_lc = set_static_lc + atoi(num);
+X                        Run_Control[44] = Run_Control[44] + atoi(num);
+N                    }                 
+N                    bit = 1;
+N                    break;
+N                }
+N            }
+N            break;
+N            
+N        }
 N    }
 N}
 N
@@ -55186,9 +56050,10 @@ N        oc_test = 0;
 N        crec1 = 0;
 N        crec2 = 0;
 N        rpow = 1;
+N		step =5;
 N    }
-W "..\APP\R_Face.c" 2012 27 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 2012 78 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 2359 27 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 2359 78 single-precision operand implicitly converted to double-precision
 N    if(((crec1 < crec2 && crec2 > 0.3) || v - /*DISS_Voltage*/DISS_Voltage > v*0.9) && para_set2 == set_2_on)
 X    if(((crec1 < crec2 && crec2 > 0.3) || v -  DISS_Voltage > v*0.9) && para_set2 == 0xff)
 N    {
@@ -55215,6 +56080,7 @@ N            oc_test = 0;
 N            crec1 = 0;
 N            crec2 = 0;
 N            rpow = 1;
+N			step =5;
 N        }else if(oc_mode == 1){
 N            oc_data = crec2;
 N            GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF   
@@ -55228,6 +56094,7 @@ N            oc_test = 0;
 N            crec1 = 0;
 N            crec2 = 0;
 N            rpow = 1;
+N			step =5;
 N        }
 N
 N    }
@@ -55241,7 +56108,7 @@ N    char sbs_c[6];
 N    float change_sbs_c;
 N    static vu16 csum;
 N             
-W "..\APP\R_Face.c" 2055 43 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 2404 43 single-precision operand implicitly converted to double-precision
 N    if(v - /*DISS_Voltage*/DISS_Voltage > v*0.9 && para_set2 == set_2_on)
 X    if(v -  DISS_Voltage > v*0.9 && para_set2 == 0xff)
 N    {
@@ -55268,6 +56135,7 @@ N            finish = 1;
 N            crec1 = 0;
 N            crec2 = 0;
 N            rpow = 1;
+N			step =5;
 N        }else if(oc_mode == 1){
 N            oc_data = crec2;
 N            GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF   
@@ -55281,11 +56149,20 @@ N            crec1 = 0;
 N            crec2 = 0;
 N            oc_test = 0;
 N            rpow = 1;
+N			step =5;
 N        }
 N
 N    }else{
 N        if(oc_mode == 0)
 N        {
+N			
+N			GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+X			GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N			GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+X			GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N//                GPIO_ResetBits(GPIOC,GPIO_Pin_12);//CC
+N			GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+X			GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
 N            SET_Current_Laod = SET_Current_Laod + set_sbs_c;
 X            Run_Control[4] = Run_Control[4] + Run_Control[23];
 N            
@@ -55311,6 +56188,7 @@ N                crec1 = 0;
 N                crec2 = 0;
 N                oc_test = 0;
 N                rpow = 1;
+N				step =5;
 N            }
 N        }else if(oc_mode == 1){
 N            SET_Voltage_Laod = 0;
@@ -55331,6 +56209,7 @@ N                crec1 = 0;
 N                crec2 = 0;
 N                oc_test = 0;
 N                rpow = 1;
+N				step =5;
 N            }
 N        }       
 N    }        
@@ -55447,8 +56326,8 @@ N                TM1650_SET_LED(0x48,0x71);
 N                TM1650_SET_LED(0x68,0xF2);//PASS灯
 N            }
 N        }else{
-N            if(r > set_max_r || r < set_min_r || v*1000 > set_max_v || v*1000 < set_min_v || oc_data*1000 > set_max_c || oc_data*1000 < set_min_c)
-X            if(r > Run_Control[16] || r < Run_Control[17] || v*1000 > Run_Control[14] || v*1000 < Run_Control[15] || oc_data*1000 > Run_Control[18] || oc_data*1000 < Run_Control[19])
+N            if(r > set_max_r || r < set_min_r || v*1000 > set_max_v || v*1000 < set_min_v || oc_data*1000 > set_max_c || oc_data*1000 < set_min_c || static_lv*1000 > set_max_lv || static_lv*1000 < set_min_lv || static_pc*1000 > set_max_pc || static_pc*1000 < set_min_pc)
+X            if(r > Run_Control[16] || r < Run_Control[17] || v*1000 > Run_Control[14] || v*1000 < Run_Control[15] || oc_data*1000 > Run_Control[18] || oc_data*1000 < Run_Control[19] || static_lv*1000 > InFlashSave[0] || static_lv*1000 < InFlashSave[1] || static_pc*1000 > InFlashSave[2] || static_pc*1000 < InFlashSave[3])
 N            {
 N                if(para_set4 == set_4_on){
 X                if(para_set4 == 0xff){
@@ -55494,6 +56373,35 @@ X                    hItem = WM_GetDialogItem(hWinR, (0x800 + 0x8F));
 N                    TEXT_SetTextColor(hItem, GUI_GREEN);
 X                    TEXT_SetTextColor(hItem, 0x0000FF00);
 N                }
+N				
+N				if(static_lv*1000 > set_max_lv || static_lv*1000 < set_min_lv)
+X				if(static_lv*1000 > InFlashSave[0] || static_lv*1000 < InFlashSave[1])
+N				{
+N					hItem = WM_GetDialogItem(hWinR, ID_TEXT_83);
+X					hItem = WM_GetDialogItem(hWinR, (0x800 + 0x90));
+N                    TEXT_SetTextColor(hItem, GUI_RED);
+X                    TEXT_SetTextColor(hItem, 0x000000FF);
+N				}else{
+N					hItem = WM_GetDialogItem(hWinR, ID_TEXT_83);
+X					hItem = WM_GetDialogItem(hWinR, (0x800 + 0x90));
+N                    TEXT_SetTextColor(hItem, GUI_GREEN);
+X                    TEXT_SetTextColor(hItem, 0x0000FF00);
+N				}
+N				
+N				if(static_pc*1000 > set_max_pc || static_pc*1000 < set_min_pc)
+X				if(static_pc*1000 > InFlashSave[2] || static_pc*1000 < InFlashSave[3])
+N				{
+N					hItem = WM_GetDialogItem(hWinR, ID_TEXT_151);
+X					hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0135));
+N                    TEXT_SetTextColor(hItem, GUI_RED);
+X                    TEXT_SetTextColor(hItem, 0x000000FF);
+N				}else{
+N					hItem = WM_GetDialogItem(hWinR, ID_TEXT_151);
+X					hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0135));
+N                    TEXT_SetTextColor(hItem, GUI_GREEN);
+X                    TEXT_SetTextColor(hItem, 0x0000FF00);
+N				}
+N				
 N            }else{
 N                hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
 X                hItem = WM_GetDialogItem(hWinR, (0x800 + 0x8D));
@@ -55505,6 +56413,14 @@ N                TEXT_SetTextColor(hItem, GUI_GREEN);
 X                TEXT_SetTextColor(hItem, 0x0000FF00);
 N                hItem = WM_GetDialogItem(hWinR, ID_TEXT_82);
 X                hItem = WM_GetDialogItem(hWinR, (0x800 + 0x8F));
+N                TEXT_SetTextColor(hItem, GUI_GREEN);				
+X                TEXT_SetTextColor(hItem, 0x0000FF00);				
+N				hItem = WM_GetDialogItem(hWinR, ID_TEXT_83);
+X				hItem = WM_GetDialogItem(hWinR, (0x800 + 0x90));
+N                TEXT_SetTextColor(hItem, GUI_GREEN);
+X                TEXT_SetTextColor(hItem, 0x0000FF00);
+N				hItem = WM_GetDialogItem(hWinR, ID_TEXT_151);
+X				hItem = WM_GetDialogItem(hWinR, (0x800 + 0x0135));
 N                TEXT_SetTextColor(hItem, GUI_GREEN);
 X                TEXT_SetTextColor(hItem, 0x0000FF00);
 N                

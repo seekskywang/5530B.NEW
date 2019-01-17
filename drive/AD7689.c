@@ -276,7 +276,7 @@ extern struct bitDefine
 vu16 AD7689_Buffer[8];
 vu16 Ad7689_Fit_Imon[100];//璐熻浇鐢垫祦
 vu16 Ad7689_Fit_Imon1[20];
-vu16 Ad7689_Fit_Vmon[20];
+vu16 Ad7689_Fit_Vmon[40];
 void Bubble_sort(vu16 *D_temp,vu8 num);
 void AD7689_InitializeSPI2(void)
 {
@@ -462,7 +462,7 @@ void AD7689_Scan_CH(void)
 	{
 		V_cont=0;
 	}
-	Bubble_sort( Ad7689_Fit_Vmon,20);//排序从大到小
+//	Bubble_sort( Ad7689_Fit_Vmon,20);//排序从大到小
 	sum1=0;
 	for(f=2;f<16;f++)
 	{

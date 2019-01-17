@@ -24,6 +24,7 @@
 #include "tm1650.h"
 #include "dac8531.h"
 #include "ad7689.h"
+#include "internalflash.h"
 
 float DISS_Voltage;//负载电压
 float DISS_POW_Voltage;//稳压电源电压
@@ -64,6 +65,7 @@ int main(void)
 	AD7689_InitializeSPI2();//AD7689初始化
 	LCD_Initializtion();//液晶屏初始化	
 	//IWDG_Inte();
+	Flash_Read16BitDatas(FLASH_USER_START_ADDR,20,InFlashSave);
     GPIO_ResetBits(GPIOC,GPIO_Pin_13);
     GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
 	MainTask();

@@ -16,6 +16,7 @@
 #include "ssd1963.h"
 #include  "gui.h"
 #include "MainTask.h"
+#include "internalflash.h"
 
 extern WM_HWIN CreateR(void);
 extern WM_HWIN CreateWindow2(void);
@@ -23,6 +24,7 @@ extern WM_HWIN CreateWindow(void);
 extern WM_HWIN CreateG(void);
 extern WM_HWIN CreateSET(void);
 extern WM_HWIN Createcal(void);
+void setmode_r(void);
 extern WM_HWIN hWinWind;
 extern WM_HWIN hWinR;
 extern WM_HWIN load_wind;//è´Ÿè½½ç•Œé¢å¥æŸ„
@@ -49,6 +51,9 @@ extern vu8 manual;
 extern vu8 oc_mode;
 extern vu8 cal;
 extern char inputv[10];
+extern vu8 con_flag;
+extern vu8 test_finish;
+extern float v;
 vu8 t_MODE;
 vu8 pass = 0;
 vu8 LOAD_t;
@@ -68,6 +73,10 @@ vu8 lock;
 vu8 c_rec;
 vu8 calstep;
 vu8 oldcal;
+extern vu8 test_start;
+extern vu8 step;
+extern vu16 r;
+extern vu8 staticcdc;
 
 //=================================================================
 extern struct bitDefine
@@ -1060,7 +1069,8 @@ void Key_Funtion(void)
                 
                 case KEY_ESC :
                 {
-                  sLCD_WR_REG(0x01);
+					Flash_Read16BitDatas(FLASH_USER_START_ADDR,20,InFlashSave);
+//                  sLCD_WR_REG(0x01);
     //                main();
     //				timer_sw = 0;
                     KeyCounter = 0;
@@ -1176,7 +1186,7 @@ void Key_Funtion(void)
                         }
                         case face_r:
                         {
-                            if(para_set2 == set_2_on && oc_mode ==0)
+                            if(para_set2 == set_2_on/* && oc_mode ==0*/)
                             {
                                 OC_OP_UP();
                                 KeyCounter = 0;
@@ -1233,7 +1243,7 @@ void Key_Funtion(void)
                         }
                         case face_r:
                         {
-                            if(para_set2 == set_2_on && oc_mode ==0)
+                            if(para_set2 == set_2_on/* && oc_mode ==0*/)
                             {
                                 OC_OP_DOWN();
                                 KeyCounter = 0;
@@ -1460,35 +1470,23 @@ void Key_Funtion(void)
                     {
                         case face_r:
                         {
-    //                         if(para_set2 == set_2_on)
-    //                         {
-    // //                            static vu8 LOAD_t;
-    //                             Mode_SW_CONT(0x02);
-    //                             LOAD_t++;
-    //                             if(LOAD_t>1)
-    //                             {
-    //                                 LOAD_t=0;
-    //                             }
-    //                             if(LOAD_t==0)
-    //                             {
-    //                                 oct_sw = oct_off;
-    //                                 set_add_c = 0;
-    //                                 Flag_Swtich_ON=0;
-    //                                 GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
-    //                                  
-    //                             }
-    //                             else if(LOAD_t==1)
-    //                             {
-    //                                 oct_sw = oct_on;
-    //                                 Flag_Swtich_ON=1;
-    //                                 GPIO_ResetBits(GPIOC,GPIO_Pin_1);//On
-    //                             }
-    //                          }
-                             if(r_test == 0 && DISS_Voltage > gate_v)
-                             {
-                                r_test = 1;
-                             }else{
-                                 r_test = 0;
+                             if(test_start == 0 && DISS_Voltage > gate_v)
+                             {								 
+                                test_start = 1;
+								r = R_VLUE;
+								v = DISS_Voltage;
+								if(staticcdc == 1)
+								{
+									step = 1;
+								}else{
+									step = 4;
+									SET_Current_Laod = set_init_c;
+									GPIO_ResetBits(GPIOA,GPIO_Pin_15);
+								}
+                             }else if(test_start == 1){
+                                test_start = 0;
+								step = 0;
+								con_flag = 0;
                              }
                              KeyCounter = 0;
                              BEEP_Tiggr();//´¥·¢·äÃùÆ÷

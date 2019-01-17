@@ -16,10 +16,11 @@
 #include "key.h"
 #include "string.h"
 #include "beep.h"
-
+#include "internalflash.h"
 
 WM_HWIN hWinset;
 extern int count_num(int data);
+int16_t InFlashSave[20];
 vu8 test_mode;
 
 /*********************************************************************
@@ -62,6 +63,10 @@ vu8 test_mode;
 #define ID_BUTTON_34   	(GUI_ID_USER + 0x39)
 #define ID_BUTTON_35    (GUI_ID_USER + 0x3A)
 #define ID_TEXT_129     (GUI_ID_USER + 0x10A)
+#define ID_TEXT_154     (GUI_ID_USER + 0x0135)
+#define ID_TEXT_155     (GUI_ID_USER + 0x0136)
+#define ID_TEXT_156     (GUI_ID_USER + 0x0137)
+#define ID_TEXT_157     (GUI_ID_USER + 0x0138)
 
 
 #define ID_TimerTime5    6
@@ -93,21 +98,25 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate5[] = {
   { TEXT_CreateIndirect, "Text", ID_TEXT_21, 30, 50, 80, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_22, 30, 75, 80, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_23, 30, 100, 80, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_24, 30, 125, 80, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_25, 30, 150, 80, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_24, 30, 125, 100, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_25, 30, 150, 140, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_26, 30, 175, 80, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_27, 30, 200, 80, 20, 0, 0x64, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_28, 118, 50, 40, 20, 0, 0x64, 0 },   
   { TEXT_CreateIndirect, "Text", ID_TEXT_29, 118, 75, 40, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_30, 118, 100, 40, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_31, 260, 50, 80, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_32, 260, 75, 80, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_35, 118, 125, 65, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_36, 118, 150, 65, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_31, 260, 50, 100, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_32, 260, 75, 140, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_35, 185, 122, 40, 14, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_36, 185, 136, 40, 14, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_154, 185, 150, 40, 14, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_155, 185, 164, 40, 14, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_37, 118, 175, 48, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_38, 118, 200, 48, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_39, 348, 50, 65, 20, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "Text", ID_TEXT_40, 348, 75, 65, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_39, 414, 47, 40, 14, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_40, 414, 61, 40, 14, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_156, 414, 75, 40, 14, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_157, 414, 89, 40, 14, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_90, 260, 100, 80, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_91, 348, 100, 120, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_92, 360, 125, 120, 20, 0, 0x0, 0 },
@@ -169,15 +178,25 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 	GUI_DispStringAt("系统设置", 130, 3);//SET
  	GUI_SetColor(GUI_WHITE);//ʨ׃ǰްɫΪїɫ
  	GUI_SetFont(&GUI_Font24_1);//
-    GUI_DispStringAt("V",195,125);
-    GUI_DispStringAt("V",195,150);
-    GUI_DispStringAt("A",415,50);
-    GUI_DispStringAt("A",415,75);
+    GUI_DispStringAt("V",220,125);
+    GUI_DispStringAt("V",220,150);
+    GUI_DispStringAt("A",451,50);
+    GUI_DispStringAt("A",451,75);
     GUI_DispStringAt("m",195,175);
     GUI_DispStringAt("m",195,200);
     GUI_SetFont(&GUI_FontHZ16);
     GUI_DispStringAt("Ω",211,182);
     GUI_DispStringAt("Ω",211,207);
+	GUI_SetColor(GUI_WHITE);//ʨ׃ǰްɫΪїɫ
+ 	GUI_SetFont(&GUI_Font16_1);//
+	GUI_DispStringAt("H",173,122);
+    GUI_DispStringAt("L",173,136);
+    GUI_DispStringAt("H",173,150);
+    GUI_DispStringAt("L",173,164);
+	GUI_DispStringAt("H",404,47);
+    GUI_DispStringAt("L",404,61);
+    GUI_DispStringAt("H",404,75);
+    GUI_DispStringAt("L",404,89);
     
     GUI_SetColor(GUI_GREEN);
     GUI_SetFont(&GUI_Fontunit);
@@ -278,13 +297,13 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
         TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
 		GUI_UC_SetEncodeUTF8();
-		TEXT_SetText(hItem,"电压上限");
+		TEXT_SetText(hItem,"电压上下限");
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_25);
 		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
         TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
 		GUI_UC_SetEncodeUTF8();
-		TEXT_SetText(hItem,"电压下限");
+		TEXT_SetText(hItem,"负载电压上下限");
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_26);
 		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
@@ -364,13 +383,13 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
         TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
 		GUI_UC_SetEncodeUTF8();
-		TEXT_SetText(hItem,"过流上限");
+		TEXT_SetText(hItem,"过流上下限");
 
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_32);
 		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
         TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
 		GUI_UC_SetEncodeUTF8();
-		TEXT_SetText(hItem,"过流下限");
+		TEXT_SetText(hItem,"充电电流上下限");
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_90);
 		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
@@ -456,14 +475,28 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_35);
         sprintf(buf,"%.3f",dis_max_v);
 		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
-        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
 		GUI_UC_SetEncodeUTF8();        
 		TEXT_SetText(hItem,buf);
 
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_36);
         sprintf(buf,"%.3f",dis_min_v);
 		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
-        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
+		GUI_UC_SetEncodeUTF8();        
+		TEXT_SetText(hItem,buf);
+		
+		hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_154);
+        sprintf(buf,"%.3f",(float)set_max_lv/1000);
+		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
+		GUI_UC_SetEncodeUTF8();        
+		TEXT_SetText(hItem,buf);
+
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_155);
+        sprintf(buf,"%.3f",(float)set_min_lv/1000);
+		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
 		GUI_UC_SetEncodeUTF8();        
 		TEXT_SetText(hItem,buf);
 //         
@@ -484,14 +517,28 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_39);
         sprintf(buf,"%.3f",dis_max_c);        
 		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
-        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
+		GUI_UC_SetEncodeUTF8();        
+		TEXT_SetText(hItem,buf);
+        
+        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_156);
+        sprintf(buf,"%.3f",(float)set_max_pc/1000);
+		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
+		GUI_UC_SetEncodeUTF8(); 
+		TEXT_SetText(hItem,buf);
+		
+		hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_157);
+        sprintf(buf,"%.3f",(float)set_min_pc/1000);        
+		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
 		GUI_UC_SetEncodeUTF8();        
 		TEXT_SetText(hItem,buf);
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_40);
         sprintf(buf,"%.3f",dis_min_c);
 		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
-        TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+        TEXT_SetFont(hItem,&GUI_Font16_1);//设定文本字体
 		GUI_UC_SetEncodeUTF8(); 
 		TEXT_SetText(hItem,buf);
         
@@ -551,6 +598,16 @@ WM_HWIN ResetSET(void) {
 //向下选择
 
 void SET_OP_DOWN(void) {
+				vu8 i;
+                char buf[5];
+  
+
+                float dis_max_v = (float)set_max_v/1000;
+                float dis_min_v = (float)set_min_v/1000;
+                vu16 dis_max_r = set_max_r;
+                vu16 dis_min_r = set_min_r;
+                float dis_max_c = (float)set_max_c/1000;
+                float dis_min_c = (float)set_min_c/1000;
                 switch(set_sw){
                     case set_1:
                     {
@@ -717,6 +774,102 @@ void SET_OP_DOWN(void) {
                         set_sw = set_8;
                         break;
                     }
+					case set_12:
+                    {
+						WM_HWIN hItem;
+//                        WM_InvalidateWindow(hWinset);
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_35);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+						if(set_max_v > 80000)
+                        {
+                            set_max_v = 80000;
+                            TEXT_SetText(hItem,"80.00");                                                       
+                        }
+                        sprintf(buf,"%.3f",dis_max_v);
+                        TEXT_SetText(hItem,buf);
+               
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_36);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+						
+						for(i=0;i<5;i++){
+							set_limit[i] = '\0';
+						}
+						bit = 1;
+                        dot_flag = 0;
+                        set_sw = set_13;
+                        break;
+					}
+					case set_82:
+                    {
+						WM_HWIN hItem;						
+						hItem = WM_GetDialogItem(hWinset, ID_TEXT_154);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                       
+                        sprintf(buf,"%.3f",(float)set_max_lv/1000);
+                        TEXT_SetText(hItem,buf);
+               
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_155);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+							
+						for(i=0;i<5;i++){
+							set_limit[i] = '\0';
+						}
+						bit = 1;
+                        dot_flag = 0;
+                        set_sw = set_83;
+                        break;
+					}
+					
+					case set_16:
+                    {
+						WM_HWIN hItem;						
+						hItem = WM_GetDialogItem(hWinset, ID_TEXT_39);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                       
+                        sprintf(buf,"%.3f",(float)set_max_c/1000);
+                        TEXT_SetText(hItem,buf);
+               
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_40);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+							
+						for(i=0;i<5;i++){
+							set_limit[i] = '\0';
+						}
+						bit = 1;
+                        dot_flag = 0;
+                        set_sw = set_17;
+                        break;
+					}
+					
+					case set_84:
+                    {
+						WM_HWIN hItem;						
+						hItem = WM_GetDialogItem(hWinset, ID_TEXT_156);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                       
+                        sprintf(buf,"%.3f",(float)set_max_pc/1000);
+                        TEXT_SetText(hItem,buf);
+               
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_157);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+							
+						for(i=0;i<5;i++){
+							set_limit[i] = '\0';
+						}
+						bit = 1;
+                        dot_flag = 0;
+                        set_sw = set_85;
+                        break;
+					}
+					
                     case set_43:
                     {
                         WM_HWIN hItem;
@@ -941,6 +1094,16 @@ void SET_OP_DOWN(void) {
 //向上选择
 
 void SET_OP_UP(void) {
+				vu8 i;
+                char buf[5];
+  
+
+                float dis_max_v = (float)set_max_v/1000;
+                float dis_min_v = (float)set_min_v/1000;
+                vu16 dis_max_r = set_max_r;
+                vu16 dis_min_r = set_min_r;
+                float dis_max_c = (float)set_max_c/1000;
+                float dis_min_c = (float)set_min_c/1000;
                 switch(set_sw){
                     case set_1:
                     {
@@ -1108,6 +1271,99 @@ void SET_OP_UP(void) {
                         set_sw = set_42;
                         break;
                     }
+					
+					case set_13:
+                    {
+						WM_HWIN hItem;						
+						hItem = WM_GetDialogItem(hWinset, ID_TEXT_36);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                       
+                        sprintf(buf,"%.3f",dis_min_v);
+                        TEXT_SetText(hItem,buf);
+               
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_35);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+							
+						for(i=0;i<5;i++){
+							set_limit[i] = '\0';
+						}
+						bit = 1;
+                        dot_flag = 0;
+                        set_sw = set_12;
+                        break;
+					}
+					
+					case set_83:
+                    {
+						WM_HWIN hItem;						
+						hItem = WM_GetDialogItem(hWinset, ID_TEXT_155);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                       
+                        sprintf(buf,"%.3f",(float)set_min_lv/1000);
+                        TEXT_SetText(hItem,buf);
+               
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_154);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+							
+						for(i=0;i<5;i++){
+							set_limit[i] = '\0';
+						}
+						bit = 1;
+                        dot_flag = 0;
+                        set_sw = set_82;
+                        break;
+					}
+					
+					case set_17:
+                    {
+						WM_HWIN hItem;						
+						hItem = WM_GetDialogItem(hWinset, ID_TEXT_40);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                       
+                        sprintf(buf,"%.3f",(float)set_min_c/1000);
+                        TEXT_SetText(hItem,buf);
+               
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_39);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+							
+						for(i=0;i<5;i++){
+							set_limit[i] = '\0';
+						}
+						bit = 1;
+                        dot_flag = 0;
+                        set_sw = set_16;
+                        break;
+					}
+					
+					case set_85:
+                    {
+						WM_HWIN hItem;						
+						hItem = WM_GetDialogItem(hWinset, ID_TEXT_157);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                       
+                        sprintf(buf,"%.3f",(float)set_min_pc/1000);
+                        TEXT_SetText(hItem,buf);
+               
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_156);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+							
+						for(i=0;i<5;i++){
+							set_limit[i] = '\0';
+						}
+						bit = 1;
+                        dot_flag = 0;
+                        set_sw = set_84;
+                        break;
+					}
+					
                     case set_43:
                     {
                         WM_HWIN hItem;
@@ -1829,6 +2085,13 @@ void PARA_SET(void) {
                         }
                         sprintf(buf,"%.3f",dis_max_v);
                         TEXT_SetText(hItem,buf);
+						
+						hItem = WM_GetDialogItem(hWinset, ID_TEXT_36);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                       
+                        sprintf(buf,"%.3f",dis_min_v);
+                        TEXT_SetText(hItem,buf);
                         
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_24);
                         TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
@@ -1839,6 +2102,98 @@ void PARA_SET(void) {
                         dot_flag = 0;
                         break; 
                     }
+					 case set_13:
+                    {
+                        WM_HWIN hItem;
+//                        WM_InvalidateWindow(hWinset);
+
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_35);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                        if(set_max_v > 80000)
+                        {
+                            set_max_v = 80000;
+                            TEXT_SetText(hItem,"80.00");                                                       
+                        }
+                        sprintf(buf,"%.3f",dis_max_v);
+                        TEXT_SetText(hItem,buf);
+						
+						hItem = WM_GetDialogItem(hWinset, ID_TEXT_36);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                       
+                        sprintf(buf,"%.3f",dis_min_v);
+                        TEXT_SetText(hItem,buf);
+						
+                    
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_24);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+   
+                        Write_Limits();
+                        set_sw = set_4;
+                        bit = 1;
+                        dot_flag = 0;
+                        break; 
+                    }
+					
+					case set_82:
+                    {
+                        WM_HWIN hItem;
+//                        WM_InvalidateWindow(hWinset);
+
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_154);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                        sprintf(buf,"%.3f",(float)set_max_lv/1000);
+                        TEXT_SetText(hItem,buf);
+						
+						hItem = WM_GetDialogItem(hWinset, ID_TEXT_155);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                       
+                        sprintf(buf,"%.3f",(float)set_min_lv/1000);
+                        TEXT_SetText(hItem,buf);
+                        
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_25);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+                        Flash_Write16BitDatas(FLASH_USER_START_ADDR,20, InFlashSave);
+                        set_sw = set_5;
+                        bit = 1;
+                        dot_flag = 0;
+                        break; 
+                    }
+					 case set_83:
+                    {
+                        WM_HWIN hItem;
+//                        WM_InvalidateWindow(hWinset);
+
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_154);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                        sprintf(buf,"%.3f",(float)set_max_lv/1000);
+                        TEXT_SetText(hItem,buf);
+						
+						hItem = WM_GetDialogItem(hWinset, ID_TEXT_155);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                       
+                        sprintf(buf,"%.3f",(float)set_min_lv/1000);
+                        TEXT_SetText(hItem,buf);
+						
+                    
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_25);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+   
+                        Flash_Write16BitDatas(FLASH_USER_START_ADDR,20, InFlashSave);
+                        set_sw = set_5;
+                        bit = 1;
+                        dot_flag = 0;
+                        break; 
+                    }
+					
                     case set_5:
                     {
                             WM_HWIN hItem;
@@ -1847,37 +2202,17 @@ void PARA_SET(void) {
                             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                             TEXT_SetTextColor(hItem, GUI_WHITE);
                
-                            hItem = WM_GetDialogItem(hWinset, ID_TEXT_36);
+                            hItem = WM_GetDialogItem(hWinset, ID_TEXT_154);
                             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                             TEXT_SetTextColor(hItem, GUI_BLACK);
 
                             for(i=0;i<5;i++){
                                 set_limit[i] = '\0';
                             }
-                            set_sw = set_13;
+                            set_sw = set_82;
                             break;                        
                     }
-                    case set_13:
-                    {
-                        WM_HWIN hItem;
-//                        WM_InvalidateWindow(hWinset);
-                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_36);
-                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
-                        TEXT_SetTextColor(hItem, GUI_WHITE);
-                       
-                        sprintf(buf,"%.3f",dis_min_v);
-                        TEXT_SetText(hItem,buf);
-                    
-                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_25);
-                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
-                        TEXT_SetTextColor(hItem, GUI_BLACK);
-   
-                        Write_Limits();
-                        set_sw = set_5;
-                        bit = 1;
-                        dot_flag = 0;
-                        break; 
-                    }
+                   
                     case set_6:
                     {
                             WM_HWIN hItem;
@@ -1987,6 +2322,20 @@ void PARA_SET(void) {
                         }
                         sprintf(buf,"%.3f",dis_max_c);
                         TEXT_SetText(hItem,buf);
+						
+						 hItem = WM_GetDialogItem(hWinset, ID_TEXT_40);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                        if(set_min_c >= set_max_c)
+                        {
+                            set_min_c = 0;
+                            TEXT_SetText(hItem,"0.000");
+                        }
+                        
+                        sprintf(buf,"%.3f",dis_min_c);
+                        TEXT_SetText(hItem,buf);
+						
+						
                         
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_31);
                         TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
@@ -1998,6 +2347,45 @@ void PARA_SET(void) {
                         dot_flag = 0;
                         break; 
                     }
+					
+					case set_17:
+                    {
+                        WM_HWIN hItem;
+//                        WM_InvalidateWindow(hWinset);
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_39);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                        if(set_max_c > 60000)
+                        {
+                            set_max_c = 60000;
+                            TEXT_SetText(hItem,"60.00");
+                        }
+                        sprintf(buf,"%.3f",dis_max_c);
+                        TEXT_SetText(hItem,buf);
+						
+						 hItem = WM_GetDialogItem(hWinset, ID_TEXT_40);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                        if(set_min_c >= set_max_c)
+                        {
+                            set_min_c = 0;
+                            TEXT_SetText(hItem,"0.000");
+                        }
+                        
+                        sprintf(buf,"%.3f",dis_min_c);
+                        TEXT_SetText(hItem,buf);
+						
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_31);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+
+                        Write_Limits();
+                        set_sw = set_8;
+                        bit = 1;
+                        dot_flag = 0;
+                        break; 
+                    }
+					
                     case set_9:
                     {
                             WM_HWIN hItem;
@@ -2006,41 +2394,95 @@ void PARA_SET(void) {
                             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                             TEXT_SetTextColor(hItem, GUI_WHITE);
                             
-                            hItem = WM_GetDialogItem(hWinset, ID_TEXT_40);
+                            hItem = WM_GetDialogItem(hWinset, ID_TEXT_156);
                             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                             TEXT_SetTextColor(hItem, GUI_BLACK);
 
                             for(i=0;i<5;i++){
                                 set_limit[i] = '\0';
                             }
-                            set_sw = set_17;
+                            set_sw = set_84;
                             break;                        
                     }
-                    case set_17:
+					
+					case set_84:
                     {
                         WM_HWIN hItem;
 //                        WM_InvalidateWindow(hWinset);
-                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_40);
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_156);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
-                        if(set_min_c >= set_max_c)
+                        if(set_max_pc > 60000)
                         {
-                            set_min_c = 0;
-                            TEXT_SetText(hItem,"00.00");
+                            set_max_pc = 60000;
+                            TEXT_SetText(hItem,"60.000");
+                        }
+                        sprintf(buf,"%.3f",(float)set_max_pc/1000);
+                        TEXT_SetText(hItem,buf);
+						
+						 hItem = WM_GetDialogItem(hWinset, ID_TEXT_157);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                        if(set_min_pc >= set_max_pc)
+                        {
+                            set_min_pc = 0;
+                            TEXT_SetText(hItem,"0.000");
                         }
                         
-                        sprintf(buf,"%.3f",dis_min_c);
+                        sprintf(buf,"%.3f",(float)set_min_pc/1000);
                         TEXT_SetText(hItem,buf);
+						
+						
+                        
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_32);
                         TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                         TEXT_SetTextColor(hItem, GUI_BLACK);
 
-                        Write_Limits();
+                        Flash_Write16BitDatas(FLASH_USER_START_ADDR,20, InFlashSave);
                         set_sw = set_9;
                         bit = 1;
                         dot_flag = 0;
                         break; 
                     }
+					
+					case set_85:
+                    {
+                        WM_HWIN hItem;
+//                        WM_InvalidateWindow(hWinset);
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_156);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                        if(set_max_pc > 60000)
+                        {
+                            set_max_pc = 60000;
+                            TEXT_SetText(hItem,"60.000");
+                        }
+                        sprintf(buf,"%.3f",(float)set_max_pc/1000);
+                        TEXT_SetText(hItem,buf);
+						
+						 hItem = WM_GetDialogItem(hWinset, ID_TEXT_157);
+                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+                        TEXT_SetTextColor(hItem, GUI_WHITE);
+                        if(set_min_pc >= set_max_pc)
+                        {
+                            set_min_pc = 0;
+                            TEXT_SetText(hItem,"0.000");
+                        }
+                        
+                        sprintf(buf,"%.3f",(float)set_min_pc/1000);
+                        TEXT_SetText(hItem,buf);
+						
+                        hItem = WM_GetDialogItem(hWinset, ID_TEXT_32);
+                        TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+                        TEXT_SetTextColor(hItem, GUI_BLACK);
+
+                        Flash_Write16BitDatas(FLASH_USER_START_ADDR,20, InFlashSave);
+                        set_sw = set_9;
+                        bit = 1;
+                        dot_flag = 0;
+                        break; 
+                    }
+                    
                     case set_73:
                     {
                         if(test_mode > 1)
@@ -2886,6 +3328,207 @@ void INPUT_NUM(char* num){
             }
             break;
         }
+		case set_82:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinset);
+            hItem = WM_GetDialogItem(hWinset, ID_TEXT_154);
+            switch(bit){
+                case 1:
+                {
+                    set_max_lv = atoi(num) * 1000;
+                    strcat(set_limit,num);            
+                    TEXT_SetText(hItem,set_limit);
+                    bit = 2;
+                    break;
+                }
+                case 2:
+                {
+                    strcat(set_limit,num);            
+                    TEXT_SetText(hItem,set_limit);
+                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
+                    {
+                        dot_flag = 1;
+                    }else{
+                        set_max_lv = set_max_lv * 10 + atoi(num) * 1000;
+                    }
+                    bit = 3;
+                    break;
+                }
+                case 3:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
+                        {                            
+                            dot_flag = 2;
+                        }else{
+                            set_max_lv = 62000;
+                        }
+                    }else{
+                        set_max_lv = set_max_lv + atoi(num) * 100;
+                    }
+                                       
+                    bit = 4;
+                    break;
+                }
+                case 4:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_max_lv = 6000;
+                    }else if(dot_flag == 2){
+                        set_max_lv = set_max_lv + atoi(num) * 100;
+                    }else{
+                        set_max_lv = set_max_lv + atoi(num) * 10;
+                    }
+                                       
+                    bit = 5;
+                    break;
+                }
+                case 5:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_max_lv = 6000;
+                    }else if(dot_flag == 1){
+                        set_max_lv = set_max_lv + atoi(num);
+                    }else{
+                        set_max_lv = set_max_lv + atoi(num) * 10;
+                    }
+                    bit = 6;
+                    break;
+                }
+                case 6:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_max_lv = 0;
+                    }else if(dot_flag == 2){
+                        set_max_lv = set_max_lv + atoi(num);
+                    }                 
+                    bit = 1;
+                    break;
+                }
+            }
+            break;
+        }
+        case set_83:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinset);
+            hItem = WM_GetDialogItem(hWinset, ID_TEXT_155);
+            switch(bit){
+                case 1:
+                {
+                    set_min_lv = atoi(num) * 1000;
+                    strcat(set_limit,num);            
+                    TEXT_SetText(hItem,set_limit);
+                    if(set_min_lv >= set_max_v){
+                        set_min_lv = 0;
+                    }
+                    bit = 2;
+                    break;
+                }
+                case 2:
+                {
+                    strcat(set_limit,num);            
+                    TEXT_SetText(hItem,set_limit);
+                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
+                    {
+                        dot_flag = 1;
+                    }else{
+                        set_min_lv = set_min_lv * 10 + atoi(num) * 1000;
+                    }
+                    if(set_min_lv >= set_max_v){
+                        set_min_lv = 0;
+                    }
+                    bit = 3;
+                    break;
+                }
+                case 3:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
+                        {                            
+                            dot_flag = 2;
+                        }else{
+                            set_max_v = 0;
+                        }
+                    }else{
+                        set_min_lv = set_min_lv + atoi(num) * 100;
+                    }
+                    if(set_min_lv >= set_max_v){
+                        set_min_lv = 0;
+                    }                   
+                    bit = 4;
+                    break;
+                }
+                case 4:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_min_lv = 0;
+                    }else if(dot_flag == 2){
+                        set_min_lv = set_min_lv + atoi(num) * 100;
+                    }else{
+                        set_min_lv = set_min_lv + atoi(num) * 10;
+                    }
+                    
+                    if(set_min_lv >= set_max_v){
+                        set_min_lv = 0;
+                    }                   
+                    bit = 5;
+                    break;
+                }
+                case 5:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_min_lv = 6000;
+                    }else if(dot_flag == 1){
+                        set_min_lv = set_min_lv + atoi(num);
+                    }else{
+                        set_min_lv = set_min_lv + atoi(num) * 10;
+                    }
+                    if(set_min_lv >= set_max_v){
+                        set_min_lv = 0;
+                    }                   
+                    bit = 6;
+                    break;
+                }
+                case 6:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_min_lv = 0;
+                    }else if(dot_flag == 2){
+                        set_min_lv = set_min_lv + atoi(num);
+                    }                 
+                    bit = 1;
+                    break;
+                }
+            }
+            break;
+        }
+		
         case set_14:
         {
             WM_HWIN hItem;
@@ -3178,7 +3821,206 @@ void INPUT_NUM(char* num){
                 }
             }
             break;
+			case set_84:
+			{
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinset);
+            hItem = WM_GetDialogItem(hWinset, ID_TEXT_156);
+            switch(bit){
+                case 1:
+                {
+                    set_max_pc = atoi(num) * 1000;
+                    strcat(set_limit,num);            
+                    TEXT_SetText(hItem,set_limit);
+                    
+                    bit = 2;
+                    break;
+                }
+                case 2:
+                {
+                    strcat(set_limit,num);            
+                    TEXT_SetText(hItem,set_limit);
+                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
+                    {
+                        dot_flag = 1;
+                    }else{
+                        set_max_pc = set_max_pc * 10 + atoi(num) * 1000;
+                    }
+                    bit = 3;
+                    break;
+                }
+                case 3:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
+                        {                            
+                            dot_flag = 2;
+                        }else{
+                            set_max_pc = 0;
+                        }
+                    }else{
+                        set_max_pc = set_max_pc + atoi(num) * 100;
+                    }                  
+                    bit = 4;
+                    break;
+                }
+                case 4:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_max_pc = 0;
+                    }else if(dot_flag == 2){
+                        set_max_pc = set_max_pc + atoi(num) * 100;
+                    }else{
+                        set_max_pc = set_max_pc + atoi(num) * 10;
+                    }                  
+                    bit = 5;
+                    break;
+                }
+                case 5:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_max_pc = 1200;
+                    }else if(dot_flag == 1){
+                        set_max_pc = set_max_pc + atoi(num);
+                    }else{
+                        set_max_pc = set_max_pc + atoi(num) * 10;
+                    }                 
+                    bit = 6;
+                    break;
+                }
+                case 6:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_max_pc = 0;
+                    }else if(dot_flag == 2){
+                        set_max_pc = set_max_pc + atoi(num);
+                    }                 
+                    bit = 1;
+                    break;
+                }
+            }
+            break;
         }
+        case set_85:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinset);
+            hItem = WM_GetDialogItem(hWinset, ID_TEXT_157);
+            switch(bit){
+                case 1:
+                {
+                    set_min_pc = atoi(num) * 1000;
+                    if(set_min_pc >= set_max_c){
+                        set_min_pc = 0;
+                    }  
+                    strcat(set_limit,num);            
+                    TEXT_SetText(hItem,set_limit);
+                        
+                    bit = 2;
+                    break;
+                }
+                case 2:
+                {
+                    strcat(set_limit,num);            
+                    TEXT_SetText(hItem,set_limit);
+                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
+                    {
+                        dot_flag = 1;
+                    }else{
+                        set_min_pc = set_min_pc * 10 + atoi(num) * 1000;
+                    }
+                    if(set_min_pc >= set_max_c){
+                        set_min_pc = 0;
+                    }
+                    bit = 3;
+                    break;
+                }
+                case 3:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
+                        {                            
+                            dot_flag = 2;
+                        }else{
+                            set_min_pc = 0;
+                        }
+                    }else{
+                        set_min_pc = set_min_pc + atoi(num) * 100;
+                    }
+                    if(set_min_pc >= set_max_c){
+                        set_min_pc = 0;
+                    }
+                    bit = 4;
+                    break;
+                }
+                case 4:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_min_pc = 0;
+                    }else if(dot_flag == 2){
+                        set_min_pc = set_min_pc + atoi(num) * 100;
+                    }else{
+                        set_min_pc = set_min_pc + atoi(num) * 10;
+                    }
+                    if(set_min_pc >= set_max_c){
+                        set_min_pc = 0;
+                    }
+                    bit = 5;
+                    break;
+                }
+                case 5:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_min_pc = 0;
+                    }else if(dot_flag == 1){
+                        set_min_pc = set_min_pc + atoi(num);
+                    }else{
+                        set_min_pc = set_min_pc + atoi(num) * 10;
+                    }
+                    if(set_min_pc >= set_max_c){
+                        set_min_pc = 0;
+                    }
+                    bit = 6;
+                    break;
+                }
+                case 6:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_min_pc = 0;
+                    }else if(dot_flag == 2){
+                        set_min_pc = set_min_pc + atoi(num);
+                    }                 
+                    bit = 1;
+                    break;
+                }
+            }
+            break;
+        }
+	}
         
     }
 }

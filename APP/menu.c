@@ -14,6 +14,7 @@
 #include "key.h"
 #include "string.h"
 #include "beep.h"
+#include "internalflash.h"
 
 WM_HWIN hWinWind;
 void test_pow(void);
@@ -23,7 +24,7 @@ extern vu16 menu_time;
 extern vu16 s_time;
 extern vu8 wait_flag;
 extern vu8 test_num;
-float overchargev;
+float pow_cutoffc;
 
 #define ID_WINDOW_0      	(GUI_ID_USER + 0x00)
 #define ID_BUTTON_0     	(GUI_ID_USER + 0x01)
@@ -46,7 +47,7 @@ float overchargev;
 #define ID_TEXT_115         (GUI_ID_USER + 0x10B)
 #define ID_TEXT_125         (GUI_ID_USER + 0x10C)
 #define ID_TEXT_144         (GUI_ID_USER + 0x012E)
-
+#define ID_TEXT_159         (GUI_ID_USER + 0x013A)
 #define ID_TimerTime2    3
 
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate1[] = {
@@ -71,6 +72,7 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate1[] = {
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_115, 95, 184, 150, 40, 0, 0x0, 0 },
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_125, 300, 2, 80, 20, 0, 0x0, 0 },
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_144, 370, 150, 65, 20, 0, 0x0, 0 },
+	{ TEXT_CreateIndirect,   "Text",   ID_TEXT_159, 290, 150, 80, 20, 0, 0x0, 0 },
   // USER START (Optionally insert additional widgets)
   // USER END
 };
@@ -115,7 +117,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         GUI_SetFont(&GUI_Font24_1);
         GUI_DispStringAt("V",435,75);
         GUI_DispStringAt("A",435,100);
-        GUI_DispStringAt("V",435,150);
+        GUI_DispStringAt("A",435,150);
         
         GUI_SetFont(&GUI_FontEN40);
         GUI_SetColor(GUI_LIGHTGRAY);
@@ -130,9 +132,9 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         GUI_SetFont(&GUI_Font24_1);
         GUI_DispStringAt("C",350, 2);
         DrawLock();
-        GUI_SetColor(GUI_WHITE);
-        GUI_SetFont(&GUI_Fontset_font);
-        GUI_DispStringAt("过充电压",290, 150);
+//        GUI_SetColor(GUI_WHITE);
+//        GUI_SetFont(&GUI_Fontset_font);
+//        GUI_DispStringAt("过充电压",290, 150);
 		break;
     
 	case WM_TIMER://定时模块消息
@@ -149,7 +151,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             if(DISS_POW_Voltage < 0.1)
             {
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
-                sprintf(buf,"%.2f",0);       
+                sprintf(buf,"%.2f",0.00);       
                 TEXT_SetText(hItem,buf);
             }else{
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
@@ -187,16 +189,14 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 TEXT_SetText(hItem,"");
                 status_flash = 0;
            }
-           if(DISS_POW_Current < 0.005 && cdelay > 20)
+           if(pow_cutoffc != 0 && DISS_POW_Current < pow_cutoffc && cdelay > 20)
            {
-              overchargev =  DISS_POW_Voltage;
               GPIO_ResetBits(GPIOC,GPIO_Pin_1);
               GPIO_SetBits(GPIOC,GPIO_Pin_13);
               mode_sw = 0;
               pow_sw = pow_off;
               cdelay = 0;
            }else{
-               overchargev = 0;
                cdelay++;
            }
         }else{
@@ -204,14 +204,14 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             TEXT_SetText(hItem,"");
             
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_87);
-            sprintf(buf,"%.3f",0);        
+            sprintf(buf,"%.3f",0.000);        
             TEXT_SetText(hItem,buf);
             
             cdelay = 0;
         }
-        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_144);       
-        sprintf(buf,"%.3f",overchargev);
-        TEXT_SetText(hItem,buf);
+//        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_144);       
+//        sprintf(buf,"%.3f",overchargev);
+//        TEXT_SetText(hItem,buf);
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_125);       
         sprintf(buf,"%.1f",temp);
@@ -314,6 +314,12 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
 		GUI_UC_SetEncodeUTF8();
 		TEXT_SetText(hItem,"限制电流");
+		
+		hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_159);
+		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+        TEXT_SetFont(hItem,&GUI_Fontset_font);//设定文本字体
+		GUI_UC_SetEncodeUTF8();
+		TEXT_SetText(hItem,"截止电流");
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_41);
         sprintf(buf,"%.2f",dis_output_v);
@@ -330,14 +336,14 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 		TEXT_SetText(hItem,buf);
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
-        sprintf(buf,"%.2f",0);
+        sprintf(buf,"%.2f",0.00);
 		TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
         TEXT_SetFont(hItem,&GUI_FontD24x32);//设定文本字体
 		GUI_UC_SetEncodeUTF8();        
 		TEXT_SetText(hItem,buf);
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_87);
-        sprintf(buf,"%.3f",0);
+        sprintf(buf,"%.3f",0.000);
 		TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
         TEXT_SetFont(hItem,&GUI_FontD24x32);//设定文本字体
 		GUI_UC_SetEncodeUTF8();        
@@ -357,7 +363,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         TEXT_SetText(hItem,buf);
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_144);
-        sprintf(buf,"%.3f",0.000);
+        sprintf(buf,"%.3f",pow_cutoffc);
 		TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
         TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
 		GUI_UC_SetEncodeUTF8();     
@@ -478,6 +484,7 @@ WM_HWIN CreateWindow(void) {
   set_sw = set_10;
   SET_Voltage = pow_v;
   SET_Current = pow_c;
+  pow_cutoffc = (float)set_pow_cutoffc/1000;
   pass = 0;
   mode_sw = mode_pow;
 //  USART_SendData(USART3,1);//连接电源
@@ -521,11 +528,11 @@ void MENU_OP_DOWN(void)
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
             
-            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_33);
+            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_159);
             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
             TEXT_SetTextColor(hItem, GUI_BLACK);
 
-            set_sw = set_10;
+            set_sw = set_88;
             break;
         }                     
         default: break;
@@ -537,37 +544,37 @@ void MENU_OP_UP(void)
 {
     switch(set_sw)
     {
-        case set_10:
-            {
-                WM_HWIN hItem;
-//                WM_InvalidateWindow(hWinWind);
-                hItem = WM_GetDialogItem(hWinWind, ID_TEXT_33);
-                TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
-                TEXT_SetTextColor(hItem, GUI_WHITE);
-               
-                hItem = WM_GetDialogItem(hWinWind, ID_TEXT_34);
-                TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
-                TEXT_SetTextColor(hItem, GUI_BLACK);
-
-                set_sw = set_11;
-                break;
-            }
-            case set_11:
-            {
-                 WM_HWIN hItem;
+        case set_11:
+		{
+			 WM_HWIN hItem;
 //                 WM_InvalidateWindow(hWinWind);
-                 hItem = WM_GetDialogItem(hWinWind, ID_TEXT_34);
-                 TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
-                 TEXT_SetTextColor(hItem, GUI_WHITE);
-               
-                 hItem = WM_GetDialogItem(hWinWind, ID_TEXT_33);
-                 TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
-                 TEXT_SetTextColor(hItem, GUI_BLACK);
+			 hItem = WM_GetDialogItem(hWinWind, ID_TEXT_34);
+			 TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+			 TEXT_SetTextColor(hItem, GUI_WHITE);
+		   
+			 hItem = WM_GetDialogItem(hWinWind, ID_TEXT_33);
+			 TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+			 TEXT_SetTextColor(hItem, GUI_BLACK);
 
-                 set_sw = set_10;
-                 break;
-             }                     
-             default: break;
+			 set_sw = set_10;
+			 break;
+		 } 
+		case set_88:
+		{
+			 WM_HWIN hItem;
+//                 WM_InvalidateWindow(hWinWind);
+			 hItem = WM_GetDialogItem(hWinWind, ID_TEXT_159);
+			 TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+			 TEXT_SetTextColor(hItem, GUI_WHITE);
+		   
+			 hItem = WM_GetDialogItem(hWinWind, ID_TEXT_34);
+			 TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+			 TEXT_SetTextColor(hItem, GUI_BLACK);
+
+			 set_sw = set_11;
+			 break;
+		 }                     
+		 default: break;
     }
 }
 
@@ -686,6 +693,50 @@ void MENU_SET(void)
             dot_flag = 0;
             break; 
          }
+		 case set_88:
+         {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinWind);
+            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_159);
+            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+            TEXT_SetTextColor(hItem, GUI_WHITE);
+                                
+            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_144);
+            TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+            TEXT_SetTextColor(hItem, GUI_BLACK);
+            for(i=0;i<5;i++)
+            {
+                set_limit[i] = '\0';
+            }
+
+            set_sw = set_89;
+            break;                        
+         }
+         case set_89:
+         {           
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinWind);
+            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_144);
+            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
+            TEXT_SetTextColor(hItem, GUI_WHITE);
+            if(set_pow_cutoffc > 5000)
+            {
+                set_pow_cutoffc = 5000;               
+            }
+            pow_cutoffc = (float)set_pow_cutoffc/1000;
+            sprintf(buf,"%.3f",pow_cutoffc);
+            TEXT_SetText(hItem,buf);            
+                   
+            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_159);
+            TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
+            TEXT_SetTextColor(hItem, GUI_BLACK);
+                                                 
+            Flash_Write16BitDatas(FLASH_USER_START_ADDR,20, InFlashSave);
+            set_sw = set_88;
+            bit = 1;
+            dot_flag = 0;
+            break; 
+         }
          default:break;
      }
 }
@@ -695,7 +746,7 @@ void MENU_SET(void)
 void INPUT_POW(char* num);            
 void INPUT_POW(char* num){    
     switch(set_sw){
-    case set_18:
+		case set_18:
         {
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWinWind);
@@ -782,54 +833,6 @@ void INPUT_POW(char* num){
 //            WM_InvalidateWindow(hWinWind);
             hItem = WM_GetDialogItem(hWinWind, ID_TEXT_42);
             switch(bit){
-//                 case 1:
-//                 {
-//                     SET_Current = atoi(num) * 1000;
-//                     strcat(set_limit,num);            
-//                     TEXT_SetText(hItem,set_limit);
-//                     bit = 2;
-//                     break;
-//                 }
-//                 case 2:
-//                 {
-//                     strcat(set_limit,num);            
-//                     TEXT_SetText(hItem,set_limit);
-//                     if(set_limit[1] == 0x2e)//判断输入是否为小数点
-//                     {
-//                         dot_flag = 1;
-//                     }else{
-//                         SET_Current = 15000;
-//                     }
-//                     bit = 3;
-//                     break;
-//                 }
-//                 case 3:
-//                 {
-//                     strcat(set_limit,num);
-//                     TEXT_SetText(hItem,set_limit);
-//                     if(dot_flag == 0)
-//                     {                                                                       
-//                         SET_Current = 15000;
-//                     }else{
-//                         SET_Current = SET_Current + atoi(num) * 100;
-//                     }                                       
-//                     bit = 4;
-//                     break;
-//                 }
-//                 case 4:
-//                 {
-//                     strcat(set_limit,num);
-//                     TEXT_SetText(hItem,set_limit);
-//                     if(dot_flag == 0)
-//                     {
-//                         SET_Current = 15000;
-//                     }else{
-//                         SET_Current = SET_Current + atoi(num) * 10;
-//                     }
-//                                        
-//                     bit = 1;
-//                     break;
-//                 }
                 case 1:
                 {
                     pow_c = atoi(num) * 1000;
@@ -911,6 +914,100 @@ void INPUT_POW(char* num){
                         pow_c = 0;
                     }else if(dot_flag == 2){
                         pow_c = pow_c + atoi(num);
+                    }                 
+                    bit = 1;
+                    break;
+                }
+            }
+        }
+        break;
+		case set_89:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinWind);
+            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_144);
+            switch(bit){
+                case 1:
+                {
+                    set_pow_cutoffc = atoi(num) * 1000;
+                    strcat(set_limit,num);            
+                    TEXT_SetText(hItem,set_limit);
+                    bit = 2;
+                    break;
+                }
+                case 2:
+                {
+                    strcat(set_limit,num);            
+                    TEXT_SetText(hItem,set_limit);
+                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
+                    {
+                        dot_flag = 1;
+                    }else{
+                        set_pow_cutoffc = set_pow_cutoffc * 10 + atoi(num) * 1000;
+                    }
+                    bit = 3;
+                    break;
+                }
+                case 3:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
+                        {                            
+                            dot_flag = 2;
+                        }else{
+                            set_pow_cutoffc = 5000;
+                        }
+                    }else{
+                        set_pow_cutoffc = set_pow_cutoffc + atoi(num) * 100;
+                    }
+                                       
+                    bit = 4;
+                    break;
+                }
+                case 4:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_pow_cutoffc = 5000;
+                    }else if(dot_flag == 2){
+                        set_pow_cutoffc = set_pow_cutoffc + atoi(num) * 100;
+                    }else{
+                        set_pow_cutoffc = set_pow_cutoffc + atoi(num) * 10;
+                    }
+                                       
+                    bit = 5;
+                    break;
+                }
+                case 5:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_pow_cutoffc = 5000;
+                    }else if(dot_flag == 1){
+                        set_pow_cutoffc = set_pow_cutoffc + atoi(num);
+                    }else{
+                        set_pow_cutoffc = set_pow_cutoffc + atoi(num) * 10;
+                    }
+                                       
+                    bit = 6;
+                    break;
+                }
+                case 6:
+                {
+                    strcat(set_limit,num);
+                    TEXT_SetText(hItem,set_limit);
+                    if(dot_flag == 0)
+                    {
+                        set_pow_cutoffc = 0;
+                    }else if(dot_flag == 2){
+                        set_pow_cutoffc = set_pow_cutoffc + atoi(num);
                     }                 
                     bit = 1;
                     break;

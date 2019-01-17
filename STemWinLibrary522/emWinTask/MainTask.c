@@ -36,7 +36,10 @@ extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ16;
 extern WM_HWIN CreateWindow(void);
 extern WM_HWIN CreateR(void);
 extern vu8 load_sw;
+extern vu8 test_start;
 RCC_ClocksTypeDef rcc;
+vu16 sendload;
+extern vu8 cdc_sw;
 static void ee_Delay( vu32 nCount)	 //莶榨謩覔时诏私
 {
 	for(; nCount != 0; nCount--);
@@ -140,13 +143,25 @@ void MainTask(void)
 //缓启动
 void Slow_Start(void)
 {
-    static vu16 sendload;
+
     
     if(page_sw == face_r)
     {
-        DAC8531_Send(Contr_Laod);//加载DAC值
+		if(test_start == 1)
+		{
+			if(sendload < 250)
+            {
+                sendload = sendload + 10;
+            }else{
+                sendload = Contr_Laod;
+            }
+			DAC8531_Send(sendload);
+		}else{	
+			sendload = 200;
+			DAC8531_Send(sendload);//加载DAC值
+		}
     }else{
-        if(load_sw == load_on)
+        if(load_sw == load_on || (mode_sw == mode_load && cdc_sw == cdc_on))
         {
             if(sendload < 250)
             {

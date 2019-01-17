@@ -212,8 +212,15 @@ extern u8 usartocflag;
 extern u8 usartshortflag;
 extern float oc_data;
 extern vu8 lock;
-extern vu32 Run_Control[42];	
+extern vu32 Run_Control[49];	
 extern u8 lockstat1,lockstat2;
+extern int16_t InFlashSave[20];
+#define set_max_lv						InFlashSave[0]
+#define set_min_lv						InFlashSave[1]
+#define set_max_pc						InFlashSave[2]
+#define set_min_pc						InFlashSave[3]
+#define set_load_cutoffv				InFlashSave[4]
+#define set_pow_cutoffc					InFlashSave[5]
 
 #define SLAVE_REG_P00		0x0000       //R_VOLU
 #define SLAVE_REG_P01		0x0001      //Load_Voltage
@@ -290,6 +297,12 @@ extern u8 lockstat1,lockstat2;
 #define cdc_dc    					    Run_Control[39]
 #define pow_c    					    Run_Control[40]
 #define load_v    					    Run_Control[41]
+#define set_static_pv					Run_Control[42]
+#define set_static_pc					Run_Control[43]
+#define set_static_lc					Run_Control[44]
+
+
+
 
 extern vu16 coff[6];
 #define cov1    					    coff[0]
@@ -394,6 +407,21 @@ extern vu16 coff[6];
 #define set_72          71
 #define set_73          72
 #define set_74          73
+#define set_75          74
+#define set_76          75
+#define set_77          76
+#define set_78          77
+#define set_79          78
+#define set_80          79
+#define set_81          80
+#define set_82          81
+#define set_83          82
+#define set_84          83
+#define set_85          84
+#define set_86          85
+#define set_87          86
+#define set_88          87
+#define set_89          88
 /*
 ************************************************************************
 *						参数设置识别符
