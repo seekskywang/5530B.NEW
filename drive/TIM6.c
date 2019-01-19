@@ -153,7 +153,7 @@ void TIM4_IRQHandler(void)
 		 {
 			 if(step == 1)
 			 {
-				if(powcount < 6000)
+				if(powcount < 10000)
 				{
 					SET_Current_Laod = set_static_lc;
 					flag_Load_CC = 1;

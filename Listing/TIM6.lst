@@ -50033,7 +50033,7 @@ X         if(page_sw == 3)
 N		 {
 N			 if(step == 1)
 N			 {
-N				if(powcount < 6000)
+N				if(powcount < 10000)
 N				{
 N					SET_Current_Laod = set_static_lc;
 X					Run_Control[4] = Run_Control[44];

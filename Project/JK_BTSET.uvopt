@@ -187,7 +187,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2449</Expression>
         </Bp>
@@ -203,7 +203,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2412</Expression>
         </Bp>
@@ -219,7 +219,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2410</Expression>
         </Bp>
@@ -235,7 +235,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2385</Expression>
         </Bp>
@@ -251,7 +251,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2383</Expression>
         </Bp>
@@ -267,7 +267,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2379</Expression>
         </Bp>
@@ -283,7 +283,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2377</Expression>
         </Bp>
@@ -299,7 +299,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2340</Expression>
         </Bp>
@@ -308,83 +308,67 @@
           <Type>0</Type>
           <LineNumber>641</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134377380</Address>
+          <Address>134377284</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\641</Expression>
         </Bp>
         <Bp>
           <Number>9</Number>
           <Type>0</Type>
-          <LineNumber>156</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>134317600</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\STemWinLibrary522\emWinTask\MainTask.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../STemWinLibrary522/emWinTask/MainTask.c\156</Expression>
-        </Bp>
-        <Bp>
-          <Number>10</Number>
-          <Type>0</Type>
           <LineNumber>343</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134375102</Address>
+          <Address>134375006</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\343</Expression>
         </Bp>
         <Bp>
-          <Number>11</Number>
+          <Number>10</Number>
           <Type>0</Type>
           <LineNumber>642</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134377384</Address>
+          <Address>134377288</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\642</Expression>
         </Bp>
         <Bp>
-          <Number>12</Number>
+          <Number>11</Number>
           <Type>0</Type>
           <LineNumber>644</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134377392</Address>
+          <Address>134377296</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\644</Expression>
         </Bp>
         <Bp>
-          <Number>13</Number>
+          <Number>12</Number>
           <Type>0</Type>
           <LineNumber>2343</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -395,12 +379,12 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2343</Expression>
         </Bp>
         <Bp>
-          <Number>14</Number>
+          <Number>13</Number>
           <Type>0</Type>
           <LineNumber>2380</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -411,12 +395,12 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2380</Expression>
         </Bp>
         <Bp>
-          <Number>15</Number>
+          <Number>14</Number>
           <Type>0</Type>
           <LineNumber>2382</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -427,12 +411,12 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2382</Expression>
         </Bp>
         <Bp>
-          <Number>16</Number>
+          <Number>15</Number>
           <Type>0</Type>
           <LineNumber>2386</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -443,12 +427,12 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2386</Expression>
         </Bp>
         <Bp>
-          <Number>17</Number>
+          <Number>16</Number>
           <Type>0</Type>
           <LineNumber>2388</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -459,12 +443,12 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2388</Expression>
         </Bp>
         <Bp>
-          <Number>18</Number>
+          <Number>17</Number>
           <Type>0</Type>
           <LineNumber>2413</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -475,12 +459,12 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2413</Expression>
         </Bp>
         <Bp>
-          <Number>19</Number>
+          <Number>18</Number>
           <Type>0</Type>
           <LineNumber>2415</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -491,12 +475,12 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2415</Expression>
         </Bp>
         <Bp>
-          <Number>20</Number>
+          <Number>19</Number>
           <Type>0</Type>
           <LineNumber>2452</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -507,12 +491,12 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\APP\R_Face.c</Filename>
+          <Filename>G:\D\5530bnew\5530B.NEW\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\JK_BTSET\../APP/R_Face.c\2452</Expression>
         </Bp>
         <Bp>
-          <Number>21</Number>
+          <Number>20</Number>
           <Type>0</Type>
           <LineNumber>617</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -528,7 +512,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>22</Number>
+          <Number>21</Number>
           <Type>0</Type>
           <LineNumber>626</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -544,7 +528,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>23</Number>
+          <Number>22</Number>
           <Type>0</Type>
           <LineNumber>639</LineNumber>
           <EnabledFlag>0</EnabledFlag>
@@ -556,6 +540,22 @@
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>23</Number>
+          <Type>0</Type>
+          <LineNumber>169</LineNumber>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\STemWinLibrary522\emWinTask\MainTask.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>

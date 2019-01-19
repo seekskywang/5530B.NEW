@@ -37,6 +37,7 @@ extern WM_HWIN CreateWindow(void);
 extern WM_HWIN CreateR(void);
 extern vu8 load_sw;
 extern vu8 test_start;
+extern vu8 step;
 RCC_ClocksTypeDef rcc;
 vu16 sendload;
 extern vu8 cdc_sw;
@@ -147,19 +148,25 @@ void Slow_Start(void)
     
     if(page_sw == face_r)
     {
-		if(test_start == 1)
+		if(step ==6)
 		{
-			if(sendload < 250)
-            {
-                sendload = sendload + 10;
-            }else{
-                sendload = Contr_Laod;
-            }
-			DAC8531_Send(sendload);
-		}else{	
-			sendload = 200;
-			DAC8531_Send(sendload);//加载DAC值
+			DAC8531_Send(Contr_Laod);
+		}else{
+			if(test_start == 1)
+			{
+				if(sendload < 250)
+				{
+					sendload = sendload + 10;
+				}else{
+					sendload = Contr_Laod;
+				}
+				DAC8531_Send(sendload);
+			}else{	
+				sendload = 0;
+				DAC8531_Send(sendload);//加载DAC值
+			}
 		}
+		
     }else{
         if(load_sw == load_on || (mode_sw == mode_load && cdc_sw == cdc_on))
         {
@@ -171,7 +178,7 @@ void Slow_Start(void)
             }
             DAC8531_Send(sendload);
         }else{
-            sendload = 200;
+            sendload = 0;
             DAC8531_Send(sendload);
         }
     }

@@ -1064,7 +1064,7 @@ void Transformation_ADC(void)
 		var32 = var32 >> 14;
 		Current = var32;;
 		DISS_POW_Current=Current;
-		DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
+		DISS_POW_Current=DISS_POW_Current/1000 - 0.004;//计算显示电流
 	}
 /**************************稳压电源设置电压转换******************************************/
 	var32 = SET_Voltage;
