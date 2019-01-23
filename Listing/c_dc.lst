@@ -53923,6 +53923,10 @@ N                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_68);
 X                     hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x81));
 N                     sprintf(buf,"%05d",battery_c);
 N                     TEXT_SetText(hItem,buf);
+N					SET_Voltage = opv1;
+X					Run_Control[1] = Run_Control[31];
+N					 SET_Current = opc1;
+X					 Run_Control[2] = Run_Control[34];
 N                   GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
 X                   GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
 N                    GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
@@ -54394,7 +54398,7 @@ X	  track = 1;
 N	  TM1650_SET_LED(0x68,0x70);
 N	  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//İֆ+
 X	  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
-W "..\APP\c_dc.c" 1095 4 function "IO_OFF" declared implicitly
+W "..\APP\c_dc.c" 1097 4 function "IO_OFF" declared implicitly
 N	  IO_OFF();//ȍ
 N	  GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
 X	  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0400));

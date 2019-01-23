@@ -27,8 +27,18 @@ Project File Date:  01/10/2019
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'JK_BTSET'
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Build Time Elapsed:  00:00:01
+compiling AD7689.c...
+compiling c_dc.c...
+..\APP\c_dc.c(248): warning:  #223-D: function "DrawLockc" declared implicitly
+          DrawLockc();
+..\APP\c_dc.c(1097): warning:  #223-D: function "IO_OFF" declared implicitly
+          IO_OFF();//ȍ
+..\APP\c_dc.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=183714 RO-data=126330 RW-data=2356 ZI-data=34652  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 2 Warning(s).
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

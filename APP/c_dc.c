@@ -725,6 +725,8 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                      hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_68);
                      sprintf(buf,"%05d",battery_c);
                      TEXT_SetText(hItem,buf);
+					SET_Voltage = opv1;
+					 SET_Current = opc1;
                    GPIO_ResetBits(GPIOC,GPIO_Pin_13);//打开电源输出继电器
                     GPIO_SetBits(GPIOC,GPIO_Pin_1);//打开电源输出
 //                    GPIO_SetBits(GPIOB,GPIO_Pin_13);//打开稳压电源输出
