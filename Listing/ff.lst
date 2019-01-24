@@ -1,4 +1,4 @@
-L 1 "..\drive\ff.c"
+L 1 "..\FATFS\src\ff.c"
 N/*----------------------------------------------------------------------------/
 N/  FatFs - FAT file system module  R0.10b                (C)ChaN, 2014
 N/-----------------------------------------------------------------------------/
@@ -117,7 +117,7 @@ N/                   Fixed LFN entry is not deleted on delete/rename an object w
 N/---------------------------------------------------------------------------*/
 N
 N#include "ff.h"			/* Declarations of FatFs API */
-L 1 "..\Include\ff.h" 1
+L 1 "..\FATFS\src\ff.h" 1
 N/*---------------------------------------------------------------------------/
 N/  FatFs - FAT file system module include file  R0.10b    (C)ChaN, 2014
 N/----------------------------------------------------------------------------/
@@ -142,7 +142,7 @@ Sextern "C" {
 N#endif
 N
 N#include "integer.h"	/* Basic integer types */
-L 1 "..\Include\integer.h" 1
+L 1 "..\FATFS\src\integer.h" 1
 N/*-------------------------------------------*/
 N/* Integer type definitions for FatFs module */
 N/*-------------------------------------------*/
@@ -176,9 +176,9 @@ N
 N#endif
 N
 N#endif
-L 25 "..\Include\ff.h" 2
+L 25 "..\FATFS\src\ff.h" 2
 N#include "ffconf.h"		/* FatFs configuration options */
-L 1 "..\Include\ffconf.h" 1
+L 1 "..\FATFS\src\ffconf.h" 1
 N/*---------------------------------------------------------------------------/
 N/  FatFs - FAT file system module configuration file  R0.10b (C)ChaN, 2014
 N/---------------------------------------------------------------------------*/
@@ -407,7 +407,7 @@ N*/
 N
 N
 N#endif /* _FFCONF */
-L 26 "..\Include\ff.h" 2
+L 26 "..\FATFS\src\ff.h" 2
 N
 N#if _FATFS != _FFCONF
 X#if 8051 != 8051
@@ -750,9 +750,9 @@ S}
 N#endif
 N
 N#endif /* _FATFS */
-L 119 "..\drive\ff.c" 2
+L 119 "..\FATFS\src\ff.c" 2
 N#include "diskio.h"		/* Declarations of disk I/O functions */
-L 1 "..\Include\diskio.h" 1
+L 1 "..\FATFS\src\diskio.h" 1
 N/*-----------------------------------------------------------------------/
 N/  Low level disk interface modlue include file   (C)ChaN, 2013          /
 N/-----------------------------------------------------------------------*/
@@ -833,8 +833,8 @@ S}
 N#endif
 N
 N#endif
-L 120 "..\drive\ff.c" 2
-N#include "integer.h"
+L 120 "..\FATFS\src\ff.c" 2
+N
 N
 N
 N
@@ -5674,20 +5674,20 @@ N
 N#if !_FS_READONLY
 X#if !0
 N#include <stdarg.h>
-L 1 "d:\Keil\ARM\ARMCC\bin\..\include\stdarg.h" 1
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h" 1
 N/* stdarg.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.8 */
 N/* Copyright (C) Codemist Ltd., 1988                            */
 N/* Copyright (C) ARM Ltd., 1991-1999. All rights reserved */
 N
 N/*
-N * RCS $Revision: 178085 $
-N * Checkin $Date: 2012-12-11 14:54:17 +0000 (Tue, 11 Dec 2012) $
+N * RCS $Revision$
+N * Checkin $Date$
 N * Revising $Author: agrant $
 N */
 N
 N#ifndef __stdarg_h
 N#define __stdarg_h
-N#define __ARMCLIB_VERSION 5030076
+N#define __ARMCLIB_VERSION 5060037
 N
 N  #ifndef __STDARG_DECLS
 N  #define __STDARG_DECLS
@@ -5713,8 +5713,26 @@ N */
 N
 N/* N.B. <stdio.h> is required to declare vfprintf() without defining      */
 N/* va_list.  Clearly the type __va_list there must keep in step.          */
-N  typedef struct __va_list { void *__ap; } va_list;
-N
+N#ifdef __clang__
+S  typedef __builtin_va_list va_list;
+S  #define va_start(ap, param) __builtin_va_start(ap, param)
+S  #define va_end(ap)          __builtin_va_end(ap)
+S  #define va_arg(ap, type)    __builtin_va_arg(ap, type)
+S  #if __STDC_VERSION__ >= 199900L || __cplusplus >= 201103L || !defined(__STRICT_ANSI__)
+S  #define va_copy(dest, src)  __builtin_va_copy(dest, src)
+S  #endif
+N#else
+N  #ifdef __TARGET_ARCH_AARCH64
+S    typedef struct __va_list {
+S      void *__stack;
+S      void *__gr_top;
+S      void *__vr_top;
+S      int __gr_offs;
+S      int __vr_offs;
+S    } va_list;
+N  #else
+N    typedef struct __va_list { void *__ap; } va_list;
+N  #endif
 N   /*
 N    * an array type suitable for holding information needed by the macro va_arg
 N    * and the function va_end. The called function shall declare a variable
@@ -5759,8 +5777,8 @@ N    */
 N
 N#define __va_copy(dest, src) ((void)((dest) = (src)))
 N
-N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
-X#if !0L || (1L && 199901L <= 199409L)
+N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X#if !0L || (1L && 199901L <= 199409L) || (0L && 201103L <= __cplusplus)
 N   /* va_copy is in C99 and non-strict C90 and non-strict C++
 N    * __va_copy is always present.
 N    */
@@ -5782,6 +5800,7 @@ N    * initialised the va_list ap. If the va_end macro is not invoked before
 N    * the return, the behaviour is undefined.
 N    * Returns: no value.
 N    */
+N#endif /* __clang__ */
 N
 N    #ifdef __cplusplus
 S         }  /* extern "C" */
@@ -5802,12 +5821,11 @@ S    #ifndef __STDARG_NO_EXPORTS
 S      using ::std::va_list;
 S    #endif
 N  #endif /* __cplusplus */
-N
 N#endif
 N
 N/* end of stdarg.h */
 N
-L 4369 "..\drive\ff.c" 2
+L 4369 "..\FATFS\src\ff.c" 2
 N/*-----------------------------------------------------------------------*/
 N/* Put a character to the file                                           */
 N/*-----------------------------------------------------------------------*/

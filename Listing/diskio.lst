@@ -1,4 +1,4 @@
-L 1 "..\drive\diskio.c"
+L 1 "..\FATFS\src\diskio.c"
 N/*-----------------------------------------------------------------------*/
 N/* Low level disk I/O module skeleton for FatFs     (C)ChaN, 2013        */
 N/*-----------------------------------------------------------------------*/
@@ -9,7 +9,7 @@ N/* storage control module to the FatFs module with a defined API.        */
 N/*-----------------------------------------------------------------------*/
 N
 N#include "diskio.h"		/* FatFs lower layer API */
-L 1 "..\Include\diskio.h" 1
+L 1 "..\FATFS\src\diskio.h" 1
 N/*-----------------------------------------------------------------------/
 N/  Low level disk interface modlue include file   (C)ChaN, 2013          /
 N/-----------------------------------------------------------------------*/
@@ -25,7 +25,7 @@ N#define _USE_WRITE	1	/* 1: Enable disk_write function */
 N#define _USE_IOCTL	1	/* 1: Enable disk_ioctl fucntion */
 N
 N#include "integer.h"
-L 1 "..\Include\integer.h" 1
+L 1 "..\FATFS\src\integer.h" 1
 N/*-------------------------------------------*/
 N/* Integer type definitions for FatFs module */
 N/*-------------------------------------------*/
@@ -59,7 +59,7 @@ N
 N#endif
 N
 N#endif
-L 16 "..\Include\diskio.h" 2
+L 16 "..\FATFS\src\diskio.h" 2
 N
 N
 N/* Status of Disk Functions */
@@ -125,777 +125,13 @@ S}
 N#endif
 N
 N#endif
-L 11 "..\drive\diskio.c" 2
-N#include "usbh_usr.h"
-L 1 "..\USB\USB_APP\usbh_usr.h" 1
-N/**
-N  ******************************************************************************
-N  * @file    usbh_usr.h
-N  * @author  MCD Application Team
-N  * @version V2.1.0
-N  * @date    19-March-2012
-N  * @brief   Header file for usbh_usr.c
-N  ******************************************************************************
-N  * @attention
-N  *
-N  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
-N  *
-N  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-N  * You may not use this file except in compliance with the License.
-N  * You may obtain a copy of the License at:
-N  *
-N  *        http://www.st.com/software_license_agreement_liberty_v2
-N  *
-N  * Unless required by applicable law or agreed to in writing, software 
-N  * distributed under the License is distributed on an "AS IS" BASIS, 
-N  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-N  * See the License for the specific language governing permissions and
-N  * limitations under the License.
-N  *
-N  ******************************************************************************
-N  */ 
-N
-N/* Define to prevent recursive inclusion -------------------------------------*/
-N#ifndef __USH_USR_H__
-N#define __USH_USR_H__
-N
-N/* Includes ------------------------------------------------------------------*/
-N#include "ff.h"
-L 1 "..\Include\ff.h" 1
-N/*---------------------------------------------------------------------------/
-N/  FatFs - FAT file system module include file  R0.10b    (C)ChaN, 2014
-N/----------------------------------------------------------------------------/
-N/ FatFs module is a generic FAT file system module for small embedded systems.
-N/ This is a free software that opened for education, research and commercial
-N/ developments under license policy of following terms.
-N/
-N/  Copyright (C) 2014, ChaN, all right reserved.
-N/
-N/ * The FatFs module is a free software and there is NO WARRANTY.
-N/ * No restriction on use. You can use, modify and redistribute it for
-N/   personal, non-profit or commercial product UNDER YOUR RESPONSIBILITY.
-N/ * Redistributions of source code must retain the above copyright notice.
-N/
-N/----------------------------------------------------------------------------*/
-N
-N#ifndef _FATFS
-N#define _FATFS	8051	/* Revision ID */
-N
-N#ifdef __cplusplus
-Sextern "C" {
-N#endif
-N
-N#include "integer.h"	/* Basic integer types */
-N#include "ffconf.h"		/* FatFs configuration options */
-L 1 "..\Include\ffconf.h" 1
-N/*---------------------------------------------------------------------------/
-N/  FatFs - FAT file system module configuration file  R0.10b (C)ChaN, 2014
-N/---------------------------------------------------------------------------*/
-N
-N#ifndef _FFCONF
-N#define _FFCONF 8051	/* Revision ID */
-N
-N
-N/*---------------------------------------------------------------------------/
-N/ Functions and Buffer Configurations
-N/---------------------------------------------------------------------------*/
-N
-N#define	_FS_TINY		0	/* 0:Normal or 1:Tiny */
-N/* When _FS_TINY is set to 1, it reduces memory consumption _MAX_SS bytes each
-N/  file object. For file data transfer, FatFs uses the common sector buffer in
-N/  the file system object (FATFS) instead of private sector buffer eliminated
-N/  from the file object (FIL). */
-N
-N
-N#define _FS_READONLY	0	/* 0:Read/Write or 1:Read only */
-N/* Setting _FS_READONLY to 1 defines read only configuration. This removes
-N/  writing functions, f_write(), f_sync(), f_unlink(), f_mkdir(), f_chmod(),
-N/  f_rename(), f_truncate() and useless f_getfree(). */
-N
-N
-N#define _FS_MINIMIZE	0	/* 0 to 3 */
-N/* The _FS_MINIMIZE option defines minimization level to remove API functions.
-N/
-N/   0: All basic functions are enabled.
-N/   1: f_stat(), f_getfree(), f_unlink(), f_mkdir(), f_chmod(), f_utime(),
-N/      f_truncate() and f_rename() function are removed.
-N/   2: f_opendir(), f_readdir() and f_closedir() are removed in addition to 1.
-N/   3: f_lseek() function is removed in addition to 2. */
-N
-N
-N#define	_USE_STRFUNC	1	/* 0:Disable or 1-2:Enable */
-N/* To enable string functions, set _USE_STRFUNC to 1 or 2. */
-N
-N
-N#define	_USE_MKFS		1	/* 0:Disable or 1:Enable */
-N/* To enable f_mkfs() function, set _USE_MKFS to 1 and set _FS_READONLY to 0 */
-N
-N
-N#define	_USE_FASTSEEK	1	/* 0:Disable or 1:Enable */
-N/* To enable fast seek feature, set _USE_FASTSEEK to 1. */
-N
-N
-N#define _USE_LABEL		1	/* 0:Disable or 1:Enable */
-N/* To enable volume label functions, set _USE_LAVEL to 1 */
-N
-N
-N#define	_USE_FORWARD	0	/* 0:Disable or 1:Enable */
-N/* To enable f_forward() function, set _USE_FORWARD to 1 and set _FS_TINY to 1. */
-N
-N
-N/*---------------------------------------------------------------------------/
-N/ Locale and Namespace Configurations
-N/---------------------------------------------------------------------------*/
-N
-N#define _CODE_PAGE	936		//采用中文GBK编码
-N/* The _CODE_PAGE specifies the OEM code page to be used on the target system.
-N/  Incorrect setting of the code page can cause a file open failure.
-N/
-N/   932  - Japanese Shift_JIS (DBCS, OEM, Windows)
-N/   936  - Simplified Chinese GBK (DBCS, OEM, Windows)
-N/   949  - Korean (DBCS, OEM, Windows)
-N/   950  - Traditional Chinese Big5 (DBCS, OEM, Windows)
-N/   1250 - Central Europe (Windows)
-N/   1251 - Cyrillic (Windows)
-N/   1252 - Latin 1 (Windows)
-N/   1253 - Greek (Windows)
-N/   1254 - Turkish (Windows)
-N/   1255 - Hebrew (Windows)
-N/   1256 - Arabic (Windows)
-N/   1257 - Baltic (Windows)
-N/   1258 - Vietnam (OEM, Windows)
-N/   437  - U.S. (OEM)
-N/   720  - Arabic (OEM)
-N/   737  - Greek (OEM)
-N/   775  - Baltic (OEM)
-N/   850  - Multilingual Latin 1 (OEM)
-N/   858  - Multilingual Latin 1 + Euro (OEM)
-N/   852  - Latin 2 (OEM)
-N/   855  - Cyrillic (OEM)
-N/   866  - Russian (OEM)
-N/   857  - Turkish (OEM)
-N/   862  - Hebrew (OEM)
-N/   874  - Thai (OEM, Windows)
-N/   1    - ASCII (Valid for only non-LFN configuration) */
-N
-N
-N#define	_USE_LFN	3		/* 0 to 3 */
-N#define	_MAX_LFN	255		/* Maximum LFN length to handle (12 to 255) */
-N/* The _USE_LFN option switches the LFN feature.
-N/
-N/   0: Disable LFN feature. _MAX_LFN has no effect.
-N/   1: Enable LFN with static working buffer on the BSS. Always NOT thread-safe.
-N/   2: Enable LFN with dynamic working buffer on the STACK.
-N/   3: Enable LFN with dynamic working buffer on the HEAP.
-N/
-N/  When enable LFN feature, Unicode handling functions ff_convert() and ff_wtoupper()
-N/  function must be added to the project.
-N/  The LFN working buffer occupies (_MAX_LFN + 1) * 2 bytes. When use stack for the
-N/  working buffer, take care on stack overflow. When use heap memory for the working
-N/  buffer, memory management functions, ff_memalloc() and ff_memfree(), must be added
-N/  to the project. */
-N
-N
-N#define	_LFN_UNICODE	0	/* 0:ANSI/OEM or 1:Unicode */
-N/* To switch the character encoding on the FatFs API (TCHAR) to Unicode, enable LFN
-N/  feature and set _LFN_UNICODE to 1. This option affects behavior of string I/O
-N/  functions. This option must be 0 when LFN feature is not enabled. */
-N
-N
-N#define _STRF_ENCODE	3	/* 0:ANSI/OEM, 1:UTF-16LE, 2:UTF-16BE, 3:UTF-8 */
-N/* When Unicode API is enabled by _LFN_UNICODE option, this option selects the character
-N/  encoding on the file to be read/written via string I/O functions, f_gets(), f_putc(),
-N/  f_puts and f_printf(). This option has no effect when _LFN_UNICODE == 0. Note that
-N/  FatFs supports only BMP. */
-N
-N
-N#define _FS_RPATH		0	/* 0 to 2 */
-N/* The _FS_RPATH option configures relative path feature.
-N/
-N/   0: Disable relative path feature and remove related functions.
-N/   1: Enable relative path. f_chdrive() and f_chdir() function are available.
-N/   2: f_getcwd() function is available in addition to 1.
-N/
-N/  Note that output of the f_readdir() fnction is affected by this option. */
-N
-N
-N/*---------------------------------------------------------------------------/
-N/ Drive/Volume Configurations
-N/---------------------------------------------------------------------------*/
-N
-N#define _VOLUMES	3 	//支持3个磁盘
-N/* Number of volumes (logical drives) to be used. */
-N
-N
-N#define _STR_VOLUME_ID	0	/* 0:Use only 0-9 for drive ID, 1:Use strings for drive ID */
-N#define _VOLUME_STRS	"RAM","NAND","CF","SD1","SD2","USB1","USB2","USB3"
-N/* When _STR_VOLUME_ID is set to 1, also pre-defined strings can be used as drive
-N/  number in the path name. _VOLUME_STRS defines the drive ID strings for each logical
-N/  drives. Number of items must be equal to _VOLUMES. Valid characters for the drive ID
-N/  strings are: 0-9 and A-Z. */
-N
-N
-N#define	_MULTI_PARTITION	0	/* 0:Single partition, 1:Enable multiple partition */
-N/* By default(0), each logical drive number is bound to the same physical drive number
-N/  and only a FAT volume found on the physical drive is mounted. When it is set to 1,
-N/  each logical drive number is bound to arbitrary drive/partition listed in VolToPart[].
-N*/
-N
-N
-N#define	_MIN_SS		512
-N#define	_MAX_SS		512
-N/* These options configure the range of sector size to be supported. (512, 1024, 2048 or
-N/  4096) Always set both 512 for most systems, all memory card and harddisk. But a larger
-N/  value may be required for on-board flash memory and some type of optical media.
-N/  When _MAX_SS is larger than _MIN_SS, FatFs is configured to variable sector size and
-N/  GET_SECTOR_SIZE command must be implemented to the disk_ioctl() function. */
-N
-N
-N#define	_USE_ERASE	0	/* 0:Disable or 1:Enable */
-N/* To enable sector erase feature, set _USE_ERASE to 1. Also CTRL_ERASE_SECTOR command
-N/  should be added to the disk_ioctl() function. */
-N
-N
-N#define _FS_NOFSINFO	0	/* 0 to 3 */
-N/* If you need to know correct free space on the FAT32 volume, set bit 0 of this option
-N/  and f_getfree() function at first time after volume mount will force a full FAT scan.
-N/  Bit 1 controls the last allocated cluster number as bit 0.
-N/
-N/  bit0=0: Use free cluster count in the FSINFO if available.
-N/  bit0=1: Do not trust free cluster count in the FSINFO.
-N/  bit1=0: Use last allocated cluster number in the FSINFO if available.
-N/  bit1=1: Do not trust last allocated cluster number in the FSINFO.
-N*/
-N
-N
-N
-N/*---------------------------------------------------------------------------/
-N/ System Configurations
-N/---------------------------------------------------------------------------*/
-N
-N#define	_FS_LOCK	0	/* 0:Disable or >=1:Enable */
-N/* To enable file lock control feature, set _FS_LOCK to non-zero value.
-N/  The value defines how many files/sub-directories can be opened simultaneously
-N/  with file lock control. This feature uses bss _FS_LOCK * 12 bytes. */
-N
-N
-N#define _FS_REENTRANT	0		/* 0:Disable or 1:Enable */
-N#define _FS_TIMEOUT		1000	/* Timeout period in unit of time tick */
-N#define	_SYNC_t			HANDLE	/* O/S dependent sync object type. e.g. HANDLE, OS_EVENT*, ID, SemaphoreHandle_t and etc.. */
-N/* The _FS_REENTRANT option switches the re-entrancy (thread safe) of the FatFs module.
-N/
-N/   0: Disable re-entrancy. _FS_TIMEOUT and _SYNC_t have no effect.
-N/   1: Enable re-entrancy. Also user provided synchronization handlers,
-N/      ff_req_grant(), ff_rel_grant(), ff_del_syncobj() and ff_cre_syncobj()
-N/      function must be added to the project.
-N*/
-N
-N
-N#define _WORD_ACCESS	0	/* 0 or 1 */
-N/* The _WORD_ACCESS option is an only platform dependent option. It defines
-N/  which access method is used to the word data on the FAT volume.
-N/
-N/   0: Byte-by-byte access. Always compatible with all platforms.
-N/   1: Word access. Do not choose this unless under both the following conditions.
-N/
-N/  * Address misaligned memory access is always allowed for ALL instructions.
-N/  * Byte order on the memory is little-endian.
-N/
-N/  If it is the case, _WORD_ACCESS can also be set to 1 to improve performance and
-N/  reduce code size. Following table shows an example of some processor types.
-N/
-N/   ARM7TDMI    0           ColdFire    0           V850E       0
-N/   Cortex-M3   0           Z80         0/1         V850ES      0/1
-N/   Cortex-M0   0           RX600(LE)   0/1         TLCS-870    0/1
-N/   AVR         0/1         RX600(BE)   0           TLCS-900    0/1
-N/   AVR32       0           RL78        0           R32C        0
-N/   PIC18       0/1         SH-2        0           M16C        0/1
-N/   PIC24       0           H8S         0           MSP430      0
-N/   PIC32       0           H8/300H     0           x86         0/1
-N*/
-N
-N
-N#endif /* _FFCONF */
-L 26 "..\Include\ff.h" 2
-N
-N#if _FATFS != _FFCONF
-X#if 8051 != 8051
-S#error Wrong configuration file (ffconf.h).
-N#endif
-N
-N
-N
-N/* Definitions of volume management */
-N
-N#if _MULTI_PARTITION		/* Multiple partition configuration */
-X#if 0		 
-Stypedef struct {
-S	BYTE pd;	/* Physical drive number */
-S	BYTE pt;	/* Partition: 0:Auto detect, 1-4:Forced partition) */
-S} PARTITION;
-Sextern PARTITION VolToPart[];	/* Volume - Partition resolution table */
-S#define LD2PD(vol) (VolToPart[vol].pd)	/* Get physical drive number */
-S#define LD2PT(vol) (VolToPart[vol].pt)	/* Get partition index */
-S
-N#else							/* Single partition configuration */
-N#define LD2PD(vol) (BYTE)(vol)	/* Each logical drive is bound to the same physical drive number */
-N#define LD2PT(vol) 0			/* Find first valid partition or in SFD */
-N
-N#endif
-N
-N
-N
-N/* Type of path name strings on FatFs API */
-N
-N#if _LFN_UNICODE			/* Unicode string */
-X#if 0			 
-S#if !_USE_LFN
-S#error _LFN_UNICODE must be 0 at non-LFN cfg.
-S#endif
-S#ifndef _INC_TCHAR
-Stypedef WCHAR TCHAR;
-S#define _T(x) L ## x
-S#define _TEXT(x) L ## x
-S#endif
-S
-N#else						/* ANSI/OEM string */
-N#ifndef _INC_TCHAR
-Ntypedef char TCHAR;
-N#define _T(x) x
-N#define _TEXT(x) x
-N#endif
-N
-N#endif
-N
-N
-N
-N/* File system object structure (FATFS) */
-N
-Ntypedef struct {
-N	BYTE	fs_type;		/* FAT sub-type (0:Not mounted) */
-N	BYTE	drv;			/* Physical drive number */
-N	BYTE	csize;			/* Sectors per cluster (1,2,4...128) */
-N	BYTE	n_fats;			/* Number of FAT copies (1 or 2) */
-N	BYTE	wflag;			/* win[] flag (b0:dirty) */
-N	BYTE	fsi_flag;		/* FSINFO flags (b7:disabled, b0:dirty) */
-N	WORD	id;				/* File system mount ID */
-N	WORD	n_rootdir;		/* Number of root directory entries (FAT12/16) */
-N#if _MAX_SS != _MIN_SS
-X#if 512 != 512
-S	WORD	ssize;			/* Bytes per sector (512, 1024, 2048 or 4096) */
-N#endif
-N#if _FS_REENTRANT
-X#if 0
-S	_SYNC_t	sobj;			/* Identifier of sync object */
-N#endif
-N#if !_FS_READONLY
-X#if !0
-N	DWORD	last_clust;		/* Last allocated cluster */
-N	DWORD	free_clust;		/* Number of free clusters */
-N#endif
-N#if _FS_RPATH
-X#if 0
-S	DWORD	cdir;			/* Current directory start cluster (0:root) */
-N#endif
-N	DWORD	n_fatent;		/* Number of FAT entries, = number of clusters + 2 */
-N	DWORD	fsize;			/* Sectors per FAT */
-N	DWORD	volbase;		/* Volume start sector */
-N	DWORD	fatbase;		/* FAT start sector */
-N	DWORD	dirbase;		/* Root directory start sector (FAT32:Cluster#) */
-N	DWORD	database;		/* Data start sector */
-N	DWORD	winsect;		/* Current sector appearing in the win[] */
-N	BYTE	win[_MAX_SS];	/* Disk access window for Directory, FAT (and file data at tiny cfg) */
-X	BYTE	win[512];	 
-N} FATFS;
-N
-N
-N
-N/* File object structure (FIL) */
-N
-Ntypedef struct {
-N	FATFS*	fs;				/* Pointer to the related file system object (**do not change order**) */
-N	WORD	id;				/* Owner file system mount ID (**do not change order**) */
-N	BYTE	flag;			/* Status flags */
-N	BYTE	err;			/* Abort flag (error code) */
-N	DWORD	fptr;			/* File read/write pointer (Zeroed on file open) */
-N	DWORD	fsize;			/* File size */
-N	DWORD	sclust;			/* File start cluster (0:no cluster chain, always 0 when fsize is 0) */
-N	DWORD	clust;			/* Current cluster of fpter (not valid when fprt is 0) */
-N	DWORD	dsect;			/* Sector number appearing in buf[] (0:invalid) */
-N#if !_FS_READONLY
-X#if !0
-N	DWORD	dir_sect;		/* Sector number containing the directory entry */
-N	BYTE*	dir_ptr;		/* Pointer to the directory entry in the win[] */
-N#endif
-N#if _USE_FASTSEEK
-X#if 1
-N	DWORD*	cltbl;			/* Pointer to the cluster link map table (Nulled on file open) */
-N#endif
-N#if _FS_LOCK
-X#if 0
-S	UINT	lockid;			/* File lock ID origin from 1 (index of file semaphore table Files[]) */
-N#endif
-N#if !_FS_TINY
-X#if !0
-N	BYTE	buf[_MAX_SS];	/* File private data read/write window */
-X	BYTE	buf[512];	 
-N#endif
-N} FIL;
-N
-N
-N
-N/* Directory object structure (DIR) */
-N
-Ntypedef struct {
-N	FATFS*	fs;				/* Pointer to the owner file system object (**do not change order**) */
-N	WORD	id;				/* Owner file system mount ID (**do not change order**) */
-N	WORD	index;			/* Current read/write index number */
-N	DWORD	sclust;			/* Table start cluster (0:Root dir) */
-N	DWORD	clust;			/* Current cluster */
-N	DWORD	sect;			/* Current sector */
-N	BYTE*	dir;			/* Pointer to the current SFN entry in the win[] */
-N	BYTE*	fn;				/* Pointer to the SFN (in/out) {file[8],ext[3],status[1]} */
-N#if _FS_LOCK
-X#if 0
-S	UINT	lockid;			/* File lock ID (index of file semaphore table Files[]) */
-N#endif
-N#if _USE_LFN
-X#if 3
-N	WCHAR*	lfn;			/* Pointer to the LFN working buffer */
-N	WORD	lfn_idx;		/* Last matched LFN index number (0xFFFF:No LFN) */
-N#endif
-N} DIR;
-N
-N
-N
-N/* File status structure (FILINFO) */
-N
-Ntypedef struct {
-N	DWORD	fsize;			/* File size */
-N	WORD	fdate;			/* Last modified date */
-N	WORD	ftime;			/* Last modified time */
-N	BYTE	fattrib;		/* Attribute */
-N	TCHAR	fname[13];		/* Short file name (8.3 format) */
-N#if _USE_LFN
-X#if 3
-N	TCHAR*	lfname;			/* Pointer to the LFN buffer */
-N	UINT 	lfsize;			/* Size of LFN buffer in TCHAR */
-N#endif
-N} FILINFO;
-N
-N
-N
-N/* File function return code (FRESULT) */
-N
-Ntypedef enum {
-N	FR_OK = 0,				/* (0) Succeeded */
-N	FR_DISK_ERR,			/* (1) A hard error occurred in the low level disk I/O layer */
-N	FR_INT_ERR,				/* (2) Assertion failed */
-N	FR_NOT_READY,			/* (3) The physical drive cannot work */
-N	FR_NO_FILE,				/* (4) Could not find the file */
-N	FR_NO_PATH,				/* (5) Could not find the path */
-N	FR_INVALID_NAME,		/* (6) The path name format is invalid */
-N	FR_DENIED,				/* (7) Access denied due to prohibited access or directory full */
-N	FR_EXIST,				/* (8) Access denied due to prohibited access */
-N	FR_INVALID_OBJECT,		/* (9) The file/directory object is invalid */
-N	FR_WRITE_PROTECTED,		/* (10) The physical drive is write protected */
-N	FR_INVALID_DRIVE,		/* (11) The logical drive number is invalid */
-N	FR_NOT_ENABLED,			/* (12) The volume has no work area */
-N	FR_NO_FILESYSTEM,		/* (13) There is no valid FAT volume */
-N	FR_MKFS_ABORTED,		/* (14) The f_mkfs() aborted due to any parameter error */
-N	FR_TIMEOUT,				/* (15) Could not get a grant to access the volume within defined period */
-N	FR_LOCKED,				/* (16) The operation is rejected according to the file sharing policy */
-N	FR_NOT_ENOUGH_CORE,		/* (17) LFN working buffer could not be allocated */
-N	FR_TOO_MANY_OPEN_FILES,	/* (18) Number of open files > _FS_SHARE */
-N	FR_INVALID_PARAMETER	/* (19) Given parameter is invalid */
-N} FRESULT;
-N
-N
-N
-N/*--------------------------------------------------------------*/
-N/* FatFs module application interface                           */
-N
-NFRESULT f_open (FIL* fp, const TCHAR* path, BYTE mode);				/* Open or create a file */
-NFRESULT f_close (FIL* fp);											/* Close an open file object */
-NFRESULT f_read (FIL* fp, void* buff, UINT btr, UINT* br);			/* Read data from a file */
-NFRESULT f_write (FIL* fp, const void* buff, UINT btw, UINT* bw);	/* Write data to a file */
-NFRESULT f_forward (FIL* fp, UINT(*func)(const BYTE*,UINT), UINT btf, UINT* bf);	/* Forward data to the stream */
-NFRESULT f_lseek (FIL* fp, DWORD ofs);								/* Move file pointer of a file object */
-NFRESULT f_truncate (FIL* fp);										/* Truncate file */
-NFRESULT f_sync (FIL* fp);											/* Flush cached data of a writing file */
-NFRESULT f_opendir (DIR* dp, const TCHAR* path);						/* Open a directory */
-NFRESULT f_closedir (DIR* dp);										/* Close an open directory */
-NFRESULT f_readdir (DIR* dp, FILINFO* fno);							/* Read a directory item */
-NFRESULT f_mkdir (const TCHAR* path);								/* Create a sub directory */
-NFRESULT f_unlink (const TCHAR* path);								/* Delete an existing file or directory */
-NFRESULT f_rename (const TCHAR* path_old, const TCHAR* path_new);	/* Rename/Move a file or directory */
-NFRESULT f_stat (const TCHAR* path, FILINFO* fno);					/* Get file status */
-NFRESULT f_chmod (const TCHAR* path, BYTE value, BYTE mask);			/* Change attribute of the file/dir */
-NFRESULT f_utime (const TCHAR* path, const FILINFO* fno);			/* Change times-tamp of the file/dir */
-NFRESULT f_chdir (const TCHAR* path);								/* Change current directory */
-NFRESULT f_chdrive (const TCHAR* path);								/* Change current drive */
-NFRESULT f_getcwd (TCHAR* buff, UINT len);							/* Get current directory */
-NFRESULT f_getfree (const TCHAR* path, DWORD* nclst, FATFS** fatfs);	/* Get number of free clusters on the drive */
-NFRESULT f_getlabel (const TCHAR* path, TCHAR* label, DWORD* vsn);	/* Get volume label */
-NFRESULT f_setlabel (const TCHAR* label);							/* Set volume label */
-NFRESULT f_mount (FATFS* fs, const TCHAR* path, BYTE opt);			/* Mount/Unmount a logical drive */
-NFRESULT f_mkfs (const TCHAR* path, BYTE sfd, UINT au);				/* Create a file system on the volume */
-NFRESULT f_fdisk (BYTE pdrv, const DWORD szt[], void* work);			/* Divide a physical drive into some partitions */
-Nint f_putc (TCHAR c, FIL* fp);										/* Put a character to the file */
-Nint f_puts (const TCHAR* str, FIL* cp);								/* Put a string to the file */
-Nint f_printf (FIL* fp, const TCHAR* str, ...);						/* Put a formatted string to the file */
-NTCHAR* f_gets (TCHAR* buff, int len, FIL* fp);						/* Get a string from the file */
-N
-N#define f_eof(fp) (((fp)->fptr == (fp)->fsize) ? 1 : 0)
-N#define f_error(fp) ((fp)->err)
-N#define f_tell(fp) ((fp)->fptr)
-N#define f_size(fp) ((fp)->fsize)
-N
-NFRESULT dir_sdi (DIR *dp,UINT idx);					//此处为自行添加的,用于方便查找上一个文件.
-Nvoid ff_enter(FATFS *fs);							//在diskio.c实现
-Nvoid ff_leave(FATFS* fs);
-N#ifndef EOF
-N#define EOF (-1)
-N#endif
-N
-N
-N
-N
-N/*--------------------------------------------------------------*/
-N/* Additional user defined functions                            */
-N
-N/* RTC function */
-N#if !_FS_READONLY
-X#if !0
-NDWORD get_fattime (void);
-N#endif
-N
-N/* Unicode support functions */
-N#if _USE_LFN							/* Unicode - OEM code conversion */
-X#if 3							 
-NWCHAR ff_convert (WCHAR chr, UINT dir);	/* OEM-Unicode bidirectional conversion */
-NWCHAR ff_wtoupper (WCHAR chr);			/* Unicode upper-case conversion */
-N#if _USE_LFN == 3						/* Memory functions */
-X#if 3 == 3						 
-Nvoid* ff_memalloc (UINT msize);			/* Allocate memory block */
-Nvoid ff_memfree (void* mblock);			/* Free memory block */
-N#endif
-N#endif
-N
-N/* Sync functions */
-N#if _FS_REENTRANT
-X#if 0
-Sint ff_cre_syncobj (BYTE vol, _SYNC_t* sobj);	/* Create a sync object */
-Sint ff_req_grant (_SYNC_t sobj);				/* Lock sync object */
-Svoid ff_rel_grant (_SYNC_t sobj);				/* Unlock sync object */
-Sint ff_del_syncobj (_SYNC_t sobj);				/* Delete a sync object */
-N#endif
-N
-N
-N
-N
-N/*--------------------------------------------------------------*/
-N/* Flags and offset address                                     */
-N
-N
-N/* File access control and file status flags (FIL.flag) */
-N
-N#define	FA_READ				0x01
-N#define	FA_OPEN_EXISTING	0x00
-N
-N#if !_FS_READONLY
-X#if !0
-N#define	FA_WRITE			0x02
-N#define	FA_CREATE_NEW		0x04
-N#define	FA_CREATE_ALWAYS	0x08
-N#define	FA_OPEN_ALWAYS		0x10
-N#define FA__WRITTEN			0x20
-N#define FA__DIRTY			0x40
-N#endif
-N
-N
-N/* FAT sub type (FATFS.fs_type) */
-N
-N#define FS_FAT12	1
-N#define FS_FAT16	2
-N#define FS_FAT32	3
-N
-N
-N/* File attribute bits for directory entry */
-N
-N#define	AM_RDO	0x01	/* Read only */
-N#define	AM_HID	0x02	/* Hidden */
-N#define	AM_SYS	0x04	/* System */
-N#define	AM_VOL	0x08	/* Volume label */
-N#define AM_LFN	0x0F	/* LFN entry */
-N#define AM_DIR	0x10	/* Directory */
-N#define AM_ARC	0x20	/* Archive */
-N#define AM_MASK	0x3F	/* Mask of defined bits */
-N
-N
-N/* Fast seek feature */
-N#define CREATE_LINKMAP	0xFFFFFFFF
-N
-N
-N
-N/*--------------------------------*/
-N/* Multi-byte word access macros  */
-N
-N#if _WORD_ACCESS == 1	/* Enable word access to the FAT structure */
-X#if 0 == 1	 
-S#define	LD_WORD(ptr)		(WORD)(*(WORD*)(BYTE*)(ptr))
-S#define	LD_DWORD(ptr)		(DWORD)(*(DWORD*)(BYTE*)(ptr))
-S#define	ST_WORD(ptr,val)	*(WORD*)(BYTE*)(ptr)=(WORD)(val)
-S#define	ST_DWORD(ptr,val)	*(DWORD*)(BYTE*)(ptr)=(DWORD)(val)
-N#else					/* Use byte-by-byte access to the FAT structure */
-N#define	LD_WORD(ptr)		(WORD)(((WORD)*((BYTE*)(ptr)+1)<<8)|(WORD)*(BYTE*)(ptr))
-N#define	LD_DWORD(ptr)		(DWORD)(((DWORD)*((BYTE*)(ptr)+3)<<24)|((DWORD)*((BYTE*)(ptr)+2)<<16)|((WORD)*((BYTE*)(ptr)+1)<<8)|*(BYTE*)(ptr))
-N#define	ST_WORD(ptr,val)	*(BYTE*)(ptr)=(BYTE)(val); *((BYTE*)(ptr)+1)=(BYTE)((WORD)(val)>>8)
-N#define	ST_DWORD(ptr,val)	*(BYTE*)(ptr)=(BYTE)(val); *((BYTE*)(ptr)+1)=(BYTE)((WORD)(val)>>8); *((BYTE*)(ptr)+2)=(BYTE)((DWORD)(val)>>16); *((BYTE*)(ptr)+3)=(BYTE)((DWORD)(val)>>24)
-N#endif
-N
-N#ifdef __cplusplus
-S}
-N#endif
-N
-N#endif /* _FATFS */
-L 34 "..\USB\USB_APP\usbh_usr.h" 2
-N#include "usbh_core.h"
-L 1 "..\USB\STM32_USB_HOST_Library\Core\inc\usbh_core.h" 1
-N/**
-N  ******************************************************************************
-N  * @file    usbh_core.h
-N  * @author  MCD Application Team
-N  * @version V2.1.0
-N  * @date    19-March-2012
-N  * @brief   Header file for usbh_core.c
-N  ******************************************************************************
-N  * @attention
-N  *
-N  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
-N  *
-N  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-N  * You may not use this file except in compliance with the License.
-N  * You may obtain a copy of the License at:
-N  *
-N  *        http://www.st.com/software_license_agreement_liberty_v2
-N  *
-N  * Unless required by applicable law or agreed to in writing, software 
-N  * distributed under the License is distributed on an "AS IS" BASIS, 
-N  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-N  * See the License for the specific language governing permissions and
-N  * limitations under the License.
-N  *
-N  ******************************************************************************
-N  */ 
-N
-N/* Define to prevent recursive  ----------------------------------------------*/
-N#ifndef __USBH_CORE_H
-N#define __USBH_CORE_H
-N
-N/* Includes ------------------------------------------------------------------*/
-N#include "usb_hcd.h"
-L 1 "..\USB\STM32_USB_OTG_Driver\inc\usb_hcd.h" 1
-N/**
-N  ******************************************************************************
-N  * @file    usb_hcd.h
-N  * @author  MCD Application Team
-N  * @version V2.1.0
-N  * @date    19-March-2012
-N  * @brief   Host layer Header file
-N  ******************************************************************************
-N  * @attention
-N  *
-N  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
-N  *
-N  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-N  * You may not use this file except in compliance with the License.
-N  * You may obtain a copy of the License at:
-N  *
-N  *        http://www.st.com/software_license_agreement_liberty_v2
-N  *
-N  * Unless required by applicable law or agreed to in writing, software 
-N  * distributed under the License is distributed on an "AS IS" BASIS, 
-N  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-N  * See the License for the specific language governing permissions and
-N  * limitations under the License.
-N  *
-N  ******************************************************************************
-N  */
-N
-N/* Define to prevent recursive inclusion -------------------------------------*/
-N#ifndef __USB_HCD_H__
-N#define __USB_HCD_H__
-N
-N/* Includes ------------------------------------------------------------------*/
-N#include "usb_regs.h"
-L 1 "..\USB\STM32_USB_OTG_Driver\inc\usb_regs.h" 1
-N/**
-N  ******************************************************************************
-N  * @file    usb_regs.h
-N  * @author  MCD Application Team
-N  * @version V2.1.0
-N  * @date    19-March-2012
-N  * @brief   hardware registers
-N  ******************************************************************************
-N  * @attention
-N  *
-N  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
-N  *
-N  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-N  * You may not use this file except in compliance with the License.
-N  * You may obtain a copy of the License at:
-N  *
-N  *        http://www.st.com/software_license_agreement_liberty_v2
-N  *
-N  * Unless required by applicable law or agreed to in writing, software 
-N  * distributed under the License is distributed on an "AS IS" BASIS, 
-N  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-N  * See the License for the specific language governing permissions and
-N  * limitations under the License.
-N  *
-N  ******************************************************************************
-N  */
-N
-N/* Define to prevent recursive inclusion -------------------------------------*/
-N#ifndef __USB_OTG_REGS_H__
-N#define __USB_OTG_REGS_H__
-N
-N/* Includes ------------------------------------------------------------------*/
-N#include "usb_conf.h"
-L 1 "..\USB\USB_APP\usb_conf.h" 1
-N/**
-N  ******************************************************************************
-N  * @file    usb_conf.h
-N  * @author  MCD Application Team
-N  * @version V2.1.0
-N  * @date    19-March-2012
-N  * @brief   General low level driver configuration
-N  ******************************************************************************
-N  * @attention
-N  *
-N  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
-N  *
-N  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-N  * You may not use this file except in compliance with the License.
-N  * You may obtain a copy of the License at:
-N  *
-N  *        http://www.st.com/software_license_agreement_liberty_v2
-N  *
-N  * Unless required by applicable law or agreed to in writing, software 
-N  * distributed under the License is distributed on an "AS IS" BASIS, 
-N  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-N  * See the License for the specific language governing permissions and
-N  * limitations under the License.
-N  *
-N  ******************************************************************************
-N  */
-N
-N/* Define to prevent recursive inclusion -------------------------------------*/
-N#ifndef __USB_CONF__H__
-N#define __USB_CONF__H__
-N
-N/* Includes ------------------------------------------------------------------*/ 
+L 11 "..\FATFS\src\diskio.c" 2
+N//#include "sdio_sdcard.h"
+N//#include "w25qxx.h"
+N#include "malloc.h"		
+L 1 "..\MALLOC\malloc.h" 1
+N#ifndef __MALLOC_H
+N#define __MALLOC_H
 N#include "stm32f4xx.h"
 L 1 "..\User\stm32f4xx.h" 1
 N/**
@@ -1554,19 +790,40 @@ S  #endif
 N#endif
 N
 N#include <stdint.h>                      /* standard types definitions                      */
-L 1 "d:\Keil\ARM\ARMCC\bin\..\include\stdint.h" 1
-N/* Copyright (C) ARM Ltd., 1999 */
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h" 1
+N/* Copyright (C) ARM Ltd., 1999,2014 */
 N/* All rights reserved */
 N
 N/*
-N * RCS $Revision: 178085 $
-N * Checkin $Date: 2012-12-11 14:54:17 +0000 (Tue, 11 Dec 2012) $
+N * RCS $Revision$
+N * Checkin $Date$
 N * Revising $Author: agrant $
 N */
 N
 N#ifndef __stdint_h
 N#define __stdint_h
-N#define __ARMCLIB_VERSION 5030076
+N#define __ARMCLIB_VERSION 5060037
+N
+N  #ifdef __INT64_TYPE__
+S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
+S    #define __INT64 __INT64_TYPE__
+N  #else
+N    /* armcc has builtin '__int64' which can be used in --strict mode */
+N    #define __INT64 __int64
+N    #define __INT64_C_SUFFIX__ ll
+N  #endif
+N  #define __PASTE2(x, y) x ## y
+N  #define __PASTE(x, y) __PASTE2(x, y)
+N  #define __INT64_C(x)  __ESCAPE__(__PASTE(x, __INT64_C_SUFFIX__))
+N  #define __UINT64_C(x)  __ESCAPE__(__PASTE(x ## u, __INT64_C_SUFFIX__))
+N  #if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
+X  #if 0L || (1L && !0L)
+N    /* armclang and non-strict armcc allow 'long long' in system headers */
+N    #define __LONGLONG long long
+N  #else
+S    /* strict armcc has '__int64' */
+S    #define __LONGLONG __int64
+N  #endif
 N
 N  #ifndef __STDINT_DECLS
 N  #define __STDINT_DECLS
@@ -1585,8 +842,6 @@ N
 N/*
 N * 'signed' is redundant below, except for 'signed char' and if
 N * the typedef is used to declare a bitfield.
-N * '__int64' is used instead of 'long long' so that this header
-N * can be used in --strict mode.
 N */
 N
 N    /* 7.18.1.1 */
@@ -1595,13 +850,15 @@ N    /* exact-width signed integer types */
 Ntypedef   signed          char int8_t;
 Ntypedef   signed short     int int16_t;
 Ntypedef   signed           int int32_t;
-Ntypedef   signed       __int64 int64_t;
+Ntypedef   signed       __INT64 int64_t;
+Xtypedef   signed       __int64 int64_t;
 N
 N    /* exact-width unsigned integer types */
 Ntypedef unsigned          char uint8_t;
 Ntypedef unsigned short     int uint16_t;
 Ntypedef unsigned           int uint32_t;
-Ntypedef unsigned       __int64 uint64_t;
+Ntypedef unsigned       __INT64 uint64_t;
+Xtypedef unsigned       __int64 uint64_t;
 N
 N    /* 7.18.1.2 */
 N
@@ -1610,13 +867,15 @@ N    /* minimum-width signed integer types */
 Ntypedef   signed          char int_least8_t;
 Ntypedef   signed short     int int_least16_t;
 Ntypedef   signed           int int_least32_t;
-Ntypedef   signed       __int64 int_least64_t;
+Ntypedef   signed       __INT64 int_least64_t;
+Xtypedef   signed       __int64 int_least64_t;
 N
 N    /* minimum-width unsigned integer types */
 Ntypedef unsigned          char uint_least8_t;
 Ntypedef unsigned short     int uint_least16_t;
 Ntypedef unsigned           int uint_least32_t;
-Ntypedef unsigned       __int64 uint_least64_t;
+Ntypedef unsigned       __INT64 uint_least64_t;
+Xtypedef unsigned       __int64 uint_least64_t;
 N
 N    /* 7.18.1.3 */
 N
@@ -1624,21 +883,31 @@ N    /* fastest minimum-width signed integer types */
 Ntypedef   signed           int int_fast8_t;
 Ntypedef   signed           int int_fast16_t;
 Ntypedef   signed           int int_fast32_t;
-Ntypedef   signed       __int64 int_fast64_t;
+Ntypedef   signed       __INT64 int_fast64_t;
+Xtypedef   signed       __int64 int_fast64_t;
 N
 N    /* fastest minimum-width unsigned integer types */
 Ntypedef unsigned           int uint_fast8_t;
 Ntypedef unsigned           int uint_fast16_t;
 Ntypedef unsigned           int uint_fast32_t;
-Ntypedef unsigned       __int64 uint_fast64_t;
+Ntypedef unsigned       __INT64 uint_fast64_t;
+Xtypedef unsigned       __int64 uint_fast64_t;
 N
 N    /* 7.18.1.4 integer types capable of holding object pointers */
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+Stypedef   signed       __INT64 intptr_t;
+Stypedef unsigned       __INT64 uintptr_t;
+N#else
 Ntypedef   signed           int intptr_t;
 Ntypedef unsigned           int uintptr_t;
+N#endif
 N
 N    /* 7.18.1.5 greatest-width integer types */
-Ntypedef   signed       __int64 intmax_t;
-Ntypedef unsigned       __int64 uintmax_t;
+Ntypedef   signed     __LONGLONG intmax_t;
+Xtypedef   signed     long long intmax_t;
+Ntypedef unsigned     __LONGLONG uintmax_t;
+Xtypedef unsigned     long long uintmax_t;
 N
 N
 N#if !defined(__cplusplus) || defined(__STDC_LIMIT_MACROS)
@@ -1650,19 +919,19 @@ N    /* minimum values of exact-width signed integer types */
 N#define INT8_MIN                   -128
 N#define INT16_MIN                -32768
 N#define INT32_MIN          (~0x7fffffff)   /* -2147483648 is unsigned */
-N#define INT64_MIN  __ESCAPE__(~0x7fffffffffffffffll) /* -9223372036854775808 is unsigned */
+N#define INT64_MIN  __INT64_C(~0x7fffffffffffffff) /* -9223372036854775808 is unsigned */
 N
 N    /* maximum values of exact-width signed integer types */
 N#define INT8_MAX                    127
 N#define INT16_MAX                 32767
 N#define INT32_MAX            2147483647
-N#define INT64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of exact-width unsigned integer types */
 N#define UINT8_MAX                   255
 N#define UINT16_MAX                65535
 N#define UINT32_MAX           4294967295u
-N#define UINT64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.2 */
 N
@@ -1670,19 +939,19 @@ N    /* minimum values of minimum-width signed integer types */
 N#define INT_LEAST8_MIN                   -128
 N#define INT_LEAST16_MIN                -32768
 N#define INT_LEAST32_MIN          (~0x7fffffff)
-N#define INT_LEAST64_MIN  __ESCAPE__(~0x7fffffffffffffffll)
+N#define INT_LEAST64_MIN  __INT64_C(~0x7fffffffffffffff)
 N
 N    /* maximum values of minimum-width signed integer types */
 N#define INT_LEAST8_MAX                    127
 N#define INT_LEAST16_MAX                 32767
 N#define INT_LEAST32_MAX            2147483647
-N#define INT_LEAST64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT_LEAST64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of minimum-width unsigned integer types */
 N#define UINT_LEAST8_MAX                   255
 N#define UINT_LEAST16_MAX                65535
 N#define UINT_LEAST32_MAX           4294967295u
-N#define UINT_LEAST64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT_LEAST64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.3 */
 N
@@ -1690,30 +959,45 @@ N    /* minimum values of fastest minimum-width signed integer types */
 N#define INT_FAST8_MIN           (~0x7fffffff)
 N#define INT_FAST16_MIN          (~0x7fffffff)
 N#define INT_FAST32_MIN          (~0x7fffffff)
-N#define INT_FAST64_MIN  __ESCAPE__(~0x7fffffffffffffffll)
+N#define INT_FAST64_MIN  __INT64_C(~0x7fffffffffffffff)
 N
 N    /* maximum values of fastest minimum-width signed integer types */
 N#define INT_FAST8_MAX             2147483647
 N#define INT_FAST16_MAX            2147483647
 N#define INT_FAST32_MAX            2147483647
-N#define INT_FAST64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT_FAST64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of fastest minimum-width unsigned integer types */
 N#define UINT_FAST8_MAX            4294967295u
 N#define UINT_FAST16_MAX           4294967295u
 N#define UINT_FAST32_MAX           4294967295u
-N#define UINT_FAST64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT_FAST64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.4 */
 N
 N    /* minimum value of pointer-holding signed integer type */
-N#define INTPTR_MIN (~0x7fffffff)
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define INTPTR_MIN INT64_MIN
+N#else
+N#define INTPTR_MIN INT32_MIN
+N#endif
 N
 N    /* maximum value of pointer-holding signed integer type */
-N#define INTPTR_MAX   2147483647
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define INTPTR_MAX INT64_MAX
+N#else
+N#define INTPTR_MAX INT32_MAX
+N#endif
 N
 N    /* maximum value of pointer-holding unsigned integer type */
-N#define UINTPTR_MAX  4294967295u
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define UINTPTR_MAX UINT64_MAX
+N#else
+N#define UINTPTR_MAX UINT32_MAX
+N#endif
 N
 N    /* 7.18.2.5 */
 N
@@ -1729,15 +1013,26 @@ N
 N    /* 7.18.3 */
 N
 N    /* limits of ptrdiff_t */
-N#define PTRDIFF_MIN (~0x7fffffff)
-N#define PTRDIFF_MAX   2147483647
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define PTRDIFF_MIN INT64_MIN
+S#define PTRDIFF_MAX INT64_MAX
+N#else
+N#define PTRDIFF_MIN INT32_MIN
+N#define PTRDIFF_MAX INT32_MAX
+N#endif
 N
 N    /* limits of sig_atomic_t */
 N#define SIG_ATOMIC_MIN (~0x7fffffff)
 N#define SIG_ATOMIC_MAX   2147483647
 N
 N    /* limit of size_t */
-N#define SIZE_MAX 4294967295u
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define SIZE_MAX UINT64_MAX
+N#else
+N#define SIZE_MAX UINT32_MAX
+N#endif
 N
 N    /* limits of wchar_t */
 N    /* NB we have to undef and redef because they're defined in both
@@ -1745,8 +1040,8 @@ N     * stdint.h and wchar.h */
 N#undef WCHAR_MIN
 N#undef WCHAR_MAX
 N
-N#if defined(__WCHAR32)
-X#if 0L
+N#if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
+X#if 0L || (0L && __ARM_SIZEOF_WCHAR_T == 4)
 S  #define WCHAR_MIN   0
 S  #define WCHAR_MAX   0xffffffffU
 N#else
@@ -1767,12 +1062,12 @@ N    /* 7.18.4.1 macros for minimum-width integer constants */
 N#define INT8_C(x)   (x)
 N#define INT16_C(x)  (x)
 N#define INT32_C(x)  (x)
-N#define INT64_C(x)  __ESCAPE__(x ## ll)
+N#define INT64_C(x)  __INT64_C(x)
 N
 N#define UINT8_C(x)  (x ## u)
 N#define UINT16_C(x) (x ## u)
 N#define UINT32_C(x) (x ## u)
-N#define UINT64_C(x) __ESCAPE__(x ## ull)
+N#define UINT64_C(x) __UINT64_C(x)
 N
 N    /* 7.18.4.2 macros for greatest-width integer constants */
 N#define INTMAX_C(x)  __ESCAPE__(x ## ll)
@@ -1816,28 +1111,28 @@ S      using ::std::intptr_t;
 S      using ::std::uintptr_t;
 S      using ::std::intmax_t;
 S      using ::std::uintmax_t;
-S    #endif 
+S    #endif
 N  #endif /* __cplusplus */
+N
+N#undef __INT64
+N#undef __LONGLONG
 N
 N#endif /* __stdint_h */
 N
 N/* end of stdint.h */
-N
-N
-N
 L 169 "..\Libraries\CMSIS\inc\core_cm4.h" 2
 N#include <core_cmInstr.h>                /* Core Instruction Access                         */
-L 1 "d:\Keil\ARM\CMSIS\Include\core_cmInstr.h" 1
+L 1 "D:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h" 1
 N/**************************************************************************//**
 N * @file     core_cmInstr.h
 N * @brief    CMSIS Cortex-M Core Instruction Access Header File
-N * @version  V3.20
-N * @date     05. March 2013
+N * @version  V3.30
+N * @date     17. February 2014
 N *
 N * @note
 N *
 N ******************************************************************************/
-N/* Copyright (c) 2009 - 2013 ARM LIMITED
+N/* Copyright (c) 2009 - 2014 ARM LIMITED
 N
 N   All rights reserved.
 N   Redistribution and use in source and binary forms, with or without
@@ -1880,7 +1175,7 @@ X#if   1L
 N/* ARM armcc specific functions */
 N
 N#if (__ARMCC_VERSION < 400677)
-X#if (5030076 < 400677)
+X#if (5060750 < 400677)
 S  #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -2126,20 +1421,7 @@ N
 N#endif /* (__CORTEX_M >= 0x03) */
 N
 N
-N
-N#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
-S/* IAR iccarm specific functions */
-S
-S#include <cmsis_iar.h>
-S
-S
-S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
-S/* TI CCS specific functions */
-S
-S#include <cmsis_ccs.h>
-S
-S
-S#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+N#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
 S/* GNU gcc specific functions */
 S
 S/* Define macros for porting to both thumb1 and thumb2.
@@ -2347,7 +1629,7 @@ S       accepted by assembler. So has to use following less efficient pattern.
 S    */
 S   __ASM volatile ("ldrexb %0, [%1]" : "=r" (result) : "r" (addr) : "memory" );
 S#endif
-S   return(result);
+S   return ((uint8_t) result);    /* Add explicit type cast here */
 S}
 S
 S
@@ -2370,7 +1652,7 @@ S       accepted by assembler. So has to use following less efficient pattern.
 S    */
 S   __ASM volatile ("ldrexh %0, [%1]" : "=r" (result) : "r" (addr) : "memory" );
 S#endif
-S   return(result);
+S   return ((uint16_t) result);    /* Add explicit type cast here */
 S}
 S
 S
@@ -2403,7 +1685,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __STREXB(uint8_t va
 S{
 S   uint32_t result;
 S
-S   __ASM volatile ("strexb %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" (value) );
+S   __ASM volatile ("strexb %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
 S   return(result);
 S}
 S
@@ -2421,7 +1703,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __STREXH(uint16_t v
 S{
 S   uint32_t result;
 S
-S   __ASM volatile ("strexh %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" (value) );
+S   __ASM volatile ("strexh %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
 S   return(result);
 S}
 S
@@ -2498,25 +1780,37 @@ S    \return             number of leading zeros in value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint8_t __CLZ(uint32_t value)
 S{
-S   uint32_t result;
+S  uint32_t result;
 S
 S  __ASM volatile ("clz %0, %1" : "=r" (result) : "r" (value) );
-S  return(result);
+S   return ((uint8_t) result);    /* Add explicit type cast here */
 S}
 S
 S#endif /* (__CORTEX_M >= 0x03) */
 S
 S
+S#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
+S/* IAR iccarm specific functions */
+S#include <cmsis_iar.h>
+S
+S
+S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
+S/* TI CCS specific functions */
+S#include <cmsis_ccs.h>
 S
 S
 S#elif defined ( __TASKING__ ) /*------------------ TASKING Compiler --------------*/
 S/* TASKING carm specific functions */
-S
 S/*
 S * The CMSIS functions have been implemented as intrinsics in the compiler.
 S * Please use "carm -?i" to get an up to date list of all intrinsics,
 S * Including the CMSIS ones.
 S */
+S
+S
+S#elif defined ( __CSMC__ ) /*------------------ COSMIC Compiler -------------------*/
+S/* Cosmic specific functions */
+S#include <cmsis_csm.h>
 S
 N#endif
 N
@@ -2525,17 +1819,17 @@ N
 N#endif /* __CORE_CMINSTR_H */
 L 170 "..\Libraries\CMSIS\inc\core_cm4.h" 2
 N#include <core_cmFunc.h>                 /* Core Function Access                            */
-L 1 "d:\Keil\ARM\CMSIS\Include\core_cmFunc.h" 1
+L 1 "D:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h" 1
 N/**************************************************************************//**
 N * @file     core_cmFunc.h
 N * @brief    CMSIS Cortex-M Core Function Access Header File
-N * @version  V3.20
-N * @date     25. February 2013
+N * @version  V3.30
+N * @date     17. February 2014
 N *
 N * @note
 N *
 N ******************************************************************************/
-N/* Copyright (c) 2009 - 2013 ARM LIMITED
+N/* Copyright (c) 2009 - 2014 ARM LIMITED
 N
 N   All rights reserved.
 N   Redistribution and use in source and binary forms, with or without
@@ -2578,7 +1872,7 @@ X#if   1L
 N/* ARM armcc specific functions */
 N
 N#if (__ARMCC_VERSION < 400677)
-X#if (5030076 < 400677)
+X#if (5060750 < 400677)
 S  #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -2874,19 +2168,7 @@ N
 N#endif /* (__CORTEX_M == 0x04) */
 N
 N
-N#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
-S/* IAR iccarm specific functions */
-S
-S#include <cmsis_iar.h>
-S
-S
-S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
-S/* TI CCS specific functions */
-S
-S#include <cmsis_ccs.h>
-S
-S
-S#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+N#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
 S/* GNU gcc specific functions */
 S
 S/** \brief  Enable IRQ Interrupts
@@ -3187,19 +2469,32 @@ S
 S#endif /* (__CORTEX_M == 0x04) */
 S
 S
+S#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
+S/* IAR iccarm specific functions */
+S#include <cmsis_iar.h>
+S
+S
+S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
+S/* TI CCS specific functions */
+S#include <cmsis_ccs.h>
+S
+S
 S#elif defined ( __TASKING__ ) /*------------------ TASKING Compiler --------------*/
 S/* TASKING carm specific functions */
-S
 S/*
 S * The CMSIS functions have been implemented as intrinsics in the compiler.
-S * Please use "carm -?i" to get an up to date list of all instrinsics,
+S * Please use "carm -?i" to get an up to date list of all intrinsics,
 S * Including the CMSIS ones.
 S */
+S
+S
+S#elif defined ( __CSMC__ ) /*------------------ COSMIC Compiler -------------------*/
+S/* Cosmic specific functions */
+S#include <cmsis_csm.h>
 S
 N#endif
 N
 N/*@} end of CMSIS_Core_RegAccFunctions */
-N
 N
 N#endif /* __CORE_CMFUNC_H */
 L 171 "..\Libraries\CMSIS\inc\core_cm4.h" 2
@@ -30577,6 +29872,8 @@ N
 N/* Data transfers functions ***************************************************/ 
 Nvoid SPI_I2S_SendData(SPI_TypeDef* SPIx, uint16_t Data);
 Nuint16_t SPI_I2S_ReceiveData(SPI_TypeDef* SPIx);
+Nuint8_t SPI_ReceiveData8(SPI_TypeDef* SPIx);
+Nvoid SPI_SendData8(SPI_TypeDef* SPIx, uint8_t Data);
 N
 N/* Hardware CRC Calculation functions *****************************************/
 Nvoid SPI_CalculateCRC(SPI_TypeDef* SPIx, FunctionalState NewState);
@@ -35678,7 +34975,903 @@ N  * @}
 N  */
 N
 N/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-L 34 "..\USB\USB_APP\usb_conf.h" 2
+L 4 "..\MALLOC\malloc.h" 2
+N//////////////////////////////////////////////////////////////////////////////////	 
+N//本程序只供学习使用，未经作者许可，不得用于其它任何用途
+N//ALIENTEK STM32F407开发板
+N//内存管理 驱动代码	   
+N//正点原子@ALIENTEK
+N//技术论坛:www.openedv.com
+N//创建日期:2014/5/15
+N//版本：V1.2
+N//版权所有，盗版必究。
+N//Copyright(C) 广州市星翼电子科技有限公司 2014-2024
+N//All rights reserved
+N//********************************************************************************
+N//V1.1 20140706
+N//1,修改部分函数名字,防止和其他代码的名字冲突(比如LWIP).
+N//2,修改内存池为32字节对齐
+N//V1.2 20140716
+N//1,修改my_mem_malloc函数,对于大内存分配错误的bug.
+N////////////////////////////////////////////////////////////////////////////////// 	 
+N
+N 
+N#ifndef NULL
+N#define NULL 0
+N#endif
+N
+N//定义三个内存池
+N#define SRAMIN	 0		//内部内存池
+N#define SRAMEX   1		//外部内存池
+N#define SRAMCCM  2		//CCM内存池(此部分SRAM仅仅CPU可以访问!!!)
+N
+N
+N#define SRAMBANK 	3	//定义支持的SRAM块数.	
+N
+N
+N//mem1内存参数设定.mem1完全处于内部SRAM里面.
+N#define MEM1_BLOCK_SIZE			32  	  						//内存块大小为32字节
+N#define MEM1_MAX_SIZE			100*1024  						//最大管理内存 100K
+N#define MEM1_ALLOC_TABLE_SIZE	MEM1_MAX_SIZE/MEM1_BLOCK_SIZE 	//内存表大小
+N
+N//mem2内存参数设定.mem2的内存池处于外部SRAM里面
+N#define MEM2_BLOCK_SIZE			32  	  						//内存块大小为32字节
+N#define MEM2_MAX_SIZE			960 *1024  						//最大管理内存960K
+N#define MEM2_ALLOC_TABLE_SIZE	MEM2_MAX_SIZE/MEM2_BLOCK_SIZE 	//内存表大小
+N		 
+N//mem3内存参数设定.mem3处于CCM,用于管理CCM(特别注意,这部分SRAM,仅CPU可以访问!!)
+N#define MEM3_BLOCK_SIZE			32  	  						//内存块大小为32字节
+N#define MEM3_MAX_SIZE			60 *1024  						//最大管理内存60K
+N#define MEM3_ALLOC_TABLE_SIZE	MEM3_MAX_SIZE/MEM3_BLOCK_SIZE 	//内存表大小
+N		 
+N
+N
+N//内存管理控制器
+Nstruct _m_mallco_dev
+N{
+N	void (*init)(u8);					//初始化
+N	u8 (*perused)(u8);		  	    	//内存使用率
+N	u8 	*membase[SRAMBANK];				//内存池 管理SRAMBANK个区域的内存
+X	u8 	*membase[3];				
+N	u16 *memmap[SRAMBANK]; 				//内存管理状态表
+X	u16 *memmap[3]; 				
+N	u8  memrdy[SRAMBANK]; 				//内存管理是否就绪
+X	u8  memrdy[3]; 				
+N};
+Nextern struct _m_mallco_dev mallco_dev;	 //在mallco.c里面定义
+N
+Nvoid mymemset(void *s,u8 c,u32 count);	//设置内存
+Nvoid mymemcpy(void *des,void *src,u32 n);//复制内存     
+Nvoid my_mem_init(u8 memx);				//内存管理初始化函数(外/内部调用)
+Nu32 my_mem_malloc(u8 memx,u32 size);	//内存分配(内部调用)
+Nu8 my_mem_free(u8 memx,u32 offset);		//内存释放(内部调用)
+Nu8 my_mem_perused(u8 memx);				//获得内存使用率(外/内部调用) 
+N////////////////////////////////////////////////////////////////////////////////
+N//用户调用函数
+Nvoid myfree(u8 memx,void *ptr);  			//内存释放(外部调用)
+Nvoid *mymalloc(u8 memx,u32 size);			//内存分配(外部调用)
+Nvoid *myrealloc(u8 memx,void *ptr,u32 size);//重新分配内存(外部调用)
+N#endif
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+L 14 "..\FATFS\src\diskio.c" 2
+N#include "usbh_usr.h"
+L 1 "..\USB\USB_APP\usbh_usr.h" 1
+N/**
+N  ******************************************************************************
+N  * @file    usbh_usr.h
+N  * @author  MCD Application Team
+N  * @version V2.1.0
+N  * @date    19-March-2012
+N  * @brief   Header file for usbh_usr.c
+N  ******************************************************************************
+N  * @attention
+N  *
+N  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+N  *
+N  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+N  * You may not use this file except in compliance with the License.
+N  * You may obtain a copy of the License at:
+N  *
+N  *        http://www.st.com/software_license_agreement_liberty_v2
+N  *
+N  * Unless required by applicable law or agreed to in writing, software 
+N  * distributed under the License is distributed on an "AS IS" BASIS, 
+N  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+N  * See the License for the specific language governing permissions and
+N  * limitations under the License.
+N  *
+N  ******************************************************************************
+N  */ 
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __USH_USR_H__
+N#define __USH_USR_H__
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "ff.h"
+L 1 "..\Include\ff.h" 1
+N/*---------------------------------------------------------------------------/
+N/  FatFs - FAT file system module include file  R0.10b    (C)ChaN, 2014
+N/----------------------------------------------------------------------------/
+N/ FatFs module is a generic FAT file system module for small embedded systems.
+N/ This is a free software that opened for education, research and commercial
+N/ developments under license policy of following terms.
+N/
+N/  Copyright (C) 2014, ChaN, all right reserved.
+N/
+N/ * The FatFs module is a free software and there is NO WARRANTY.
+N/ * No restriction on use. You can use, modify and redistribute it for
+N/   personal, non-profit or commercial product UNDER YOUR RESPONSIBILITY.
+N/ * Redistributions of source code must retain the above copyright notice.
+N/
+N/----------------------------------------------------------------------------*/
+N
+N#ifndef _FATFS
+N#define _FATFS	8051	/* Revision ID */
+N
+N#ifdef __cplusplus
+Sextern "C" {
+N#endif
+N
+N#include "integer.h"	/* Basic integer types */
+L 1 "..\Include\integer.h" 1
+N/*-------------------------------------------*/
+N/* Integer type definitions for FatFs module */
+N/*-------------------------------------------*/
+N
+N#ifndef _FF_INTEGER
+S#define _FF_INTEGER
+S
+S#ifdef _WIN32	/* FatFs development platform */
+S
+S#include <windows.h>
+S#include <tchar.h>
+S
+S#else			/* Embedded platform */
+S
+S/* This type MUST be 8 bit */
+Stypedef unsigned char	BYTE;
+S
+S/* These types MUST be 16 bit */
+Stypedef short			SHORT;
+Stypedef unsigned short	WORD;
+Stypedef unsigned short	WCHAR;
+S
+S/* These types MUST be 16 bit or 32 bit */
+Stypedef int				INT;
+Stypedef unsigned int	UINT;
+S
+S/* These types MUST be 32 bit */
+Stypedef long			LONG;
+Stypedef unsigned long	DWORD;
+S
+S#endif
+S
+N#endif
+L 25 "..\Include\ff.h" 2
+N#include "ffconf.h"		/* FatFs configuration options */
+L 1 "..\Include\ffconf.h" 1
+N/*---------------------------------------------------------------------------/
+N/  FatFs - FAT file system module configuration file  R0.10b (C)ChaN, 2014
+N/---------------------------------------------------------------------------*/
+N
+N#ifndef _FFCONF
+N#define _FFCONF 8051	/* Revision ID */
+N
+N
+N/*---------------------------------------------------------------------------/
+N/ Functions and Buffer Configurations
+N/---------------------------------------------------------------------------*/
+N
+N#define	_FS_TINY		0	/* 0:Normal or 1:Tiny */
+N/* When _FS_TINY is set to 1, it reduces memory consumption _MAX_SS bytes each
+N/  file object. For file data transfer, FatFs uses the common sector buffer in
+N/  the file system object (FATFS) instead of private sector buffer eliminated
+N/  from the file object (FIL). */
+N
+N
+N#define _FS_READONLY	0	/* 0:Read/Write or 1:Read only */
+N/* Setting _FS_READONLY to 1 defines read only configuration. This removes
+N/  writing functions, f_write(), f_sync(), f_unlink(), f_mkdir(), f_chmod(),
+N/  f_rename(), f_truncate() and useless f_getfree(). */
+N
+N
+N#define _FS_MINIMIZE	0	/* 0 to 3 */
+N/* The _FS_MINIMIZE option defines minimization level to remove API functions.
+N/
+N/   0: All basic functions are enabled.
+N/   1: f_stat(), f_getfree(), f_unlink(), f_mkdir(), f_chmod(), f_utime(),
+N/      f_truncate() and f_rename() function are removed.
+N/   2: f_opendir(), f_readdir() and f_closedir() are removed in addition to 1.
+N/   3: f_lseek() function is removed in addition to 2. */
+N
+N
+N#define	_USE_STRFUNC	1	/* 0:Disable or 1-2:Enable */
+N/* To enable string functions, set _USE_STRFUNC to 1 or 2. */
+N
+N
+N#define	_USE_MKFS		1	/* 0:Disable or 1:Enable */
+N/* To enable f_mkfs() function, set _USE_MKFS to 1 and set _FS_READONLY to 0 */
+N
+N
+N#define	_USE_FASTSEEK	1	/* 0:Disable or 1:Enable */
+N/* To enable fast seek feature, set _USE_FASTSEEK to 1. */
+N
+N
+N#define _USE_LABEL		1	/* 0:Disable or 1:Enable */
+N/* To enable volume label functions, set _USE_LAVEL to 1 */
+N
+N
+N#define	_USE_FORWARD	0	/* 0:Disable or 1:Enable */
+N/* To enable f_forward() function, set _USE_FORWARD to 1 and set _FS_TINY to 1. */
+N
+N
+N/*---------------------------------------------------------------------------/
+N/ Locale and Namespace Configurations
+N/---------------------------------------------------------------------------*/
+N
+N#define _CODE_PAGE	936		//采用中文GBK编码
+N/* The _CODE_PAGE specifies the OEM code page to be used on the target system.
+N/  Incorrect setting of the code page can cause a file open failure.
+N/
+N/   932  - Japanese Shift_JIS (DBCS, OEM, Windows)
+N/   936  - Simplified Chinese GBK (DBCS, OEM, Windows)
+N/   949  - Korean (DBCS, OEM, Windows)
+N/   950  - Traditional Chinese Big5 (DBCS, OEM, Windows)
+N/   1250 - Central Europe (Windows)
+N/   1251 - Cyrillic (Windows)
+N/   1252 - Latin 1 (Windows)
+N/   1253 - Greek (Windows)
+N/   1254 - Turkish (Windows)
+N/   1255 - Hebrew (Windows)
+N/   1256 - Arabic (Windows)
+N/   1257 - Baltic (Windows)
+N/   1258 - Vietnam (OEM, Windows)
+N/   437  - U.S. (OEM)
+N/   720  - Arabic (OEM)
+N/   737  - Greek (OEM)
+N/   775  - Baltic (OEM)
+N/   850  - Multilingual Latin 1 (OEM)
+N/   858  - Multilingual Latin 1 + Euro (OEM)
+N/   852  - Latin 2 (OEM)
+N/   855  - Cyrillic (OEM)
+N/   866  - Russian (OEM)
+N/   857  - Turkish (OEM)
+N/   862  - Hebrew (OEM)
+N/   874  - Thai (OEM, Windows)
+N/   1    - ASCII (Valid for only non-LFN configuration) */
+N
+N
+N#define	_USE_LFN	3		/* 0 to 3 */
+N#define	_MAX_LFN	255		/* Maximum LFN length to handle (12 to 255) */
+N/* The _USE_LFN option switches the LFN feature.
+N/
+N/   0: Disable LFN feature. _MAX_LFN has no effect.
+N/   1: Enable LFN with static working buffer on the BSS. Always NOT thread-safe.
+N/   2: Enable LFN with dynamic working buffer on the STACK.
+N/   3: Enable LFN with dynamic working buffer on the HEAP.
+N/
+N/  When enable LFN feature, Unicode handling functions ff_convert() and ff_wtoupper()
+N/  function must be added to the project.
+N/  The LFN working buffer occupies (_MAX_LFN + 1) * 2 bytes. When use stack for the
+N/  working buffer, take care on stack overflow. When use heap memory for the working
+N/  buffer, memory management functions, ff_memalloc() and ff_memfree(), must be added
+N/  to the project. */
+N
+N
+N#define	_LFN_UNICODE	0	/* 0:ANSI/OEM or 1:Unicode */
+N/* To switch the character encoding on the FatFs API (TCHAR) to Unicode, enable LFN
+N/  feature and set _LFN_UNICODE to 1. This option affects behavior of string I/O
+N/  functions. This option must be 0 when LFN feature is not enabled. */
+N
+N
+N#define _STRF_ENCODE	3	/* 0:ANSI/OEM, 1:UTF-16LE, 2:UTF-16BE, 3:UTF-8 */
+N/* When Unicode API is enabled by _LFN_UNICODE option, this option selects the character
+N/  encoding on the file to be read/written via string I/O functions, f_gets(), f_putc(),
+N/  f_puts and f_printf(). This option has no effect when _LFN_UNICODE == 0. Note that
+N/  FatFs supports only BMP. */
+N
+N
+N#define _FS_RPATH		0	/* 0 to 2 */
+N/* The _FS_RPATH option configures relative path feature.
+N/
+N/   0: Disable relative path feature and remove related functions.
+N/   1: Enable relative path. f_chdrive() and f_chdir() function are available.
+N/   2: f_getcwd() function is available in addition to 1.
+N/
+N/  Note that output of the f_readdir() fnction is affected by this option. */
+N
+N
+N/*---------------------------------------------------------------------------/
+N/ Drive/Volume Configurations
+N/---------------------------------------------------------------------------*/
+N
+N#define _VOLUMES	3 	//支持3个磁盘
+N/* Number of volumes (logical drives) to be used. */
+N
+N
+N#define _STR_VOLUME_ID	0	/* 0:Use only 0-9 for drive ID, 1:Use strings for drive ID */
+N#define _VOLUME_STRS	"RAM","NAND","CF","SD1","SD2","USB1","USB2","USB3"
+N/* When _STR_VOLUME_ID is set to 1, also pre-defined strings can be used as drive
+N/  number in the path name. _VOLUME_STRS defines the drive ID strings for each logical
+N/  drives. Number of items must be equal to _VOLUMES. Valid characters for the drive ID
+N/  strings are: 0-9 and A-Z. */
+N
+N
+N#define	_MULTI_PARTITION	0	/* 0:Single partition, 1:Enable multiple partition */
+N/* By default(0), each logical drive number is bound to the same physical drive number
+N/  and only a FAT volume found on the physical drive is mounted. When it is set to 1,
+N/  each logical drive number is bound to arbitrary drive/partition listed in VolToPart[].
+N*/
+N
+N
+N#define	_MIN_SS		512
+N#define	_MAX_SS		512
+N/* These options configure the range of sector size to be supported. (512, 1024, 2048 or
+N/  4096) Always set both 512 for most systems, all memory card and harddisk. But a larger
+N/  value may be required for on-board flash memory and some type of optical media.
+N/  When _MAX_SS is larger than _MIN_SS, FatFs is configured to variable sector size and
+N/  GET_SECTOR_SIZE command must be implemented to the disk_ioctl() function. */
+N
+N
+N#define	_USE_ERASE	0	/* 0:Disable or 1:Enable */
+N/* To enable sector erase feature, set _USE_ERASE to 1. Also CTRL_ERASE_SECTOR command
+N/  should be added to the disk_ioctl() function. */
+N
+N
+N#define _FS_NOFSINFO	0	/* 0 to 3 */
+N/* If you need to know correct free space on the FAT32 volume, set bit 0 of this option
+N/  and f_getfree() function at first time after volume mount will force a full FAT scan.
+N/  Bit 1 controls the last allocated cluster number as bit 0.
+N/
+N/  bit0=0: Use free cluster count in the FSINFO if available.
+N/  bit0=1: Do not trust free cluster count in the FSINFO.
+N/  bit1=0: Use last allocated cluster number in the FSINFO if available.
+N/  bit1=1: Do not trust last allocated cluster number in the FSINFO.
+N*/
+N
+N
+N
+N/*---------------------------------------------------------------------------/
+N/ System Configurations
+N/---------------------------------------------------------------------------*/
+N
+N#define	_FS_LOCK	0	/* 0:Disable or >=1:Enable */
+N/* To enable file lock control feature, set _FS_LOCK to non-zero value.
+N/  The value defines how many files/sub-directories can be opened simultaneously
+N/  with file lock control. This feature uses bss _FS_LOCK * 12 bytes. */
+N
+N
+N#define _FS_REENTRANT	0		/* 0:Disable or 1:Enable */
+N#define _FS_TIMEOUT		1000	/* Timeout period in unit of time tick */
+N#define	_SYNC_t			HANDLE	/* O/S dependent sync object type. e.g. HANDLE, OS_EVENT*, ID, SemaphoreHandle_t and etc.. */
+N/* The _FS_REENTRANT option switches the re-entrancy (thread safe) of the FatFs module.
+N/
+N/   0: Disable re-entrancy. _FS_TIMEOUT and _SYNC_t have no effect.
+N/   1: Enable re-entrancy. Also user provided synchronization handlers,
+N/      ff_req_grant(), ff_rel_grant(), ff_del_syncobj() and ff_cre_syncobj()
+N/      function must be added to the project.
+N*/
+N
+N
+N#define _WORD_ACCESS	0	/* 0 or 1 */
+N/* The _WORD_ACCESS option is an only platform dependent option. It defines
+N/  which access method is used to the word data on the FAT volume.
+N/
+N/   0: Byte-by-byte access. Always compatible with all platforms.
+N/   1: Word access. Do not choose this unless under both the following conditions.
+N/
+N/  * Address misaligned memory access is always allowed for ALL instructions.
+N/  * Byte order on the memory is little-endian.
+N/
+N/  If it is the case, _WORD_ACCESS can also be set to 1 to improve performance and
+N/  reduce code size. Following table shows an example of some processor types.
+N/
+N/   ARM7TDMI    0           ColdFire    0           V850E       0
+N/   Cortex-M3   0           Z80         0/1         V850ES      0/1
+N/   Cortex-M0   0           RX600(LE)   0/1         TLCS-870    0/1
+N/   AVR         0/1         RX600(BE)   0           TLCS-900    0/1
+N/   AVR32       0           RL78        0           R32C        0
+N/   PIC18       0/1         SH-2        0           M16C        0/1
+N/   PIC24       0           H8S         0           MSP430      0
+N/   PIC32       0           H8/300H     0           x86         0/1
+N*/
+N
+N
+N#endif /* _FFCONF */
+L 26 "..\Include\ff.h" 2
+N
+N#if _FATFS != _FFCONF
+X#if 8051 != 8051
+S#error Wrong configuration file (ffconf.h).
+N#endif
+N
+N
+N
+N/* Definitions of volume management */
+N
+N#if _MULTI_PARTITION		/* Multiple partition configuration */
+X#if 0		 
+Stypedef struct {
+S	BYTE pd;	/* Physical drive number */
+S	BYTE pt;	/* Partition: 0:Auto detect, 1-4:Forced partition) */
+S} PARTITION;
+Sextern PARTITION VolToPart[];	/* Volume - Partition resolution table */
+S#define LD2PD(vol) (VolToPart[vol].pd)	/* Get physical drive number */
+S#define LD2PT(vol) (VolToPart[vol].pt)	/* Get partition index */
+S
+N#else							/* Single partition configuration */
+N#define LD2PD(vol) (BYTE)(vol)	/* Each logical drive is bound to the same physical drive number */
+N#define LD2PT(vol) 0			/* Find first valid partition or in SFD */
+N
+N#endif
+N
+N
+N
+N/* Type of path name strings on FatFs API */
+N
+N#if _LFN_UNICODE			/* Unicode string */
+X#if 0			 
+S#if !_USE_LFN
+S#error _LFN_UNICODE must be 0 at non-LFN cfg.
+S#endif
+S#ifndef _INC_TCHAR
+Stypedef WCHAR TCHAR;
+S#define _T(x) L ## x
+S#define _TEXT(x) L ## x
+S#endif
+S
+N#else						/* ANSI/OEM string */
+N#ifndef _INC_TCHAR
+Ntypedef char TCHAR;
+N#define _T(x) x
+N#define _TEXT(x) x
+N#endif
+N
+N#endif
+N
+N
+N
+N/* File system object structure (FATFS) */
+N
+Ntypedef struct {
+N	BYTE	fs_type;		/* FAT sub-type (0:Not mounted) */
+N	BYTE	drv;			/* Physical drive number */
+N	BYTE	csize;			/* Sectors per cluster (1,2,4...128) */
+N	BYTE	n_fats;			/* Number of FAT copies (1 or 2) */
+N	BYTE	wflag;			/* win[] flag (b0:dirty) */
+N	BYTE	fsi_flag;		/* FSINFO flags (b7:disabled, b0:dirty) */
+N	WORD	id;				/* File system mount ID */
+N	WORD	n_rootdir;		/* Number of root directory entries (FAT12/16) */
+N#if _MAX_SS != _MIN_SS
+X#if 512 != 512
+S	WORD	ssize;			/* Bytes per sector (512, 1024, 2048 or 4096) */
+N#endif
+N#if _FS_REENTRANT
+X#if 0
+S	_SYNC_t	sobj;			/* Identifier of sync object */
+N#endif
+N#if !_FS_READONLY
+X#if !0
+N	DWORD	last_clust;		/* Last allocated cluster */
+N	DWORD	free_clust;		/* Number of free clusters */
+N#endif
+N#if _FS_RPATH
+X#if 0
+S	DWORD	cdir;			/* Current directory start cluster (0:root) */
+N#endif
+N	DWORD	n_fatent;		/* Number of FAT entries, = number of clusters + 2 */
+N	DWORD	fsize;			/* Sectors per FAT */
+N	DWORD	volbase;		/* Volume start sector */
+N	DWORD	fatbase;		/* FAT start sector */
+N	DWORD	dirbase;		/* Root directory start sector (FAT32:Cluster#) */
+N	DWORD	database;		/* Data start sector */
+N	DWORD	winsect;		/* Current sector appearing in the win[] */
+N	BYTE	win[_MAX_SS];	/* Disk access window for Directory, FAT (and file data at tiny cfg) */
+X	BYTE	win[512];	 
+N} FATFS;
+N
+N
+N
+N/* File object structure (FIL) */
+N
+Ntypedef struct {
+N	FATFS*	fs;				/* Pointer to the related file system object (**do not change order**) */
+N	WORD	id;				/* Owner file system mount ID (**do not change order**) */
+N	BYTE	flag;			/* Status flags */
+N	BYTE	err;			/* Abort flag (error code) */
+N	DWORD	fptr;			/* File read/write pointer (Zeroed on file open) */
+N	DWORD	fsize;			/* File size */
+N	DWORD	sclust;			/* File start cluster (0:no cluster chain, always 0 when fsize is 0) */
+N	DWORD	clust;			/* Current cluster of fpter (not valid when fprt is 0) */
+N	DWORD	dsect;			/* Sector number appearing in buf[] (0:invalid) */
+N#if !_FS_READONLY
+X#if !0
+N	DWORD	dir_sect;		/* Sector number containing the directory entry */
+N	BYTE*	dir_ptr;		/* Pointer to the directory entry in the win[] */
+N#endif
+N#if _USE_FASTSEEK
+X#if 1
+N	DWORD*	cltbl;			/* Pointer to the cluster link map table (Nulled on file open) */
+N#endif
+N#if _FS_LOCK
+X#if 0
+S	UINT	lockid;			/* File lock ID origin from 1 (index of file semaphore table Files[]) */
+N#endif
+N#if !_FS_TINY
+X#if !0
+N	BYTE	buf[_MAX_SS];	/* File private data read/write window */
+X	BYTE	buf[512];	 
+N#endif
+N} FIL;
+N
+N
+N
+N/* Directory object structure (DIR) */
+N
+Ntypedef struct {
+N	FATFS*	fs;				/* Pointer to the owner file system object (**do not change order**) */
+N	WORD	id;				/* Owner file system mount ID (**do not change order**) */
+N	WORD	index;			/* Current read/write index number */
+N	DWORD	sclust;			/* Table start cluster (0:Root dir) */
+N	DWORD	clust;			/* Current cluster */
+N	DWORD	sect;			/* Current sector */
+N	BYTE*	dir;			/* Pointer to the current SFN entry in the win[] */
+N	BYTE*	fn;				/* Pointer to the SFN (in/out) {file[8],ext[3],status[1]} */
+N#if _FS_LOCK
+X#if 0
+S	UINT	lockid;			/* File lock ID (index of file semaphore table Files[]) */
+N#endif
+N#if _USE_LFN
+X#if 3
+N	WCHAR*	lfn;			/* Pointer to the LFN working buffer */
+N	WORD	lfn_idx;		/* Last matched LFN index number (0xFFFF:No LFN) */
+N#endif
+N} DIR;
+N
+N
+N
+N/* File status structure (FILINFO) */
+N
+Ntypedef struct {
+N	DWORD	fsize;			/* File size */
+N	WORD	fdate;			/* Last modified date */
+N	WORD	ftime;			/* Last modified time */
+N	BYTE	fattrib;		/* Attribute */
+N	TCHAR	fname[13];		/* Short file name (8.3 format) */
+N#if _USE_LFN
+X#if 3
+N	TCHAR*	lfname;			/* Pointer to the LFN buffer */
+N	UINT 	lfsize;			/* Size of LFN buffer in TCHAR */
+N#endif
+N} FILINFO;
+N
+N
+N
+N/* File function return code (FRESULT) */
+N
+Ntypedef enum {
+N	FR_OK = 0,				/* (0) Succeeded */
+N	FR_DISK_ERR,			/* (1) A hard error occurred in the low level disk I/O layer */
+N	FR_INT_ERR,				/* (2) Assertion failed */
+N	FR_NOT_READY,			/* (3) The physical drive cannot work */
+N	FR_NO_FILE,				/* (4) Could not find the file */
+N	FR_NO_PATH,				/* (5) Could not find the path */
+N	FR_INVALID_NAME,		/* (6) The path name format is invalid */
+N	FR_DENIED,				/* (7) Access denied due to prohibited access or directory full */
+N	FR_EXIST,				/* (8) Access denied due to prohibited access */
+N	FR_INVALID_OBJECT,		/* (9) The file/directory object is invalid */
+N	FR_WRITE_PROTECTED,		/* (10) The physical drive is write protected */
+N	FR_INVALID_DRIVE,		/* (11) The logical drive number is invalid */
+N	FR_NOT_ENABLED,			/* (12) The volume has no work area */
+N	FR_NO_FILESYSTEM,		/* (13) There is no valid FAT volume */
+N	FR_MKFS_ABORTED,		/* (14) The f_mkfs() aborted due to any parameter error */
+N	FR_TIMEOUT,				/* (15) Could not get a grant to access the volume within defined period */
+N	FR_LOCKED,				/* (16) The operation is rejected according to the file sharing policy */
+N	FR_NOT_ENOUGH_CORE,		/* (17) LFN working buffer could not be allocated */
+N	FR_TOO_MANY_OPEN_FILES,	/* (18) Number of open files > _FS_SHARE */
+N	FR_INVALID_PARAMETER	/* (19) Given parameter is invalid */
+N} FRESULT;
+N
+N
+N
+N/*--------------------------------------------------------------*/
+N/* FatFs module application interface                           */
+N
+NFRESULT f_open (FIL* fp, const TCHAR* path, BYTE mode);				/* Open or create a file */
+NFRESULT f_close (FIL* fp);											/* Close an open file object */
+NFRESULT f_read (FIL* fp, void* buff, UINT btr, UINT* br);			/* Read data from a file */
+NFRESULT f_write (FIL* fp, const void* buff, UINT btw, UINT* bw);	/* Write data to a file */
+NFRESULT f_forward (FIL* fp, UINT(*func)(const BYTE*,UINT), UINT btf, UINT* bf);	/* Forward data to the stream */
+NFRESULT f_lseek (FIL* fp, DWORD ofs);								/* Move file pointer of a file object */
+NFRESULT f_truncate (FIL* fp);										/* Truncate file */
+NFRESULT f_sync (FIL* fp);											/* Flush cached data of a writing file */
+NFRESULT f_opendir (DIR* dp, const TCHAR* path);						/* Open a directory */
+NFRESULT f_closedir (DIR* dp);										/* Close an open directory */
+NFRESULT f_readdir (DIR* dp, FILINFO* fno);							/* Read a directory item */
+NFRESULT f_mkdir (const TCHAR* path);								/* Create a sub directory */
+NFRESULT f_unlink (const TCHAR* path);								/* Delete an existing file or directory */
+NFRESULT f_rename (const TCHAR* path_old, const TCHAR* path_new);	/* Rename/Move a file or directory */
+NFRESULT f_stat (const TCHAR* path, FILINFO* fno);					/* Get file status */
+NFRESULT f_chmod (const TCHAR* path, BYTE value, BYTE mask);			/* Change attribute of the file/dir */
+NFRESULT f_utime (const TCHAR* path, const FILINFO* fno);			/* Change times-tamp of the file/dir */
+NFRESULT f_chdir (const TCHAR* path);								/* Change current directory */
+NFRESULT f_chdrive (const TCHAR* path);								/* Change current drive */
+NFRESULT f_getcwd (TCHAR* buff, UINT len);							/* Get current directory */
+NFRESULT f_getfree (const TCHAR* path, DWORD* nclst, FATFS** fatfs);	/* Get number of free clusters on the drive */
+NFRESULT f_getlabel (const TCHAR* path, TCHAR* label, DWORD* vsn);	/* Get volume label */
+NFRESULT f_setlabel (const TCHAR* label);							/* Set volume label */
+NFRESULT f_mount (FATFS* fs, const TCHAR* path, BYTE opt);			/* Mount/Unmount a logical drive */
+NFRESULT f_mkfs (const TCHAR* path, BYTE sfd, UINT au);				/* Create a file system on the volume */
+NFRESULT f_fdisk (BYTE pdrv, const DWORD szt[], void* work);			/* Divide a physical drive into some partitions */
+Nint f_putc (TCHAR c, FIL* fp);										/* Put a character to the file */
+Nint f_puts (const TCHAR* str, FIL* cp);								/* Put a string to the file */
+Nint f_printf (FIL* fp, const TCHAR* str, ...);						/* Put a formatted string to the file */
+NTCHAR* f_gets (TCHAR* buff, int len, FIL* fp);						/* Get a string from the file */
+N
+N#define f_eof(fp) (((fp)->fptr == (fp)->fsize) ? 1 : 0)
+N#define f_error(fp) ((fp)->err)
+N#define f_tell(fp) ((fp)->fptr)
+N#define f_size(fp) ((fp)->fsize)
+N
+NFRESULT dir_sdi (DIR *dp,UINT idx);					//此处为自行添加的,用于方便查找上一个文件.
+Nvoid ff_enter(FATFS *fs);							//在diskio.c实现
+Nvoid ff_leave(FATFS* fs);
+N#ifndef EOF
+N#define EOF (-1)
+N#endif
+N
+N
+N
+N
+N/*--------------------------------------------------------------*/
+N/* Additional user defined functions                            */
+N
+N/* RTC function */
+N#if !_FS_READONLY
+X#if !0
+NDWORD get_fattime (void);
+N#endif
+N
+N/* Unicode support functions */
+N#if _USE_LFN							/* Unicode - OEM code conversion */
+X#if 3							 
+NWCHAR ff_convert (WCHAR chr, UINT dir);	/* OEM-Unicode bidirectional conversion */
+NWCHAR ff_wtoupper (WCHAR chr);			/* Unicode upper-case conversion */
+N#if _USE_LFN == 3						/* Memory functions */
+X#if 3 == 3						 
+Nvoid* ff_memalloc (UINT msize);			/* Allocate memory block */
+Nvoid ff_memfree (void* mblock);			/* Free memory block */
+N#endif
+N#endif
+N
+N/* Sync functions */
+N#if _FS_REENTRANT
+X#if 0
+Sint ff_cre_syncobj (BYTE vol, _SYNC_t* sobj);	/* Create a sync object */
+Sint ff_req_grant (_SYNC_t sobj);				/* Lock sync object */
+Svoid ff_rel_grant (_SYNC_t sobj);				/* Unlock sync object */
+Sint ff_del_syncobj (_SYNC_t sobj);				/* Delete a sync object */
+N#endif
+N
+N
+N
+N
+N/*--------------------------------------------------------------*/
+N/* Flags and offset address                                     */
+N
+N
+N/* File access control and file status flags (FIL.flag) */
+N
+N#define	FA_READ				0x01
+N#define	FA_OPEN_EXISTING	0x00
+N
+N#if !_FS_READONLY
+X#if !0
+N#define	FA_WRITE			0x02
+N#define	FA_CREATE_NEW		0x04
+N#define	FA_CREATE_ALWAYS	0x08
+N#define	FA_OPEN_ALWAYS		0x10
+N#define FA__WRITTEN			0x20
+N#define FA__DIRTY			0x40
+N#endif
+N
+N
+N/* FAT sub type (FATFS.fs_type) */
+N
+N#define FS_FAT12	1
+N#define FS_FAT16	2
+N#define FS_FAT32	3
+N
+N
+N/* File attribute bits for directory entry */
+N
+N#define	AM_RDO	0x01	/* Read only */
+N#define	AM_HID	0x02	/* Hidden */
+N#define	AM_SYS	0x04	/* System */
+N#define	AM_VOL	0x08	/* Volume label */
+N#define AM_LFN	0x0F	/* LFN entry */
+N#define AM_DIR	0x10	/* Directory */
+N#define AM_ARC	0x20	/* Archive */
+N#define AM_MASK	0x3F	/* Mask of defined bits */
+N
+N
+N/* Fast seek feature */
+N#define CREATE_LINKMAP	0xFFFFFFFF
+N
+N
+N
+N/*--------------------------------*/
+N/* Multi-byte word access macros  */
+N
+N#if _WORD_ACCESS == 1	/* Enable word access to the FAT structure */
+X#if 0 == 1	 
+S#define	LD_WORD(ptr)		(WORD)(*(WORD*)(BYTE*)(ptr))
+S#define	LD_DWORD(ptr)		(DWORD)(*(DWORD*)(BYTE*)(ptr))
+S#define	ST_WORD(ptr,val)	*(WORD*)(BYTE*)(ptr)=(WORD)(val)
+S#define	ST_DWORD(ptr,val)	*(DWORD*)(BYTE*)(ptr)=(DWORD)(val)
+N#else					/* Use byte-by-byte access to the FAT structure */
+N#define	LD_WORD(ptr)		(WORD)(((WORD)*((BYTE*)(ptr)+1)<<8)|(WORD)*(BYTE*)(ptr))
+N#define	LD_DWORD(ptr)		(DWORD)(((DWORD)*((BYTE*)(ptr)+3)<<24)|((DWORD)*((BYTE*)(ptr)+2)<<16)|((WORD)*((BYTE*)(ptr)+1)<<8)|*(BYTE*)(ptr))
+N#define	ST_WORD(ptr,val)	*(BYTE*)(ptr)=(BYTE)(val); *((BYTE*)(ptr)+1)=(BYTE)((WORD)(val)>>8)
+N#define	ST_DWORD(ptr,val)	*(BYTE*)(ptr)=(BYTE)(val); *((BYTE*)(ptr)+1)=(BYTE)((WORD)(val)>>8); *((BYTE*)(ptr)+2)=(BYTE)((DWORD)(val)>>16); *((BYTE*)(ptr)+3)=(BYTE)((DWORD)(val)>>24)
+N#endif
+N
+N#ifdef __cplusplus
+S}
+N#endif
+N
+N#endif /* _FATFS */
+L 34 "..\USB\USB_APP\usbh_usr.h" 2
+N#include "usbh_core.h"
+L 1 "..\USB\STM32_USB_HOST_Library\Core\inc\usbh_core.h" 1
+N/**
+N  ******************************************************************************
+N  * @file    usbh_core.h
+N  * @author  MCD Application Team
+N  * @version V2.1.0
+N  * @date    19-March-2012
+N  * @brief   Header file for usbh_core.c
+N  ******************************************************************************
+N  * @attention
+N  *
+N  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+N  *
+N  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+N  * You may not use this file except in compliance with the License.
+N  * You may obtain a copy of the License at:
+N  *
+N  *        http://www.st.com/software_license_agreement_liberty_v2
+N  *
+N  * Unless required by applicable law or agreed to in writing, software 
+N  * distributed under the License is distributed on an "AS IS" BASIS, 
+N  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+N  * See the License for the specific language governing permissions and
+N  * limitations under the License.
+N  *
+N  ******************************************************************************
+N  */ 
+N
+N/* Define to prevent recursive  ----------------------------------------------*/
+N#ifndef __USBH_CORE_H
+N#define __USBH_CORE_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "usb_hcd.h"
+L 1 "..\USB\STM32_USB_OTG_Driver\inc\usb_hcd.h" 1
+N/**
+N  ******************************************************************************
+N  * @file    usb_hcd.h
+N  * @author  MCD Application Team
+N  * @version V2.1.0
+N  * @date    19-March-2012
+N  * @brief   Host layer Header file
+N  ******************************************************************************
+N  * @attention
+N  *
+N  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+N  *
+N  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+N  * You may not use this file except in compliance with the License.
+N  * You may obtain a copy of the License at:
+N  *
+N  *        http://www.st.com/software_license_agreement_liberty_v2
+N  *
+N  * Unless required by applicable law or agreed to in writing, software 
+N  * distributed under the License is distributed on an "AS IS" BASIS, 
+N  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+N  * See the License for the specific language governing permissions and
+N  * limitations under the License.
+N  *
+N  ******************************************************************************
+N  */
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __USB_HCD_H__
+N#define __USB_HCD_H__
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "usb_regs.h"
+L 1 "..\USB\STM32_USB_OTG_Driver\inc\usb_regs.h" 1
+N/**
+N  ******************************************************************************
+N  * @file    usb_regs.h
+N  * @author  MCD Application Team
+N  * @version V2.1.0
+N  * @date    19-March-2012
+N  * @brief   hardware registers
+N  ******************************************************************************
+N  * @attention
+N  *
+N  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+N  *
+N  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+N  * You may not use this file except in compliance with the License.
+N  * You may obtain a copy of the License at:
+N  *
+N  *        http://www.st.com/software_license_agreement_liberty_v2
+N  *
+N  * Unless required by applicable law or agreed to in writing, software 
+N  * distributed under the License is distributed on an "AS IS" BASIS, 
+N  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+N  * See the License for the specific language governing permissions and
+N  * limitations under the License.
+N  *
+N  ******************************************************************************
+N  */
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __USB_OTG_REGS_H__
+N#define __USB_OTG_REGS_H__
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "usb_conf.h"
+L 1 "..\USB\USB_APP\usb_conf.h" 1
+N/**
+N  ******************************************************************************
+N  * @file    usb_conf.h
+N  * @author  MCD Application Team
+N  * @version V2.1.0
+N  * @date    19-March-2012
+N  * @brief   General low level driver configuration
+N  ******************************************************************************
+N  * @attention
+N  *
+N  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+N  *
+N  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+N  * You may not use this file except in compliance with the License.
+N  * You may obtain a copy of the License at:
+N  *
+N  *        http://www.st.com/software_license_agreement_liberty_v2
+N  *
+N  * Unless required by applicable law or agreed to in writing, software 
+N  * distributed under the License is distributed on an "AS IS" BASIS, 
+N  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+N  * See the License for the specific language governing permissions and
+N  * limitations under the License.
+N  *
+N  ******************************************************************************
+N  */ 
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __USB_CONF__H__
+N#define __USB_CONF__H__
+N
+N/* Includes ------------------------------------------------------------------*/ 
+N#include "stm32f4xx.h"
 N
 N
 N/** @addtogroup USB_OTG_DRIVER
@@ -38546,14 +38739,14 @@ N
 L 35 "..\USB\USB_APP\usbh_usr.h" 2
 N#include "usb_conf.h"
 N#include <stdio.h>
-L 1 "d:\Keil\ARM\ARMCC\bin\..\include\stdio.h" 1
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
 N/* Copyright (C) Codemist Ltd., 1988-1993                       */
 N/* Copyright 1991-1998 ARM Limited. All rights reserved.        */
 N
 N/*
-N * RCS $Revision: 178085 $
-N * Checkin $Date: 2012-12-11 14:54:17 +0000 (Tue, 11 Dec 2012) $
+N * RCS $Revision$
+N * Checkin $Date$
 N * Revising $Author: sdouglas $
 N */
 N
@@ -38566,9 +38759,18 @@ N */
 N
 N#ifndef __stdio_h
 N#define __stdio_h
-N#define __ARMCLIB_VERSION 5030076
+N#define __ARMCLIB_VERSION 5060037
 N
-N
+N/*
+N * Depending on compiler version __int64 or __INT64_TYPE__ should be defined.
+N */
+N#ifndef __int64
+N  #ifdef __INT64_TYPE__
+S    #define __int64 __INT64_TYPE__
+N  #endif
+N  /* On some architectures neither of these may be defined - if so, fall
+N     through and error out if used. */
+N#endif
 N
 N
 N#define _ARMABI __declspec(__nothrow)
@@ -38588,7 +38790,12 @@ N
 N#if defined(__cplusplus) || !defined(__STRICT_ANSI__) || !defined(__size_t)
 X#if 0L || !0L || !0L
 N /* always defined in C++ and non-strict C for consistency of debug info */
-N  typedef unsigned int size_t;   /* see <stddef.h> */
+N  #if __sizeof_ptr == 8
+X  #if 4 == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+N  #else
+N    typedef unsigned int size_t;   /* see <stddef.h> */
+N  #endif
 N  #if !defined(__cplusplus) && defined(__STRICT_ANSI__)
 X  #if !0L && 0L
 S    #define __size_t 1
@@ -38600,10 +38807,14 @@ N#define NULL 0                   /* see <stddef.h> */
 N
 N/* ANSI forbids va_list to be defined here */
 N/* keep in step with <stdarg.h> and <wchar.h> */
-N#if defined(__cplusplus) || !defined(__STRICT_ANSI__) || !defined(__va_list_defined)
-X#if 0L || !0L || !0L
+N#if !defined(__va_list) && (defined(__cplusplus) || !defined(__STRICT_ANSI__) || !defined(__va_list_defined))
+X#if !0L && (0L || !0L || !0L)
 N/* always defined in C++ and non-strict C for consistency of debug info */
-N  typedef struct __va_list __va_list;
+N  #ifdef __clang__
+S    typedef __builtin_va_list __va_list;
+N  #else
+N    typedef struct __va_list __va_list;
+N  #endif
 N  #if !defined(__cplusplus) && defined(__STRICT_ANSI__)
 X  #if !0L && 0L
 S    #define __va_list_defined 1
@@ -38651,6 +38862,27 @@ N    * error has occurred and an end-of-file indicator that records whether the
 N    * end-of-file has been reached.
 N    * Its structure is not made known to library clients.
 N    */
+N
+N#if defined(__STRICT_ANSI__) && !__FILE_INCOMPLETE
+X#if 0L && !__FILE_INCOMPLETE
+Sstruct __FILE {
+S    union {
+S        long __FILE_alignment;
+S#ifdef __TARGET_ARCH_AARCH64
+S        char __FILE_size[136];
+S#else /* __TARGET_ARCH_AARCH64 */
+S        char __FILE_size[84];
+S#endif /* __TARGET_ARCH_AARCH64 */
+S    } __FILE_opaque;
+S};
+S    /*
+S     * FILE must be an object type (C99 - 7.19.1) and an object type fully
+S     * describes an object [including its static size] (C99 - 6.2.5).
+S     * This definition is a placeholder which matches the struct __FILE in
+S     * size and alignment as used internally by libc.
+S     */
+N#endif
+N
 N
 Nextern FILE __stdin, __stdout, __stderr;
 Nextern FILE *__aeabi_stdin, *__aeabi_stdout, *__aeabi_stderr;
@@ -38964,8 +39196,14 @@ N    * is equivalent to sprintf, but does not support floating-point formats.
 N    * You can use instead of sprintf to improve code size.
 N    * Returns: as sprintf.
 N    */
-N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
-X#if !0L || (1L && 199901L <= 199409L)
+N
+N#pragma __printf_args
+Nextern _ARMABI int __ARM_snprintf(char * __restrict /*s*/, size_t /*n*/,
+Xextern __declspec(__nothrow) int __ARM_snprintf(char * __restrict  , size_t  ,
+N                     const char * __restrict /*format*/, ...) __attribute__((__nonnull__(3)));
+N
+N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X#if !0L || (1L && 199901L <= 199409L) || (0L && 201103L <= __cplusplus)
 N#pragma __printf_args
 Nextern _ARMABI int snprintf(char * __restrict /*s*/, size_t /*n*/,
 Xextern __declspec(__nothrow) int snprintf(char * __restrict  , size_t  ,
@@ -39084,8 +39322,8 @@ N    * is equivalent to sscanf, but does not support floating-point formats.
 N    * You can use instead of sscanf to improve code size.
 N    * Returns: as sscanf.
 N    */
-N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
-X#if !0L || (1L && 199901L <= 199409L)
+N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X#if !0L || (1L && 199901L <= 199409L) || (0L && 201103L <= __cplusplus)
 N/* C99 additions */
 Nextern _ARMABI int vfscanf(FILE * __restrict /*stream*/, const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1,2)));
 Xextern __declspec(__nothrow) int vfscanf(FILE * __restrict  , const char * __restrict  , __va_list) __attribute__((__nonnull__(1,2)));
@@ -39100,6 +39338,8 @@ Nextern _ARMABI int _vscanf(const char * __restrict /*format*/, __va_list) __att
 Xextern __declspec(__nothrow) int _vscanf(const char * __restrict  , __va_list) __attribute__((__nonnull__(1)));
 Nextern _ARMABI int _vsscanf(const char * __restrict /*s*/, const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1,2)));
 Xextern __declspec(__nothrow) int _vsscanf(const char * __restrict  , const char * __restrict  , __va_list) __attribute__((__nonnull__(1,2)));
+Nextern _ARMABI int __ARM_vsscanf(const char * __restrict /*s*/, const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) int __ARM_vsscanf(const char * __restrict  , const char * __restrict  , __va_list) __attribute__((__nonnull__(1,2)));
 N
 Nextern _ARMABI int vprintf(const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(1)));
 Xextern __declspec(__nothrow) int vprintf(const char * __restrict  , __va_list  ) __attribute__((__nonnull__(1)));
@@ -39139,8 +39379,11 @@ N    * va_end function.
 N    * Returns: the number of characters written in the array, not counting the
 N    *          terminating null character.
 N    */
-N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
-X#if !0L || (1L && 199901L <= 199409L)
+Nextern _ARMABI int __ARM_vsnprintf(char * __restrict /*s*/, size_t /*n*/,
+Xextern __declspec(__nothrow) int __ARM_vsnprintf(char * __restrict  , size_t  ,
+N                     const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(3)));
+N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X#if !0L || (1L && 199901L <= 199409L) || (0L && 201103L <= __cplusplus)
 Nextern _ARMABI int vsnprintf(char * __restrict /*s*/, size_t /*n*/,
 Xextern __declspec(__nothrow) int vsnprintf(char * __restrict  , size_t  ,
 N                     const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(3)));
@@ -39178,6 +39421,30 @@ N    * is equivalent to vsnprintf, but does not support floating-point formats.
 N    * You can use instead of vsnprintf to improve code size.
 N    * Returns: as vsnprintf.
 N    */
+N#if !defined(__STRICT_ANSI__)
+X#if !0L
+N#pragma __printf_args
+Nextern _ARMABI int asprintf(char ** /*strp*/, const char * __restrict /*format*/, ...) __attribute__((__nonnull__(2)));
+Xextern __declspec(__nothrow) int asprintf(char **  , const char * __restrict  , ...) __attribute__((__nonnull__(2)));
+Nextern _ARMABI int vasprintf(char ** /*strp*/, const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(2)));
+Xextern __declspec(__nothrow) int vasprintf(char **  , const char * __restrict  , __va_list  ) __attribute__((__nonnull__(2)));
+N#endif
+N#pragma __printf_args
+Nextern _ARMABI int __ARM_asprintf(char ** /*strp*/, const char * __restrict /*format*/, ...) __attribute__((__nonnull__(2)));
+Xextern __declspec(__nothrow) int __ARM_asprintf(char **  , const char * __restrict  , ...) __attribute__((__nonnull__(2)));
+Nextern _ARMABI int __ARM_vasprintf(char ** /*strp*/, const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(2)));
+Xextern __declspec(__nothrow) int __ARM_vasprintf(char **  , const char * __restrict  , __va_list  ) __attribute__((__nonnull__(2)));
+N   /*
+N    * dynamically allocates a buffer of the right size for the
+N    * formatted string, and returns it in (*strp). Formal return value
+N    * is the same as any other printf variant, except that it returns
+N    * -1 if the buffer could not be allocated.
+N    *
+N    * (The functions with __ARM_ prefixed names are identical to the
+N    * ones without, but are available in all compilation modes without
+N    * violating user namespace.)
+N    */
+N
 Nextern _ARMABI int fgetc(FILE * /*stream*/) __attribute__((__nonnull__(1)));
 Xextern __declspec(__nothrow) int fgetc(FILE *  ) __attribute__((__nonnull__(1)));
 N   /*
@@ -39518,7 +39785,7 @@ S    using ::std::printf;
 S    using ::std::_printf;
 S    using ::std::sprintf;
 S    using ::std::_sprintf;
-S    #if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
+S    #if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
 S      using ::std::snprintf;
 S      using ::std::vsnprintf;
 S      using ::std::vfscanf;
@@ -39527,6 +39794,15 @@ S      using ::std::vsscanf;
 S    #endif
 S    using ::std::_snprintf;
 S    using ::std::_vsnprintf;
+S#if !defined(__STRICT_ANSI__)
+S    using ::std::asprintf;
+S    using ::std::vasprintf;
+S#endif
+S    using ::std::__ARM_asprintf;
+S    using ::std::__ARM_vasprintf;
+S    using ::std::__ARM_vsnprintf;
+S    using ::std::__ARM_snprintf;
+S    using ::std::__ARM_vsscanf;
 S    using ::std::fscanf;
 S    using ::std::_fscanf;
 S    using ::std::scanf;
@@ -41206,7 +41482,7 @@ N  */
 N
 N/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 N
-L 12 "..\drive\diskio.c" 2
+L 15 "..\FATFS\src\diskio.c" 2
 N//////////////////////////////////////////////////////////////////////////////////	 
 N//本程序只供学习使用，未经作者许可，不得用于其它任何用途
 N//ALIENTEK STM32F407开发板
@@ -41242,6 +41518,13 @@ N{
 N	u8 res=0;	    
 N	switch(pdrv)
 N	{
+N//		case SD_CARD://SD卡
+N//			res=SD_Init();//SD卡初始化 
+N//  			break;
+N//		case EX_FLASH://外部flash
+N//			W25QXX_Init();
+N//			FLASH_SECTOR_COUNT=2048*12;//W25Q1218,前12M字节给FATFS占用 
+N// 			break;
 N		case USB_DISK://外部flash
 X		case 2:
 N	  		if(USBH_UDISK_Status())return 0;	//U盘连接成功,则返回1.否则返回0		  
@@ -41278,6 +41561,24 @@ N	u8 res=0;
 N    if (!count)return RES_PARERR;//count不能等于0，否则返回参数错误		 	 
 N	switch(pdrv)
 N	{
+N//		case SD_CARD://SD卡
+N//			res=SD_ReadDisk(buff,sector,count);	 
+N//			while(res)//读出错
+N//			{
+N//				SD_Init();	//重新初始化SD卡
+N//				res=SD_ReadDisk(buff,sector,count);	
+N//				//printf("sd rd error:%d\r\n",res);
+N//			}
+N//			break;
+N//		case EX_FLASH://外部flash
+N//			for(;count>0;count--)
+N//			{
+N//				W25QXX_Read(buff,sector*FLASH_SECTOR_SIZE,FLASH_SECTOR_SIZE);
+N//				sector++;
+N//				buff+=FLASH_SECTOR_SIZE;
+N//			}
+N//			res=0;
+N//			break;
 N		case USB_DISK://U盘 
 X		case 2:
 N			res=USBH_UDISK_Read(buff,sector,count);	  
@@ -41308,6 +41609,24 @@ N	u8 res=0;
 N    if (!count)return RES_PARERR;//count不能等于0，否则返回参数错误		 	 
 N	switch(pdrv)
 N	{
+N//		case SD_CARD://SD卡
+N//			res=SD_WriteDisk((u8*)buff,sector,count);
+N//			while(res)//写出错
+N//			{
+N//				SD_Init();	//重新初始化SD卡
+N//				res=SD_WriteDisk((u8*)buff,sector,count);	
+N//				//printf("sd wr error:%d\r\n",res);
+N//			}
+N//			break;
+N//		case EX_FLASH://外部flash
+N//			for(;count>0;count--)
+N//			{										    
+N//				W25QXX_Write((u8*)buff,sector*FLASH_SECTOR_SIZE,FLASH_SECTOR_SIZE);
+N//				sector++;
+N//				buff+=FLASH_SECTOR_SIZE;
+N//			}
+N//			res=0;
+N//			break;
 N		case USB_DISK://U盘
 X		case 2:
 N			res=USBH_UDISK_Write((u8*)buff,sector,count); 
@@ -41338,21 +41657,27 @@ N	DRESULT res;
 N	if(pdrv==SD_CARD)//SD卡
 X	if(pdrv==0)
 N	{
-N	    switch(cmd)
-N	    {
-N		    case CTRL_SYNC:
-X		    case 0:
-N				res = RES_OK; 
-N		        break;	 
-N		    case GET_SECTOR_SIZE:
-X		    case 2:
-N				*(DWORD*)buff = 512; 
-N		        res = RES_OK;
-N		        break;	 
-N		    default:
-N		        res = RES_PARERR;
-N		        break;
-N	    }
+N//	    switch(cmd)
+N//	    {
+N//		    case CTRL_SYNC:
+N//				res = RES_OK; 
+N//		        break;	 
+N//		    case GET_SECTOR_SIZE:
+N//				*(DWORD*)buff = 512; 
+N//		        res = RES_OK;
+N//		        break;	 
+N//		    case GET_BLOCK_SIZE:
+N//				*(WORD*)buff = SDCardInfo.CardBlockSize;
+N//		        res = RES_OK;
+N//		        break;	 
+N//		    case GET_SECTOR_COUNT:
+N//		        *(DWORD*)buff = SDCardInfo.CardCapacity/512;
+N//		        res = RES_OK;
+N//		        break;
+N//		    default:
+N//		        res = RES_PARERR;
+N//		        break;
+N//	    }
 N	}else if(pdrv==EX_FLASH)	//外部FLASH  
 X	}else if(pdrv==1)	
 N	{
@@ -41424,7 +41749,17 @@ N{
 N	return 0;
 N}			 
 N//动态分配内存
-N
+Nvoid *ff_memalloc (UINT size)			
+N{
+N	return (void*)mymalloc(SRAMIN,size);
+X	return (void*)mymalloc(0,size);
+N}
+N//释放内存
+Nvoid ff_memfree (void* mf)		 
+N{
+N	myfree(SRAMIN,mf);
+X	myfree(0,mf);
+N}
 N
 N
 N

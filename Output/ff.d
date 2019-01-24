@@ -1,6 +1,6 @@
-..\output\ff.o: ..\drive\ff.c
-..\output\ff.o: ..\Include\ff.h
-..\output\ff.o: ..\Include\integer.h
-..\output\ff.o: ..\Include\ffconf.h
-..\output\ff.o: ..\Include\diskio.h
-..\output\ff.o: d:\Keil\ARM\ARMCC\bin\..\include\stdarg.h
+..\output\ff.o: ..\FATFS\src\ff.c
+..\output\ff.o: ..\FATFS\src\ff.h
+..\output\ff.o: ..\FATFS\src\integer.h
+..\output\ff.o: ..\FATFS\src\ffconf.h
+..\output\ff.o: ..\FATFS\src\diskio.h
+..\output\ff.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

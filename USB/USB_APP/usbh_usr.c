@@ -25,7 +25,7 @@ void OTG_FS_IRQHandler(void)
   	//USBH_OTG_ISR_Handler(&USB_OTG_Core);
 } 
 //USB HOST 用户回调函数.
-/*USBH_Usr_cb_TypeDef USR_Callbacks=
+USBH_Usr_cb_TypeDef USR_Callbacks=
 {
 	USBH_USR_Init,
 	USBH_USR_DeInit,
@@ -45,12 +45,12 @@ void OTG_FS_IRQHandler(void)
 	USBH_USR_MSC_Application,
 	USBH_USR_DeviceNotSupported,
 	USBH_USR_UnrecoveredError
-};*/
+};
 /////////////////////////////////////////////////////////////////////////////////
 //以下为各回调函数实现.
 
 //USB HOST 初始化 
-/*void USBH_USR_Init(void)
+void USBH_USR_Init(void)
 {
 	printf("USB OTG HS MSC Host\r\n");
 	printf("> USB Host library started.\r\n");
@@ -250,7 +250,7 @@ u8 USBH_UDISK_Write(u8* buf,u32 sector,u32 cnt)
 	if(res==USBH_MSC_OK)res=0;	
 	return res;
 }
-*/
+
 
 
 

@@ -41285,7 +41285,7 @@ N{
 N  	//USBH_OTG_ISR_Handler(&USB_OTG_Core);
 N} 
 N//USB HOST 用户回调函数.
-N/*USBH_Usr_cb_TypeDef USR_Callbacks=
+NUSBH_Usr_cb_TypeDef USR_Callbacks=
 N{
 N	USBH_USR_Init,
 N	USBH_USR_DeInit,
@@ -41305,12 +41305,12 @@ N	USBH_USR_UserInput,
 N	USBH_USR_MSC_Application,
 N	USBH_USR_DeviceNotSupported,
 N	USBH_USR_UnrecoveredError
-N};*/
+N};
 N/////////////////////////////////////////////////////////////////////////////////
 N//以下为各回调函数实现.
 N
 N//USB HOST 初始化 
-N/*void USBH_USR_Init(void)
+Nvoid USBH_USR_Init(void)
 N{
 N	printf("USB OTG HS MSC Host\r\n");
 N	printf("> USB Host library started.\r\n");
@@ -41337,14 +41337,17 @@ N//DeviceSpeed:从机速度(0,1,2 / 其他)
 Nvoid USBH_USR_DeviceSpeedDetected(uint8_t DeviceSpeed)
 N{
 N	if(DeviceSpeed==HPRT0_PRTSPD_HIGH_SPEED)
+X	if(DeviceSpeed==0)
 N	{
 N		//printf("高速(HS)USB设备!\r\n");
 N 	}  
 N	else if(DeviceSpeed==HPRT0_PRTSPD_FULL_SPEED)
+X	else if(DeviceSpeed==1)
 N	{
 N		//printf("全速(FS)USB设备!\r\n"); 
 N	}
 N	else if(DeviceSpeed==HPRT0_PRTSPD_LOW_SPEED)
+X	else if(DeviceSpeed==2)
 N	{
 N		//printf("低速(LS)USB设备!\r\n");  
 N	}
@@ -41427,13 +41430,17 @@ N	u8 res=0;
 N  	switch(AppState)
 N  	{
 N    	case USH_USR_FS_INIT://初始化文件系统 
+X    	case 0:
 N			printf("开始执行用户程序!!!\r\n");
 N			AppState=USH_USR_FS_TEST;
+X			AppState=1;
 N      		break;
 N    	case USH_USR_FS_TEST:	//执行USB OTG 测试主程序
+X    	case 1:	
 N			res=USH_User_App(); //用户主程序
 N     		res=0;
 N			if(res)AppState=USH_USR_FS_INIT;
+X			if(res)AppState=0;
 N      		break;
 N    	default:break;
 N  	} 
@@ -41443,6 +41450,7 @@ N//用户要求重新初始化设备
 Nvoid USBH_USR_DeInit(void)
 N{
 N  	AppState=USH_USR_FS_INIT;
+X  	AppState=0;
 N}
 N//无法恢复的错误!!  
 Nvoid USBH_USR_UnrecoveredError (void)
@@ -41470,6 +41478,7 @@ Nu8 USBH_UDISK_Read(u8* buf,u32 sector,u32 cnt)
 N{
 N	u8 res=1;
 N	if(HCD_IsDeviceConnected(&USB_OTG_Core)&&AppState==USH_USR_FS_TEST)//连接还存在,且是APP测试状态
+X	if(HCD_IsDeviceConnected(&USB_OTG_Core)&&AppState==1)
 N	{  		    
 N		do
 N		{
@@ -41495,6 +41504,7 @@ Nu8 USBH_UDISK_Write(u8* buf,u32 sector,u32 cnt)
 N{
 N	u8 res=1;
 N	if(HCD_IsDeviceConnected(&USB_OTG_Core)&&AppState==USH_USR_FS_TEST)//连接还存在,且是APP测试状态
+X	if(HCD_IsDeviceConnected(&USB_OTG_Core)&&AppState==1)
 N	{  		    
 N		do
 N		{
@@ -41510,7 +41520,6 @@ N	}else res=1;
 N	if(res==USBH_MSC_OK)res=0;	
 N	return res;
 N}
-N*/
 N
 N
 N
@@ -41554,4 +41563,4 @@ N
 N
 N
 N
-W "..\USB\USB_APP\usbh_usr.c" 19 11 variable "AppState"  was declared but never referenced
+N

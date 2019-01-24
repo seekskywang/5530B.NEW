@@ -376,7 +376,7 @@
               <MiscControls>--diag_suppress=870 --no-multibyte-chars</MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F40XX,USE_USB_OTG_FS,USE_EMBEDDED_PHY,USE_USB_OTG_HS</Define>
               <Undefine></Undefine>
-              <IncludePath>..\APP;..\drive;..\Include;..\Libraries\CMSIS\inc;..\Libraries\CMSIS\src;..\Libraries\FWlib\inc;..\Libraries\FWlib\src;..\Listing;..\Output;..\Project;..\STemWinLibrary522\Config;..\STemWinLibrary522\emWinTask;..\STemWinLibrary522\GUILib;..\STemWinLibrary522\inc;..\User;..\USB\STM32_USB_HOST_Library\Class\HID\inc;..\USB\STM32_USB_HOST_Library\Class\MSC\src;..\USB\STM32_USB_HOST_Library\Core\src;..\USB\USB_APP;..\USB\STM32_USB_HOST_Library\Class\HID\src;..\USB\STM32_USB_HOST_Library\Class\MSC\inc;..\USB\STM32_USB_HOST_Library\Core\inc;..\USB\STM32_USB_OTG_Driver\inc;..\FATFS\exfuns;..\FATFS\src\option;..\FATFS\src;..\MALLOC</IncludePath>
+              <IncludePath>..\APP;..\drive;..\Include;..\Libraries\CMSIS\inc;..\Libraries\CMSIS\src;..\Libraries\FWlib\inc;..\Libraries\FWlib\src;..\Listing;..\Output;..\Project;..\STemWinLibrary522\Config;..\STemWinLibrary522\emWinTask;..\STemWinLibrary522\GUILib;..\STemWinLibrary522\inc;..\User;..\USB\STM32_USB_HOST_Library\Class\HID\inc;..\USB\STM32_USB_HOST_Library\Class\MSC\src;..\USB\STM32_USB_HOST_Library\Core\src;..\USB\USB_APP;..\USB\STM32_USB_HOST_Library\Class\HID\src;..\USB\STM32_USB_HOST_Library\Class\MSC\inc;..\USB\STM32_USB_HOST_Library\Core\inc;..\USB\STM32_USB_OTG_Driver\inc;..\FATFS\exfuns;..\FATFS\src\option;..\FATFS\src;..\MALLOC;..\FATFS</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -964,6 +964,26 @@
               <FileName>usbh_usr.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USB\USB_APP\usbh_usr.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FATFS</GroupName>
+          <Files>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FATFS\src\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FATFS\src\diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>cc936.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FATFS\src\option\cc936.c</FilePath>
             </File>
           </Files>
         </Group>

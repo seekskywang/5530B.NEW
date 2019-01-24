@@ -94,6 +94,9 @@
 "..\output\usbh_msc_scsi.o"
 "..\output\usb_bsp.o"
 "..\output\usbh_usr.o"
+"..\output\ff.o"
+"..\output\diskio.o"
+"..\output\cc936.o"
 --strict --scatter "..\Output\JK_BTSET.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
