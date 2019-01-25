@@ -37296,8 +37296,8 @@ N  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;//推挽输出
 N  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;//100MHz
 X  GPIO_InitStructure.GPIO_Speed = GPIO_High_Speed;
 N  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL; 
-N  GPIO_Init(GPIOC, &GPIO_InitStructure);//初始化
-X  GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)), &GPIO_InitStructure);
+N  GPIO_Init(GPIOB, &GPIO_InitStructure);//初始化
+X  GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)), &GPIO_InitStructure);
 N	
 N	
 N  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;//PC10推挽输出		
@@ -37311,10 +37311,10 @@ N
 N  USB_HOST_PWRCTRL=1;			//开启USB HOST电源供电
 X  *((volatile unsigned long *)((((((((uint32_t)0x40000000) + 0x00020000) + 0x0800)+20) & 0xF0000000)+0x2000000+(((((((uint32_t)0x40000000) + 0x00020000) + 0x0800)+20) &0xFFFFF)<<5)+(10<<2))))=1;			
 N
-N	GPIO_PinAFConfig(GPIOC,GPIO_PinSource14,GPIO_AF_OTG_FS);//PA11,AF10(USB)
-X	GPIO_PinAFConfig(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint8_t)0x0E),((uint8_t)0xA));
-N	GPIO_PinAFConfig(GPIOC,GPIO_PinSource15,GPIO_AF_OTG_FS);//PA12,AF10(USB)
-X	GPIO_PinAFConfig(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint8_t)0x0F),((uint8_t)0xA));
+N	GPIO_PinAFConfig(GPIOB,GPIO_PinSource14,GPIO_AF_OTG_FS);//PA11,AF10(USB)
+X	GPIO_PinAFConfig(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint8_t)0x0E),((uint8_t)0xA));
+N	GPIO_PinAFConfig(GPIOB,GPIO_PinSource15,GPIO_AF_OTG_FS);//PA12,AF10(USB)
+X	GPIO_PinAFConfig(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint8_t)0x0F),((uint8_t)0xA));
 N}
 N//USB OTG 中断设置,开启USB FS中断
 N//pdev:USB OTG内核结构体指针

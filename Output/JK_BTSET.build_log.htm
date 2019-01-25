@@ -22,27 +22,12 @@ Dialog DLL:      TCM.DLL V1.35.1.0
  
 <h2>Project:</h2>
 F:\5530BNEW\Project\JK_BTSET.uvproj
-Project File Date:  01/24/2019
+Project File Date:  01/25/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'JK_BTSET'
-compiling main.c...
-..\Include\internalflash.h(36): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\User\main.c(66): warning:  #223-D: function "TIM4_Int_Init" declared implicitly
-      TIM4_Int_Init(2-1,8400-1);
-..\User\main.c(67): warning:  #223-D: function "TIM3_Int_Init" declared implicitly
-      TIM3_Int_Init(10000-1,8400-1);
-..\User\main.c(68): warning:  #223-D: function "TIM5_Int_Init" declared implicitly
-      TIM5_Int_Init(90-1,8400-1);
-..\User\main.c(72): warning:  #223-D: function "USART3_Configuration" declared implicitly
-      USART3_Configuration();
-..\User\main.c(43): warning:  #177-D: variable "filedatabuf"  was declared but never referenced
-  static  u8    filedatabuf[2048];
-..\User\main.c(44): warning:  #177-D: variable "readcount"  was declared but never referenced
-  static  UINT   readcount;
-..\User\main.c: 7 warnings, 0 errors
+compiling usb_bsp.c...
 linking...
 ..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol USH_User_App (referred from usbh_usr.o).
 ..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol myfree (referred from diskio.o).
@@ -50,9 +35,9 @@ linking...
 Not enough information to list image symbols.
 Not enough information to list load addresses in the image map.
 Finished: 2 information, 0 warning and 3 error messages.
-"..\Output\JK_BTSET.axf" - 3 Error(s), 7 Warning(s).
+"..\Output\JK_BTSET.axf" - 3 Error(s), 0 Warning(s).
 Target not created.
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:05
 </pre>
 </body>
 </html>

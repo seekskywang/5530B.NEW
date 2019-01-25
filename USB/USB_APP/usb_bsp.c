@@ -34,7 +34,7 @@ void USB_OTG_BSP_Init(USB_OTG_CORE_HANDLE *pdev)
   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;//推挽输出
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;//100MHz
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL; 
-  GPIO_Init(GPIOC, &GPIO_InitStructure);//初始化
+  GPIO_Init(GPIOB, &GPIO_InitStructure);//初始化
 	
 	
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;//PC10推挽输出		
@@ -45,8 +45,8 @@ void USB_OTG_BSP_Init(USB_OTG_CORE_HANDLE *pdev)
 	
   USB_HOST_PWRCTRL=1;			//开启USB HOST电源供电
 
-	GPIO_PinAFConfig(GPIOC,GPIO_PinSource14,GPIO_AF_OTG_FS);//PA11,AF10(USB)
-	GPIO_PinAFConfig(GPIOC,GPIO_PinSource15,GPIO_AF_OTG_FS);//PA12,AF10(USB)
+	GPIO_PinAFConfig(GPIOB,GPIO_PinSource14,GPIO_AF_OTG_FS);//PA11,AF10(USB)
+	GPIO_PinAFConfig(GPIOB,GPIO_PinSource15,GPIO_AF_OTG_FS);//PA12,AF10(USB)
 }
 //USB OTG 中断设置,开启USB FS中断
 //pdev:USB OTG内核结构体指针

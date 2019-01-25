@@ -100,7 +100,7 @@
 000026  f88d0005          STRB     r0,[sp,#5]
 ;;;36       GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL; 
 00002a  f88d4007          STRB     r4,[sp,#7]
-;;;37       GPIO_Init(GPIOC, &GPIO_InitStructure);//初始化
+;;;37       GPIO_Init(GPIOB, &GPIO_InitStructure);//初始化
 00002e  4e0f              LDR      r6,|L5.108|
 000030  4669              MOV      r1,sp
 000032  4630              MOV      r0,r6
@@ -119,19 +119,19 @@
 000046  f88d4007          STRB     r4,[sp,#7]
 ;;;44       GPIO_Init(GPIOC, &GPIO_InitStructure);//初始化
 00004a  4669              MOV      r1,sp
-00004c  4630              MOV      r0,r6
+00004c  4808              LDR      r0,|L5.112|
 00004e  f7fffffe          BL       GPIO_Init
 ;;;45     	
 ;;;46       USB_HOST_PWRCTRL=1;			//开启USB HOST电源供电
-000052  4907              LDR      r1,|L5.112|
+000052  4908              LDR      r1,|L5.116|
 000054  600d              STR      r5,[r1,#0]
 ;;;47     
-;;;48     	GPIO_PinAFConfig(GPIOC,GPIO_PinSource14,GPIO_AF_OTG_FS);//PA11,AF10(USB)
+;;;48     	GPIO_PinAFConfig(GPIOB,GPIO_PinSource14,GPIO_AF_OTG_FS);//PA11,AF10(USB)
 000056  220a              MOVS     r2,#0xa
 000058  210e              MOVS     r1,#0xe
 00005a  4630              MOV      r0,r6
 00005c  f7fffffe          BL       GPIO_PinAFConfig
-;;;49     	GPIO_PinAFConfig(GPIOC,GPIO_PinSource15,GPIO_AF_OTG_FS);//PA12,AF10(USB)
+;;;49     	GPIO_PinAFConfig(GPIOB,GPIO_PinSource15,GPIO_AF_OTG_FS);//PA12,AF10(USB)
 000060  220a              MOVS     r2,#0xa
 000062  210f              MOVS     r1,#0xf
 000064  4630              MOV      r0,r6
@@ -142,8 +142,10 @@
                           ENDP
 
                   |L5.108|
-                          DCD      0x40020800
+                          DCD      0x40020400
                   |L5.112|
+                          DCD      0x40020800
+                  |L5.116|
                           DCD      0x424102a8
 
                           AREA ||i.USB_OTG_BSP_mDelay||, CODE, READONLY, ALIGN=1

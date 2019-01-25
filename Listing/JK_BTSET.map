@@ -10235,7 +10235,7 @@ Removing Unused input sections from the image.
     Removing usb_bsp.o(i.USB_OTG_BSP_DisableInterrupt), (2 bytes).
     Removing usb_bsp.o(i.USB_OTG_BSP_DriveVBUS), (2 bytes).
     Removing usb_bsp.o(i.USB_OTG_BSP_EnableInterrupt), (34 bytes).
-    Removing usb_bsp.o(i.USB_OTG_BSP_Init), (116 bytes).
+    Removing usb_bsp.o(i.USB_OTG_BSP_Init), (120 bytes).
     Removing usb_bsp.o(i.USB_OTG_BSP_mDelay), (2 bytes).
     Removing usb_bsp.o(i.USB_OTG_BSP_uDelay), (2 bytes).
     Removing usbh_usr.o(.rev16_text), (4 bytes).
@@ -10971,4 +10971,4 @@ Removing Unused input sections from the image.
     Removing wm_setxsize.o(i.WM_SetXSize), (64 bytes).
     Removing wm_setysize.o(i.WM_SetYSize), (64 bytes).
 
-1904 unused section(s) (total 275705 bytes) removed from the image.
+1904 unused section(s) (total 275709 bytes) removed from the image.
