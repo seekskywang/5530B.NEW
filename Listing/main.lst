@@ -36095,6 +36095,13 @@ N
 N
 N#ifndef _usart_h_
 N#define _usart_h_
+N#define USART_REC_LEN  			400*1024 //定义最大接收字节数 55K
+N#define EN_USART1_RX 			1		//使能（1）/禁止（0）串口1接收
+N
+N
+Nextern u16 USART_RX_STA; //?????? 
+Nextern u32 USART_RX_CNT;  //?????? 
+N
 N
 Nvoid USART_Configuration(void);//串口初始化函数
 Nvoid UART1_Send(void);
@@ -53104,6 +53111,25 @@ N#define ADDR_FLASH_SECTOR_11    ((uint32_t)0x080E0000) /* Base @ of Sector 11, 
 N
 N#define FLASH_USER_START_ADDR ADDR_FLASH_SECTOR_11	//用户起始地址，暂定为第十个扇区的起始地址
 N
+N//用户根据自己的需要设置
+N#define STM32_FLASH_SIZE 1024 	 		//所选STM32的FLASH容量大小(单位为K)
+N#define STM32_FLASH_WREN 1              //使能FLASH写入(0，不是能;1，使能)
+N//////////////////////////////////////////////////////////////////////////////////////////////////////
+N
+N//FLASH起始地址
+N#define STM32_FLASH_BASE 0x08000000 	//STM32 FLASH的起始地址
+N//FLASH解锁键值
+N 
+N
+Nu16 STMFLASH_ReadHalfWord(u32 faddr);		  //读出半字  
+Nvoid STMFLASH_WriteLenByte(u32 WriteAddr,u32 DataToWrite,u16 Len);	//指定地址开始写入指定长度的数据
+Nu32 STMFLASH_ReadLenByte(u32 ReadAddr,u16 Len);						//指定地址开始读取指定长度数据
+Nvoid STMFLASH_Write(u32 WriteAddr,u16 *pBuffer,u16 NumToWrite);		//从指定地址开始写入指定长度的数据
+Nvoid STMFLASH_Read(u32 ReadAddr,u16 *pBuffer,u16 NumToRead);   		//从指定地址开始读出指定长度的数据
+N
+N//测试写入
+Nvoid Test_Write(u32 WriteAddr,u16 WriteData);	
+N
 N//API
 Nuint16_t Flash_GetSector(uint32_t Address);
 Nvoid Flash_EraseSector(uint16_t SectorNum);
@@ -53118,7 +53144,7 @@ Nvoid Flash_Write8BitDatas(uint32_t address, uint16_t length, int8_t* data_8);
 Nvoid Flash_Read8BitDatas(uint32_t address, uint16_t length, int8_t* data_8);
 N
 N
-W "..\Include\internalflash.h" 36 7 last line of file ends without a newline
+W "..\Include\internalflash.h" 55 7 last line of file ends without a newline
 N#endif
 L 28 "..\User\main.c" 2
 N#include "usbh_usr.h" 
