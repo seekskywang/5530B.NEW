@@ -5,10 +5,10 @@
 <h2>Tool Versions:</h2>
 IDE-Version: ¦ÌVision V5.25.2.0
 Copyright (C) 2018 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: 1 Microsoft, Microsoft, LIC=RC9PC-7RXIV-SYKVA-1PZTZ-AUNXS-K64YH
+License Information: 1 Microsoft, Microsoft, LIC=S5ITG-V5G2Q-BXVUY-I5T0J-4HUEL-MI8C5
  
 Tool Versions:
-Toolchain:       MDK-ARM Plus  Version: 5.25.2.0
+Toolchain:       MDK-ARM Professional  Version: 5.25.2.0
 Toolchain Path:  D:\Keil_v5\ARM\ARMCC\Bin
 C Compiler:      Armcc.exe V5.06 update 6 (build 750)
 Assembler:       Armasm.exe V5.06 update 6 (build 750)
@@ -22,21 +22,23 @@ Dialog DLL:      TCM.DLL V1.35.1.0
  
 <h2>Project:</h2>
 F:\5530BNEW\Project\JK_BTSET.uvproj
-Project File Date:  01/25/2019
+Project File Date:  01/26/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'JK_BTSET'
-compiling usb_bsp.c...
+compiling modbus.c...
+..\drive\modbus.c(778): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      if(DISS_Voltage < 0.5)
+..\drive\modbus.c(752): warning:  #177-D: variable "rave"  was declared but never referenced
+      static u32 rave;
+..\drive\modbus.c(753): warning:  #177-D: variable "rcount"  was declared but never referenced
+      static u8 rcount;
+..\drive\modbus.c: 3 warnings, 0 errors
 linking...
-..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol USH_User_App (referred from usbh_usr.o).
-..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol myfree (referred from diskio.o).
-..\Output\JK_BTSET.axf: Error: L6218E: Undefined symbol mymalloc (referred from diskio.o).
-Not enough information to list image symbols.
-Not enough information to list load addresses in the image map.
-Finished: 2 information, 0 warning and 3 error messages.
-"..\Output\JK_BTSET.axf" - 3 Error(s), 0 Warning(s).
-Target not created.
+Program Size: Code=183762 RO-data=126330 RW-data=2356 ZI-data=34652  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 3 Warning(s).
 Build Time Elapsed:  00:00:05
 </pre>
 </body>

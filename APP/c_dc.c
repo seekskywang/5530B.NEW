@@ -577,24 +577,30 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                     charge_step =2;
                 }
             }else if(charge_step == 2){
-                if((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && (DISS_POW_Current <= 10))//若测量电流小于截止电流
-                {
-                    SET_Current = 10;
-                    charge_step =3;
-                }
-            }else if(charge_step == 3){
-                if((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && (DISS_POW_Current <= 8))//若测量电流小于截止电流
+                if(DISS_POW_Current < ((float)coc1/1000))//若测量电流小于截止电流
                 {
                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
-                    GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
-//                     Mode_SW_CONT(0x02);//切换至负载模式
-//                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+                    GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电�?
+					SET_Current_Laod = cdc_dc;
+//                     Mode_SW_CONT(0x02);//切换至负载模�?
+//                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负�?
                     GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
                      GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
                     mode_sw = mode_load;
                 }
             }
-            
+//			else if(charge_step == 3){
+//                if((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && (DISS_POW_Current <= 8))//若测量电流小于截止电流
+//                {
+//                    GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
+//                    GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
+////                     Mode_SW_CONT(0x02);//切换至负载模式
+////                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+//                    GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+//                     GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+//                    mode_sw = mode_load;
+//                }
+//            }
             
 //             if(DISS_POW_Current < dis_c_cutoff_c && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
 //                 cutoff_time = GUI_GetTime()/500;

@@ -87,102 +87,68 @@
                   |L1.148|
                           DCD      0x40020800
 
-                          AREA ||.ARM.__AT_0x20001000||, DATA, NOINIT, ALIGN=0
-
-                  RX_BUF
-                          %        5120
-
-                          AREA ||.bss||, DATA, NOINIT, ALIGN=2
-
-                  USB_Host
-                          %        132
-
-                          AREA ||area_number.5||, DATA, NOINIT, ALIGN=2
-
-                          EXPORTAS ||area_number.5||, ||.bss||
-                  USB_OTG_Core
-                          %        1452
-
                           AREA ||.data||, DATA, ALIGN=2
 
                   DISS_Voltage
                           DCD      0x00000000
 
+                          AREA ||area_number.5||, DATA, ALIGN=2
+
+                          EXPORTAS ||area_number.5||, ||.data||
+                  DISS_POW_Voltage
+                          DCD      0x00000000
+
+                          AREA ||area_number.6||, DATA, ALIGN=2
+
+                          EXPORTAS ||area_number.6||, ||.data||
+                  DISS_Current
+                          DCD      0x00000000
+
+                          AREA ||area_number.7||, DATA, ALIGN=2
+
+                          EXPORTAS ||area_number.7||, ||.data||
+                  DISS_POW_Current
+                          DCD      0x00000000
+
                           AREA ||area_number.8||, DATA, ALIGN=2
 
                           EXPORTAS ||area_number.8||, ||.data||
-                  DISS_POW_Voltage
+                  flagA
                           DCD      0x00000000
 
                           AREA ||area_number.9||, DATA, ALIGN=2
 
                           EXPORTAS ||area_number.9||, ||.data||
-                  DISS_Current
+                  flagB
                           DCD      0x00000000
 
                           AREA ||area_number.10||, DATA, ALIGN=2
 
                           EXPORTAS ||area_number.10||, ||.data||
-                  DISS_POW_Current
+                  flagC
                           DCD      0x00000000
 
                           AREA ||area_number.11||, DATA, ALIGN=2
 
                           EXPORTAS ||area_number.11||, ||.data||
-                  file
+                  flagD
                           DCD      0x00000000
 
                           AREA ||area_number.12||, DATA, ALIGN=2
 
                           EXPORTAS ||area_number.12||, ||.data||
-                  ||br||
+                  flagE
                           DCD      0x00000000
 
                           AREA ||area_number.13||, DATA, ALIGN=2
 
                           EXPORTAS ||area_number.13||, ||.data||
-                  ||bw||
+                  flagF
                           DCD      0x00000000
 
                           AREA ||area_number.14||, DATA, ALIGN=2
 
                           EXPORTAS ||area_number.14||, ||.data||
-                  flagA
-                          DCD      0x00000000
-
-                          AREA ||area_number.15||, DATA, ALIGN=2
-
-                          EXPORTAS ||area_number.15||, ||.data||
-                  flagB
-                          DCD      0x00000000
-
-                          AREA ||area_number.16||, DATA, ALIGN=2
-
-                          EXPORTAS ||area_number.16||, ||.data||
-                  flagC
-                          DCD      0x00000000
-
-                          AREA ||area_number.17||, DATA, ALIGN=2
-
-                          EXPORTAS ||area_number.17||, ||.data||
-                  flagD
-                          DCD      0x00000000
-
-                          AREA ||area_number.18||, DATA, ALIGN=2
-
-                          EXPORTAS ||area_number.18||, ||.data||
-                  flagE
-                          DCD      0x00000000
-
-                          AREA ||area_number.19||, DATA, ALIGN=2
-
-                          EXPORTAS ||area_number.19||, ||.data||
-                  flagF
-                          DCD      0x00000000
-
-                          AREA ||area_number.20||, DATA, ALIGN=2
-
-                          EXPORTAS ||area_number.20||, ||.data||
                   flagG
                           DCD      0x00000000
 

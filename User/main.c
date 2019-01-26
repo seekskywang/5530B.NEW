@@ -33,15 +33,15 @@ float DISS_POW_Voltage;//稳压电源电压
 float DISS_Current;//负载电流
 float DISS_POW_Current;//稳压电源电流
 
-USBH_HOST  USB_Host;
-USB_OTG_CORE_HANDLE  USB_OTG_Core;
-FIL   *file;
-UINT  br, bw;
-//u8 *fatbuff;
-#define REC_LEN  			5*1024 //定义最大接收字节数 120K
-u8 RX_BUF[REC_LEN] __attribute__ ((at(0X20001000)));//接收缓冲,最大REC_LEN个字节,起始地址为0X20001000.    
-static  u8    filedatabuf[2048];
-static  UINT   readcount;
+//USBH_HOST  USB_Host;
+//USB_OTG_CORE_HANDLE  USB_OTG_Core;
+//FIL   *file;
+//UINT  br, bw;
+////u8 *fatbuff;
+//#define REC_LEN  			5*1024 //定义最大接收字节数 120K
+//u8 RX_BUF[REC_LEN] __attribute__ ((at(0X20001000)));//接收缓冲,最大REC_LEN个字节,起始地址为0X20001000.    
+//static  u8    filedatabuf[2048];
+//static  UINT   readcount;
 
 struct bitDefine
 {

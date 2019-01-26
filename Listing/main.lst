@@ -59445,16 +59445,15 @@ Nfloat DISS_POW_Voltage;//稳压电源电压
 Nfloat DISS_Current;//负载电流
 Nfloat DISS_POW_Current;//稳压电源电流
 N
-NUSBH_HOST  USB_Host;
-NUSB_OTG_CORE_HANDLE  USB_OTG_Core;
-NFIL   *file;
-NUINT  br, bw;
-N//u8 *fatbuff;
-N#define REC_LEN  			5*1024 //定义最大接收字节数 120K
-Nu8 RX_BUF[REC_LEN] __attribute__ ((at(0X20001000)));//接收缓冲,最大REC_LEN个字节,起始地址为0X20001000.    
-Xu8 RX_BUF[5*1024] __attribute__ ((at(0X20001000)));
-Nstatic  u8    filedatabuf[2048];
-Nstatic  UINT   readcount;
+N//USBH_HOST  USB_Host;
+N//USB_OTG_CORE_HANDLE  USB_OTG_Core;
+N//FIL   *file;
+N//UINT  br, bw;
+N////u8 *fatbuff;
+N//#define REC_LEN  			5*1024 //定义最大接收字节数 120K
+N//u8 RX_BUF[REC_LEN] __attribute__ ((at(0X20001000)));//接收缓冲,最大REC_LEN个字节,起始地址为0X20001000.    
+N//static  u8    filedatabuf[2048];
+N//static  UINT   readcount;
 N
 Nstruct bitDefine
 N{
@@ -59506,5 +59505,3 @@ N}
 N
 N
 N/******************* (C) COPYRIGHT 2017 STMicroelectronics *****END OF FILE****/
-W "..\User\main.c" 43 15 variable "filedatabuf"  was declared but never referenced
-W "..\User\main.c" 44 16 variable "readcount"  was declared but never referenced

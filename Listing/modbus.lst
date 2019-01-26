@@ -37311,8 +37311,7 @@ N		Current = var32;;
 X		Run_Control[11] = var32;;
 N		DISS_POW_Current=Current;
 X		DISS_POW_Current=Run_Control[11];
-W "..\drive\modbus.c" 1067 20 single-precision operand implicitly converted to double-precision
-N		DISS_POW_Current=DISS_POW_Current/1000 - 0.004;//计算显示电流
+N		DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
 N	}
 N/**************************稳压电源设置电压转换******************************************/
 N	var32 = SET_Voltage;
