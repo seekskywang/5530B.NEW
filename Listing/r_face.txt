@@ -4575,7 +4575,7 @@
 ;;;471                    TEXT_SetTextColor(hItem, GUI_WHITE);
 ;;;472                    TEXT_SetText(hItem, "未测试");
 ;;;473    				
-;;;474    				if(DISS_Voltage < 0.1)
+;;;474    				if(DISS_Voltage < 0.3)
 ;;;475                    {
 ;;;476                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
 ;;;477                        sprintf(buf,"%.3f",0.000);
@@ -4679,7 +4679,7 @@
 ;;;575    			
 ;;;576    			
 ;;;577    		}else{
-;;;578    			if(DISS_Voltage < 0.1)
+;;;578    			if(DISS_Voltage < 0.3)
 ;;;579    			{
 ;;;580    				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
 ;;;581    				sprintf(buf,"%.3f",0.000);
@@ -5606,7 +5606,7 @@
 0004c4  cea900            DCB      206,169,0
 0004c7  00                DCB      0
                   |L9.1224|
-                          DCD      0x3dcccccd
+                          DCD      0x3e99999a
                   |L9.1228|
 0004cc  00000000          DCFD     0x0000000000000000 ; 0
 0004d0  00000000
@@ -6044,7 +6044,7 @@
 000952  00                DCB      0
 000953  00                DCB      0
                   |L9.2388|
-                          DCD      0x3dcccccd
+                          DCD      0x3e99999a
                   |L9.2392|
 000958  25346400          DCB      "%4d",0
                   |L9.2396|

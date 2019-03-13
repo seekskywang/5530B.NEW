@@ -31,6 +31,7 @@ vu8 Transmit_BUFFERsize;
 vu8 t_USART;
 u16 USART_RX_STA=0; //?????? 
 u32 USART_RX_CNT=0;  //?????? 
+u8 USART_RX_BUF[USART_REC_LEN];// __attribute__ ((at(0X20001000)));//接收缓冲,最大USART_REC_LEN个字节,起始地址为0X20001000. 
 
 /*****************************************************************/
 

@@ -17,6 +17,8 @@
 extern u16 USART_RX_STA; //?????? 
 extern u32 USART_RX_CNT;  //?????? 
 
+extern u8  USART_RX_BUF[USART_REC_LEN]; //接收缓冲,最大USART_REC_LEN个字节.末字节为换行符 
+
 
 void USART_Configuration(void);//串口初始化函数
 void UART1_Send(void);

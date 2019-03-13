@@ -15,7 +15,7 @@
 //////////////////////////////////////////////////////////////////////////////////	
 typedef  void (*iapfun)(void);				//定义一个函数类型的参数.
 
-#define FLASH_APP1_ADDR		0x08010000  	//第一个应用程序起始地址(存放在FLASH)
+#define FLASH_APP1_ADDR		0x08060000  	//第一个应用程序起始地址(存放在FLASH)
 											//保留0X08000000~0X0800FFFF的空间为IAP使用
 
 void iap_load_app(u32 appxaddr);			//执行flash里面的app程序

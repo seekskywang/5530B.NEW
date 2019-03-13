@@ -333,6 +333,7 @@ void USART1_IRQHandler(void)
     
  	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
 	{
+		
         g_mods_timeout = 2;
         if (g_tModS.RxCount < S_RX_BUF_SIZE)
         {

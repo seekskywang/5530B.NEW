@@ -261,7 +261,8 @@ void TIM4_IRQHandler(void)
         {
 
             if(flag_Load_CC == 1)
-            {              
+            {   
+//				load_sw = load_on;
                 GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
                 GPIO_ResetBits(GPIOA,GPIO_Pin_15);//µç×Ó¸ºÔØOn
             }else if(flag_Load_CC == 0){
@@ -289,7 +290,7 @@ void TIM4_IRQHandler(void)
             }else{
                 if(flag_Load_CC == 1)
                 {
-                    if(uocount == 10)
+                    if(uocount == 20)
                     {
                         SET_Current_Laod = SET_Current_Laod + 10;
                         uocount = 0;

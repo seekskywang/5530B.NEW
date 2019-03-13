@@ -172,24 +172,24 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
         lockstat2 = lockstat1;
         lockstat1 = lock;
         
-        if((vu32)(DISS_Current*1000) > SET_Current_Laod)
-        {
-            testflag = 1;
-        }else{
-            testflag = 0;
-            testc1 = testc2 = 0;
-        }
-        if(testflag == 1)
-        {
-            testc2 = testc1;
-            testc1 = DISS_Current;
-            if(testc1 < testc2)
-            {
-                testres = testc2;
-                testflag = 0;
-                testc1 = testc2 = 0;
-            }
-        }
+//        if((vu32)(DISS_Current*1000) > SET_Current_Laod)
+//        {
+//            testflag = 1;
+//        }else{
+//            testflag = 0;
+//            testc1 = testc2 = 0;
+//        }
+//        if(testflag == 1)
+//        {
+//            testc2 = testc1;
+//            testc1 = DISS_Current;
+//            if(testc1 < testc2)
+//            {
+//                testres = testc2;
+//                testflag = 0;
+//                testc1 = testc2 = 0;
+//            }
+//        }
         
         
         if(lockstat1 != lockstat2)
@@ -198,7 +198,7 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
         }
 //         if(clear_flag3 == 1)
 //         {
-            if(DISS_Voltage < 0.1)
+            if(DISS_Voltage < 0.3)
             {
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
                 sprintf(buf,"%.3f",0.000);       

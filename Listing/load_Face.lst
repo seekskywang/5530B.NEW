@@ -53342,25 +53342,24 @@ N	{
 N        lockstat2 = lockstat1;
 N        lockstat1 = lock;
 N        
-N        if((vu32)(DISS_Current*1000) > SET_Current_Laod)
-X        if((vu32)(DISS_Current*1000) > Run_Control[4])
-N        {
-N            testflag = 1;
-N        }else{
-N            testflag = 0;
-N            testc1 = testc2 = 0;
-N        }
-N        if(testflag == 1)
-N        {
-N            testc2 = testc1;
-N            testc1 = DISS_Current;
-N            if(testc1 < testc2)
-N            {
-N                testres = testc2;
-N                testflag = 0;
-N                testc1 = testc2 = 0;
-N            }
-N        }
+N//        if((vu32)(DISS_Current*1000) > SET_Current_Laod)
+N//        {
+N//            testflag = 1;
+N//        }else{
+N//            testflag = 0;
+N//            testc1 = testc2 = 0;
+N//        }
+N//        if(testflag == 1)
+N//        {
+N//            testc2 = testc1;
+N//            testc1 = DISS_Current;
+N//            if(testc1 < testc2)
+N//            {
+N//                testres = testc2;
+N//                testflag = 0;
+N//                testc1 = testc2 = 0;
+N//            }
+N//        }
 N        
 N        
 N        if(lockstat1 != lockstat2)
@@ -53370,7 +53369,7 @@ N        }
 N//         if(clear_flag3 == 1)
 N//         {
 W "..\APP\load_Face.c" 201 16 single-precision operand implicitly converted to double-precision
-N            if(DISS_Voltage < 0.1)
+N            if(DISS_Voltage < 0.3)
 N            {
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x91));
@@ -53838,7 +53837,9 @@ N    break;
 N  }
 W "..\APP\load_Face.c" 108 16 variable "olvbuff"  was declared but never referenced
 W "..\APP\load_Face.c" 108 24 variable "oldv"  was declared but never referenced
-W "..\APP\load_Face.c" 109 30 variable "testres"  was set but never used
+W "..\APP\load_Face.c" 109 16 variable "testc1"  was declared but never referenced
+W "..\APP\load_Face.c" 109 23 variable "testc2"  was declared but never referenced
+W "..\APP\load_Face.c" 109 30 variable "testres"  was declared but never referenced
 N}
 N
 NWM_HWIN CreateWindow2(void) {

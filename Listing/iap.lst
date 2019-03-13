@@ -34943,5 +34943,295 @@ N
 N
 N
 L 2 "..\IAP\iap.c" 2
-C "..\IAP\iap.c" 2 19 cannot open source input file "delay.h": No such file or directory
 N#include "delay.h"
+L 1 "..\Include\delay.h" 1
+N#ifndef __DELAY_H
+N#define __DELAY_H 			   
+N#include "sys.h"
+N//////////////////////////////////////////////////////////////////////////////////	 
+N//本程序只供学习使用，未经作者许可，不得用于其它任何用途
+N//ALIENTEK STM32开发板
+N//使用SysTick的普通计数模式对延迟进行管理
+N//包括delay_us,delay_ms
+N//正点原子@ALIENTEK
+N//技术论坛:www.openedv.com
+N//修改日期:2012/9/2
+N//版本：V1.5
+N//版权所有，盗版必究。
+N//Copyright(C) 广州市星翼电子科技有限公司 2009-2019
+N//All rights reserved
+N//********************************************************************************
+N//V1.2修改说明
+N//修正了中断中调用出现死循环的错误
+N//防止延时不准确,采用do while结构!
+N
+N//V1.3修改说明
+N//增加了对UCOSII延时的支持.
+N//如果使用ucosII,delay_init会自动设置SYSTICK的值,使之与ucos的TICKS_PER_SEC对应.
+N//delay_ms和delay_us也进行了针对ucos的改造.
+N//delay_us可以在ucos下使用,而且准确度很高,更重要的是没有占用额外的定时器.
+N//delay_ms在ucos下,可以当成OSTimeDly来用,在未启动ucos时,它采用delay_us实现,从而准确延时
+N//可以用来初始化外设,在启动了ucos之后delay_ms根据延时的长短,选择OSTimeDly实现或者delay_us实现.
+N
+N//V1.4修改说明 20110929
+N//修改了使用ucos,但是ucos未启动的时候,delay_ms中中断无法响应的bug.
+N//V1.5修改说明 20120902
+N//在delay_us加入ucos上锁，防止由于ucos打断delay_us的执行，可能导致的延时不准。
+N////////////////////////////////////////////////////////////////////////////////// 	 
+Nvoid delay_init(void);
+Nvoid delay_ms(u16 nms);
+Nvoid delay_us(u32 nus);
+N
+N#endif
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+L 3 "..\IAP\iap.c" 2
+N#include "usart.h"
+L 1 "..\Include\usart.h" 1
+N/******************** (C) COPYRIGHT 2014 KUNKIN********************
+N * 名称    :usart.h
+N * 作者    :李振
+N * 描述    :
+N * 软件功能:
+N * 硬件外设:
+N * 修改日期:2015-2-5
+N*******************************************************************/
+N	
+N
+N#ifndef _usart_h_
+N#define _usart_h_
+N#define USART_REC_LEN  			400*1024 //定义最大接收字节数 55K
+N#define EN_USART1_RX 			1		//使能（1）/禁止（0）串口1接收
+N
+N
+Nextern u16 USART_RX_STA; //?????? 
+Nextern u32 USART_RX_CNT;  //?????? 
+N
+Nextern u8  USART_RX_BUF[USART_REC_LEN]; //接收缓冲,最大USART_REC_LEN个字节.末字节为换行符 
+Xextern u8  USART_RX_BUF[400*1024]; 
+N
+N
+Nvoid USART_Configuration(void);//串口初始化函数
+Nvoid UART1_Send(void);
+Nstatic void USART1_NVIC_Config(void);
+N
+N#endif
+L 4 "..\IAP\iap.c" 2
+N#include "internalflash.h"
+L 1 "..\Include\internalflash.h" 1
+N#ifndef __INTERNALFLASH_H__
+N#define __INTERNALFLASH_H__
+N
+N#include "stm32f4xx.h"
+N
+N/* Base address of the Flash sectors */
+N#define ADDR_FLASH_SECTOR_0     ((uint32_t)0x08000000) /* Base @ of Sector 0, 16 Kbytes */
+N#define ADDR_FLASH_SECTOR_1     ((uint32_t)0x08004000) /* Base @ of Sector 1, 16 Kbytes */
+N#define ADDR_FLASH_SECTOR_2     ((uint32_t)0x08008000) /* Base @ of Sector 2, 16 Kbytes */
+N#define ADDR_FLASH_SECTOR_3     ((uint32_t)0x0800C000) /* Base @ of Sector 3, 16 Kbytes */
+N#define ADDR_FLASH_SECTOR_4     ((uint32_t)0x08010000) /* Base @ of Sector 4, 64 Kbytes */
+N#define ADDR_FLASH_SECTOR_5     ((uint32_t)0x08020000) /* Base @ of Sector 5, 128 Kbytes */
+N#define ADDR_FLASH_SECTOR_6     ((uint32_t)0x08040000) /* Base @ of Sector 6, 128 Kbytes */
+N#define ADDR_FLASH_SECTOR_7     ((uint32_t)0x08060000) /* Base @ of Sector 7, 128 Kbytes */
+N#define ADDR_FLASH_SECTOR_8     ((uint32_t)0x08080000) /* Base @ of Sector 8, 128 Kbytes */
+N#define ADDR_FLASH_SECTOR_9     ((uint32_t)0x080A0000) /* Base @ of Sector 9, 128 Kbytes */
+N#define ADDR_FLASH_SECTOR_10    ((uint32_t)0x080C0000) /* Base @ of Sector 10, 128 Kbytes */
+N#define ADDR_FLASH_SECTOR_11    ((uint32_t)0x080E0000) /* Base @ of Sector 11, 128 Kbytes */
+N
+N#define FLASH_USER_START_ADDR ADDR_FLASH_SECTOR_11	//用户起始地址，暂定为第十个扇区的起始地址
+N
+N//用户根据自己的需要设置
+N#define STM32_FLASH_SIZE 1024 	 		//所选STM32的FLASH容量大小(单位为K)
+N#define STM32_FLASH_WREN 1              //使能FLASH写入(0，不是能;1，使能)
+N//////////////////////////////////////////////////////////////////////////////////////////////////////
+N
+N//FLASH起始地址
+N#define STM32_FLASH_BASE 0x08000000 	//STM32 FLASH的起始地址
+N//FLASH解锁键值
+N 
+N
+Nu16 STMFLASH_ReadHalfWord(u32 faddr);		  //读出半字  
+Nvoid STMFLASH_WriteLenByte(u32 WriteAddr,u32 DataToWrite,u16 Len);	//指定地址开始写入指定长度的数据
+Nu32 STMFLASH_ReadLenByte(u32 ReadAddr,u16 Len);						//指定地址开始读取指定长度数据
+Nvoid STMFLASH_Write(u32 WriteAddr,u16 *pBuffer,u16 NumToWrite);		//从指定地址开始写入指定长度的数据
+Nvoid STMFLASH_Read(u32 ReadAddr,u16 *pBuffer,u16 NumToRead);   		//从指定地址开始读出指定长度的数据
+N
+N//测试写入
+Nvoid Test_Write(u32 WriteAddr,u16 WriteData);	
+N
+N//API
+Nuint16_t Flash_GetSector(uint32_t Address);
+Nvoid Flash_EraseSector(uint16_t SectorNum);
+N
+Nvoid Flash_Write32BitDatas(uint32_t address, uint16_t length, int32_t* data_32);
+Nvoid Flash_Read32BitDatas(uint32_t address, uint16_t length, int32_t* data_32);
+N
+Nvoid Flash_Write16BitDatas(uint32_t address, uint16_t length, int16_t* data_16);
+Nvoid Flash_Read16BitDatas(uint32_t address, uint16_t length, int16_t* data_16);
+N
+Nvoid Flash_Write8BitDatas(uint32_t address, uint16_t length, int8_t* data_8);
+Nvoid Flash_Read8BitDatas(uint32_t address, uint16_t length, int8_t* data_8);
+N
+N
+W "..\Include\internalflash.h" 55 7 last line of file ends without a newline
+N#endif
+L 5 "..\IAP\iap.c" 2
+N#include "iap.h"
+L 1 "..\IAP\iap.h" 1
+N#ifndef __IAP_H__
+N#define __IAP_H__
+N#include "sys.h"  
+N//////////////////////////////////////////////////////////////////////////////////	 
+N//本程序只供学习使用，未经作者许可，不得用于其它任何用途
+N//ALIENTEK战舰STM32开发板
+N//IAP 代码	   
+N//正点原子@ALIENTEK
+N//技术论坛:www.openedv.com
+N//修改日期:2012/9/24
+N//版本：V1.0
+N//版权所有，盗版必究。
+N//Copyright(C) 广州市星翼电子科技有限公司 2009-2019
+N//All rights reserved									  
+N//////////////////////////////////////////////////////////////////////////////////	
+Ntypedef  void (*iapfun)(void);				//定义一个函数类型的参数.
+N
+N#define FLASH_APP1_ADDR		0x08060000  	//第一个应用程序起始地址(存放在FLASH)
+N											//保留0X08000000~0X0800FFFF的空间为IAP使用
+N
+Nvoid iap_load_app(u32 appxaddr);			//执行flash里面的app程序
+Nvoid iap_load_appsram(u32 appxaddr);		//执行sram里面的app程序
+Nvoid iap_write_appbin(u32 appxaddr,u8 *appbuf,u32 applen);	//在指定地址开始,写入bin
+N#endif
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+L 6 "..\IAP\iap.c" 2
+N//////////////////////////////////////////////////////////////////////////////////	 
+N//本程序只供学习使用，未经作者许可，不得用于其它任何用途
+N//ALIENTEK战舰STM32开发板
+N//IAP 代码	   
+N//正点原子@ALIENTEK
+N//技术论坛:www.openedv.com
+N//修改日期:2012/9/24
+N//版本：V1.0
+N//版权所有，盗版必究。
+N//Copyright(C) 广州市星翼电子科技有限公司 2009-2019
+N//All rights reserved									  
+N//////////////////////////////////////////////////////////////////////////////////	
+N
+Niapfun jump2app; 
+Nu16 iapbuf[1024];   
+N//appxaddr:应用程序的起始地址
+N//appbuf:应用程序CODE.
+N//appsize:应用程序大小(字节).
+Nvoid iap_write_appbin(u32 appxaddr,u8 *appbuf,u32 appsize)
+N{
+N	u16 t;
+N	u16 i=0;
+N	u16 temp;
+N	u32 fwaddr=appxaddr;//当前写入的地址
+N	u8 *dfu=appbuf;
+N	for(t=0;t<appsize;t+=2)
+N	{						    
+N		temp=(u16)dfu[1]<<8;
+N		temp+=(u16)dfu[0];	  
+N		dfu+=2;//偏移2个字节
+N		iapbuf[i++]=temp;	    
+N		if(i==1024)
+N		{
+N			i=0;
+N			STMFLASH_Write(fwaddr,iapbuf,1024);	
+N			fwaddr+=2048;//偏移2048  16=2*8.所以要乘以2.
+N		}
+N	}
+N	if(i)STMFLASH_Write(fwaddr,iapbuf,i);//将最后的一些内容字节写进去.  
+N}
+N
+N//跳转到应用程序段
+N//appxaddr:用户代码起始地址.
+Nvoid iap_load_app(u32 appxaddr)
+N{
+N	if(((*(vu32*)appxaddr)&0x2FFE0000)==0x20000000)	//检查栈顶地址是否合法.
+N	{ 
+N		jump2app=(iapfun)*(vu32*)(appxaddr+4);		//用户代码区第二个字为程序开始地址(复位地址)		
+N		MSR_MSP(*(vu32*)appxaddr);					//初始化APP堆栈指针(用户代码区的第一个字用于存放栈顶地址)
+N		jump2app();									//跳转到APP.
+N	}
+N}		 
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N

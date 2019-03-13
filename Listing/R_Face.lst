@@ -53647,7 +53647,7 @@ X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
 N                TEXT_SetText(hItem, "未测试");
 N				
 W "..\APP\R_Face.c" 474 8 single-precision operand implicitly converted to double-precision
-N				if(DISS_Voltage < 0.1)
+N				if(DISS_Voltage < 0.3)
 N                {
 N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
 X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
@@ -53775,7 +53775,7 @@ N
 N			
 N		}else{
 W "..\APP\R_Face.c" 578 7 single-precision operand implicitly converted to double-precision
-N			if(DISS_Voltage < 0.1)
+N			if(DISS_Voltage < 0.3)
 N			{
 N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
 X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));

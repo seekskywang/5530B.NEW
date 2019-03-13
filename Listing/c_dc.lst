@@ -53882,7 +53882,8 @@ N                if(count > set_loop_count){
 N                    c_sum += bc_raw;
 N                    battery_c = c_sum/set_loop_count;                     
 N                    count = 1;
-N                    
+N                    cdc_sw = cdc_off;
+X                    cdc_sw = 0;
 N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_68);
 X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x81));
 N                    sprintf(buf,"%05d",battery_c);
@@ -56702,16 +56703,16 @@ N                    }else if(dot_flag == 1){
 N                        if(coffc_step == step1)
 X                        if(coffc_step == 0)
 N                        {
-N                            coc1 = coc1;
-X                            coff[3] = coff[3];
+N                            coc1 = coc1 + atoi(num);
+X                            coff[3] = coff[3] + atoi(num);
 N                        }else if(coffc_step == step2){
 X                        }else if(coffc_step == 1){
-N                            coc2 = coc2;
-X                            coff[4] = coff[4];
+N                            coc2 = coc2 + atoi(num);
+X                            coff[4] = coff[4] + atoi(num);
 N                        }else if(coffc_step == step3){
 X                        }else if(coffc_step == 2){
-N                            coc3 = coc3;
-X                            coff[5] = coff[5];
+N                            coc3 = coc3 + atoi(num);
+X                            coff[5] = coff[5] + atoi(num);
 N                        }
 N//                        set_c_cutoff_c = set_c_cutoff_c + atoi(num);
 N                    }else{

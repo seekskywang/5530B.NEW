@@ -692,7 +692,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                     c_sum += bc_raw;
                     battery_c = c_sum/set_loop_count;                     
                     count = 1;
-                    
+                    cdc_sw = cdc_off;
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_68);
                     sprintf(buf,"%05d",battery_c);
                     TEXT_SetText(hItem,buf);
@@ -2754,11 +2754,11 @@ void INPUT_CDC(char* num){
                     }else if(dot_flag == 1){
                         if(coffc_step == step1)
                         {
-                            coc1 = coc1;
+                            coc1 = coc1 + atoi(num);
                         }else if(coffc_step == step2){
-                            coc2 = coc2;
+                            coc2 = coc2 + atoi(num);
                         }else if(coffc_step == step3){
-                            coc3 = coc3;
+                            coc3 = coc3 + atoi(num);
                         }
 //                        set_c_cutoff_c = set_c_cutoff_c + atoi(num);
                     }else{

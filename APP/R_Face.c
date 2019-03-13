@@ -471,7 +471,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 TEXT_SetTextColor(hItem, GUI_WHITE);
                 TEXT_SetText(hItem, "未测试");
 				
-				if(DISS_Voltage < 0.1)
+				if(DISS_Voltage < 0.3)
                 {
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
                     sprintf(buf,"%.3f",0.000);
@@ -575,7 +575,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 			
 			
 		}else{
-			if(DISS_Voltage < 0.1)
+			if(DISS_Voltage < 0.3)
 			{
 				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
 				sprintf(buf,"%.3f",0.000);

@@ -1,7 +1,7 @@
 #include "sys.h"
 #include "delay.h"
 #include "usart.h"
-#include "stmflash.h"
+#include "internalflash.h"
 #include "iap.h"
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途

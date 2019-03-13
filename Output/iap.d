@@ -35,3 +35,7 @@
 ..\output\iap.o: ..\Libraries\FWlib\inc\stm32f4xx_dac.h
 ..\output\iap.o: ..\Libraries\FWlib\inc\stm32f4xx_dcmi.h
 ..\output\iap.o: ..\Libraries\FWlib\inc\stm32f4xx_fsmc.h
+..\output\iap.o: ..\Include\delay.h
+..\output\iap.o: ..\Include\usart.h
+..\output\iap.o: ..\Include\internalflash.h
+..\output\iap.o: ..\IAP\iap.h

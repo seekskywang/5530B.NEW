@@ -760,6 +760,16 @@
               <FileType>1</FileType>
               <FilePath>..\drive\internalflash.c</FilePath>
             </File>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\drive\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\drive\sys.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

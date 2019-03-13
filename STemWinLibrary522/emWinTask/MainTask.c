@@ -84,8 +84,14 @@ void MainTask(void)
 	{
 		TIM_SetCompare1(TIM2,Contr_Current);//稳压电源电流DAC
 		TIM_SetCompare2(TIM2,Contr_Voltage);//稳压电源电压DAC
-//		DAC8531_Send(Contr_Laod);//加载DAC值
-        Slow_Start();
+		if(usartocflag == 1)
+		{
+			DAC8531_Send(Contr_Laod);//加载DAC值
+		}else{
+			Slow_Start();
+		}
+		
+        
         RCC_GetClocksFreq(&rcc);
         if(page_sw != face_starter)
         {

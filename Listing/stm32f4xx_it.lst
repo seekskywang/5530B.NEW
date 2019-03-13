@@ -36369,6 +36369,7 @@ N
 N 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
 X 	if(USART_GetITStatus(((USART_TypeDef *) ((((uint32_t)0x40000000) + 0x00010000) + 0x1000)), ((uint16_t)0x0525)) != RESET)
 N	{
+N		
 N        g_mods_timeout = 2;
 N        if (g_tModS.RxCount < S_RX_BUF_SIZE)
 X        if (g_tModS.RxCount < 30)
@@ -36419,7 +36420,7 @@ N            if(i < 10)
 N            {
 N             sum += (UART_Buffer_Rece[2] * 256 + UART_Buffer_Rece[3])/10.0;
 N            }else{
-W "..\User\stm32f4xx_it.c" 382 24 single-precision operand implicitly converted to double-precision
+W "..\User\stm32f4xx_it.c" 383 24 single-precision operand implicitly converted to double-precision
 N                temp = sum/10.0;
 N                sum = 0;
 N                i = 0;
@@ -36455,13 +36456,13 @@ N            MODS_06H();
 N        }break;
 N        default:break;
 N    }
-W "..\User\stm32f4xx_it.c" 396 8 variable "crec"  was declared but never referenced
-W "..\User\stm32f4xx_it.c" 397 9 variable "csend"  was declared but never referenced
-W "..\User\stm32f4xx_it.c" 398 16 variable "sendbuf"  was declared but never referenced
-W "..\User\stm32f4xx_it.c" 399 8 variable "sendlen"  was declared but never referenced
-W "..\User\stm32f4xx_it.c" 400 16 variable "recrc"  was declared but never referenced
-W "..\User\stm32f4xx_it.c" 401 16 variable "scrc"  was declared but never referenced
-W "..\User\stm32f4xx_it.c" 402 8 variable "i"  was declared but never referenced
+W "..\User\stm32f4xx_it.c" 397 8 variable "crec"  was declared but never referenced
+W "..\User\stm32f4xx_it.c" 398 9 variable "csend"  was declared but never referenced
+W "..\User\stm32f4xx_it.c" 399 16 variable "sendbuf"  was declared but never referenced
+W "..\User\stm32f4xx_it.c" 400 8 variable "sendlen"  was declared but never referenced
+W "..\User\stm32f4xx_it.c" 401 16 variable "recrc"  was declared but never referenced
+W "..\User\stm32f4xx_it.c" 402 16 variable "scrc"  was declared but never referenced
+W "..\User\stm32f4xx_it.c" 403 8 variable "i"  was declared but never referenced
 N}
 N
 N/*
@@ -36505,7 +36506,7 @@ N			value =	(int)(DISS_POW_Current*1000);		/* ½«¼Ä´æÆ÷Öµ¶Á³ö */
 N			break;
 N		case SLAVE_REG_P05:
 X		case 0x0005:
-W "..\User\stm32f4xx_it.c" 452 4 function "IO_OFF" declared implicitly
+W "..\User\stm32f4xx_it.c" 453 4 function "IO_OFF" declared implicitly
 N			IO_OFF();
 N            SET_Current_Laod = 1000;
 X            Run_Control[4] = 1000;
@@ -36655,7 +36656,7 @@ N{
 N	uint16_t crc;
 N	uint8_t buf[S_TX_BUF_SIZE];
 X	uint8_t buf[128];
-W "..\User\stm32f4xx_it.c" 576 2 function "memcpy" declared implicitly
+W "..\User\stm32f4xx_it.c" 577 2 function "memcpy" declared implicitly
 N	memcpy(buf, _pBuf, _ucLen);
 N	crc = CRC16(_pBuf, _ucLen);
 N	buf[_ucLen++] = crc >> 8;

@@ -58,6 +58,8 @@
 "..\output\dac8531.o"
 "..\output\ad7689.o"
 "..\output\internalflash.o"
+"..\output\delay.o"
+"..\output\sys.o"
 "..\output\gui_x.o"
 "..\output\guiconf.o"
 "..\output\guidrv_template.o"
@@ -82,6 +84,7 @@
 "..\output\symbol.o"
 "..\output\unit.o"
 "..\output\hz14.o"
+"..\output\iap.o"
 --strict --scatter "..\Output\JK_BTSET.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
