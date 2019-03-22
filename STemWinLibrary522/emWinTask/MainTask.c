@@ -41,6 +41,7 @@ extern vu8 step;
 RCC_ClocksTypeDef rcc;
 vu16 sendload;
 extern vu8 cdc_sw;
+vu8 ocf;
 static void ee_Delay( vu32 nCount)	 //莶榨謩覔时诏私
 {
 	for(; nCount != 0; nCount--);
@@ -88,7 +89,49 @@ void MainTask(void)
 		{
 			DAC8531_Send(Contr_Laod);//加载DAC值
 		}else{
-			Slow_Start();
+//			Slow_Start();
+			if(page_sw == face_r)
+			{
+				if(step == 6)
+				{
+					DAC8531_Send(Contr_Laod);
+				}else{
+					
+					if(test_start == 1)
+					{
+						if(step == 3 || (step == 4 && ocf == 0))
+						{
+							DAC8531_Send(0);
+						}else{
+							if(sendload < 250)
+							{
+								sendload = sendload + 10;
+							}else{
+								sendload = Contr_Laod;
+							}
+							DAC8531_Send(sendload);
+						}
+					}else{	
+						sendload = 0;
+						DAC8531_Send(sendload);//加载DAC值
+					}
+				}
+				
+			}else{
+				if(load_sw == load_on || (mode_sw == mode_load && cdc_sw == cdc_on))
+				{
+					if(sendload < 250)
+					{
+						sendload = sendload + 10;
+					}else{
+						sendload = Contr_Laod;
+					}
+					DAC8531_Send(sendload);
+				}else{
+					sendload = 0;
+					DAC8531_Send(sendload);
+				}
+			}
 		}
 		
         

@@ -47,7 +47,7 @@ float static_lv;
 vu8 staticcdc;
 vu8 step;
 ////////////////////////////////////
-
+extern vu8 ocf;
 vu16 dis_gate_v;
 float DISS_R;//内阻
 extern vu8 page_sw;
@@ -2422,6 +2422,7 @@ void OC_ADD(void){
             crec2 = 0;
             rpow = 1;
 			step =5;
+			
         }else if(oc_mode == 1){
             oc_data = crec2;
             GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF   
@@ -2443,7 +2444,10 @@ void OC_ADD(void){
 			GPIO_ResetBits(GPIOC,GPIO_Pin_1);//关闭电源输出
 			GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
 //                GPIO_ResetBits(GPIOC,GPIO_Pin_12);//CC
+			flag_Load_CC = 1;
+			GPIO_ResetBits(GPIOC,GPIO_Pin_12);//CC
 			GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
+			ocf = 1;
             SET_Current_Laod = SET_Current_Laod + set_sbs_c;
             
             if(crec1 < crec2)

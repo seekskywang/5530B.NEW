@@ -53119,7 +53119,7 @@ Nfloat static_lv;
 Nvu8 staticcdc;
 Nvu8 step;
 N////////////////////////////////////
-N
+Nextern vu8 ocf;
 Nvu16 dis_gate_v;
 Nfloat DISS_R;//内阻
 Nextern vu8 page_sw;
@@ -56136,6 +56136,7 @@ N            crec1 = 0;
 N            crec2 = 0;
 N            rpow = 1;
 N			step =5;
+N			
 N        }else if(oc_mode == 1){
 N            oc_data = crec2;
 N            GPIO_SetBits(GPIOA,GPIO_Pin_15);//电子负载OFF   
@@ -56161,8 +56162,13 @@ X			GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x
 N			GPIO_SetBits(GPIOC,GPIO_Pin_13);//关闭电源输出继电器
 X			GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
 N//                GPIO_ResetBits(GPIOC,GPIO_Pin_12);//CC
+N			flag_Load_CC = 1;
+X			(flagD . bit7) = 1;
+N			GPIO_ResetBits(GPIOC,GPIO_Pin_12);//CC
+X			GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x1000));
 N			GPIO_ResetBits(GPIOA,GPIO_Pin_15);//电子负载On
 X			GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N			ocf = 1;
 N            SET_Current_Laod = SET_Current_Laod + set_sbs_c;
 X            Run_Control[4] = Run_Control[4] + Run_Control[23];
 N            

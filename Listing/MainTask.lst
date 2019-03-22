@@ -51882,6 +51882,7 @@ Nextern vu8 step;
 NRCC_ClocksTypeDef rcc;
 Nvu16 sendload;
 Nextern vu8 cdc_sw;
+Nvu8 ocf;
 Nstatic void ee_Delay( vu32 nCount)	 //莶榨謩覔时诏私
 N{
 N	for(; nCount != 0; nCount--);
@@ -51926,7 +51927,7 @@ N	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
 X	HEADER_SetDefaultSkin(HEADER_DrawSkinFlex);
 N	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
 X	RADIO_SetDefaultSkin(RADIO_DrawSkinFlex);
-W "..\STemWinLibrary522\emWinTask\MainTask.c" 76 5 function "CreateSTARTER" declared implicitly
+W "..\STemWinLibrary522\emWinTask\MainTask.c" 77 5 function "CreateSTARTER" declared implicitly
 N    CreateSTARTER();
 N//	CreateR();//开机进入内阻测试界面
 N// 	flag_Load_CC=1;//开机负载默认进入CC模式
@@ -51946,7 +51947,51 @@ N		if(usartocflag == 1)
 N		{
 N			DAC8531_Send(Contr_Laod);//加载DAC值
 N		}else{
-N			Slow_Start();
+N//			Slow_Start();
+N			if(page_sw == face_r)
+X			if(page_sw == 3)
+N			{
+N				if(step == 6)
+N				{
+N					DAC8531_Send(Contr_Laod);
+N				}else{
+N					
+N					if(test_start == 1)
+N					{
+N						if(step == 3 || (step == 4 && ocf == 0))
+N						{
+N							DAC8531_Send(0);
+N						}else{
+N							if(sendload < 250)
+N							{
+N								sendload = sendload + 10;
+N							}else{
+N								sendload = Contr_Laod;
+N							}
+N							DAC8531_Send(sendload);
+N						}
+N					}else{	
+N						sendload = 0;
+N						DAC8531_Send(sendload);//加载DAC值
+N					}
+N				}
+N				
+N			}else{
+N				if(load_sw == load_on || (mode_sw == mode_load && cdc_sw == cdc_on))
+X				if(load_sw == 1 || (mode_sw == 2 && cdc_sw == 1))
+N				{
+N					if(sendload < 250)
+N					{
+N						sendload = sendload + 10;
+N					}else{
+N						sendload = Contr_Laod;
+N					}
+N					DAC8531_Send(sendload);
+N				}else{
+N					sendload = 0;
+N					DAC8531_Send(sendload);
+N				}
+N			}
 N		}
 N		
 N        
