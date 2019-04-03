@@ -2064,7 +2064,7 @@ void PARA_SET(void) {
                             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                             TEXT_SetTextColor(hItem, GUI_BLACK);
                             
-                            for(i=0;i<5;i++){
+                            for(i=0;i<6;i++){
                                 set_limit[i] = '\0';
                             }
                             set_sw = set_12;
@@ -2078,11 +2078,23 @@ void PARA_SET(void) {
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_35);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
-                        if(set_max_v > 80000)
-                        {
-                            set_max_v = 80000;
-                            TEXT_SetText(hItem,"80.00");                                                       
-                        }
+						if(dot_flag == 0){
+							set_max_v = atoi(set_limit)*1000;					
+						}else if(dot_flag != 0){
+							memset(buf, '\0', sizeof(buf));
+							strncpy(buf,set_limit,dot_flag + 2);
+							set_max_v = atof(buf)*1000;
+						}
+						if(set_max_v > 62000)
+						{
+							set_max_v = 62000;
+						}
+						dis_max_v = (float)set_max_v/1000;
+//                        if(set_max_v > 80000)
+//                        {
+//                            set_max_v = 80000;
+//                            TEXT_SetText(hItem,"80.00");                                                       
+//                        }
                         sprintf(buf,"%.3f",dis_max_v);
                         TEXT_SetText(hItem,buf);
 						
@@ -2110,11 +2122,23 @@ void PARA_SET(void) {
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_35);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
-                        if(set_max_v > 80000)
-                        {
-                            set_max_v = 80000;
-                            TEXT_SetText(hItem,"80.00");                                                       
-                        }
+//                        if(set_max_v > 80000)
+//                        {
+//                            set_max_v = 80000;
+//                            TEXT_SetText(hItem,"80.00");                                                       
+//                        }
+						if(dot_flag == 0){
+							set_min_v = atoi(set_limit)*1000;					
+						}else if(dot_flag != 0){
+							memset(buf, '\0', sizeof(buf));
+							strncpy(buf,set_limit,dot_flag + 2);
+							set_min_v = atof(buf)*1000;
+						}
+						if(set_min_v > 62000)
+						{
+							set_min_v = 62000;
+						}
+						dis_min_v = (float)set_min_v/1000;
                         sprintf(buf,"%.3f",dis_max_v);
                         TEXT_SetText(hItem,buf);
 						
@@ -2145,6 +2169,13 @@ void PARA_SET(void) {
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_154);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
+						if(dot_flag == 0){
+							set_max_lv = atoi(set_limit)*1000;					
+						}else if(dot_flag != 0){
+							memset(buf, '\0', sizeof(buf));
+							strncpy(buf,set_limit,dot_flag + 3);
+							set_max_lv = atof(buf)*1000;
+						}
                         sprintf(buf,"%.3f",(float)set_max_lv/1000);
                         TEXT_SetText(hItem,buf);
 						
@@ -2172,6 +2203,13 @@ void PARA_SET(void) {
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_154);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
+						if(dot_flag == 0){
+							set_min_lv = atoi(set_limit)*1000;					
+						}else if(dot_flag != 0){
+							memset(buf, '\0', sizeof(buf));
+							strncpy(buf,set_limit,dot_flag + 3);
+							set_min_lv = atof(buf)*1000;
+						}
                         sprintf(buf,"%.3f",(float)set_max_lv/1000);
                         TEXT_SetText(hItem,buf);
 						
@@ -2206,7 +2244,7 @@ void PARA_SET(void) {
                             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                             TEXT_SetTextColor(hItem, GUI_BLACK);
 
-                            for(i=0;i<5;i++){
+                            for(i=0;i<6;i++){
                                 set_limit[i] = '\0';
                             }
                             set_sw = set_82;
@@ -2225,7 +2263,7 @@ void PARA_SET(void) {
                             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                             TEXT_SetTextColor(hItem, GUI_BLACK);
                             
-                            for(i=0;i<5;i++){
+                            for(i=0;i<6;i++){
                                 set_limit[i] = '\0';
                             }
                             set_sw = set_14;
@@ -2238,6 +2276,13 @@ void PARA_SET(void) {
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_37);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
+						if(dot_flag == 0){
+							dis_max_r = atoi(set_limit);					
+						}else if(dot_flag != 0){
+							memset(buf, '\0', sizeof(buf));
+							strncpy(buf,set_limit,dot_flag);
+							dis_max_r = atof(buf);
+						}
                         sprintf(buf,"%4d",dis_max_r);
                         TEXT_SetText(hItem,buf);
                
@@ -2263,7 +2308,7 @@ void PARA_SET(void) {
                             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                             TEXT_SetTextColor(hItem, GUI_BLACK);
                             
-                            for(i=0;i<5;i++){
+                            for(i=0;i<6;i++){
                                 set_limit[i] = '\0';
                             }
                             set_sw = set_15;
@@ -2276,7 +2321,13 @@ void PARA_SET(void) {
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_38);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
-                        
+                        if(dot_flag == 0){
+							dis_min_r = atoi(set_limit);					
+						}else if(dot_flag != 0){
+							memset(buf, '\0', sizeof(buf));
+							strncpy(buf,set_limit,dot_flag);
+							dis_min_r = atof(buf);
+						}
                         sprintf(buf,"%4d",dis_min_r);
                         TEXT_SetText(hItem,buf);
                         
@@ -2302,7 +2353,7 @@ void PARA_SET(void) {
                             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                             TEXT_SetTextColor(hItem, GUI_BLACK);
 
-                            for(i=0;i<5;i++){
+                            for(i=0;i<6;i++){
                                 set_limit[i] = '\0';
                             }
                             set_sw = set_16;
@@ -2315,11 +2366,18 @@ void PARA_SET(void) {
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_39);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
-                        if(set_max_c > 60000)
+						if(dot_flag == 0){
+							set_max_c = atoi(set_limit)*1000;					
+						}else if(dot_flag != 0){
+							memset(buf, '\0', sizeof(buf));
+							strncpy(buf,set_limit,dot_flag + 3);
+							set_max_c = atof(buf)*1000;
+						}
+                        if(set_max_c > 30000)
                         {
-                            set_max_c = 60000;
-                            TEXT_SetText(hItem,"60.00");
+                            set_max_c = 30000;
                         }
+						dis_max_c = (float)set_max_c/1000;
                         sprintf(buf,"%.3f",dis_max_c);
                         TEXT_SetText(hItem,buf);
 						
@@ -2355,23 +2413,33 @@ void PARA_SET(void) {
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_39);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
-                        if(set_max_c > 60000)
-                        {
-                            set_max_c = 60000;
-                            TEXT_SetText(hItem,"60.00");
-                        }
+//                        if(set_max_c > 60000)
+//                        {
+//                            set_max_c = 60000;
+//                            TEXT_SetText(hItem,"60.00");
+//                        }
                         sprintf(buf,"%.3f",dis_max_c);
                         TEXT_SetText(hItem,buf);
 						
 						 hItem = WM_GetDialogItem(hWinset, ID_TEXT_40);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
+						if(dot_flag == 0){
+							set_min_c = atoi(set_limit)*1000;					
+						}else if(dot_flag != 0){
+							memset(buf, '\0', sizeof(buf));
+							strncpy(buf,set_limit,dot_flag + 3);
+							set_min_c = atof(buf)*1000;
+						}
+                        if(set_max_c > 30000)
+                        {
+                            set_max_c = 30000;
+                        }
                         if(set_min_c >= set_max_c)
                         {
                             set_min_c = 0;
-                            TEXT_SetText(hItem,"0.000");
                         }
-                        
+                        dis_min_c = (float)set_min_c/1000;
                         sprintf(buf,"%.3f",dis_min_c);
                         TEXT_SetText(hItem,buf);
 						
@@ -2398,7 +2466,7 @@ void PARA_SET(void) {
                             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
                             TEXT_SetTextColor(hItem, GUI_BLACK);
 
-                            for(i=0;i<5;i++){
+                            for(i=0;i<6;i++){
                                 set_limit[i] = '\0';
                             }
                             set_sw = set_84;
@@ -2412,11 +2480,23 @@ void PARA_SET(void) {
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_156);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
-                        if(set_max_pc > 60000)
+						if(dot_flag == 0){
+							set_max_pc = atoi(set_limit)*1000;					
+						}else if(dot_flag != 0){
+							memset(buf, '\0', sizeof(buf));
+							strncpy(buf,set_limit,dot_flag + 3);
+							set_max_pc = atof(buf)*1000;
+						}
+                        if(set_max_pc > 10000)
                         {
-                            set_max_pc = 60000;
-                            TEXT_SetText(hItem,"60.000");
+                            set_max_pc = 10000;
                         }
+//						dis_max_c = (float)set_max_c/1000;
+//                        if(set_max_pc > 60000)
+//                        {
+//                            set_max_pc = 60000;
+//                            TEXT_SetText(hItem,"60.000");
+//                        }
                         sprintf(buf,"%.3f",(float)set_max_pc/1000);
                         TEXT_SetText(hItem,buf);
 						
@@ -2452,21 +2532,32 @@ void PARA_SET(void) {
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_156);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
-                        if(set_max_pc > 60000)
-                        {
-                            set_max_pc = 60000;
-                            TEXT_SetText(hItem,"60.000");
-                        }
+//                        if(set_max_pc > 60000)
+//                        {
+//                            set_max_pc = 60000;
+//                            TEXT_SetText(hItem,"60.000");
+//                        }
                         sprintf(buf,"%.3f",(float)set_max_pc/1000);
                         TEXT_SetText(hItem,buf);
 						
 						 hItem = WM_GetDialogItem(hWinset, ID_TEXT_157);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
+						if(dot_flag == 0){
+							set_min_pc = atoi(set_limit)*1000;					
+						}else if(dot_flag != 0){
+							memset(buf, '\0', sizeof(buf));
+							strncpy(buf,set_limit,dot_flag + 3);
+							set_min_pc = atof(buf)*1000;
+						}
+                        if(set_min_pc > 10000)
+                        {
+                            set_min_pc = 10000;
+                        }
                         if(set_min_pc >= set_max_pc)
                         {
                             set_min_pc = 0;
-                            TEXT_SetText(hItem,"0.000");
+//                            TEXT_SetText(hItem,"0.000");
                         }
                         
                         sprintf(buf,"%.3f",(float)set_min_pc/1000);
@@ -3123,102 +3214,25 @@ void PARA_SET(void) {
 //    
 //    return tempt;
 // }
-//系统设置界面数据输入
-void INPUT_NUM(char* num);            
-void INPUT_NUM(char* num){
-    
+
+void DEL_NUM(void){
+    u8 i;
     switch(set_sw){
         case set_12:
         {
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWinset);
             hItem = WM_GetDialogItem(hWinset, ID_TEXT_35);
-            switch(bit){
-                case 1:
-                {
-                    set_max_v = atoi(num) * 1000;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        set_max_v = set_max_v * 10 + atoi(num) * 1000;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            set_max_v = 62000;
-                        }
-                    }else{
-                        set_max_v = set_max_v + atoi(num) * 100;
-                    }
-                                       
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_max_v = 6000;
-                    }else if(dot_flag == 2){
-                        set_max_v = set_max_v + atoi(num) * 100;
-                    }else{
-                        set_max_v = set_max_v + atoi(num) * 10;
-                    }
-                                       
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_max_v = 6000;
-                    }else if(dot_flag == 1){
-                        set_max_v = set_max_v + atoi(num);
-                    }else{
-                        set_max_v = set_max_v + atoi(num) * 10;
-                    }
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_max_v = 0;
-                    }else if(dot_flag == 2){
-                        set_max_v = set_max_v + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
         case set_13:
@@ -3226,106 +3240,16 @@ void INPUT_NUM(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWinset);
             hItem = WM_GetDialogItem(hWinset, ID_TEXT_36);
-            switch(bit){
-                case 1:
-                {
-                    set_min_v = atoi(num) * 1000;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_min_v >= set_max_v){
-                        set_min_v = 0;
-                    }
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        set_min_v = set_min_v * 10 + atoi(num) * 1000;
-                    }
-                    if(set_min_v >= set_max_v){
-                        set_min_v = 0;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            set_max_v = 0;
-                        }
-                    }else{
-                        set_min_v = set_min_v + atoi(num) * 100;
-                    }
-                    if(set_min_v >= set_max_v){
-                        set_min_v = 0;
-                    }                   
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_min_v = 0;
-                    }else if(dot_flag == 2){
-                        set_min_v = set_min_v + atoi(num) * 100;
-                    }else{
-                        set_min_v = set_min_v + atoi(num) * 10;
-                    }
-                    
-                    if(set_min_v >= set_max_v){
-                        set_min_v = 0;
-                    }                   
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_min_v = 6000;
-                    }else if(dot_flag == 1){
-                        set_min_v = set_min_v + atoi(num);
-                    }else{
-                        set_min_v = set_min_v + atoi(num) * 10;
-                    }
-                    if(set_min_v >= set_max_v){
-                        set_min_v = 0;
-                    }                   
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_min_v = 0;
-                    }else if(dot_flag == 2){
-                        set_min_v = set_min_v + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
 		case set_82:
@@ -3333,92 +3257,16 @@ void INPUT_NUM(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWinset);
             hItem = WM_GetDialogItem(hWinset, ID_TEXT_154);
-            switch(bit){
-                case 1:
-                {
-                    set_max_lv = atoi(num) * 1000;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        set_max_lv = set_max_lv * 10 + atoi(num) * 1000;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            set_max_lv = 62000;
-                        }
-                    }else{
-                        set_max_lv = set_max_lv + atoi(num) * 100;
-                    }
-                                       
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_max_lv = 6000;
-                    }else if(dot_flag == 2){
-                        set_max_lv = set_max_lv + atoi(num) * 100;
-                    }else{
-                        set_max_lv = set_max_lv + atoi(num) * 10;
-                    }
-                                       
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_max_lv = 6000;
-                    }else if(dot_flag == 1){
-                        set_max_lv = set_max_lv + atoi(num);
-                    }else{
-                        set_max_lv = set_max_lv + atoi(num) * 10;
-                    }
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_max_lv = 0;
-                    }else if(dot_flag == 2){
-                        set_max_lv = set_max_lv + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
         case set_83:
@@ -3426,106 +3274,16 @@ void INPUT_NUM(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWinset);
             hItem = WM_GetDialogItem(hWinset, ID_TEXT_155);
-            switch(bit){
-                case 1:
-                {
-                    set_min_lv = atoi(num) * 1000;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_min_lv >= set_max_v){
-                        set_min_lv = 0;
-                    }
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        set_min_lv = set_min_lv * 10 + atoi(num) * 1000;
-                    }
-                    if(set_min_lv >= set_max_v){
-                        set_min_lv = 0;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            set_max_v = 0;
-                        }
-                    }else{
-                        set_min_lv = set_min_lv + atoi(num) * 100;
-                    }
-                    if(set_min_lv >= set_max_v){
-                        set_min_lv = 0;
-                    }                   
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_min_lv = 0;
-                    }else if(dot_flag == 2){
-                        set_min_lv = set_min_lv + atoi(num) * 100;
-                    }else{
-                        set_min_lv = set_min_lv + atoi(num) * 10;
-                    }
-                    
-                    if(set_min_lv >= set_max_v){
-                        set_min_lv = 0;
-                    }                   
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_min_lv = 6000;
-                    }else if(dot_flag == 1){
-                        set_min_lv = set_min_lv + atoi(num);
-                    }else{
-                        set_min_lv = set_min_lv + atoi(num) * 10;
-                    }
-                    if(set_min_lv >= set_max_v){
-                        set_min_lv = 0;
-                    }                   
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_min_lv = 0;
-                    }else if(dot_flag == 2){
-                        set_min_lv = set_min_lv + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
+           if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
 		
@@ -3534,40 +3292,16 @@ void INPUT_NUM(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWinset);
             hItem = WM_GetDialogItem(hWinset, ID_TEXT_37);
-            switch(bit){
-                case 1:
-                {
-                    set_max_r = atoi(num);
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    bit = 2;
-                    break; 
-                }
-                case 2:
-                {
-                    set_max_r = set_max_r * 10 + atoi(num);
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    bit = 3;
-                    break; 
-                }
-                case 3:
-                {
-                    set_max_r = set_max_r * 10 + atoi(num);
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    bit = 4;
-                    break; 
-                }
-                case 4:
-                {
-                    set_max_r = set_max_r * 10 + atoi(num);
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    bit = 1;
-                    break; 
-                }
-            }
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;           
         }
         case set_15:
@@ -3575,52 +3309,16 @@ void INPUT_NUM(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWinset);
             hItem = WM_GetDialogItem(hWinset, ID_TEXT_38);
-            switch(bit){
-                case 1:
-                {
-                    set_min_r = atoi(num);
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_min_r >= set_max_r){
-                        set_min_r = 0;
-                    }
-                    bit = 2;
-                    break; 
-                }
-                case 2:
-                {
-                    set_min_r = set_min_r * 10 + atoi(num);
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_min_r >= set_max_r){
-                        set_min_r = 0;
-                    }
-                    bit = 3;
-                    break; 
-                }
-                case 3:
-                {
-                    set_min_r = set_min_r * 10 + atoi(num);
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_min_r >= set_max_r){
-                        set_min_r = 0;
-                    }
-                    bit = 4;
-                    break; 
-                }
-                case 4:
-                {
-                    set_min_r = set_min_r * 10 + atoi(num);
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_min_r >= set_max_r){
-                        set_min_r = 0;
-                    }
-                    bit = 1;
-                    break; 
-                }
-            }
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
         case set_16:
@@ -3628,91 +3326,16 @@ void INPUT_NUM(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWinset);
             hItem = WM_GetDialogItem(hWinset, ID_TEXT_39);
-            switch(bit){
-                case 1:
-                {
-                    set_max_c = atoi(num) * 1000;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        set_max_c = set_max_c * 10 + atoi(num) * 1000;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            set_max_c = 0;
-                        }
-                    }else{
-                        set_max_c = set_max_c + atoi(num) * 100;
-                    }                  
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_max_c = 0;
-                    }else if(dot_flag == 2){
-                        set_max_c = set_max_c + atoi(num) * 100;
-                    }else{
-                        set_max_c = set_max_c + atoi(num) * 10;
-                    }                  
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_max_c = 1200;
-                    }else if(dot_flag == 1){
-                        set_max_c = set_max_c + atoi(num);
-                    }else{
-                        set_max_c = set_max_c + atoi(num) * 10;
-                    }                 
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_max_c = 0;
-                    }else if(dot_flag == 2){
-                        set_max_c = set_max_c + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
         case set_17:
@@ -3720,197 +3343,33 @@ void INPUT_NUM(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWinset);
             hItem = WM_GetDialogItem(hWinset, ID_TEXT_40);
-            switch(bit){
-                case 1:
-                {
-                    set_min_c = atoi(num) * 1000;
-                    if(set_min_c >= set_max_c){
-                        set_min_c = 0;
-                    }  
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                        
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        set_min_c = set_min_c * 10 + atoi(num) * 1000;
-                    }
-                    if(set_min_c >= set_max_c){
-                        set_min_c = 0;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            set_min_c = 0;
-                        }
-                    }else{
-                        set_min_c = set_min_c + atoi(num) * 100;
-                    }
-                    if(set_min_c >= set_max_c){
-                        set_min_c = 0;
-                    }
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_min_c = 0;
-                    }else if(dot_flag == 2){
-                        set_min_c = set_min_c + atoi(num) * 100;
-                    }else{
-                        set_min_c = set_min_c + atoi(num) * 10;
-                    }
-                    if(set_min_c >= set_max_c){
-                        set_min_c = 0;
-                    }
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_min_c = 0;
-                    }else if(dot_flag == 1){
-                        set_min_c = set_min_c + atoi(num);
-                    }else{
-                        set_min_c = set_min_c + atoi(num) * 10;
-                    }
-                    if(set_min_c >= set_max_c){
-                        set_min_c = 0;
-                    }
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_min_c = 0;
-                    }else if(dot_flag == 2){
-                        set_min_c = set_min_c + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
-            break;
-			case set_84:
+            if(bit > 1)
 			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+		}
+		case set_84:
+		{
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWinset);
             hItem = WM_GetDialogItem(hWinset, ID_TEXT_156);
-            switch(bit){
-                case 1:
-                {
-                    set_max_pc = atoi(num) * 1000;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        set_max_pc = set_max_pc * 10 + atoi(num) * 1000;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            set_max_pc = 0;
-                        }
-                    }else{
-                        set_max_pc = set_max_pc + atoi(num) * 100;
-                    }                  
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_max_pc = 0;
-                    }else if(dot_flag == 2){
-                        set_max_pc = set_max_pc + atoi(num) * 100;
-                    }else{
-                        set_max_pc = set_max_pc + atoi(num) * 10;
-                    }                  
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_max_pc = 1200;
-                    }else if(dot_flag == 1){
-                        set_max_pc = set_max_pc + atoi(num);
-                    }else{
-                        set_max_pc = set_max_pc + atoi(num) * 10;
-                    }                 
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_max_pc = 0;
-                    }else if(dot_flag == 2){
-                        set_max_pc = set_max_pc + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
         case set_85:
@@ -3918,112 +3377,261 @@ void INPUT_NUM(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWinset);
             hItem = WM_GetDialogItem(hWinset, ID_TEXT_157);
-            switch(bit){
-                case 1:
-                {
-                    set_min_pc = atoi(num) * 1000;
-                    if(set_min_pc >= set_max_c){
-                        set_min_pc = 0;
-                    }  
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                        
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        set_min_pc = set_min_pc * 10 + atoi(num) * 1000;
-                    }
-                    if(set_min_pc >= set_max_c){
-                        set_min_pc = 0;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            set_min_pc = 0;
-                        }
-                    }else{
-                        set_min_pc = set_min_pc + atoi(num) * 100;
-                    }
-                    if(set_min_pc >= set_max_c){
-                        set_min_pc = 0;
-                    }
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_min_pc = 0;
-                    }else if(dot_flag == 2){
-                        set_min_pc = set_min_pc + atoi(num) * 100;
-                    }else{
-                        set_min_pc = set_min_pc + atoi(num) * 10;
-                    }
-                    if(set_min_pc >= set_max_c){
-                        set_min_pc = 0;
-                    }
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_min_pc = 0;
-                    }else if(dot_flag == 1){
-                        set_min_pc = set_min_pc + atoi(num);
-                    }else{
-                        set_min_pc = set_min_pc + atoi(num) * 10;
-                    }
-                    if(set_min_pc >= set_max_c){
-                        set_min_pc = 0;
-                    }
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_min_pc = 0;
-                    }else if(dot_flag == 2){
-                        set_min_pc = set_min_pc + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
 	}
         
-    }
 }
+//系统设置界面数据输入
+void INPUT_NUM(char* num);            
+void INPUT_NUM(char* num){
+    u8 i;
+    switch(set_sw){
+        case set_12:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinset);
+            hItem = WM_GetDialogItem(hWinset, ID_TEXT_35);
+            if(bit < 7)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+        case set_13:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinset);
+            hItem = WM_GetDialogItem(hWinset, ID_TEXT_36);
+            if(bit < 7)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+		case set_82:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinset);
+            hItem = WM_GetDialogItem(hWinset, ID_TEXT_154);
+            if(bit < 7)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+        case set_83:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinset);
+            hItem = WM_GetDialogItem(hWinset, ID_TEXT_155);
+            if(bit < 7)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+		
+        case set_14:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinset);
+            hItem = WM_GetDialogItem(hWinset, ID_TEXT_37);
+            if(bit < 7)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;           
+        }
+        case set_15:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinset);
+            hItem = WM_GetDialogItem(hWinset, ID_TEXT_38);
+            if(bit < 7)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+        case set_16:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinset);
+            hItem = WM_GetDialogItem(hWinset, ID_TEXT_39);
+            if(bit < 7)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+        case set_17:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinset);
+            hItem = WM_GetDialogItem(hWinset, ID_TEXT_40);
+            if(bit < 7)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+		}
+		case set_84:
+		{
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinset);
+            hItem = WM_GetDialogItem(hWinset, ID_TEXT_156);
+            if(bit < 7)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+        case set_85:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinset);
+            hItem = WM_GetDialogItem(hWinset, ID_TEXT_157);
+            if(bit < 7)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+	}
+        
+}
+
 
 
 

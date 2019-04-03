@@ -163,8 +163,9 @@ void TIM4_IRQHandler(void)
 					powcount++;																		
 				}else{
 					powcount = 0;
-					step = 2;
+					
 					IO_OFF();
+					step = 2;
 				}
 			 }else if(step == 2){
 				if(powcount < 10000)
@@ -177,20 +178,25 @@ void TIM4_IRQHandler(void)
 					powcount++;
 					static_pc = DISS_POW_Current;
 				}else{
-					step = 3;
+					GPIO_ResetBits(GPIOC,GPIO_Pin_1);//¹Ø±ÕµçÔ´Êä³ö
+					Delay_ms(500);
+				    GPIO_SetBits(GPIOC,GPIO_Pin_13);//¹Ø±ÕµçÔ´Êä³ö¼ÌµçÆ÷				
 					powcount = 0;
-					IO_OFF();			
+					step = 3;
+//					IO_OFF();		
+					
 				}
 			 }else if(step == 3){
 				if(powcount < 5000)
 				{
 					powcount++;
 				}else{
-					step = 4;
+					
 					powcount = 0;	
 					sendload = 200;				
 					SET_Current_Laod = set_init_c;
 					GPIO_ResetBits(GPIOA,GPIO_Pin_15);//æ‰“å¼€è´Ÿè½½
+					step = 4;
 				}
 			 }else if(step == 4){
 				OC_CHECK();
@@ -210,9 +216,12 @@ void TIM4_IRQHandler(void)
 					GPIO_SetBits(GPIOC,GPIO_Pin_1);//Õ²ßªÖ§Ô´Ë¤Ô¶
 					powcount++;
 				}else{
-					step = 6;
+					GPIO_ResetBits(GPIOC,GPIO_Pin_1);//¹Ø±ÕµçÔ´Êä³ö
+					Delay_ms(500);
+				    GPIO_SetBits(GPIOC,GPIO_Pin_13);//¹Ø±ÕµçÔ´Êä³ö¼ÌµçÆ÷				
 					powcount = 0;
-					IO_OFF();
+					step = 6;
+//					IO_OFF();
 				}
 			 }else if(step == 6){
 				if(flag_Load_CC == 1)
@@ -245,9 +254,12 @@ void TIM4_IRQHandler(void)
 					powcount++;
 	//                 shortv = DISS_Voltage;
 				}else{
+					GPIO_ResetBits(GPIOC,GPIO_Pin_1);//¹Ø±ÕµçÔ´Êä³ö
+					Delay_ms(500);
+				    GPIO_SetBits(GPIOC,GPIO_Pin_13);//¹Ø±ÕµçÔ´Êä³ö¼ÌµçÆ
 					powcount = 0;
 					step = 0;
-					IO_OFF();                
+//					IO_OFF();                
 				}
 			 }else if(step == 0)
 			 {

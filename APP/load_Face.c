@@ -726,7 +726,7 @@ void LOAD_SET(void) {
             hItem = WM_GetDialogItem(load_wind, ID_TEXT_49);
             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
             TEXT_SetTextColor(hItem, GUI_BLACK);
-            for(i=0;i<5;i++)
+            for(i=0;i<6;i++)
             {
                 set_limit[i] = '\0';
             }
@@ -736,14 +736,22 @@ void LOAD_SET(void) {
         case set_25:
         {
             WM_HWIN hItem;
-//            WM_InvalidateWindow(load_wind);
+//            WM_InvalidateWindow(lo\\JK_BTSET\../drive/AD7689.c\AD7689_Bufferad_wind);
             hItem = WM_GetDialogItem(load_wind, ID_TEXT_49);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);  
-            SET_Current_Laod = load_c;            
-            if(SET_Current_Laod > 55000 || (float)SET_Current_Laod/1000 * DISS_Voltage > 200){
-                SET_Current_Laod = 0;
+			if(dot_flag == 0){
+				load_c = atoi(set_limit)*1000;					
+			}else if(dot_flag != 0){
+				memset(buf, '\0', sizeof(buf));
+				strncpy(buf,set_limit,dot_flag + 3);
+				load_c = atof(buf)*1000;
+			}
+			if(load_c > 30000 || (float)load_c/1000 * DISS_Voltage > 200){
+                load_c = 0;
             }
+            SET_Current_Laod = load_c;            
+            
             dis_load_c = (float)SET_Current_Laod/1000;
             sprintf(buf,"%.3f",dis_load_c);
             TEXT_SetText(hItem,buf);
@@ -769,7 +777,7 @@ void LOAD_SET(void) {
             hItem = WM_GetDialogItem(load_wind, ID_TEXT_123);
             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
             TEXT_SetTextColor(hItem, GUI_BLACK);
-            for(i=0;i<5;i++)
+            for(i=0;i<6;i++)
             {
                 set_limit[i] = '\0';
             }
@@ -782,10 +790,18 @@ void LOAD_SET(void) {
             hItem = WM_GetDialogItem(load_wind, ID_TEXT_123);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE); 
-            SET_Voltage_Laod = load_v;          
-            if(SET_Voltage_Laod > 80000 || (float)SET_Voltage_Laod/1000 * DISS_Current > 200){
-                SET_Voltage_Laod = 0;
+			if(dot_flag == 0){
+				load_v = atoi(set_limit)*1000;					
+			}else if(dot_flag != 0){
+				memset(buf, '\0', sizeof(buf));
+				strncpy(buf,set_limit,dot_flag + 3);
+				load_v = atof(buf)*1000;
+			}
+			if(load_v > 80000 || (float)load_v/1000 * DISS_Current > 200){
+                load_v = 0;
             }
+            SET_Voltage_Laod = load_v;          
+            
             dis_load_v = (float)SET_Voltage_Laod/1000;
             sprintf(buf,"%.3f",dis_load_v);
             TEXT_SetText(hItem,buf);
@@ -809,7 +825,7 @@ void LOAD_SET(void) {
                     WM_HWIN hItem;
                     hItem = WM_GetDialogItem(load_wind, ID_TEXT_121);
                     TEXT_SetText(hItem,"CV");
-                    GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV
+                    GPIO_SetBits(GPIOC,GPIO_Pin_12);//CV
                     flag_Load_CC = 0;
                     load_mode = 0;
                     Write_LOAD();
@@ -820,7 +836,7 @@ void LOAD_SET(void) {
                      WM_HWIN hItem;
                      hItem = WM_GetDialogItem(load_wind, ID_TEXT_121);
                      TEXT_SetText(hItem,"CC");
-                     GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+                     GPIO_ResetBits(GPIOC,GPIO_Pin_12);//CC
                      flag_Load_CC = 1;
                      load_mode =1;
                      Write_LOAD();
@@ -839,7 +855,7 @@ void LOAD_SET(void) {
             hItem = WM_GetDialogItem(load_wind, ID_TEXT_143);
             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
             TEXT_SetTextColor(hItem, GUI_BLACK);
-            for(i=0;i<5;i++)
+            for(i=0;i<6;i++)
             {
                 set_limit[i] = '\0';
             }
@@ -852,6 +868,13 @@ void LOAD_SET(void) {
             hItem = WM_GetDialogItem(load_wind, ID_TEXT_143);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE); 
+			if(dot_flag == 0){
+				set_load_cutoffv = atoi(set_limit)*1000;					
+			}else if(dot_flag != 0){
+				memset(buf, '\0', sizeof(buf));
+				strncpy(buf,set_limit,dot_flag + 3);
+				set_load_cutoffv = atof(buf)*1000;
+			}
             load_cutoffv = (float)set_load_cutoffv/1000;
             sprintf(buf,"%.3f",load_cutoffv);
             TEXT_SetText(hItem,buf);
@@ -868,10 +891,63 @@ void LOAD_SET(void) {
         }
     }
 }
-
+void DEL_LOAD(void)
+{
+	switch(set_sw){
+		case set_25:
+        {
+			WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinWind);
+            hItem = WM_GetDialogItem(load_wind, ID_TEXT_49);
+			if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
+		}break;
+		case set_68:
+        {
+			WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinWind);
+            hItem = WM_GetDialogItem(load_wind, ID_TEXT_123);
+			if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
+		}break;
+		case set_87:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWinWind);
+            hItem = WM_GetDialogItem(load_wind, ID_TEXT_143);
+			if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
+		}break;
+	}
+}
 
 void INPUT_LOAD(char* num);            
-void INPUT_LOAD(char* num){    
+void INPUT_LOAD(char* num){
+	u8 i;    
     switch(set_sw)
     {
         case set_25:
@@ -879,91 +955,111 @@ void INPUT_LOAD(char* num){
             WM_HWIN hItem;
  //           WM_InvalidateWindow(load_wind);
             hItem = WM_GetDialogItem(load_wind, ID_TEXT_49);
-            switch(bit){
-                case 1:
-                {
-                    load_c = atoi(num) * 1000;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        load_c = load_c * 10 + atoi(num) * 1000;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            load_c = 0;
-                        }
-                    }else{
-                        load_c = load_c + atoi(num) * 100;
-                    }                  
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        load_c = 0;
-                    }else if(dot_flag == 2){
-                        load_c = load_c + atoi(num) * 100;
-                    }else{
-                        load_c = load_c + atoi(num) * 10;
-                    }                  
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        load_c = 0;
-                    }else if(dot_flag == 1){
-                        load_c = load_c + atoi(num);
-                    }else{
-                        load_c = load_c + atoi(num) * 10;
-                    }                 
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        load_c = 0;
-                    }else if(dot_flag == 2){
-                        load_c = load_c + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
+			if(bit < 6)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
+//            switch(bit){
+//                case 1:
+//                {
+//					for(i=0;i<6;i++)
+//					{
+//						set_limit[i] = '\0';
+//					}
+//                    load_c = atoi(num) * 1000;
+//                    strcat(set_limit,num);            
+//                    TEXT_SetText(hItem,set_limit);
+//                    
+//                    bit = 2;
+//                    break;
+//                }
+//                case 2:
+//                {
+//                    strcat(set_limit,num);            
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
+//                    {
+//                        dot_flag = 1;
+//                    }else{
+//                        load_c = load_c * 10 + atoi(num) * 1000;
+//                    }
+//                    bit = 3;
+//                    break;
+//                }
+//                case 3:
+//                {
+//                    strcat(set_limit,num);
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(dot_flag == 0)
+//                    {
+//                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
+//                        {                            
+//                            dot_flag = 2;
+//                        }else{
+//                            load_c = 0;
+//                        }
+//                    }else{
+//                        load_c = load_c + atoi(num) * 100;
+//                    }                  
+//                    bit = 4;
+//                    break;
+//                }
+//                case 4:
+//                {
+//                    strcat(set_limit,num);
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(dot_flag == 0)
+//                    {
+//                        load_c = 0;
+//                    }else if(dot_flag == 2){
+//                        load_c = load_c + atoi(num) * 100;
+//                    }else{
+//                        load_c = load_c + atoi(num) * 10;
+//                    }                  
+//                    bit = 5;
+//                    break;
+//                }
+//                case 5:
+//                {
+//                    strcat(set_limit,num);
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(dot_flag == 0)
+//                    {
+//                        load_c = 0;
+//                    }else if(dot_flag == 1){
+//                        load_c = load_c + atoi(num);
+//                    }else{
+//                        load_c = load_c + atoi(num) * 10;
+//                    }                 
+//                    bit = 6;
+//                    break;
+//                }
+//                case 6:
+//                {
+//                    strcat(set_limit,num);
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(dot_flag == 0)
+//                    {
+//                        load_c = 0;
+//                    }else if(dot_flag == 2){
+//                        load_c = load_c + atoi(num);
+//                    }                 
+//                    bit = 1;
+//                    break;
+//                }
+//            }
             break;
             
         }
@@ -972,91 +1068,111 @@ void INPUT_LOAD(char* num){
             WM_HWIN hItem;
  //           WM_InvalidateWindow(load_wind);
             hItem = WM_GetDialogItem(load_wind, ID_TEXT_123);
-            switch(bit){
-                case 1:
-                {
-                    load_v = atoi(num) * 1000;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        load_v = load_v * 10 + atoi(num) * 1000;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            load_v = 0;
-                        }
-                    }else{
-                        load_v = load_v + atoi(num) * 100;
-                    }                  
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        load_v = 0;
-                    }else if(dot_flag == 2){
-                        load_v = load_v + atoi(num) * 100;
-                    }else{
-                        load_v = load_v + atoi(num) * 10;
-                    }                  
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        load_v = 0;
-                    }else if(dot_flag == 1){
-                        load_v = load_v + atoi(num);
-                    }else{
-                        load_v = load_v + atoi(num) * 10;
-                    }                 
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        load_v = 0;
-                    }else if(dot_flag == 2){
-                        load_v = load_v + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
+			if(bit < 6)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
+//            switch(bit){
+//                case 1:
+//                {
+//					for(i=0;i<6;i++)
+//					{
+//						set_limit[i] = '\0';
+//					}
+//                    load_v = atoi(num) * 1000;
+//                    strcat(set_limit,num);            
+//                    TEXT_SetText(hItem,set_limit);
+//                    
+//                    bit = 2;
+//                    break;
+//                }
+//                case 2:
+//                {
+//                    strcat(set_limit,num);            
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
+//                    {
+//                        dot_flag = 1;
+//                    }else{
+//                        load_v = load_v * 10 + atoi(num) * 1000;
+//                    }
+//                    bit = 3;
+//                    break;
+//                }
+//                case 3:
+//                {
+//                    strcat(set_limit,num);
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(dot_flag == 0)
+//                    {
+//                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
+//                        {                            
+//                            dot_flag = 2;
+//                        }else{
+//                            load_v = 0;
+//                        }
+//                    }else{
+//                        load_v = load_v + atoi(num) * 100;
+//                    }                  
+//                    bit = 4;
+//                    break;
+//                }
+//                case 4:
+//                {
+//                    strcat(set_limit,num);
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(dot_flag == 0)
+//                    {
+//                        load_v = 0;
+//                    }else if(dot_flag == 2){
+//                        load_v = load_v + atoi(num) * 100;
+//                    }else{
+//                        load_v = load_v + atoi(num) * 10;
+//                    }                  
+//                    bit = 5;
+//                    break;
+//                }
+//                case 5:
+//                {
+//                    strcat(set_limit,num);
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(dot_flag == 0)
+//                    {
+//                        load_v = 0;
+//                    }else if(dot_flag == 1){
+//                        load_v = load_v + atoi(num);
+//                    }else{
+//                        load_v = load_v + atoi(num) * 10;
+//                    }                 
+//                    bit = 6;
+//                    break;
+//                }
+//                case 6:
+//                {
+//                    strcat(set_limit,num);
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(dot_flag == 0)
+//                    {
+//                        load_v = 0;
+//                    }else if(dot_flag == 2){
+//                        load_v = load_v + atoi(num);
+//                    }                 
+//                    bit = 1;
+//                    break;
+//                }
+//            }
             break;
             
         }
@@ -1065,91 +1181,111 @@ void INPUT_LOAD(char* num){
             WM_HWIN hItem;
  //           WM_InvalidateWindow(load_wind);
             hItem = WM_GetDialogItem(load_wind, ID_TEXT_143);
-            switch(bit){
-                case 1:
-                {
-                    set_load_cutoffv = atoi(num) * 1000;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        set_load_cutoffv = set_load_cutoffv * 10 + atoi(num) * 1000;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            set_load_cutoffv = 0;
-                        }
-                    }else{
-                        set_load_cutoffv = set_load_cutoffv + atoi(num) * 100;
-                    }                  
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_load_cutoffv = 0;
-                    }else if(dot_flag == 2){
-                        set_load_cutoffv = set_load_cutoffv + atoi(num) * 100;
-                    }else{
-                        set_load_cutoffv = set_load_cutoffv + atoi(num) * 10;
-                    }                  
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_load_cutoffv = 0;
-                    }else if(dot_flag == 1){
-                        set_load_cutoffv = set_load_cutoffv + atoi(num);
-                    }else{
-                        set_load_cutoffv = set_load_cutoffv + atoi(num) * 10;
-                    }                 
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_load_cutoffv = 0;
-                    }else if(dot_flag == 2){
-                        set_load_cutoffv = set_load_cutoffv + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
+			if(bit < 6)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
+//            switch(bit){
+//                case 1:
+//                {
+//					for(i=0;i<6;i++)
+//					{
+//						set_limit[i] = '\0';
+//					}
+//                    set_load_cutoffv = atoi(num) * 1000;
+//                    strcat(set_limit,num);            
+//                    TEXT_SetText(hItem,set_limit);
+//                    
+//                    bit = 2;
+//                    break;
+//                }
+//                case 2:
+//                {
+//                    strcat(set_limit,num);            
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
+//                    {
+//                        dot_flag = 1;
+//                    }else{
+//                        set_load_cutoffv = set_load_cutoffv * 10 + atoi(num) * 1000;
+//                    }
+//                    bit = 3;
+//                    break;
+//                }
+//                case 3:
+//                {
+//                    strcat(set_limit,num);
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(dot_flag == 0)
+//                    {
+//                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
+//                        {                            
+//                            dot_flag = 2;
+//                        }else{
+//                            set_load_cutoffv = 0;
+//                        }
+//                    }else{
+//                        set_load_cutoffv = set_load_cutoffv + atoi(num) * 100;
+//                    }                  
+//                    bit = 4;
+//                    break;
+//                }
+//                case 4:
+//                {
+//                    strcat(set_limit,num);
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(dot_flag == 0)
+//                    {
+//                        set_load_cutoffv = 0;
+//                    }else if(dot_flag == 2){
+//                        set_load_cutoffv = set_load_cutoffv + atoi(num) * 100;
+//                    }else{
+//                        set_load_cutoffv = set_load_cutoffv + atoi(num) * 10;
+//                    }                  
+//                    bit = 5;
+//                    break;
+//                }
+//                case 5:
+//                {
+//                    strcat(set_limit,num);
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(dot_flag == 0)
+//                    {
+//                        set_load_cutoffv = 0;
+//                    }else if(dot_flag == 1){
+//                        set_load_cutoffv = set_load_cutoffv + atoi(num);
+//                    }else{
+//                        set_load_cutoffv = set_load_cutoffv + atoi(num) * 10;
+//                    }                 
+//                    bit = 6;
+//                    break;
+//                }
+//                case 6:
+//                {
+//                    strcat(set_limit,num);
+//                    TEXT_SetText(hItem,set_limit);
+//                    if(dot_flag == 0)
+//                    {
+//                        set_load_cutoffv = 0;
+//                    }else if(dot_flag == 2){
+//                        set_load_cutoffv = set_load_cutoffv + atoi(num);
+//                    }                 
+//                    bit = 1;
+//                    break;
+//                }
+//            }
             break;
             
         }

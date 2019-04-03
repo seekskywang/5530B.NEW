@@ -1069,7 +1069,47 @@ void Key_Funtion(void)
                 
                 case KEY_ESC :
                 {
-					Flash_Read16BitDatas(FLASH_USER_START_ADDR,20,InFlashSave);
+					switch(page_sw){
+                        case face_menu:
+                        {
+                            DEL_POW();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+                            break;
+                        }
+                        case face_set:
+                        {
+                            DEL_NUM();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+                            break;
+                        }
+                        case face_load:
+                        {
+                            DEL_LOAD();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+                            break;
+                        }
+                        case face_r:
+                        {
+                            if(para_set2 == set_2_on)
+                            {
+                                DEL_C();
+                                KeyCounter = 0;
+                                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+                                break;
+                            }
+                        }
+                        case face_cdc:
+                        {
+                            DEL_CDC();
+                            KeyCounter = 0;
+                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+                            break;
+                        }                     
+                    }
+//					Flash_Read16BitDatas(FLASH_USER_START_ADDR,20,InFlashSave);
 //                  sLCD_WR_REG(0x01);
     //                main();
     //				timer_sw = 0;
@@ -1532,6 +1572,7 @@ void Key_Funtion(void)
                             if(pow_sw==pow_on)
                             {
                                 GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
+								Delay_ms(500);
                                 GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
                                 mode_sw = 0;
                                 pow_sw = pow_off;
@@ -1563,6 +1604,7 @@ void Key_Funtion(void)
                             }else{
                                
                                GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
+								Delay_ms(500);
                                GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
                                GPIO_SetBits(GPIOA,GPIO_Pin_15);//µÁ◊”∏∫‘ÿOFF
                                cdc_sw = cdc_off;
@@ -1686,8 +1728,9 @@ void Key_Funtion(void)
                     WM_DeleteWindow(hWincdc);
                     WM_DeleteWindow(hWinset);
                     GPIO_SetBits(GPIOA,GPIO_Pin_15);//µÁ◊”∏∫‘ÿOFF
-                    GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
+					Delay_ms(500);
+				    GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆
                     CreateR();
                     KeyCounter = 0;
                     BEEP_Tiggr();//
@@ -1704,8 +1747,9 @@ void Key_Funtion(void)
                     WM_DeleteWindow(hWinset);
                     CreateWindow2();
                     t_onoff = 0;
-                    GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆˜
                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
+					Delay_ms(500);
+				    GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆
                     KeyCounter = 0;
                     BEEP_Tiggr();//
                 }
@@ -1734,6 +1778,9 @@ void Key_Funtion(void)
                     WM_DeleteWindow(hWinsysinfo);
                     WM_DeleteWindow(hWincdc);
                     WM_DeleteWindow(hWinset);
+					GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
+					Delay_ms(500);
+				    GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆
                     CreateCDC(); 
                     KeyCounter = 0;
                     BEEP_Tiggr();//
@@ -1762,6 +1809,9 @@ void Key_Funtion(void)
                     WM_DeleteWindow(hWinsysinfo);
                     WM_DeleteWindow(hWincdc);
                     WM_DeleteWindow(hWinset);
+					GPIO_ResetBits(GPIOC,GPIO_Pin_1);//πÿ±’µÁ‘¥ ‰≥ˆ
+					Delay_ms(500);
+				    GPIO_SetBits(GPIOC,GPIO_Pin_13);//πÿ±’µÁ‘¥ ‰≥ˆºÃµÁ∆
                     Createsysinfo();
                     KeyCounter = 0;
                     BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô?

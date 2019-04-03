@@ -56005,7 +56005,7 @@ N                            TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色
 N                            TEXT_SetTextColor(hItem, GUI_BLACK);
 X                            TEXT_SetTextColor(hItem, 0x00000000);
 N                            
-N                            for(i=0;i<5;i++){
+N                            for(i=0;i<6;i++){
 N                                set_limit[i] = '\0';
 N                            }
 N                            set_sw = set_12;
@@ -56025,13 +56025,28 @@ N                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景
 X                        TEXT_SetBkColor(hItem,0xFFFFFFF);
 N                        TEXT_SetTextColor(hItem, GUI_WHITE);
 X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                        if(set_max_v > 80000)
-X                        if(Run_Control[14] > 80000)
-N                        {
-N                            set_max_v = 80000;
-X                            Run_Control[14] = 80000;
-N                            TEXT_SetText(hItem,"80.00");                                                       
-N                        }
+N						if(dot_flag == 0){
+N							set_max_v = atoi(set_limit)*1000;					
+X							Run_Control[14] = atoi(set_limit)*1000;					
+N						}else if(dot_flag != 0){
+N							memset(buf, '\0', sizeof(buf));
+N							strncpy(buf,set_limit,dot_flag + 2);
+N							set_max_v = atof(buf)*1000;
+X							Run_Control[14] = atof(buf)*1000;
+N						}
+N						if(set_max_v > 62000)
+X						if(Run_Control[14] > 62000)
+N						{
+N							set_max_v = 62000;
+X							Run_Control[14] = 62000;
+N						}
+N						dis_max_v = (float)set_max_v/1000;
+X						dis_max_v = (float)Run_Control[14]/1000;
+N//                        if(set_max_v > 80000)
+N//                        {
+N//                            set_max_v = 80000;
+N//                            TEXT_SetText(hItem,"80.00");                                                       
+N//                        }
 N                        sprintf(buf,"%.3f",dis_max_v);
 N                        TEXT_SetText(hItem,buf);
 N						
@@ -56070,13 +56085,28 @@ N                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景
 X                        TEXT_SetBkColor(hItem,0xFFFFFFF);
 N                        TEXT_SetTextColor(hItem, GUI_WHITE);
 X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                        if(set_max_v > 80000)
-X                        if(Run_Control[14] > 80000)
-N                        {
-N                            set_max_v = 80000;
-X                            Run_Control[14] = 80000;
-N                            TEXT_SetText(hItem,"80.00");                                                       
-N                        }
+N//                        if(set_max_v > 80000)
+N//                        {
+N//                            set_max_v = 80000;
+N//                            TEXT_SetText(hItem,"80.00");                                                       
+N//                        }
+N						if(dot_flag == 0){
+N							set_min_v = atoi(set_limit)*1000;					
+X							Run_Control[15] = atoi(set_limit)*1000;					
+N						}else if(dot_flag != 0){
+N							memset(buf, '\0', sizeof(buf));
+N							strncpy(buf,set_limit,dot_flag + 2);
+N							set_min_v = atof(buf)*1000;
+X							Run_Control[15] = atof(buf)*1000;
+N						}
+N						if(set_min_v > 62000)
+X						if(Run_Control[15] > 62000)
+N						{
+N							set_min_v = 62000;
+X							Run_Control[15] = 62000;
+N						}
+N						dis_min_v = (float)set_min_v/1000;
+X						dis_min_v = (float)Run_Control[15]/1000;
 N                        sprintf(buf,"%.3f",dis_max_v);
 N                        TEXT_SetText(hItem,buf);
 N						
@@ -56118,6 +56148,15 @@ N                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景
 X                        TEXT_SetBkColor(hItem,0xFFFFFFF);
 N                        TEXT_SetTextColor(hItem, GUI_WHITE);
 X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N						if(dot_flag == 0){
+N							set_max_lv = atoi(set_limit)*1000;					
+X							InFlashSave[0] = atoi(set_limit)*1000;					
+N						}else if(dot_flag != 0){
+N							memset(buf, '\0', sizeof(buf));
+N							strncpy(buf,set_limit,dot_flag + 3);
+N							set_max_lv = atof(buf)*1000;
+X							InFlashSave[0] = atof(buf)*1000;
+N						}
 N                        sprintf(buf,"%.3f",(float)set_max_lv/1000);
 X                        sprintf(buf,"%.3f",(float)InFlashSave[0]/1000);
 N                        TEXT_SetText(hItem,buf);
@@ -56159,6 +56198,15 @@ N                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景
 X                        TEXT_SetBkColor(hItem,0xFFFFFFF);
 N                        TEXT_SetTextColor(hItem, GUI_WHITE);
 X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N						if(dot_flag == 0){
+N							set_min_lv = atoi(set_limit)*1000;					
+X							InFlashSave[1] = atoi(set_limit)*1000;					
+N						}else if(dot_flag != 0){
+N							memset(buf, '\0', sizeof(buf));
+N							strncpy(buf,set_limit,dot_flag + 3);
+N							set_min_lv = atof(buf)*1000;
+X							InFlashSave[1] = atof(buf)*1000;
+N						}
 N                        sprintf(buf,"%.3f",(float)set_max_lv/1000);
 X                        sprintf(buf,"%.3f",(float)InFlashSave[0]/1000);
 N                        TEXT_SetText(hItem,buf);
@@ -56209,7 +56257,7 @@ N                            TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色
 N                            TEXT_SetTextColor(hItem, GUI_BLACK);
 X                            TEXT_SetTextColor(hItem, 0x00000000);
 N
-N                            for(i=0;i<5;i++){
+N                            for(i=0;i<6;i++){
 N                                set_limit[i] = '\0';
 N                            }
 N                            set_sw = set_82;
@@ -56236,7 +56284,7 @@ N                            TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色
 N                            TEXT_SetTextColor(hItem, GUI_BLACK);
 X                            TEXT_SetTextColor(hItem, 0x00000000);
 N                            
-N                            for(i=0;i<5;i++){
+N                            for(i=0;i<6;i++){
 N                                set_limit[i] = '\0';
 N                            }
 N                            set_sw = set_14;
@@ -56255,6 +56303,13 @@ N                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景
 X                        TEXT_SetBkColor(hItem,0xFFFFFFF);
 N                        TEXT_SetTextColor(hItem, GUI_WHITE);
 X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N						if(dot_flag == 0){
+N							dis_max_r = atoi(set_limit);					
+N						}else if(dot_flag != 0){
+N							memset(buf, '\0', sizeof(buf));
+N							strncpy(buf,set_limit,dot_flag);
+N							dis_max_r = atof(buf);
+N						}
 N                        sprintf(buf,"%4d",dis_max_r);
 N                        TEXT_SetText(hItem,buf);
 N               
@@ -56290,7 +56345,7 @@ N                            TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色
 N                            TEXT_SetTextColor(hItem, GUI_BLACK);
 X                            TEXT_SetTextColor(hItem, 0x00000000);
 N                            
-N                            for(i=0;i<5;i++){
+N                            for(i=0;i<6;i++){
 N                                set_limit[i] = '\0';
 N                            }
 N                            set_sw = set_15;
@@ -56309,7 +56364,13 @@ N                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景
 X                        TEXT_SetBkColor(hItem,0xFFFFFFF);
 N                        TEXT_SetTextColor(hItem, GUI_WHITE);
 X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                        
+N                        if(dot_flag == 0){
+N							dis_min_r = atoi(set_limit);					
+N						}else if(dot_flag != 0){
+N							memset(buf, '\0', sizeof(buf));
+N							strncpy(buf,set_limit,dot_flag);
+N							dis_min_r = atof(buf);
+N						}
 N                        sprintf(buf,"%4d",dis_min_r);
 N                        TEXT_SetText(hItem,buf);
 N                        
@@ -56345,7 +56406,7 @@ N                            TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色
 N                            TEXT_SetTextColor(hItem, GUI_BLACK);
 X                            TEXT_SetTextColor(hItem, 0x00000000);
 N
-N                            for(i=0;i<5;i++){
+N                            for(i=0;i<6;i++){
 N                                set_limit[i] = '\0';
 N                            }
 N                            set_sw = set_16;
@@ -56364,13 +56425,23 @@ N                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景
 X                        TEXT_SetBkColor(hItem,0xFFFFFFF);
 N                        TEXT_SetTextColor(hItem, GUI_WHITE);
 X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                        if(set_max_c > 60000)
-X                        if(Run_Control[18] > 60000)
+N						if(dot_flag == 0){
+N							set_max_c = atoi(set_limit)*1000;					
+X							Run_Control[18] = atoi(set_limit)*1000;					
+N						}else if(dot_flag != 0){
+N							memset(buf, '\0', sizeof(buf));
+N							strncpy(buf,set_limit,dot_flag + 3);
+N							set_max_c = atof(buf)*1000;
+X							Run_Control[18] = atof(buf)*1000;
+N						}
+N                        if(set_max_c > 30000)
+X                        if(Run_Control[18] > 30000)
 N                        {
-N                            set_max_c = 60000;
-X                            Run_Control[18] = 60000;
-N                            TEXT_SetText(hItem,"60.00");
+N                            set_max_c = 30000;
+X                            Run_Control[18] = 30000;
 N                        }
+N						dis_max_c = (float)set_max_c/1000;
+X						dis_max_c = (float)Run_Control[18]/1000;
 N                        sprintf(buf,"%.3f",dis_max_c);
 N                        TEXT_SetText(hItem,buf);
 N						
@@ -56419,13 +56490,11 @@ N                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景
 X                        TEXT_SetBkColor(hItem,0xFFFFFFF);
 N                        TEXT_SetTextColor(hItem, GUI_WHITE);
 X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                        if(set_max_c > 60000)
-X                        if(Run_Control[18] > 60000)
-N                        {
-N                            set_max_c = 60000;
-X                            Run_Control[18] = 60000;
-N                            TEXT_SetText(hItem,"60.00");
-N                        }
+N//                        if(set_max_c > 60000)
+N//                        {
+N//                            set_max_c = 60000;
+N//                            TEXT_SetText(hItem,"60.00");
+N//                        }
 N                        sprintf(buf,"%.3f",dis_max_c);
 N                        TEXT_SetText(hItem,buf);
 N						
@@ -56435,14 +56504,29 @@ N                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景
 X                        TEXT_SetBkColor(hItem,0xFFFFFFF);
 N                        TEXT_SetTextColor(hItem, GUI_WHITE);
 X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N						if(dot_flag == 0){
+N							set_min_c = atoi(set_limit)*1000;					
+X							Run_Control[19] = atoi(set_limit)*1000;					
+N						}else if(dot_flag != 0){
+N							memset(buf, '\0', sizeof(buf));
+N							strncpy(buf,set_limit,dot_flag + 3);
+N							set_min_c = atof(buf)*1000;
+X							Run_Control[19] = atof(buf)*1000;
+N						}
+N                        if(set_max_c > 30000)
+X                        if(Run_Control[18] > 30000)
+N                        {
+N                            set_max_c = 30000;
+X                            Run_Control[18] = 30000;
+N                        }
 N                        if(set_min_c >= set_max_c)
 X                        if(Run_Control[19] >= Run_Control[18])
 N                        {
 N                            set_min_c = 0;
 X                            Run_Control[19] = 0;
-N                            TEXT_SetText(hItem,"0.000");
 N                        }
-N                        
+N                        dis_min_c = (float)set_min_c/1000;
+X                        dis_min_c = (float)Run_Control[19]/1000;
 N                        sprintf(buf,"%.3f",dis_min_c);
 N                        TEXT_SetText(hItem,buf);
 N						
@@ -56479,7 +56563,7 @@ N                            TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色
 N                            TEXT_SetTextColor(hItem, GUI_BLACK);
 X                            TEXT_SetTextColor(hItem, 0x00000000);
 N
-N                            for(i=0;i<5;i++){
+N                            for(i=0;i<6;i++){
 N                                set_limit[i] = '\0';
 N                            }
 N                            set_sw = set_84;
@@ -56499,14 +56583,27 @@ N                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景
 X                        TEXT_SetBkColor(hItem,0xFFFFFFF);
 N                        TEXT_SetTextColor(hItem, GUI_WHITE);
 X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                        if(set_max_pc > 60000)
-X                        if(InFlashSave[2] > 60000)
+N						if(dot_flag == 0){
+N							set_max_pc = atoi(set_limit)*1000;					
+X							InFlashSave[2] = atoi(set_limit)*1000;					
+N						}else if(dot_flag != 0){
+N							memset(buf, '\0', sizeof(buf));
+N							strncpy(buf,set_limit,dot_flag + 3);
+N							set_max_pc = atof(buf)*1000;
+X							InFlashSave[2] = atof(buf)*1000;
+N						}
+N                        if(set_max_pc > 10000)
+X                        if(InFlashSave[2] > 10000)
 N                        {
-W "..\APP\settings.c" 2417 42 integer conversion resulted in a change of sign
-N                            set_max_pc = 60000;
-X                            InFlashSave[2] = 60000;
-N                            TEXT_SetText(hItem,"60.000");
+N                            set_max_pc = 10000;
+X                            InFlashSave[2] = 10000;
 N                        }
+N//						dis_max_c = (float)set_max_c/1000;
+N//                        if(set_max_pc > 60000)
+N//                        {
+N//                            set_max_pc = 60000;
+N//                            TEXT_SetText(hItem,"60.000");
+N//                        }
 N                        sprintf(buf,"%.3f",(float)set_max_pc/1000);
 X                        sprintf(buf,"%.3f",(float)InFlashSave[2]/1000);
 N                        TEXT_SetText(hItem,buf);
@@ -56558,14 +56655,11 @@ N                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景
 X                        TEXT_SetBkColor(hItem,0xFFFFFFF);
 N                        TEXT_SetTextColor(hItem, GUI_WHITE);
 X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N                        if(set_max_pc > 60000)
-X                        if(InFlashSave[2] > 60000)
-N                        {
-W "..\APP\settings.c" 2457 42 integer conversion resulted in a change of sign
-N                            set_max_pc = 60000;
-X                            InFlashSave[2] = 60000;
-N                            TEXT_SetText(hItem,"60.000");
-N                        }
+N//                        if(set_max_pc > 60000)
+N//                        {
+N//                            set_max_pc = 60000;
+N//                            TEXT_SetText(hItem,"60.000");
+N//                        }
 N                        sprintf(buf,"%.3f",(float)set_max_pc/1000);
 X                        sprintf(buf,"%.3f",(float)InFlashSave[2]/1000);
 N                        TEXT_SetText(hItem,buf);
@@ -56576,12 +56670,27 @@ N                        TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景
 X                        TEXT_SetBkColor(hItem,0xFFFFFFF);
 N                        TEXT_SetTextColor(hItem, GUI_WHITE);
 X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N						if(dot_flag == 0){
+N							set_min_pc = atoi(set_limit)*1000;					
+X							InFlashSave[3] = atoi(set_limit)*1000;					
+N						}else if(dot_flag != 0){
+N							memset(buf, '\0', sizeof(buf));
+N							strncpy(buf,set_limit,dot_flag + 3);
+N							set_min_pc = atof(buf)*1000;
+X							InFlashSave[3] = atof(buf)*1000;
+N						}
+N                        if(set_min_pc > 10000)
+X                        if(InFlashSave[3] > 10000)
+N                        {
+N                            set_min_pc = 10000;
+X                            InFlashSave[3] = 10000;
+N                        }
 N                        if(set_min_pc >= set_max_pc)
 X                        if(InFlashSave[3] >= InFlashSave[2])
 N                        {
 N                            set_min_pc = 0;
 X                            InFlashSave[3] = 0;
-N                            TEXT_SetText(hItem,"0.000");
+N//                            TEXT_SetText(hItem,"0.000");
 N                        }
 N                        
 N                        sprintf(buf,"%.3f",(float)set_min_pc/1000);
@@ -57483,10 +57592,9 @@ N//    *arr1 = '\0';
 N//    
 N//    return tempt;
 N// }
-N//系统设置界面数据输入
-Nvoid INPUT_NUM(char* num);            
-Nvoid INPUT_NUM(char* num){
-N    
+N
+Nvoid DEL_NUM(void){
+N    u8 i;
 N    switch(set_sw){
 N        case set_12:
 X        case 11:
@@ -57496,104 +57604,16 @@ X            GUI_HWIN hItem;
 N//            WM_InvalidateWindow(hWinset);
 N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_35);
 X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x60));
-N            switch(bit){
-N                case 1:
-N                {
-N                    set_max_v = atoi(num) * 1000;
-X                    Run_Control[14] = atoi(num) * 1000;
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    bit = 2;
-N                    break;
-N                }
-N                case 2:
-N                {
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-N                    {
-N                        dot_flag = 1;
-N                    }else{
-N                        set_max_v = set_max_v * 10 + atoi(num) * 1000;
-X                        Run_Control[14] = Run_Control[14] * 10 + atoi(num) * 1000;
-N                    }
-N                    bit = 3;
-N                    break;
-N                }
-N                case 3:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-N                        {                            
-N                            dot_flag = 2;
-N                        }else{
-N                            set_max_v = 62000;
-X                            Run_Control[14] = 62000;
-N                        }
-N                    }else{
-N                        set_max_v = set_max_v + atoi(num) * 100;
-X                        Run_Control[14] = Run_Control[14] + atoi(num) * 100;
-N                    }
-N                                       
-N                    bit = 4;
-N                    break;
-N                }
-N                case 4:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_max_v = 6000;
-X                        Run_Control[14] = 6000;
-N                    }else if(dot_flag == 2){
-N                        set_max_v = set_max_v + atoi(num) * 100;
-X                        Run_Control[14] = Run_Control[14] + atoi(num) * 100;
-N                    }else{
-N                        set_max_v = set_max_v + atoi(num) * 10;
-X                        Run_Control[14] = Run_Control[14] + atoi(num) * 10;
-N                    }
-N                                       
-N                    bit = 5;
-N                    break;
-N                }
-N                case 5:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_max_v = 6000;
-X                        Run_Control[14] = 6000;
-N                    }else if(dot_flag == 1){
-N                        set_max_v = set_max_v + atoi(num);
-X                        Run_Control[14] = Run_Control[14] + atoi(num);
-N                    }else{
-N                        set_max_v = set_max_v + atoi(num) * 10;
-X                        Run_Control[14] = Run_Control[14] + atoi(num) * 10;
-N                    }
-N                    bit = 6;
-N                    break;
-N                }
-N                case 6:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_max_v = 0;
-X                        Run_Control[14] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_max_v = set_max_v + atoi(num);
-X                        Run_Control[14] = Run_Control[14] + atoi(num);
-N                    }                 
-N                    bit = 1;
-N                    break;
-N                }
-N            }
+N            if(bit > 1)
+N			{
+N				bit --;
+N				set_limit[bit-1] = '\0';
+N			}
+N			if(bit == dot_flag)
+N			{
+N				dot_flag = 0;
+N			}
+N			TEXT_SetText(hItem,set_limit);
 N            break;
 N        }
 N        case set_13:
@@ -57604,128 +57624,16 @@ X            GUI_HWIN hItem;
 N//            WM_InvalidateWindow(hWinset);
 N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_36);
 X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x61));
-N            switch(bit){
-N                case 1:
-N                {
-N                    set_min_v = atoi(num) * 1000;
-X                    Run_Control[15] = atoi(num) * 1000;
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_min_v >= set_max_v){
-X                    if(Run_Control[15] >= Run_Control[14]){
-N                        set_min_v = 0;
-X                        Run_Control[15] = 0;
-N                    }
-N                    bit = 2;
-N                    break;
-N                }
-N                case 2:
-N                {
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-N                    {
-N                        dot_flag = 1;
-N                    }else{
-N                        set_min_v = set_min_v * 10 + atoi(num) * 1000;
-X                        Run_Control[15] = Run_Control[15] * 10 + atoi(num) * 1000;
-N                    }
-N                    if(set_min_v >= set_max_v){
-X                    if(Run_Control[15] >= Run_Control[14]){
-N                        set_min_v = 0;
-X                        Run_Control[15] = 0;
-N                    }
-N                    bit = 3;
-N                    break;
-N                }
-N                case 3:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-N                        {                            
-N                            dot_flag = 2;
-N                        }else{
-N                            set_max_v = 0;
-X                            Run_Control[14] = 0;
-N                        }
-N                    }else{
-N                        set_min_v = set_min_v + atoi(num) * 100;
-X                        Run_Control[15] = Run_Control[15] + atoi(num) * 100;
-N                    }
-N                    if(set_min_v >= set_max_v){
-X                    if(Run_Control[15] >= Run_Control[14]){
-N                        set_min_v = 0;
-X                        Run_Control[15] = 0;
-N                    }                   
-N                    bit = 4;
-N                    break;
-N                }
-N                case 4:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_min_v = 0;
-X                        Run_Control[15] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_min_v = set_min_v + atoi(num) * 100;
-X                        Run_Control[15] = Run_Control[15] + atoi(num) * 100;
-N                    }else{
-N                        set_min_v = set_min_v + atoi(num) * 10;
-X                        Run_Control[15] = Run_Control[15] + atoi(num) * 10;
-N                    }
-N                    
-N                    if(set_min_v >= set_max_v){
-X                    if(Run_Control[15] >= Run_Control[14]){
-N                        set_min_v = 0;
-X                        Run_Control[15] = 0;
-N                    }                   
-N                    bit = 5;
-N                    break;
-N                }
-N                case 5:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_min_v = 6000;
-X                        Run_Control[15] = 6000;
-N                    }else if(dot_flag == 1){
-N                        set_min_v = set_min_v + atoi(num);
-X                        Run_Control[15] = Run_Control[15] + atoi(num);
-N                    }else{
-N                        set_min_v = set_min_v + atoi(num) * 10;
-X                        Run_Control[15] = Run_Control[15] + atoi(num) * 10;
-N                    }
-N                    if(set_min_v >= set_max_v){
-X                    if(Run_Control[15] >= Run_Control[14]){
-N                        set_min_v = 0;
-X                        Run_Control[15] = 0;
-N                    }                   
-N                    bit = 6;
-N                    break;
-N                }
-N                case 6:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_min_v = 0;
-X                        Run_Control[15] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_min_v = set_min_v + atoi(num);
-X                        Run_Control[15] = Run_Control[15] + atoi(num);
-N                    }                 
-N                    bit = 1;
-N                    break;
-N                }
-N            }
+N            if(bit > 1)
+N			{
+N				bit --;
+N				set_limit[bit-1] = '\0';
+N			}
+N			if(bit == dot_flag)
+N			{
+N				dot_flag = 0;
+N			}
+N			TEXT_SetText(hItem,set_limit);
 N            break;
 N        }
 N		case set_82:
@@ -57736,105 +57644,16 @@ X            GUI_HWIN hItem;
 N//            WM_InvalidateWindow(hWinset);
 N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_154);
 X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x0135));
-N            switch(bit){
-N                case 1:
-N                {
-N                    set_max_lv = atoi(num) * 1000;
-X                    InFlashSave[0] = atoi(num) * 1000;
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    bit = 2;
-N                    break;
-N                }
-N                case 2:
-N                {
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-N                    {
-N                        dot_flag = 1;
-N                    }else{
-N                        set_max_lv = set_max_lv * 10 + atoi(num) * 1000;
-X                        InFlashSave[0] = InFlashSave[0] * 10 + atoi(num) * 1000;
-N                    }
-N                    bit = 3;
-N                    break;
-N                }
-N                case 3:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-N                        {                            
-N                            dot_flag = 2;
-N                        }else{
-W "..\APP\settings.c" 3368 42 integer conversion resulted in a change of sign
-N                            set_max_lv = 62000;
-X                            InFlashSave[0] = 62000;
-N                        }
-N                    }else{
-N                        set_max_lv = set_max_lv + atoi(num) * 100;
-X                        InFlashSave[0] = InFlashSave[0] + atoi(num) * 100;
-N                    }
-N                                       
-N                    bit = 4;
-N                    break;
-N                }
-N                case 4:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_max_lv = 6000;
-X                        InFlashSave[0] = 6000;
-N                    }else if(dot_flag == 2){
-N                        set_max_lv = set_max_lv + atoi(num) * 100;
-X                        InFlashSave[0] = InFlashSave[0] + atoi(num) * 100;
-N                    }else{
-N                        set_max_lv = set_max_lv + atoi(num) * 10;
-X                        InFlashSave[0] = InFlashSave[0] + atoi(num) * 10;
-N                    }
-N                                       
-N                    bit = 5;
-N                    break;
-N                }
-N                case 5:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_max_lv = 6000;
-X                        InFlashSave[0] = 6000;
-N                    }else if(dot_flag == 1){
-N                        set_max_lv = set_max_lv + atoi(num);
-X                        InFlashSave[0] = InFlashSave[0] + atoi(num);
-N                    }else{
-N                        set_max_lv = set_max_lv + atoi(num) * 10;
-X                        InFlashSave[0] = InFlashSave[0] + atoi(num) * 10;
-N                    }
-N                    bit = 6;
-N                    break;
-N                }
-N                case 6:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_max_lv = 0;
-X                        InFlashSave[0] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_max_lv = set_max_lv + atoi(num);
-X                        InFlashSave[0] = InFlashSave[0] + atoi(num);
-N                    }                 
-N                    bit = 1;
-N                    break;
-N                }
-N            }
+N            if(bit > 1)
+N			{
+N				bit --;
+N				set_limit[bit-1] = '\0';
+N			}
+N			if(bit == dot_flag)
+N			{
+N				dot_flag = 0;
+N			}
+N			TEXT_SetText(hItem,set_limit);
 N            break;
 N        }
 N        case set_83:
@@ -57845,128 +57664,16 @@ X            GUI_HWIN hItem;
 N//            WM_InvalidateWindow(hWinset);
 N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_155);
 X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x0136));
-N            switch(bit){
-N                case 1:
-N                {
-N                    set_min_lv = atoi(num) * 1000;
-X                    InFlashSave[1] = atoi(num) * 1000;
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_min_lv >= set_max_v){
-X                    if(InFlashSave[1] >= Run_Control[14]){
-N                        set_min_lv = 0;
-X                        InFlashSave[1] = 0;
-N                    }
-N                    bit = 2;
-N                    break;
-N                }
-N                case 2:
-N                {
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-N                    {
-N                        dot_flag = 1;
-N                    }else{
-N                        set_min_lv = set_min_lv * 10 + atoi(num) * 1000;
-X                        InFlashSave[1] = InFlashSave[1] * 10 + atoi(num) * 1000;
-N                    }
-N                    if(set_min_lv >= set_max_v){
-X                    if(InFlashSave[1] >= Run_Control[14]){
-N                        set_min_lv = 0;
-X                        InFlashSave[1] = 0;
-N                    }
-N                    bit = 3;
-N                    break;
-N                }
-N                case 3:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-N                        {                            
-N                            dot_flag = 2;
-N                        }else{
-N                            set_max_v = 0;
-X                            Run_Control[14] = 0;
-N                        }
-N                    }else{
-N                        set_min_lv = set_min_lv + atoi(num) * 100;
-X                        InFlashSave[1] = InFlashSave[1] + atoi(num) * 100;
-N                    }
-N                    if(set_min_lv >= set_max_v){
-X                    if(InFlashSave[1] >= Run_Control[14]){
-N                        set_min_lv = 0;
-X                        InFlashSave[1] = 0;
-N                    }                   
-N                    bit = 4;
-N                    break;
-N                }
-N                case 4:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_min_lv = 0;
-X                        InFlashSave[1] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_min_lv = set_min_lv + atoi(num) * 100;
-X                        InFlashSave[1] = InFlashSave[1] + atoi(num) * 100;
-N                    }else{
-N                        set_min_lv = set_min_lv + atoi(num) * 10;
-X                        InFlashSave[1] = InFlashSave[1] + atoi(num) * 10;
-N                    }
-N                    
-N                    if(set_min_lv >= set_max_v){
-X                    if(InFlashSave[1] >= Run_Control[14]){
-N                        set_min_lv = 0;
-X                        InFlashSave[1] = 0;
-N                    }                   
-N                    bit = 5;
-N                    break;
-N                }
-N                case 5:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_min_lv = 6000;
-X                        InFlashSave[1] = 6000;
-N                    }else if(dot_flag == 1){
-N                        set_min_lv = set_min_lv + atoi(num);
-X                        InFlashSave[1] = InFlashSave[1] + atoi(num);
-N                    }else{
-N                        set_min_lv = set_min_lv + atoi(num) * 10;
-X                        InFlashSave[1] = InFlashSave[1] + atoi(num) * 10;
-N                    }
-N                    if(set_min_lv >= set_max_v){
-X                    if(InFlashSave[1] >= Run_Control[14]){
-N                        set_min_lv = 0;
-X                        InFlashSave[1] = 0;
-N                    }                   
-N                    bit = 6;
-N                    break;
-N                }
-N                case 6:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_min_lv = 0;
-X                        InFlashSave[1] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_min_lv = set_min_lv + atoi(num);
-X                        InFlashSave[1] = InFlashSave[1] + atoi(num);
-N                    }                 
-N                    bit = 1;
-N                    break;
-N                }
-N            }
+N           if(bit > 1)
+N			{
+N				bit --;
+N				set_limit[bit-1] = '\0';
+N			}
+N			if(bit == dot_flag)
+N			{
+N				dot_flag = 0;
+N			}
+N			TEXT_SetText(hItem,set_limit);
 N            break;
 N        }
 N		
@@ -57978,44 +57685,16 @@ X            GUI_HWIN hItem;
 N//            WM_InvalidateWindow(hWinset);
 N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_37);
 X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x62));
-N            switch(bit){
-N                case 1:
-N                {
-N                    set_max_r = atoi(num);
-X                    Run_Control[16] = atoi(num);
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    bit = 2;
-N                    break; 
-N                }
-N                case 2:
-N                {
-N                    set_max_r = set_max_r * 10 + atoi(num);
-X                    Run_Control[16] = Run_Control[16] * 10 + atoi(num);
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    bit = 3;
-N                    break; 
-N                }
-N                case 3:
-N                {
-N                    set_max_r = set_max_r * 10 + atoi(num);
-X                    Run_Control[16] = Run_Control[16] * 10 + atoi(num);
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    bit = 4;
-N                    break; 
-N                }
-N                case 4:
-N                {
-N                    set_max_r = set_max_r * 10 + atoi(num);
-X                    Run_Control[16] = Run_Control[16] * 10 + atoi(num);
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    bit = 1;
-N                    break; 
-N                }
-N            }
+N            if(bit > 1)
+N			{
+N				bit --;
+N				set_limit[bit-1] = '\0';
+N			}
+N			if(bit == dot_flag)
+N			{
+N				dot_flag = 0;
+N			}
+N			TEXT_SetText(hItem,set_limit);
 N            break;           
 N        }
 N        case set_15:
@@ -58026,64 +57705,16 @@ X            GUI_HWIN hItem;
 N//            WM_InvalidateWindow(hWinset);
 N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_38);
 X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x63));
-N            switch(bit){
-N                case 1:
-N                {
-N                    set_min_r = atoi(num);
-X                    Run_Control[17] = atoi(num);
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_min_r >= set_max_r){
-X                    if(Run_Control[17] >= Run_Control[16]){
-N                        set_min_r = 0;
-X                        Run_Control[17] = 0;
-N                    }
-N                    bit = 2;
-N                    break; 
-N                }
-N                case 2:
-N                {
-N                    set_min_r = set_min_r * 10 + atoi(num);
-X                    Run_Control[17] = Run_Control[17] * 10 + atoi(num);
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_min_r >= set_max_r){
-X                    if(Run_Control[17] >= Run_Control[16]){
-N                        set_min_r = 0;
-X                        Run_Control[17] = 0;
-N                    }
-N                    bit = 3;
-N                    break; 
-N                }
-N                case 3:
-N                {
-N                    set_min_r = set_min_r * 10 + atoi(num);
-X                    Run_Control[17] = Run_Control[17] * 10 + atoi(num);
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_min_r >= set_max_r){
-X                    if(Run_Control[17] >= Run_Control[16]){
-N                        set_min_r = 0;
-X                        Run_Control[17] = 0;
-N                    }
-N                    bit = 4;
-N                    break; 
-N                }
-N                case 4:
-N                {
-N                    set_min_r = set_min_r * 10 + atoi(num);
-X                    Run_Control[17] = Run_Control[17] * 10 + atoi(num);
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_min_r >= set_max_r){
-X                    if(Run_Control[17] >= Run_Control[16]){
-N                        set_min_r = 0;
-X                        Run_Control[17] = 0;
-N                    }
-N                    bit = 1;
-N                    break; 
-N                }
-N            }
+N            if(bit > 1)
+N			{
+N				bit --;
+N				set_limit[bit-1] = '\0';
+N			}
+N			if(bit == dot_flag)
+N			{
+N				dot_flag = 0;
+N			}
+N			TEXT_SetText(hItem,set_limit);
 N            break;
 N        }
 N        case set_16:
@@ -58094,103 +57725,16 @@ X            GUI_HWIN hItem;
 N//            WM_InvalidateWindow(hWinset);
 N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_39);
 X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x64));
-N            switch(bit){
-N                case 1:
-N                {
-N                    set_max_c = atoi(num) * 1000;
-X                    Run_Control[18] = atoi(num) * 1000;
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    
-N                    bit = 2;
-N                    break;
-N                }
-N                case 2:
-N                {
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-N                    {
-N                        dot_flag = 1;
-N                    }else{
-N                        set_max_c = set_max_c * 10 + atoi(num) * 1000;
-X                        Run_Control[18] = Run_Control[18] * 10 + atoi(num) * 1000;
-N                    }
-N                    bit = 3;
-N                    break;
-N                }
-N                case 3:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-N                        {                            
-N                            dot_flag = 2;
-N                        }else{
-N                            set_max_c = 0;
-X                            Run_Control[18] = 0;
-N                        }
-N                    }else{
-N                        set_max_c = set_max_c + atoi(num) * 100;
-X                        Run_Control[18] = Run_Control[18] + atoi(num) * 100;
-N                    }                  
-N                    bit = 4;
-N                    break;
-N                }
-N                case 4:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_max_c = 0;
-X                        Run_Control[18] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_max_c = set_max_c + atoi(num) * 100;
-X                        Run_Control[18] = Run_Control[18] + atoi(num) * 100;
-N                    }else{
-N                        set_max_c = set_max_c + atoi(num) * 10;
-X                        Run_Control[18] = Run_Control[18] + atoi(num) * 10;
-N                    }                  
-N                    bit = 5;
-N                    break;
-N                }
-N                case 5:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_max_c = 1200;
-X                        Run_Control[18] = 1200;
-N                    }else if(dot_flag == 1){
-N                        set_max_c = set_max_c + atoi(num);
-X                        Run_Control[18] = Run_Control[18] + atoi(num);
-N                    }else{
-N                        set_max_c = set_max_c + atoi(num) * 10;
-X                        Run_Control[18] = Run_Control[18] + atoi(num) * 10;
-N                    }                 
-N                    bit = 6;
-N                    break;
-N                }
-N                case 6:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_max_c = 0;
-X                        Run_Control[18] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_max_c = set_max_c + atoi(num);
-X                        Run_Control[18] = Run_Control[18] + atoi(num);
-N                    }                 
-N                    bit = 1;
-N                    break;
-N                }
-N            }
+N            if(bit > 1)
+N			{
+N				bit --;
+N				set_limit[bit-1] = '\0';
+N			}
+N			if(bit == dot_flag)
+N			{
+N				dot_flag = 0;
+N			}
+N			TEXT_SetText(hItem,set_limit);
 N            break;
 N        }
 N        case set_17:
@@ -58201,234 +57745,36 @@ X            GUI_HWIN hItem;
 N//            WM_InvalidateWindow(hWinset);
 N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_40);
 X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x65));
-N            switch(bit){
-N                case 1:
-N                {
-N                    set_min_c = atoi(num) * 1000;
-X                    Run_Control[19] = atoi(num) * 1000;
-N                    if(set_min_c >= set_max_c){
-X                    if(Run_Control[19] >= Run_Control[18]){
-N                        set_min_c = 0;
-X                        Run_Control[19] = 0;
-N                    }  
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                        
-N                    bit = 2;
-N                    break;
-N                }
-N                case 2:
-N                {
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-N                    {
-N                        dot_flag = 1;
-N                    }else{
-N                        set_min_c = set_min_c * 10 + atoi(num) * 1000;
-X                        Run_Control[19] = Run_Control[19] * 10 + atoi(num) * 1000;
-N                    }
-N                    if(set_min_c >= set_max_c){
-X                    if(Run_Control[19] >= Run_Control[18]){
-N                        set_min_c = 0;
-X                        Run_Control[19] = 0;
-N                    }
-N                    bit = 3;
-N                    break;
-N                }
-N                case 3:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-N                        {                            
-N                            dot_flag = 2;
-N                        }else{
-N                            set_min_c = 0;
-X                            Run_Control[19] = 0;
-N                        }
-N                    }else{
-N                        set_min_c = set_min_c + atoi(num) * 100;
-X                        Run_Control[19] = Run_Control[19] + atoi(num) * 100;
-N                    }
-N                    if(set_min_c >= set_max_c){
-X                    if(Run_Control[19] >= Run_Control[18]){
-N                        set_min_c = 0;
-X                        Run_Control[19] = 0;
-N                    }
-N                    bit = 4;
-N                    break;
-N                }
-N                case 4:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_min_c = 0;
-X                        Run_Control[19] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_min_c = set_min_c + atoi(num) * 100;
-X                        Run_Control[19] = Run_Control[19] + atoi(num) * 100;
-N                    }else{
-N                        set_min_c = set_min_c + atoi(num) * 10;
-X                        Run_Control[19] = Run_Control[19] + atoi(num) * 10;
-N                    }
-N                    if(set_min_c >= set_max_c){
-X                    if(Run_Control[19] >= Run_Control[18]){
-N                        set_min_c = 0;
-X                        Run_Control[19] = 0;
-N                    }
-N                    bit = 5;
-N                    break;
-N                }
-N                case 5:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_min_c = 0;
-X                        Run_Control[19] = 0;
-N                    }else if(dot_flag == 1){
-N                        set_min_c = set_min_c + atoi(num);
-X                        Run_Control[19] = Run_Control[19] + atoi(num);
-N                    }else{
-N                        set_min_c = set_min_c + atoi(num) * 10;
-X                        Run_Control[19] = Run_Control[19] + atoi(num) * 10;
-N                    }
-N                    if(set_min_c >= set_max_c){
-X                    if(Run_Control[19] >= Run_Control[18]){
-N                        set_min_c = 0;
-X                        Run_Control[19] = 0;
-N                    }
-N                    bit = 6;
-N                    break;
-N                }
-N                case 6:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_min_c = 0;
-X                        Run_Control[19] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_min_c = set_min_c + atoi(num);
-X                        Run_Control[19] = Run_Control[19] + atoi(num);
-N                    }                 
-N                    bit = 1;
-N                    break;
-N                }
-N            }
-N            break;
-N			case set_84:
-X			case 83:
+N            if(bit > 1)
 N			{
+N				bit --;
+N				set_limit[bit-1] = '\0';
+N			}
+N			if(bit == dot_flag)
+N			{
+N				dot_flag = 0;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N            break;
+N		}
+N		case set_84:
+X		case 83:
+N		{
 N            WM_HWIN hItem;
 X            GUI_HWIN hItem;
 N//            WM_InvalidateWindow(hWinset);
 N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_156);
 X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x0137));
-N            switch(bit){
-N                case 1:
-N                {
-N                    set_max_pc = atoi(num) * 1000;
-X                    InFlashSave[2] = atoi(num) * 1000;
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    
-N                    bit = 2;
-N                    break;
-N                }
-N                case 2:
-N                {
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-N                    {
-N                        dot_flag = 1;
-N                    }else{
-N                        set_max_pc = set_max_pc * 10 + atoi(num) * 1000;
-X                        InFlashSave[2] = InFlashSave[2] * 10 + atoi(num) * 1000;
-N                    }
-N                    bit = 3;
-N                    break;
-N                }
-N                case 3:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-N                        {                            
-N                            dot_flag = 2;
-N                        }else{
-N                            set_max_pc = 0;
-X                            InFlashSave[2] = 0;
-N                        }
-N                    }else{
-N                        set_max_pc = set_max_pc + atoi(num) * 100;
-X                        InFlashSave[2] = InFlashSave[2] + atoi(num) * 100;
-N                    }                  
-N                    bit = 4;
-N                    break;
-N                }
-N                case 4:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_max_pc = 0;
-X                        InFlashSave[2] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_max_pc = set_max_pc + atoi(num) * 100;
-X                        InFlashSave[2] = InFlashSave[2] + atoi(num) * 100;
-N                    }else{
-N                        set_max_pc = set_max_pc + atoi(num) * 10;
-X                        InFlashSave[2] = InFlashSave[2] + atoi(num) * 10;
-N                    }                  
-N                    bit = 5;
-N                    break;
-N                }
-N                case 5:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_max_pc = 1200;
-X                        InFlashSave[2] = 1200;
-N                    }else if(dot_flag == 1){
-N                        set_max_pc = set_max_pc + atoi(num);
-X                        InFlashSave[2] = InFlashSave[2] + atoi(num);
-N                    }else{
-N                        set_max_pc = set_max_pc + atoi(num) * 10;
-X                        InFlashSave[2] = InFlashSave[2] + atoi(num) * 10;
-N                    }                 
-N                    bit = 6;
-N                    break;
-N                }
-N                case 6:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_max_pc = 0;
-X                        InFlashSave[2] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_max_pc = set_max_pc + atoi(num);
-X                        InFlashSave[2] = InFlashSave[2] + atoi(num);
-N                    }                 
-N                    bit = 1;
-N                    break;
-N                }
-N            }
+N            if(bit > 1)
+N			{
+N				bit --;
+N				set_limit[bit-1] = '\0';
+N			}
+N			if(bit == dot_flag)
+N			{
+N				dot_flag = 0;
+N			}
+N			TEXT_SetText(hItem,set_limit);
 N            break;
 N        }
 N        case set_85:
@@ -58439,134 +57785,293 @@ X            GUI_HWIN hItem;
 N//            WM_InvalidateWindow(hWinset);
 N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_157);
 X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x0138));
-N            switch(bit){
-N                case 1:
-N                {
-N                    set_min_pc = atoi(num) * 1000;
-X                    InFlashSave[3] = atoi(num) * 1000;
-N                    if(set_min_pc >= set_max_c){
-X                    if(InFlashSave[3] >= Run_Control[18]){
-N                        set_min_pc = 0;
-X                        InFlashSave[3] = 0;
-N                    }  
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                        
-N                    bit = 2;
-N                    break;
-N                }
-N                case 2:
-N                {
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-N                    {
-N                        dot_flag = 1;
-N                    }else{
-N                        set_min_pc = set_min_pc * 10 + atoi(num) * 1000;
-X                        InFlashSave[3] = InFlashSave[3] * 10 + atoi(num) * 1000;
-N                    }
-N                    if(set_min_pc >= set_max_c){
-X                    if(InFlashSave[3] >= Run_Control[18]){
-N                        set_min_pc = 0;
-X                        InFlashSave[3] = 0;
-N                    }
-N                    bit = 3;
-N                    break;
-N                }
-N                case 3:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-N                        {                            
-N                            dot_flag = 2;
-N                        }else{
-N                            set_min_pc = 0;
-X                            InFlashSave[3] = 0;
-N                        }
-N                    }else{
-N                        set_min_pc = set_min_pc + atoi(num) * 100;
-X                        InFlashSave[3] = InFlashSave[3] + atoi(num) * 100;
-N                    }
-N                    if(set_min_pc >= set_max_c){
-X                    if(InFlashSave[3] >= Run_Control[18]){
-N                        set_min_pc = 0;
-X                        InFlashSave[3] = 0;
-N                    }
-N                    bit = 4;
-N                    break;
-N                }
-N                case 4:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_min_pc = 0;
-X                        InFlashSave[3] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_min_pc = set_min_pc + atoi(num) * 100;
-X                        InFlashSave[3] = InFlashSave[3] + atoi(num) * 100;
-N                    }else{
-N                        set_min_pc = set_min_pc + atoi(num) * 10;
-X                        InFlashSave[3] = InFlashSave[3] + atoi(num) * 10;
-N                    }
-N                    if(set_min_pc >= set_max_c){
-X                    if(InFlashSave[3] >= Run_Control[18]){
-N                        set_min_pc = 0;
-X                        InFlashSave[3] = 0;
-N                    }
-N                    bit = 5;
-N                    break;
-N                }
-N                case 5:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_min_pc = 0;
-X                        InFlashSave[3] = 0;
-N                    }else if(dot_flag == 1){
-N                        set_min_pc = set_min_pc + atoi(num);
-X                        InFlashSave[3] = InFlashSave[3] + atoi(num);
-N                    }else{
-N                        set_min_pc = set_min_pc + atoi(num) * 10;
-X                        InFlashSave[3] = InFlashSave[3] + atoi(num) * 10;
-N                    }
-N                    if(set_min_pc >= set_max_c){
-X                    if(InFlashSave[3] >= Run_Control[18]){
-N                        set_min_pc = 0;
-X                        InFlashSave[3] = 0;
-N                    }
-N                    bit = 6;
-N                    break;
-N                }
-N                case 6:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_min_pc = 0;
-X                        InFlashSave[3] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_min_pc = set_min_pc + atoi(num);
-X                        InFlashSave[3] = InFlashSave[3] + atoi(num);
-N                    }                 
-N                    bit = 1;
-N                    break;
-N                }
-N            }
+N            if(bit > 1)
+N			{
+N				bit --;
+N				set_limit[bit-1] = '\0';
+N			}
+N			if(bit == dot_flag)
+N			{
+N				dot_flag = 0;
+N			}
+N			TEXT_SetText(hItem,set_limit);
 N            break;
 N        }
 N	}
 N        
-N    }
+W "..\APP\settings.c" 3219 8 variable "i"  was declared but never referenced
 N}
+N//系统设置界面数据输入
+Nvoid INPUT_NUM(char* num);            
+Nvoid INPUT_NUM(char* num){
+N    u8 i;
+N    switch(set_sw){
+N        case set_12:
+X        case 11:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinset);
+N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_35);
+X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x60));
+N            if(bit < 7)
+N			{
+N				strcat(set_limit,num);
+N			}
+N			if(dot_flag != 0 && strcmp(num,".") == 0)
+N			{
+N				
+N			}else{			
+N				
+N				if(dot_flag == 0 && strcmp(num,".") == 0)
+N				{
+N					dot_flag = bit;
+N				}
+N				bit ++;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N            break;
+N        }
+N        case set_13:
+X        case 12:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinset);
+N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_36);
+X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x61));
+N            if(bit < 7)
+N			{
+N				strcat(set_limit,num);
+N			}
+N			if(dot_flag != 0 && strcmp(num,".") == 0)
+N			{
+N				
+N			}else{			
+N				
+N				if(dot_flag == 0 && strcmp(num,".") == 0)
+N				{
+N					dot_flag = bit;
+N				}
+N				bit ++;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N            break;
+N        }
+N		case set_82:
+X		case 81:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinset);
+N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_154);
+X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x0135));
+N            if(bit < 7)
+N			{
+N				strcat(set_limit,num);
+N			}
+N			if(dot_flag != 0 && strcmp(num,".") == 0)
+N			{
+N				
+N			}else{			
+N				
+N				if(dot_flag == 0 && strcmp(num,".") == 0)
+N				{
+N					dot_flag = bit;
+N				}
+N				bit ++;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N            break;
+N        }
+N        case set_83:
+X        case 82:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinset);
+N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_155);
+X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x0136));
+N            if(bit < 7)
+N			{
+N				strcat(set_limit,num);
+N			}
+N			if(dot_flag != 0 && strcmp(num,".") == 0)
+N			{
+N				
+N			}else{			
+N				
+N				if(dot_flag == 0 && strcmp(num,".") == 0)
+N				{
+N					dot_flag = bit;
+N				}
+N				bit ++;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N            break;
+N        }
+N		
+N        case set_14:
+X        case 13:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinset);
+N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_37);
+X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x62));
+N            if(bit < 7)
+N			{
+N				strcat(set_limit,num);
+N			}
+N			if(dot_flag != 0 && strcmp(num,".") == 0)
+N			{
+N				
+N			}else{			
+N				
+N				if(dot_flag == 0 && strcmp(num,".") == 0)
+N				{
+N					dot_flag = bit;
+N				}
+N				bit ++;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N            break;           
+N        }
+N        case set_15:
+X        case 14:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinset);
+N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_38);
+X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x63));
+N            if(bit < 7)
+N			{
+N				strcat(set_limit,num);
+N			}
+N			if(dot_flag != 0 && strcmp(num,".") == 0)
+N			{
+N				
+N			}else{			
+N				
+N				if(dot_flag == 0 && strcmp(num,".") == 0)
+N				{
+N					dot_flag = bit;
+N				}
+N				bit ++;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N            break;
+N        }
+N        case set_16:
+X        case 15:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinset);
+N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_39);
+X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x64));
+N            if(bit < 7)
+N			{
+N				strcat(set_limit,num);
+N			}
+N			if(dot_flag != 0 && strcmp(num,".") == 0)
+N			{
+N				
+N			}else{			
+N				
+N				if(dot_flag == 0 && strcmp(num,".") == 0)
+N				{
+N					dot_flag = bit;
+N				}
+N				bit ++;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N            break;
+N        }
+N        case set_17:
+X        case 16:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinset);
+N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_40);
+X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x65));
+N            if(bit < 7)
+N			{
+N				strcat(set_limit,num);
+N			}
+N			if(dot_flag != 0 && strcmp(num,".") == 0)
+N			{
+N				
+N			}else{			
+N				
+N				if(dot_flag == 0 && strcmp(num,".") == 0)
+N				{
+N					dot_flag = bit;
+N				}
+N				bit ++;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N            break;
+N		}
+N		case set_84:
+X		case 83:
+N		{
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinset);
+N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_156);
+X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x0137));
+N            if(bit < 7)
+N			{
+N				strcat(set_limit,num);
+N			}
+N			if(dot_flag != 0 && strcmp(num,".") == 0)
+N			{
+N				
+N			}else{			
+N				
+N				if(dot_flag == 0 && strcmp(num,".") == 0)
+N				{
+N					dot_flag = bit;
+N				}
+N				bit ++;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N            break;
+N        }
+N        case set_85:
+X        case 84:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinset);
+N            hItem = WM_GetDialogItem(hWinset, ID_TEXT_157);
+X            hItem = WM_GetDialogItem(hWinset, (0x800 + 0x0138));
+N            if(bit < 7)
+N			{
+N				strcat(set_limit,num);
+N			}
+N			if(dot_flag != 0 && strcmp(num,".") == 0)
+N			{
+N				
+N			}else{			
+N				
+N				if(dot_flag == 0 && strcmp(num,".") == 0)
+N				{
+N					dot_flag = bit;
+N				}
+N				bit ++;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N            break;
+N        }
+N	}
+N        
+W "..\APP\settings.c" 3398 8 variable "i"  was declared but never referenced
+N}
+N
 N
 N
 N

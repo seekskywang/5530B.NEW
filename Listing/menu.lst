@@ -53714,8 +53714,15 @@ N  if(page_sw == face_graph)
 X  if(page_sw == 0)
 N  {      
 N  }else{
-W "..\APP\menu.c" 480 7 function "IO_OFF" declared implicitly
-N      IO_OFF();
+N	  GPIO_SetBits(GPIOA,GPIO_Pin_15);//µç×Ó¸ºÔØOFF
+X	  GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x8000));
+N	  GPIO_ResetBits(GPIOC,GPIO_Pin_1);//¹Ø±ÕµçÔ´Êä³ö
+X	  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+W "..\APP\menu.c" 482 4 function "Delay_ms" declared implicitly
+N	  Delay_ms(500);
+N	  GPIO_SetBits(GPIOC,GPIO_Pin_13);//¹Ø±ÕµçÔ´Êä³ö¼ÌµçÆ
+X	  GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x2000));
+N//      IO_OFF();
 N  }
 N  page_sw = face_menu;
 X  page_sw = 2;
@@ -53864,7 +53871,7 @@ Nvoid MENU_SET(void);
 Nvoid MENU_SET(void)
 N{
 N    vu8 i;
-N    char buf[5];    
+N    char buf[6];    
 N
 N    float dis_output_v;
 N    float dis_output_c; 
@@ -53875,11 +53882,11 @@ N    {
 N      SET_Voltage = /*3000*/ 6200;
 X      Run_Control[1] =   6200;
 N    }
-N    if(SET_Current > 15000)
-X    if(Run_Control[2] > 15000)
+N    if(SET_Current > 10000)
+X    if(Run_Control[2] > 10000)
 N    {
-N      SET_Current = 15000;
-X      Run_Control[2] = 15000;
+N      SET_Current = 10000;
+X      Run_Control[2] = 10000;
 N    }
 N    switch(set_sw){
 N        case set_10:
@@ -53900,7 +53907,7 @@ X            hItem = WM_GetDialogItem(hWinWind, (0x800 + 0x66));
 N            TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
 N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
-N            for(i=0;i<5;i++)
+N            for(i=0;i<6;i++)
 N            {
 N                set_limit[i] = '\0';
 N            }
@@ -53921,10 +53928,25 @@ N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透
 X            TEXT_SetBkColor(hItem,0xFFFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_WHITE);
 X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N			if(dot_flag == 0){
+N				pow_v = atoi(set_limit)*100;					
+X				Run_Control[38] = atoi(set_limit)*100;					
+N			}else if(dot_flag != 0){
+N				memset(buf, '\0', sizeof(buf));
+N				strncpy(buf,set_limit,dot_flag + 2);
+N				pow_v = atof(buf)*100;
+X				Run_Control[38] = atof(buf)*100;
+N			}
+N			if(pow_v > 6200)
+X			if(Run_Control[38] > 6200)
+N			{
+N				pow_v = 6200;
+X				Run_Control[38] = 6200;
+N			}
 N            SET_Voltage = pow_v;
 X            Run_Control[1] = Run_Control[38];
-N            if(SET_Voltage/100 * SET_Current/1000 > 200)
-X            if(Run_Control[1]/100 * Run_Control[2]/1000 > 200)
+N            if(SET_Voltage/100 * SET_Current/1000 > 250)
+X            if(Run_Control[1]/100 * Run_Control[2]/1000 > 250)
 N            {
 N                SET_Voltage = 0;
 X                Run_Control[1] = 0;
@@ -53935,7 +53957,7 @@ N
 N            sprintf(buf,"%.2f",dis_output_v);
 N            TEXT_SetText(hItem,buf);
 N            
-N                                        
+N                                                                     
 N            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_33);
 X            hItem = WM_GetDialogItem(hWinWind, (0x800 + 0x3D));
 N            TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
@@ -53967,7 +53989,7 @@ X            hItem = WM_GetDialogItem(hWinWind, (0x800 + 0x67));
 N            TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
 N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
-N            for(i=0;i<5;i++)
+N            for(i=0;i<6;i++)
 N            {
 N                set_limit[i] = '\0';
 N            }
@@ -53988,16 +54010,26 @@ N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透
 X            TEXT_SetBkColor(hItem,0xFFFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_WHITE);
 X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N              SET_Current = pow_c;
-X              Run_Control[2] = Run_Control[40];
-N            if(SET_Current > 5000)
-X            if(Run_Control[2] > 5000)
+N			if(dot_flag == 0){
+N				pow_c = atoi(set_limit)*1000;					
+X				Run_Control[40] = atoi(set_limit)*1000;					
+N			}else if(dot_flag != 0){
+N				memset(buf, '\0', sizeof(buf));
+N				strncpy(buf,set_limit,dot_flag + 3);
+N				pow_c = atof(buf)*1000;
+X				Run_Control[40] = atof(buf)*1000;
+N			}
+N              
+N            if(pow_c > 10000)
+X            if(Run_Control[40] > 10000)
 N            {
-N                SET_Current = 5000;               
-X                Run_Control[2] = 5000;               
+N                pow_c = 10000;               
+X                Run_Control[40] = 10000;               
 N            }
-N            if(SET_Voltage/100 * SET_Current/1000 > 200)
-X            if(Run_Control[1]/100 * Run_Control[2]/1000 > 200)
+N			SET_Current = pow_c;
+X			Run_Control[2] = Run_Control[40];
+N            if(SET_Voltage/100 * SET_Current/1000 > 250)
+X            if(Run_Control[1]/100 * Run_Control[2]/1000 > 250)
 N            {
 N                SET_Current = 0;
 X                Run_Control[2] = 0;
@@ -54038,7 +54070,7 @@ X            hItem = WM_GetDialogItem(hWinWind, (0x800 + 0x012E));
 N            TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
 N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
-N            for(i=0;i<5;i++)
+N            for(i=0;i<6;i++)
 N            {
 N                set_limit[i] = '\0';
 N            }
@@ -54059,11 +54091,20 @@ N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透
 X            TEXT_SetBkColor(hItem,0xFFFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_WHITE);
 X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N            if(set_pow_cutoffc > 5000)
-X            if(InFlashSave[5] > 5000)
+N			if(dot_flag == 0){
+N				set_pow_cutoffc = atoi(set_limit)*1000;					
+X				InFlashSave[5] = atoi(set_limit)*1000;					
+N			}else if(dot_flag != 0){
+N				memset(buf, '\0', sizeof(buf));
+N				strncpy(buf,set_limit,dot_flag + 3);
+N				set_pow_cutoffc = atof(buf)*1000;
+X				InFlashSave[5] = atof(buf)*1000;
+N			}
+N            if(set_pow_cutoffc > 10000)
+X            if(InFlashSave[5] > 10000)
 N            {
-N                set_pow_cutoffc = 5000;               
-X                InFlashSave[5] = 5000;               
+N                set_pow_cutoffc = 10000;               
+X                InFlashSave[5] = 10000;               
 N            }
 N            pow_cutoffc = (float)set_pow_cutoffc/1000;
 X            pow_cutoffc = (float)InFlashSave[5]/1000;
@@ -54087,11 +54128,74 @@ N         }
 N         default:break;
 N     }
 N}
+Nvoid DEL_POW(void)
+N{
+N	switch(set_sw){
+N		case set_18:
+X		case 17:
+N        {
+N			WM_HWIN hItem;
+X			GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinWind);
+N            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_41);
+X            hItem = WM_GetDialogItem(hWinWind, (0x800 + 0x66));
+N			if(bit > 1)
+N			{
+N				bit --;
+N				set_limit[bit-1] = '\0';
+N			}
+N			if(bit == dot_flag)
+N			{
+N				dot_flag = 0;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N		}break;
+N		case set_19:
+X		case 18:
+N        {
+N			WM_HWIN hItem;
+X			GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinWind);
+N            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_42);
+X            hItem = WM_GetDialogItem(hWinWind, (0x800 + 0x67));
+N			if(bit > 1)
+N			{
+N				bit --;
+N				set_limit[bit-1] = '\0';
+N			}
+N			if(bit == dot_flag)
+N			{
+N				dot_flag = 0;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N		}break;
+N		case set_89:
+X		case 88:
+N        {
+N            WM_HWIN hItem;
+X            GUI_HWIN hItem;
+N//            WM_InvalidateWindow(hWinWind);
+N            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_144);
+X            hItem = WM_GetDialogItem(hWinWind, (0x800 + 0x012E));
+N			if(bit > 1)
+N			{
+N				bit --;
+N				set_limit[bit-1] = '\0';
+N			}
+N			if(bit == dot_flag)
+N			{
+N				dot_flag = 0;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N		}break;
+N	}
+N}
 N
 N
 N
 Nvoid INPUT_POW(char* num);            
-Nvoid INPUT_POW(char* num){    
+Nvoid INPUT_POW(char* num){ 
+N	u8 i;
 N    switch(set_sw){
 N		case set_18:
 X		case 17:
@@ -54101,90 +54205,127 @@ X            GUI_HWIN hItem;
 N//            WM_InvalidateWindow(hWinWind);
 N            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_41);
 X            hItem = WM_GetDialogItem(hWinWind, (0x800 + 0x66));
-N            switch(bit){
-N                case 1:
-N                {
-N                    pow_v = atoi(num) * 100;
-X                    Run_Control[38] = atoi(num) * 100;
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    bit = 2;
-N                    break;
-N                }
-N                case 2:
-N                {
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-N                    {
-N                        dot_flag = 1;
-N                    }else{
-N                        pow_v = pow_v * 10 + atoi(num) * 100;
-X                        Run_Control[38] = Run_Control[38] * 10 + atoi(num) * 100;
-N                    }
-N                    bit = 3;
-N                    break;
-N                }
-N                case 3:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-N                        {                            
-N                            dot_flag = 2;
-N                        }else{
-N                            pow_v = /*3000*/ 6200;
-X                            Run_Control[38] =   6200;
-N                        }
-N                    }else{
-N                        pow_v = pow_v + atoi(num) * 10;
-X                        Run_Control[38] = Run_Control[38] + atoi(num) * 10;
-N                    }
-N                                       
-N                    bit = 4;
-N                    break;
-N                }
-N                case 4:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        pow_v = /*3000*/ 6200;
-X                        Run_Control[38] =   6200;
-N                    }else if(dot_flag == 2){
-N                        pow_v = pow_v + atoi(num) * 10;
-X                        Run_Control[38] = Run_Control[38] + atoi(num) * 10;
-N                    }else{
-N                        pow_v = pow_v + atoi(num);
-X                        Run_Control[38] = Run_Control[38] + atoi(num);
-N                    }
-N                                       
-N                    bit = 5;
-N                    break;
-N                }
-N                case 5:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        pow_v = /*3000*/ 6200;
-X                        Run_Control[38] =   6200;
-N                    }else if(dot_flag == 1){
-N                        pow_v = pow_v;
-X                        Run_Control[38] = Run_Control[38];
-N                    }else{
-N                        pow_v = pow_v + atoi(num);
-X                        Run_Control[38] = Run_Control[38] + atoi(num);
-N                    }
-N                                       
-N                    bit = 1;
-N                    break;
-N                }
-N            }
+N			if(bit < 6)
+N			{
+N				strcat(set_limit,num);
+N			}
+N			if(dot_flag != 0 && strcmp(num,".") == 0)
+N			{
+N				
+N			}else{			
+N				
+N				if(dot_flag == 0 && strcmp(num,".") == 0)
+N				{
+N					dot_flag = bit;
+N				}
+N				bit ++;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N//            switch(bit){
+N//                case 1:
+N//                {
+N//					for(i=0;i<6;i++)
+N//					{
+N//						set_limit[i] = '\0';
+N//					}
+N//                    pow_v = atoi(num) * 100;
+N//                    strcat(set_limit,num);            
+N//                    TEXT_SetText(hItem,set_limit);
+N//                    bit = 2;
+N//                    break;
+N//                }
+N//                case 2:
+N//                {
+N//                    strcat(set_limit,num);
+N//					if(set_limit[bit-1] == 0x62){
+N//						set_limit[bit-1] = '\0';
+N//						set_limit[bit-2] = '\0';
+N//						bit -= 1;
+N//						pow_v = pow_v - atoi(num) * 100;
+N//						TEXT_SetText(hItem,set_limit);
+N//						break;
+N//					}
+N//                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
+N//                    {
+N//                        dot_flag = 1;
+N//                    }else{
+N//                        pow_v = pow_v * 10 + atoi(num) * 100;
+N//                    }           
+N//                    TEXT_SetText(hItem,set_limit);
+N//                    bit = 3;
+N//                    break;
+N//                }
+N//                case 3:
+N//                {
+N//                    strcat(set_limit,num);
+N//					if(set_limit[bit-1] == 0x62){
+N//						set_limit[bit-1] = '\0';
+N//						set_limit[bit-2] = '\0';
+N//						bit -= 1;
+N//						TEXT_SetText(hItem,set_limit);
+N//						break;
+N//					}
+N//                    if(dot_flag == 0)
+N//                    {
+N//                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
+N//                        {                            
+N//                            dot_flag = 2;
+N//                        }else{
+N//                            pow_v = /*3000*/ 6200;
+N//                        }
+N//                    }else{
+N//						pow_v = pow_v + atoi(num) * 10;
+N//                    }
+N//                    TEXT_SetText(hItem,set_limit);                  
+N//                    bit = 4;
+N//                    break;
+N//                }
+N//                case 4:
+N//                {
+N//                    strcat(set_limit,num);
+N//					if(set_limit[bit-1] == 0x62){
+N//						set_limit[bit-1] = '\0';
+N//						set_limit[bit-2] = '\0';
+N//						bit -= 1;
+N//						TEXT_SetText(hItem,set_limit);
+N//						pow_v = pow_v - atoi(num) * 10;
+N//						break;
+N//					}
+N//                    if(dot_flag == 0)
+N//                    {
+N//                        pow_v = /*3000*/ 6200;
+N//                    }else if(dot_flag == 2){
+N//                        pow_v = pow_v + atoi(num) * 10;
+N//                    }else{
+N//                        pow_v = pow_v + atoi(num);
+N//                    }
+N//                    TEXT_SetText(hItem,set_limit);                   
+N//                    bit = 5;
+N//                    break;
+N//                }
+N//                case 5:
+N//                {
+N//                    strcat(set_limit,num);
+N//					if(set_limit[bit-1] == 0x62){
+N//						set_limit[bit-1] = '\0';
+N//						set_limit[bit-2] = '\0';
+N//						bit -= 1;
+N//						TEXT_SetText(hItem,set_limit);
+N//						break;
+N//					}
+N//                    if(dot_flag == 0)
+N//                    {
+N//                        pow_v = /*3000*/ 6200;
+N//                    }else if(dot_flag == 1){
+N//                        pow_v = pow_v;
+N//                    }else{
+N//                        pow_v = pow_v + atoi(num);
+N//                    }
+N//                    TEXT_SetText(hItem,set_limit);                   
+N//                    bit = 1;
+N//                    break;
+N//                }
+N//            }
 N            break;
 N        }
 N        case set_19:
@@ -54195,105 +54336,113 @@ X            GUI_HWIN hItem;
 N//            WM_InvalidateWindow(hWinWind);
 N            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_42);
 X            hItem = WM_GetDialogItem(hWinWind, (0x800 + 0x67));
-N            switch(bit){
-N                case 1:
-N                {
-N                    pow_c = atoi(num) * 1000;
-X                    Run_Control[40] = atoi(num) * 1000;
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    bit = 2;
-N                    break;
-N                }
-N                case 2:
-N                {
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-N                    {
-N                        dot_flag = 1;
-N                    }else{
-N                        pow_c = pow_c * 10 + atoi(num) * 1000;
-X                        Run_Control[40] = Run_Control[40] * 10 + atoi(num) * 1000;
-N                    }
-N                    bit = 3;
-N                    break;
-N                }
-N                case 3:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-N                        {                            
-N                            dot_flag = 2;
-N                        }else{
-N                            pow_c = 5000;
-X                            Run_Control[40] = 5000;
-N                        }
-N                    }else{
-N                        pow_c = pow_c + atoi(num) * 100;
-X                        Run_Control[40] = Run_Control[40] + atoi(num) * 100;
-N                    }
-N                                       
-N                    bit = 4;
-N                    break;
-N                }
-N                case 4:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        pow_c = 5000;
-X                        Run_Control[40] = 5000;
-N                    }else if(dot_flag == 2){
-N                        pow_c = pow_c + atoi(num) * 100;
-X                        Run_Control[40] = Run_Control[40] + atoi(num) * 100;
-N                    }else{
-N                        pow_c = pow_c + atoi(num) * 10;
-X                        Run_Control[40] = Run_Control[40] + atoi(num) * 10;
-N                    }
-N                                       
-N                    bit = 5;
-N                    break;
-N                }
-N                case 5:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        pow_c = 5000;
-X                        Run_Control[40] = 5000;
-N                    }else if(dot_flag == 1){
-N                        pow_c = pow_c + atoi(num);
-X                        Run_Control[40] = Run_Control[40] + atoi(num);
-N                    }else{
-N                        pow_c = pow_c + atoi(num) * 10;
-X                        Run_Control[40] = Run_Control[40] + atoi(num) * 10;
-N                    }
-N                                       
-N                    bit = 6;
-N                    break;
-N                }
-N                case 6:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        pow_c = 0;
-X                        Run_Control[40] = 0;
-N                    }else if(dot_flag == 2){
-N                        pow_c = pow_c + atoi(num);
-X                        Run_Control[40] = Run_Control[40] + atoi(num);
-N                    }                 
-N                    bit = 1;
-N                    break;
-N                }
-N            }
+N			if(bit < 7)
+N			{
+N				strcat(set_limit,num);
+N			}
+N			if(dot_flag != 0 && strcmp(num,".") == 0)
+N			{
+N				
+N			}else{			
+N				
+N				if(dot_flag == 0 && strcmp(num,".") == 0)
+N				{
+N					dot_flag = bit;
+N				}
+N				bit ++;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N//            switch(bit){
+N//                case 1:
+N//                {
+N//					for(i=0;i<6;i++)
+N//					{
+N//						set_limit[i] = '\0';
+N//					}
+N//                    pow_c = atoi(num) * 1000;
+N//                    strcat(set_limit,num);            
+N//                    TEXT_SetText(hItem,set_limit);
+N//                    bit = 2;
+N//                    break;
+N//                }
+N//                case 2:
+N//                {
+N//                    strcat(set_limit,num);            
+N//                    TEXT_SetText(hItem,set_limit);
+N//                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
+N//                    {
+N//                        dot_flag = 1;
+N//                    }else{
+N//                        pow_c = pow_c * 10 + atoi(num) * 1000;
+N//                    }
+N//                    bit = 3;
+N//                    break;
+N//                }
+N//                case 3:
+N//                {
+N//                    strcat(set_limit,num);
+N//                    TEXT_SetText(hItem,set_limit);
+N//                    if(dot_flag == 0)
+N//                    {
+N//                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
+N//                        {                            
+N//                            dot_flag = 2;
+N//                        }else{
+N//                            pow_c = 5000;
+N//                        }
+N//                    }else{
+N//                        pow_c = pow_c + atoi(num) * 100;
+N//                    }
+N//                                       
+N//                    bit = 4;
+N//                    break;
+N//                }
+N//                case 4:
+N//                {
+N//                    strcat(set_limit,num);
+N//                    TEXT_SetText(hItem,set_limit);
+N//                    if(dot_flag == 0)
+N//                    {
+N//                        pow_c = 5000;
+N//                    }else if(dot_flag == 2){
+N//                        pow_c = pow_c + atoi(num) * 100;
+N//                    }else{
+N//                        pow_c = pow_c + atoi(num) * 10;
+N//                    }
+N//                                       
+N//                    bit = 5;
+N//                    break;
+N//                }
+N//                case 5:
+N//                {
+N//                    strcat(set_limit,num);
+N//                    TEXT_SetText(hItem,set_limit);
+N//                    if(dot_flag == 0)
+N//                    {
+N//                        pow_c = 5000;
+N//                    }else if(dot_flag == 1){
+N//                        pow_c = pow_c + atoi(num);
+N//                    }else{
+N//                        pow_c = pow_c + atoi(num) * 10;
+N//                    }
+N//                                       
+N//                    bit = 6;
+N//                    break;
+N//                }
+N//                case 6:
+N//                {
+N//                    strcat(set_limit,num);
+N//                    TEXT_SetText(hItem,set_limit);
+N//                    if(dot_flag == 0)
+N//                    {
+N//                        pow_c = 0;
+N//                    }else if(dot_flag == 2){
+N//                        pow_c = pow_c + atoi(num);
+N//                    }                 
+N//                    bit = 1;
+N//                    break;
+N//                }
+N//            }
 N        }
 N        break;
 N		case set_89:
@@ -54304,108 +54453,117 @@ X            GUI_HWIN hItem;
 N//            WM_InvalidateWindow(hWinWind);
 N            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_144);
 X            hItem = WM_GetDialogItem(hWinWind, (0x800 + 0x012E));
-N            switch(bit){
-N                case 1:
-N                {
-N                    set_pow_cutoffc = atoi(num) * 1000;
-X                    InFlashSave[5] = atoi(num) * 1000;
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    bit = 2;
-N                    break;
-N                }
-N                case 2:
-N                {
-N                    strcat(set_limit,num);            
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-N                    {
-N                        dot_flag = 1;
-N                    }else{
-N                        set_pow_cutoffc = set_pow_cutoffc * 10 + atoi(num) * 1000;
-X                        InFlashSave[5] = InFlashSave[5] * 10 + atoi(num) * 1000;
-N                    }
-N                    bit = 3;
-N                    break;
-N                }
-N                case 3:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-N                        {                            
-N                            dot_flag = 2;
-N                        }else{
-N                            set_pow_cutoffc = 5000;
-X                            InFlashSave[5] = 5000;
-N                        }
-N                    }else{
-N                        set_pow_cutoffc = set_pow_cutoffc + atoi(num) * 100;
-X                        InFlashSave[5] = InFlashSave[5] + atoi(num) * 100;
-N                    }
-N                                       
-N                    bit = 4;
-N                    break;
-N                }
-N                case 4:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_pow_cutoffc = 5000;
-X                        InFlashSave[5] = 5000;
-N                    }else if(dot_flag == 2){
-N                        set_pow_cutoffc = set_pow_cutoffc + atoi(num) * 100;
-X                        InFlashSave[5] = InFlashSave[5] + atoi(num) * 100;
-N                    }else{
-N                        set_pow_cutoffc = set_pow_cutoffc + atoi(num) * 10;
-X                        InFlashSave[5] = InFlashSave[5] + atoi(num) * 10;
-N                    }
-N                                       
-N                    bit = 5;
-N                    break;
-N                }
-N                case 5:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_pow_cutoffc = 5000;
-X                        InFlashSave[5] = 5000;
-N                    }else if(dot_flag == 1){
-N                        set_pow_cutoffc = set_pow_cutoffc + atoi(num);
-X                        InFlashSave[5] = InFlashSave[5] + atoi(num);
-N                    }else{
-N                        set_pow_cutoffc = set_pow_cutoffc + atoi(num) * 10;
-X                        InFlashSave[5] = InFlashSave[5] + atoi(num) * 10;
-N                    }
-N                                       
-N                    bit = 6;
-N                    break;
-N                }
-N                case 6:
-N                {
-N                    strcat(set_limit,num);
-N                    TEXT_SetText(hItem,set_limit);
-N                    if(dot_flag == 0)
-N                    {
-N                        set_pow_cutoffc = 0;
-X                        InFlashSave[5] = 0;
-N                    }else if(dot_flag == 2){
-N                        set_pow_cutoffc = set_pow_cutoffc + atoi(num);
-X                        InFlashSave[5] = InFlashSave[5] + atoi(num);
-N                    }                 
-N                    bit = 1;
-N                    break;
-N                }
-N            }
+N			if(bit < 7)
+N			{
+N				strcat(set_limit,num);
+N			}
+N			if(dot_flag != 0 && strcmp(num,".") == 0)
+N			{
+N				
+N			}else{			
+N				
+N				if(dot_flag == 0 && strcmp(num,".") == 0)
+N				{
+N					dot_flag = bit;
+N				}
+N				bit ++;
+N			}
+N			TEXT_SetText(hItem,set_limit);
+N//            switch(bit){
+N//                case 1:
+N//                {
+N//					for(i=0;i<6;i++)
+N//					{
+N//						set_limit[i] = '\0';
+N//					}
+N//                    set_pow_cutoffc = atoi(num) * 1000;
+N//                    strcat(set_limit,num);            
+N//                    TEXT_SetText(hItem,set_limit);
+N//                    bit = 2;
+N//                    break;
+N//                }
+N//                case 2:
+N//                {
+N//                    strcat(set_limit,num);            
+N//                    TEXT_SetText(hItem,set_limit);
+N//                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
+N//                    {
+N//                        dot_flag = 1;
+N//                    }else{
+N//                        set_pow_cutoffc = set_pow_cutoffc * 10 + atoi(num) * 1000;
+N//                    }
+N//                    bit = 3;
+N//                    break;
+N//                }
+N//                case 3:
+N//                {
+N//                    strcat(set_limit,num);
+N//                    TEXT_SetText(hItem,set_limit);
+N//                    if(dot_flag == 0)
+N//                    {
+N//                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
+N//                        {                            
+N//                            dot_flag = 2;
+N//                        }else{
+N//                            set_pow_cutoffc = 5000;
+N//                        }
+N//                    }else{
+N//                        set_pow_cutoffc = set_pow_cutoffc + atoi(num) * 100;
+N//                    }
+N//                                       
+N//                    bit = 4;
+N//                    break;
+N//                }
+N//                case 4:
+N//                {
+N//                    strcat(set_limit,num);
+N//                    TEXT_SetText(hItem,set_limit);
+N//                    if(dot_flag == 0)
+N//                    {
+N//                        set_pow_cutoffc = 5000;
+N//                    }else if(dot_flag == 2){
+N//                        set_pow_cutoffc = set_pow_cutoffc + atoi(num) * 100;
+N//                    }else{
+N//                        set_pow_cutoffc = set_pow_cutoffc + atoi(num) * 10;
+N//                    }
+N//                                       
+N//                    bit = 5;
+N//                    break;
+N//                }
+N//                case 5:
+N//                {
+N//                    strcat(set_limit,num);
+N//                    TEXT_SetText(hItem,set_limit);
+N//                    if(dot_flag == 0)
+N//                    {
+N//                        set_pow_cutoffc = 5000;
+N//                    }else if(dot_flag == 1){
+N//                        set_pow_cutoffc = set_pow_cutoffc + atoi(num);
+N//                    }else{
+N//                        set_pow_cutoffc = set_pow_cutoffc + atoi(num) * 10;
+N//                    }
+N//                                       
+N//                    bit = 6;
+N//                    break;
+N//                }
+N//                case 6:
+N//                {
+N//                    strcat(set_limit,num);
+N//                    TEXT_SetText(hItem,set_limit);
+N//                    if(dot_flag == 0)
+N//                    {
+N//                        set_pow_cutoffc = 0;
+N//                    }else if(dot_flag == 2){
+N//                        set_pow_cutoffc = set_pow_cutoffc + atoi(num);
+N//                    }                 
+N//                    bit = 1;
+N//                    break;
+N//                }
+N//            }
 N        }
 N        break;
 N    }    
+W "..\APP\menu.c" 831 5 variable "i"  was declared but never referenced
 N}
 N
 Nvoid test_pow(void)

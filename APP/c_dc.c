@@ -1598,7 +1598,7 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_54);
             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
             TEXT_SetTextColor(hItem, GUI_BLACK);
-            for(i=0;i<5;i++)
+            for(i=0;i<6;i++)
             {
                 set_limit[i] = '\0';
             }
@@ -1614,15 +1614,30 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_54);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-            if(pow_step == step1)
+//            if(pow_step == step1)
+//            {
+//                SET_Voltage = opv1;
+//            }else if(pow_step == step2){
+//                SET_Voltage = opv2;
+//            }else if(pow_step == step3){
+//                SET_Voltage = opv3;
+//            }
+            if(dot_flag == 0){
+				opv1 = atoi(set_limit)*100;					
+			}else if(dot_flag != 0){
+				memset(buf, '\0', sizeof(buf));
+				strncpy(buf,set_limit,dot_flag + 2);
+				opv1 = atof(buf)*100;
+			}
+			if(opv1 > 6200)
+			{
+				opv1 = 6200;
+			}
+            SET_Voltage = opv1;
+            if(SET_Voltage/100 * SET_Current/1000 > 250)
             {
-                SET_Voltage = opv1;
-            }else if(pow_step == step2){
-                SET_Voltage = opv2;
-            }else if(pow_step == step3){
-                SET_Voltage = opv3;
+                SET_Voltage = 0;
             }
-            
             dis_output_v = (float)SET_Voltage/100;
             sprintf(buf,"%.2f",dis_output_v);
             TEXT_SetText(hItem,buf);
@@ -1652,7 +1667,7 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_51);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-            for(i=0;i<5;i++)
+            for(i=0;i<6;i++)
             {
                 set_limit[i] = '\0';
             }
@@ -1671,19 +1686,36 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_55);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-            if(cur_step == step1)
-            {
-                SET_Current = opc1;
-            }else if(cur_step == step2){
-                SET_Current = opc2;
-            }else if(cur_step == step3){
-                SET_Current = opc3;
-            }
+//            if(cur_step == step1)
+//            {
+//                SET_Current = opc1;
+//            }else if(cur_step == step2){
+//                SET_Current = opc2;
+//            }else if(cur_step == step3){
+//                SET_Current = opc3;
+//            }
 //            SET_Current = cdc_cc;
-            if(SET_Current > 5000)
+			if(dot_flag == 0){
+				opc1 = atoi(set_limit)*1000;					
+			}else if(dot_flag != 0){
+				memset(buf, '\0', sizeof(buf));
+				strncpy(buf,set_limit,dot_flag + 3);
+				opc1 = atof(buf)*1000;
+			}
+              
+            if(opc1 > 10000)
             {
-                SET_Current = 5000;               
+                opc1 = 10000;               
             }
+			SET_Current = opc1;
+            if(SET_Voltage/100 * SET_Current/1000 > 250)
+            {
+                SET_Current = 0;
+            }
+//            if(SET_Current > 5000)
+//            {
+//                SET_Current = 5000;               
+//            }
             dis_output_c = (float)SET_Current/1000;
             sprintf(buf,"%.3f",dis_output_c);
             TEXT_SetText(hItem,buf);
@@ -1714,7 +1746,7 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_58);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-            for(i=0;i<5;i++)
+            for(i=0;i<6;i++)
             {
                 set_limit[i] = '\0';
             }
@@ -1733,7 +1765,17 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_62);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-            
+            if(dot_flag == 0){
+				cov1 = atoi(set_limit)*100;					
+			}else if(dot_flag != 0){
+				memset(buf, '\0', sizeof(buf));
+				strncpy(buf,set_limit,dot_flag + 2);
+				cov1 = atof(buf)*100;
+			}
+			if(cov1 > 6200)
+			{
+				cov1 = 6200;
+			}
             if(coffv_step == step1)
             {
                 dis_c_cutoff_v = (float)cov1/100;
@@ -1772,7 +1814,7 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_59);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-            for(i=0;i<5;i++)
+            for(i=0;i<6;i++)
             {
                 set_limit[i] = '\0';
             }
@@ -1791,7 +1833,18 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_63);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-            
+            if(dot_flag == 0){
+				coc1 = atoi(set_limit)*1000;					
+			}else if(dot_flag != 0){
+				memset(buf, '\0', sizeof(buf));
+				strncpy(buf,set_limit,dot_flag + 3);
+				coc1 = atof(buf)*1000;
+			}
+              
+            if(coc1 > 10000)
+            {
+                coc1 = 10000;               
+            }
             if(coffc_step == step1)
             {
                 dis_c_cutoff_c = (float)coc1/1000;
@@ -1828,7 +1881,7 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_60);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-            for(i=0;i<5;i++)
+            for(i=0;i<6;i++)
             {
                 set_limit[i] = '\0';
             }
@@ -1847,7 +1900,14 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_64);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-            
+            if(dot_flag == 0){
+				set_dc_cutoff_v = atoi(set_limit)*1000;					
+			}else if(dot_flag != 0){
+				memset(buf, '\0', sizeof(buf));
+				strncpy(buf,set_limit,dot_flag + 3);
+				set_dc_cutoff_v = atof(buf)*1000;
+			}
+			dis_dc_cutoff_v = (float)set_dc_cutoff_v/1000;
             sprintf(buf,"%.3f",dis_dc_cutoff_v);
             TEXT_SetText(hItem,buf);
                
@@ -1868,7 +1928,7 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_61);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-            for(i=0;i<5;i++)
+            for(i=0;i<6;i++)
             {
                 set_limit[i] = '\0';
             }
@@ -1907,7 +1967,7 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_52);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-            for(i=0;i<5;i++)
+            for(i=0;i<6;i++)
             {
                 set_limit[i] = '\0';
             }
@@ -1926,10 +1986,20 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_56);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-            SET_Current_Laod = cdc_dc;
-            if(SET_Current_Laod > 60000){
-                SET_Current_Laod = 0;
+			if(dot_flag == 0){
+				cdc_dc = atoi(set_limit)*1000;					
+			}else if(dot_flag != 0){
+				memset(buf, '\0', sizeof(buf));
+				strncpy(buf,set_limit,dot_flag + 3);
+				cdc_dc = atof(buf)*1000;
+			}
+			if(cdc_dc > 30000 || (float)cdc_dc/1000 * DISS_Voltage > 200){
+                cdc_dc = 0;
             }
+            SET_Current_Laod = cdc_dc;
+//            if(SET_Current_Laod > 60000){
+//                SET_Current_Laod = 0;
+//            }
             dis_load_c = (float)SET_Current_Laod/1000;
             sprintf(buf,"%.3f",dis_load_c);
             TEXT_SetText(hItem,buf);
@@ -1951,7 +2021,10 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_53);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-               
+            for(i=0;i<6;i++)
+            {
+                set_limit[i] = '\0';
+            }   
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_57);
             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
             TEXT_SetTextColor(hItem, GUI_BLACK);
@@ -1966,7 +2039,15 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_57);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-               
+            if(dot_flag == 0){
+				set_loop_count = atoi(set_limit);					
+			}else if(dot_flag != 0){
+				memset(buf, '\0', sizeof(buf));
+				strncpy(buf,set_limit,dot_flag);
+				set_loop_count = atof(buf);
+			}
+            sprintf(buf,"%3d",set_loop_count);
+            TEXT_SetText(hItem,buf);   
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_53);
             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
             TEXT_SetTextColor(hItem, GUI_BLACK);
@@ -1981,6 +2062,148 @@ void CDC_SET(void)
     }
 }
 
+void DEL_CDC(){
+    switch(set_sw){
+        case set_30:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWincdc);
+            hItem = WM_GetDialogItem(hWincdc, ID_TEXT_54);
+			if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+        case set_31:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWincdc);
+            hItem = WM_GetDialogItem(hWincdc, ID_TEXT_55);
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+        case set_32:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWincdc);
+            hItem = WM_GetDialogItem(hWincdc, ID_TEXT_56);
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+        case set_33:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWincdc);
+            hItem = WM_GetDialogItem(hWincdc, ID_TEXT_57);
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+        case set_38:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWincdc);
+            hItem = WM_GetDialogItem(hWincdc, ID_TEXT_62);
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+        case set_39:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWincdc);
+            hItem = WM_GetDialogItem(hWincdc, ID_TEXT_63);
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+        case set_40:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWincdc);
+            hItem = WM_GetDialogItem(hWincdc, ID_TEXT_64);
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+        case set_41:
+        {
+            WM_HWIN hItem;
+//            WM_InvalidateWindow(hWincdc);
+            hItem = WM_GetDialogItem(hWincdc, ID_TEXT_65);
+            if(bit > 1)
+			{
+				bit --;
+				set_limit[bit-1] = '\0';
+			}
+			if(bit == dot_flag)
+			{
+				dot_flag = 0;
+			}
+			TEXT_SetText(hItem,set_limit);
+            break;
+        }
+        
+    }    
+}
+
 //充放电界面数字键盘输入
            
 void INPUT_CDC(char* num){
@@ -1991,160 +2214,22 @@ void INPUT_CDC(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWincdc);
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_54);
-            switch(bit){
-                case 1:
-                {
-                    if(pow_step == step1)
-                    {
-                        opv1 = atoi(num) * 100;
-                    }else if(pow_step == step2){
-                        opv2 = atoi(num) * 100;
-                    }else if(pow_step == step3){
-                        opv3 = atoi(num) * 100;
-                    }
-//                    SET_Voltage = atoi(num) * 100;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        if(pow_step == step1)
-                        {
-                            opv1 = opv1 * 10 + atoi(num) * 100;
-                        }else if(pow_step == step2){
-                            opv2 = opv2 * 10 + atoi(num) * 100;
-                        }else if(pow_step == step3){
-                           opv3 = opv3 * 10 + atoi(num) * 100;
-                        }
-                        
-//                        SET_Voltage = SET_Voltage * 10 + atoi(num) * 100;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            if(pow_step == step1)
-                            {
-                               opv1 = /*3000*/ 6200;
-                            }else if(pow_step == step2){
-                                opv2 = /*3000*/ 6200;
-                            }else if(pow_step == step3){
-                               opv3 =  /*3000*/ 6200;
-                            }
-//                            SET_Voltage = /*3000*/ 6200;
-                        }
-                    }else{
-                        if(pow_step == step1)
-                        {
-                           opv1 = opv1 + atoi(num) * 10;
-                        }else if(pow_step == step2){
-                            opv2 = opv2 + atoi(num) * 10;
-                        }else if(pow_step == step3){
-                           opv3 = opv3 + atoi(num) * 10;
-                        }
-//                        SET_Voltage = SET_Voltage + atoi(num) * 10;
-                    }
-                                       
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(pow_step == step1)
-                        {
-                           opv1 = /*3000*/ 6200;
-                        }else if(pow_step == step2){
-                            opv2 = /*3000*/ 6200;
-                        }else if(pow_step == step3){
-                           opv3 =  /*3000*/ 6200;
-                        }
-//                        SET_Voltage = /*3000*/ 6200;
-                    }else if(dot_flag == 2){
-                        if(pow_step == step1)
-                        {
-                           opv1 = opv1 + atoi(num) * 10;
-                        }else if(pow_step == step2){
-                            opv2 = opv2 + atoi(num) * 10;
-                        }else if(pow_step == step3){
-                           opv3 = opv3 + atoi(num) * 10;
-                        }
-//                        SET_Voltage = SET_Voltage + atoi(num) * 10;
-                    }else{
-                        if(pow_step == step1)
-                        {
-                           opv1 = opv1 + atoi(num);
-                        }else if(pow_step == step2){
-                            opv2 = opv2 + atoi(num);
-                        }else if(pow_step == step3){
-                           opv3 = opv3 + atoi(num);
-                        }
- //                       SET_Voltage = SET_Voltage + atoi(num);
-                    }
-                                       
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(pow_step == step1)
-                            {
-                               opv1 = /*3000*/ 6200;
-                            }else if(pow_step == step2){
-                                opv2 = /*3000*/ 6200;
-                            }else if(pow_step == step3){
-                               opv3 =  /*3000*/ 6200;
-                            }
-                    }else if(dot_flag == 1){
-                        if(pow_step == step1)
-                            {
-                               opv1 = opv1;
-                            }else if(pow_step == step2){
-                                opv2 =opv2;
-                            }else if(pow_step == step3){
-                               opv3 =  opv3;
-                            }
-//                        cdc_cv = cdc_cv;
-                    }else{
-                        if(pow_step == step1)
-                            {
-                               opv1 = opv1 + atoi(num);
-                            }else if(pow_step == step2){
-                                opv2 = opv2 + atoi(num);
-                            }else if(pow_step == step3){
-                               opv3 = opv3 + atoi(num);
-                            }
-//                        cdc_cv = cdc_cv + atoi(num);
-                    }
-                                       
-                    bit = 1;
-                    break;
-                }
-            }
+			if(bit < 6)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
         case set_31:
@@ -2152,188 +2237,22 @@ void INPUT_CDC(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWincdc);
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_55);
-            switch(bit){
-                case 1:
-                {
-                    if(cur_step == step1)
-                    {
-                        opc1 = atoi(num) * 1000;
-                    }else if(cur_step == step2){
-                        opc2 = atoi(num) * 1000;
-                    }else if(cur_step == step3){
-                        opc3 = atoi(num) * 1000;
-                    }
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        if(cur_step == step1)
-                        {
-                            opc1 = opc1 * 10 + atoi(num) * 1000;
-                        }else if(cur_step == step2){
-                            opc2 = opc2 * 10 + atoi(num) * 1000;
-                        }else if(cur_step == step3){
-                            opc2 = opc2 * 10 + atoi(num) * 1000;
-                        }
-//                        SET_Current = SET_Current * 10 + atoi(num) * 1000;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            if(cur_step == step1)
-                            {
-                                opc1 = 5000;
-                            }else if(cur_step == step2){
-                                opc2 = 5000;
-                            }else if(cur_step == step3){
-                                opc3 = 5000;
-                            }
-//                            SET_Current = 15000;
-                        }
-                    }else{
-                        if(cur_step == step1)
-                        {
-                            opc1 = opc1 + atoi(num) * 100;
-                        }else if(cur_step == step2){
-                            opc2 = opc2 + atoi(num) * 100;
-                        }else if(cur_step == step3){
-                            opc3 = opc3 + atoi(num) * 100;
-                        }
-//                        SET_Current = SET_Current + atoi(num) * 100;
-                    }
-                                       
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(cur_step == step1)
-                        {
-                            opc1 = 5000;
-                        }else if(cur_step == step2){
-                            opc2 = 5000;
-                        }else if(cur_step == step3){
-                            opc3 = 5000;
-                        }
-//                        SET_Current = 15000;
-                    }else if(dot_flag == 2){
-                        if(cur_step == step1)
-                        {
-                            opc1 = opc1 + atoi(num) * 100;
-                        }else if(cur_step == step2){
-                            opc2 = opc2 + atoi(num) * 100;
-                        }else if(cur_step == step3){
-                            opc3 = opc3 + atoi(num) * 100;
-                        }
-//                        SET_Current = SET_Current + atoi(num) * 100;
-                    }else{
-                        if(cur_step == step1)
-                        {
-                            opc1 = opc1 + atoi(num) * 10;
-                        }else if(cur_step == step2){
-                            opc2 = opc2 + atoi(num) * 10;
-                        }else if(cur_step == step3){
-                            opc3 = opc3 + atoi(num) * 10;
-                        }
-//                        SET_Current = SET_Current + atoi(num) * 10;
-                    }
-                                       
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(cur_step == step1)
-                        {
-                            opc1 = 5000;
-                        }else if(cur_step == step2){
-                            opc2 = 5000;
-                        }else if(cur_step == step3){
-                            opc3 = 5000;
-                        }
-//                        SET_Current = 15000;
-                    }else if(dot_flag == 1){
-                        if(cur_step == step1)
-                        {
-                            opc1 = opc1 + atoi(num);
-                        }else if(cur_step == step2){
-                            opc2 = opc2 + atoi(num);
-                        }else if(cur_step == step3){
-                            opc3 = opc3 + atoi(num);
-                        }
-//                        SET_Current = SET_Current + atoi(num);
-                    }else{
-                        if(cur_step == step1)
-                        {
-                            opc1 = opc1 + atoi(num) * 10;
-                        }else if(cur_step == step2){
-                            opc2 = opc2 + atoi(num) * 10;
-                        }else if(cur_step == step3){
-                            opc3 = opc3 + atoi(num) * 10;
-                        }
-//                        SET_Current = SET_Current + atoi(num) * 10;
-                    }
-                                       
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(cur_step == step1)
-                        {
-                            opc1 = 15000;
-                        }else if(cur_step == step2){
-                            opc2 = 15000;
-                        }else if(cur_step == step3){
-                            opc3 = 15000;
-                        }
-//                        SET_Current = 0;
-                    }else if(dot_flag == 2){
-                        if(cur_step == step1)
-                        {
-                            opc1 = opc1 + atoi(num);
-                        }else if(cur_step == step2){
-                            opc2 = opc2 + atoi(num);
-                        }else if(cur_step == step3){
-                            opc3 = opc3 + atoi(num);
-                        }
-//                        SET_Current = SET_Current + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
+            if(bit < 6)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
         case set_32:
@@ -2341,94 +2260,22 @@ void INPUT_CDC(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWincdc);
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_56);
-            switch(bit){
-                case 1:
-                {
-                    cdc_dc = atoi(num) * 1000;
-//                    SET_Current_Laod = atoi(num) * 1000;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-
-                    
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        cdc_dc = cdc_dc * 10 + atoi(num) * 1000;
-//                        SET_Current_Laod = SET_Current_Laod * 10 + atoi(num) * 1000;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            cdc_dc = 0;
-                        }
-                    }else{
-                        cdc_dc = cdc_dc + atoi(num) * 100;
-                    }                  
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        cdc_dc = 0;
-                    }else if(dot_flag == 2){
-                        cdc_dc = cdc_dc + atoi(num) * 100;
-                    }else{
-                        cdc_dc = cdc_dc + atoi(num) * 10;
-                    }                  
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        cdc_dc = 0;
-                    }else if(dot_flag == 1){
-                        cdc_dc = cdc_dc + atoi(num);
-                    }else{
-                        cdc_dc = cdc_dc + atoi(num) * 10;
-                    }                 
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        cdc_dc = 0;
-                    }else if(dot_flag == 2){
-                        cdc_dc = cdc_dc + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
+            if(bit < 6)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
         case set_33:
@@ -2436,24 +2283,22 @@ void INPUT_CDC(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWincdc);
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_57);
-            switch(bit){
-                case 1:
-                {
-                    set_loop_count = atoi(num);                    
-                    sprintf(loop_count,"%2d",set_loop_count);
-                    TEXT_SetText(hItem,loop_count);
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    set_loop_count = set_loop_count*10 + atoi(num);                    
-                    sprintf(loop_count,"%2d",set_loop_count);
-                    TEXT_SetText(hItem,loop_count);
-                    bit = 1;
-                    break;
-                }                
-            }
+            if(bit < 6)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
         case set_38:
@@ -2461,161 +2306,22 @@ void INPUT_CDC(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWincdc);
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_62);
-            switch(bit){
-                case 1:
-                {
-                    if(coffv_step == step1)
-                    {
-                        cov1 = atoi(num) * 100;
-                    }else if(coffv_step == step2){
-                        cov2 = atoi(num) * 100;
-                    }else if(coffv_step == step3){
-                        cov3 = atoi(num) * 100;
-                    }
-                    
-//                    set_c_cutoff_v = atoi(num) * 100;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        if(coffv_step == step1)
-                        {
-                            cov1 = cov1 * 10 + atoi(num) * 100;
-                        }else if(coffv_step == step2){
-                            cov2 = cov2 * 10 + atoi(num) * 100;
-                        }else if(coffv_step == step3){
-                            cov3 = cov3 * 10 + atoi(num) * 100;
-                        }
-//                        set_c_cutoff_v = set_c_cutoff_v * 10 + atoi(num) * 100;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            if(coffv_step == step1)
-                            {
-                                cov1 =6200;
-                            }else if(coffv_step == step2){
-                                cov2 = 6200;
-                            }else if(coffv_step == step3){
-                                cov3 = 6200;
-                            }
-//                            set_c_cutoff_v = 6200;
-                        }
-                    }else{
-                        if(coffv_step == step1)
-                        {
-                            cov1 = cov1 + atoi(num) * 10;
-                        }else if(coffv_step == step2){
-                            cov2 = cov2 + atoi(num) * 10;
-                        }else if(coffv_step == step3){
-                            cov3 = cov3 + atoi(num) * 10;
-                        }
-//                        set_c_cutoff_v = set_c_cutoff_v + atoi(num) * 10;
-                    }
-                                       
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(coffv_step == step1)
-                        {
-                            cov1 =6200;
-                        }else if(coffv_step == step2){
-                            cov2 = 6200;
-                        }else if(coffv_step == step3){
-                            cov3 = 6200;
-                        }
-//                        set_c_cutoff_v = 6200;
-                    }else if(dot_flag == 2){
-                        if(coffv_step == step1)
-                        {
-                            cov1 = cov1 + atoi(num) * 10;
-                        }else if(coffv_step == step2){
-                            cov2 = cov2 + atoi(num) * 10;
-                        }else if(coffv_step == step3){
-                            cov3 = cov3 + atoi(num) * 10;
-                        }
-//                        set_c_cutoff_v = set_c_cutoff_v + atoi(num) * 10;
-                    }else{
-                        if(coffv_step == step1)
-                        {
-                            cov1 = cov1 + atoi(num) * 10;
-                        }else if(coffv_step == step2){
-                            cov2 = cov2 + atoi(num) * 10;
-                        }else if(coffv_step == step3){
-                            cov3 = cov3 + atoi(num) * 10;
-                        }
-//                        set_c_cutoff_v = set_c_cutoff_v + atoi(num);
-                    }
-                                       
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {   
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(coffv_step == step1)
-                        {
-                            cov1 =6200;
-                        }else if(coffv_step == step2){
-                            cov2 = 6200;
-                        }else if(coffv_step == step3){
-                            cov3 = 6200;
-                        }
-//                        set_c_cutoff_v = 6200;
-                    }else if(dot_flag == 1){
-                        if(coffv_step == step1)
-                        {
-                            cov1 =cov1;
-                        }else if(coffv_step == step2){
-                            cov2 = cov2;
-                        }else if(coffv_step == step3){
-                            cov3 = cov3;
-                        }
-//                        set_c_cutoff_v = set_c_cutoff_v;
-                    }else{
-                        if(coffv_step == step1)
-                        {
-                            cov1 = cov1 + atoi(num);
-                        }else if(coffv_step == step2){
-                            cov2 = cov2 + atoi(num);
-                        }else if(coffv_step == step3){
-                            cov3 = cov3 + atoi(num);
-                        }
-//                        set_c_cutoff_v = set_c_cutoff_v + atoi(num);
-                    }
-                                       
-                    bit = 1;
-                    break;
-                }
-            }
+            if(bit < 6)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
         case set_39:
@@ -2623,189 +2329,22 @@ void INPUT_CDC(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWincdc);
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_63);
-            switch(bit){
-                case 1:
-                {
-                    if(coffc_step == step1)
-                    {
-                        coc1 = atoi(num) * 1000;
-                    }else if(coffc_step == step2){
-                        coc2 = atoi(num) * 1000;
-                    }else if(coffc_step == step3){
-                        coc3 = atoi(num) * 1000;
-                    }
-//                    set_c_cutoff_c = atoi(num) * 1000;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        if(coffc_step == step1)
-                        {
-                            coc1 = coc1 * 10 + atoi(num) * 1000;
-                        }else if(coffc_step == step2){
-                            coc2 = coc2 * 10 + atoi(num) * 1000;
-                        }else if(coffc_step == step3){
-                            coc3 = coc3 * 10 + atoi(num) * 1000;
-                        }
-//                        set_c_cutoff_c = set_c_cutoff_c * 10 + atoi(num) * 1000;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            if(coffc_step == step1)
-                            {
-                                coc1 =5000;
-                            }else if(coffc_step == step2){
-                                coc2 = 5000;
-                            }else if(coffc_step == step3){
-                                coc3 = 5000;
-                            } 
-//                            set_c_cutoff_c = 5000;
-                        }
-                    }else{
-                        if(coffc_step == step1)
-                        {
-                            coc1 = coc1 + atoi(num) * 100;
-                        }else if(coffc_step == step2){
-                            coc2 = coc2 + atoi(num) * 100;
-                        }else if(coffc_step == step3){
-                            coc3 = coc3 + atoi(num) * 100;
-                        }
-//                        set_c_cutoff_c = set_c_cutoff_c + atoi(num) * 100;
-                    }
-                                       
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(coffc_step == step1)
-                        {
-                            coc1 =5000;
-                        }else if(coffc_step == step2){
-                            coc2 = 5000;
-                        }else if(coffc_step == step3){
-                            coc3 = 5000;
-                        } 
-//                        set_c_cutoff_c = 500;
-                    }else if(dot_flag == 2){
-                        if(coffc_step == step1)
-                        {
-                            coc1 = coc1 + atoi(num) * 100;
-                        }else if(coffc_step == step2){
-                            coc2 = coc2 + atoi(num) * 100;
-                        }else if(coffc_step == step3){
-                            coc3 = coc3 + atoi(num) * 100;
-                        }
-//                        set_c_cutoff_c = set_c_cutoff_c + atoi(num) * 100;
-                    }else{
-                        if(coffc_step == step1)
-                        {
-                            coc1 = coc1 + atoi(num) * 10;
-                        }else if(coffc_step == step2){
-                            coc2 = coc2 + atoi(num) * 10;
-                        }else if(coffc_step == step3){
-                            coc3 = coc3 + atoi(num) * 10;
-                        }
-//                        set_c_cutoff_c = set_c_cutoff_c + atoi(num) * 10;
-                    }
-                                       
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(coffc_step == step1)
-                        {
-                            coc1 = 5000;
-                        }else if(coffc_step == step2){
-                            coc2 = 5000;
-                        }else if(coffc_step == step3){
-                            coc3 = 5000;
-                        }
-//                        set_c_cutoff_c = 500;
-                    }else if(dot_flag == 1){
-                        if(coffc_step == step1)
-                        {
-                            coc1 = coc1 + atoi(num);
-                        }else if(coffc_step == step2){
-                            coc2 = coc2 + atoi(num);
-                        }else if(coffc_step == step3){
-                            coc3 = coc3 + atoi(num);
-                        }
-//                        set_c_cutoff_c = set_c_cutoff_c + atoi(num);
-                    }else{
-                        if(coffc_step == step1)
-                        {
-                            coc1 = coc1 + atoi(num) * 10;
-                        }else if(coffc_step == step2){
-                            coc2 = coc2 + atoi(num) * 10;
-                        }else if(coffc_step == step3){
-                            coc3 = coc3 + atoi(num) * 10;
-                        }
-//                        set_c_cutoff_c = set_c_cutoff_c + atoi(num) * 10;
-                    }
-                                       
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(coffc_step == step1)
-                        {
-                            coc1 = 5000;
-                        }else if(coffc_step == step2){
-                            coc2 = 5000;
-                        }else if(coffc_step == step3){
-                            coc3 = 5000;
-                        }
-//                        set_c_cutoff_c = 0;
-                    }else if(dot_flag == 2){
-                        if(coffc_step == step1)
-                        {
-                            coc1 = coc1 + atoi(num);
-                        }else if(coffc_step == step2){
-                            coc2 = coc2 + atoi(num);
-                        }else if(coffc_step == step3){
-                            coc3 = coc3 + atoi(num);
-                        }
-//                        set_c_cutoff_c = set_c_cutoff_c + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
+            if(bit < 6)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
         case set_40:
@@ -2813,93 +2352,22 @@ void INPUT_CDC(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWincdc);
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_64);
-            switch(bit){
-                case 1:
-                {
-                    set_dc_cutoff_v = atoi(num) * 1000;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        set_dc_cutoff_v = set_dc_cutoff_v * 10 + atoi(num) * 1000;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            set_dc_cutoff_v = 80000;
-                        }
-                    }else{
-                        set_dc_cutoff_v = set_dc_cutoff_v + atoi(num) * 100;
-                    }
-                                       
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_dc_cutoff_v = 80000;
-                    }else if(dot_flag == 2){
-                        set_dc_cutoff_v = set_dc_cutoff_v + atoi(num) * 100;
-                    }else{
-                        set_dc_cutoff_v = set_dc_cutoff_v + atoi(num) * 10;
-                    }
-                                       
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_dc_cutoff_v = 80000;
-                    }else if(dot_flag == 1){
-                        set_dc_cutoff_v = set_dc_cutoff_v + atoi(num);
-                    }else{
-                        set_dc_cutoff_v = set_dc_cutoff_v + atoi(num) * 10;
-                    }
-                                       
-                    bit = 6;
-                    break;
-                }
-                case 6:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_dc_cutoff_v = 80000;
-                    }else if(dot_flag == 2){
-                        set_dc_cutoff_v = set_dc_cutoff_v + atoi(num);
-                    }                 
-                    bit = 1;
-                    break;
-                }
-            }
+            if(bit < 6)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
         case set_41:
@@ -2907,80 +2375,22 @@ void INPUT_CDC(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWincdc);
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_65);
-            switch(bit){
-                case 1:
-                {
-                    set_dc_cutoff_c = atoi(num) * 100;
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    bit = 2;
-                    break;
-                }
-                case 2:
-                {
-                    strcat(set_limit,num);            
-                    TEXT_SetText(hItem,set_limit);
-                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
-                    {
-                        dot_flag = 1;
-                    }else{
-                        set_dc_cutoff_c = set_dc_cutoff_c * 10 + atoi(num) * 100;
-                    }
-                    bit = 3;
-                    break;
-                }
-                case 3:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        if(set_limit[2] == 0x2e)//判断输入是否为小数点
-                        {                            
-                            dot_flag = 2;
-                        }else{
-                            set_dc_cutoff_c = 1500;
-                        }
-                    }else{
-                        set_dc_cutoff_c = set_dc_cutoff_c + atoi(num) * 10;
-                    }
-                                       
-                    bit = 4;
-                    break;
-                }
-                case 4:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_dc_cutoff_c = 1500;
-                    }else if(dot_flag == 2){
-                        set_dc_cutoff_c = set_dc_cutoff_c + atoi(num) * 10;
-                    }else{
-                        set_dc_cutoff_c = set_dc_cutoff_c + atoi(num);
-                    }
-                                       
-                    bit = 5;
-                    break;
-                }
-                case 5:
-                {
-                    strcat(set_limit,num);
-                    TEXT_SetText(hItem,set_limit);
-                    if(dot_flag == 0)
-                    {
-                        set_dc_cutoff_c = 1500;
-                    }else if(dot_flag == 1){
-                        set_dc_cutoff_c = set_dc_cutoff_c;
-                    }else{
-                        set_dc_cutoff_c = set_dc_cutoff_c + atoi(num);
-                    }
-                                       
-                    bit = 1;
-                    break;
-                }
-            }
+            if(bit < 6)
+			{
+				strcat(set_limit,num);
+			}
+			if(dot_flag != 0 && strcmp(num,".") == 0)
+			{
+				
+			}else{			
+				
+				if(dot_flag == 0 && strcmp(num,".") == 0)
+				{
+					dot_flag = bit;
+				}
+				bit ++;
+			}
+			TEXT_SetText(hItem,set_limit);
             break;
         }
         
