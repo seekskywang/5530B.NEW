@@ -141,10 +141,6 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DLGUARM</Key>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>PWSTATINFO</Key>
           <Name>200,50,700</Name>
         </SetRegEntry>
@@ -183,9 +179,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>2449</LineNumber>
+          <LineNumber>2793</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134294336</Address>
+          <Address>134286350</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -194,14 +190,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2449</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2793</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>2412</LineNumber>
+          <LineNumber>2790</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134293950</Address>
+          <Address>134286328</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -210,14 +206,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2412</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2790</Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>2410</LineNumber>
+          <LineNumber>2786</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134293960</Address>
+          <Address>134286296</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -226,14 +222,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2410</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2786</Expression>
         </Bp>
         <Bp>
           <Number>3</Number>
           <Type>0</Type>
-          <LineNumber>2385</LineNumber>
+          <LineNumber>2752</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134294852</Address>
+          <Address>134285932</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -242,14 +238,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2385</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2752</Expression>
         </Bp>
         <Bp>
           <Number>4</Number>
           <Type>0</Type>
-          <LineNumber>2383</LineNumber>
+          <LineNumber>2750</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134294848</Address>
+          <Address>134286186</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -258,14 +254,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2383</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2750</Expression>
         </Bp>
         <Bp>
           <Number>5</Number>
           <Type>0</Type>
-          <LineNumber>2379</LineNumber>
+          <LineNumber>2749</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134294988</Address>
+          <Address>134285910</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -274,14 +270,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2379</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2749</Expression>
         </Bp>
         <Bp>
           <Number>6</Number>
           <Type>0</Type>
-          <LineNumber>2377</LineNumber>
+          <LineNumber>2747</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134294982</Address>
+          <Address>134285920</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -290,14 +286,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2377</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2747</Expression>
         </Bp>
         <Bp>
           <Number>7</Number>
           <Type>0</Type>
-          <LineNumber>2340</LineNumber>
+          <LineNumber>2725</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134294586</Address>
+          <Address>134286818</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -306,14 +302,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2340</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2725</Expression>
         </Bp>
         <Bp>
           <Number>8</Number>
           <Type>0</Type>
-          <LineNumber>641</LineNumber>
+          <LineNumber>2723</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134380636</Address>
+          <Address>134286814</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -322,14 +318,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\641</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2723</Expression>
         </Bp>
         <Bp>
           <Number>9</Number>
           <Type>0</Type>
-          <LineNumber>343</LineNumber>
+          <LineNumber>2722</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134378358</Address>
+          <Address>134286812</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -338,14 +334,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\343</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2722</Expression>
         </Bp>
         <Bp>
           <Number>10</Number>
           <Type>0</Type>
-          <LineNumber>642</LineNumber>
+          <LineNumber>2720</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134380640</Address>
+          <Address>134286808</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -354,14 +350,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\642</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2720</Expression>
         </Bp>
         <Bp>
           <Number>11</Number>
           <Type>0</Type>
-          <LineNumber>644</LineNumber>
+          <LineNumber>2719</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134380648</Address>
+          <Address>134286800</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -370,14 +366,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\644</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2719</Expression>
         </Bp>
         <Bp>
           <Number>12</Number>
           <Type>0</Type>
-          <LineNumber>2343</LineNumber>
+          <LineNumber>2717</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134294592</Address>
+          <Address>134286786</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -386,14 +382,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2343</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2717</Expression>
         </Bp>
         <Bp>
           <Number>13</Number>
           <Type>0</Type>
-          <LineNumber>2380</LineNumber>
+          <LineNumber>2716</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134294826</Address>
+          <Address>134286948</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -402,14 +398,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2380</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2716</Expression>
         </Bp>
         <Bp>
           <Number>14</Number>
           <Type>0</Type>
-          <LineNumber>2382</LineNumber>
+          <LineNumber>2714</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134294840</Address>
+          <Address>134286942</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -418,14 +414,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2382</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2714</Expression>
         </Bp>
         <Bp>
           <Number>15</Number>
           <Type>0</Type>
-          <LineNumber>2386</LineNumber>
+          <LineNumber>2680</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134294854</Address>
+          <Address>134286552</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -434,14 +430,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2386</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2680</Expression>
         </Bp>
         <Bp>
           <Number>16</Number>
           <Type>0</Type>
-          <LineNumber>2388</LineNumber>
+          <LineNumber>2677</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134294858</Address>
+          <Address>134286546</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -450,14 +446,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2388</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2677</Expression>
         </Bp>
         <Bp>
           <Number>17</Number>
           <Type>0</Type>
-          <LineNumber>2413</LineNumber>
+          <LineNumber>2409</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134294226</Address>
+          <Address>134268330</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -466,14 +462,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2413</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2409</Expression>
         </Bp>
         <Bp>
           <Number>18</Number>
           <Type>0</Type>
-          <LineNumber>2415</LineNumber>
+          <LineNumber>2407</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134293972</Address>
+          <Address>134268316</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -482,14 +478,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2415</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2407</Expression>
         </Bp>
         <Bp>
           <Number>19</Number>
           <Type>0</Type>
-          <LineNumber>2453</LineNumber>
+          <LineNumber>2400</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134294368</Address>
+          <Address>134268292</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -498,14 +494,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2453</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2400</Expression>
         </Bp>
         <Bp>
           <Number>20</Number>
           <Type>0</Type>
-          <LineNumber>2456</LineNumber>
+          <LineNumber>2398</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134294390</Address>
+          <Address>134268286</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -514,60 +510,60 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\JK_BTSET\../APP/R_Face.c\2456</Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\2398</Expression>
         </Bp>
         <Bp>
           <Number>21</Number>
           <Type>0</Type>
-          <LineNumber>2656</LineNumber>
+          <LineNumber>665</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>0</Address>
+          <Address>134373906</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
+          <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\665</Expression>
         </Bp>
         <Bp>
           <Number>22</Number>
           <Type>0</Type>
-          <LineNumber>2659</LineNumber>
+          <LineNumber>663</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>0</Address>
+          <Address>134373898</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
+          <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\663</Expression>
         </Bp>
         <Bp>
           <Number>23</Number>
           <Type>0</Type>
-          <LineNumber>2693</LineNumber>
+          <LineNumber>662</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>0</Address>
+          <Address>134373894</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
+          <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\R_Face.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\JK_BTSET\../APP/R_Face.c\662</Expression>
         </Bp>
         <Bp>
           <Number>24</Number>
           <Type>0</Type>
-          <LineNumber>2695</LineNumber>
+          <LineNumber>345</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -583,7 +579,7 @@
         <Bp>
           <Number>25</Number>
           <Type>0</Type>
-          <LineNumber>2696</LineNumber>
+          <LineNumber>2361</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -599,7 +595,7 @@
         <Bp>
           <Number>26</Number>
           <Type>0</Type>
-          <LineNumber>2698</LineNumber>
+          <LineNumber>2364</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -615,7 +611,7 @@
         <Bp>
           <Number>27</Number>
           <Type>0</Type>
-          <LineNumber>2699</LineNumber>
+          <LineNumber>2401</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -631,7 +627,7 @@
         <Bp>
           <Number>28</Number>
           <Type>0</Type>
-          <LineNumber>2701</LineNumber>
+          <LineNumber>2403</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -647,7 +643,7 @@
         <Bp>
           <Number>29</Number>
           <Type>0</Type>
-          <LineNumber>2702</LineNumber>
+          <LineNumber>2404</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -663,7 +659,7 @@
         <Bp>
           <Number>30</Number>
           <Type>0</Type>
-          <LineNumber>2704</LineNumber>
+          <LineNumber>2406</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -679,7 +675,7 @@
         <Bp>
           <Number>31</Number>
           <Type>0</Type>
-          <LineNumber>2726</LineNumber>
+          <LineNumber>2431</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -695,7 +691,7 @@
         <Bp>
           <Number>32</Number>
           <Type>0</Type>
-          <LineNumber>2728</LineNumber>
+          <LineNumber>2433</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -711,7 +707,7 @@
         <Bp>
           <Number>33</Number>
           <Type>0</Type>
-          <LineNumber>2729</LineNumber>
+          <LineNumber>2434</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -727,7 +723,7 @@
         <Bp>
           <Number>34</Number>
           <Type>0</Type>
-          <LineNumber>2731</LineNumber>
+          <LineNumber>2436</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -743,7 +739,7 @@
         <Bp>
           <Number>35</Number>
           <Type>0</Type>
-          <LineNumber>2765</LineNumber>
+          <LineNumber>2470</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -759,7 +755,7 @@
         <Bp>
           <Number>36</Number>
           <Type>0</Type>
-          <LineNumber>2768</LineNumber>
+          <LineNumber>2474</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -775,7 +771,7 @@
         <Bp>
           <Number>37</Number>
           <Type>0</Type>
-          <LineNumber>2769</LineNumber>
+          <LineNumber>2477</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -791,7 +787,7 @@
         <Bp>
           <Number>38</Number>
           <Type>0</Type>
-          <LineNumber>2772</LineNumber>
+          <LineNumber>2789</LineNumber>
           <EnabledFlag>0</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -2360,7 +2356,7 @@
 
   <Group>
     <GroupName>FAST</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

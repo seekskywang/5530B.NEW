@@ -53192,6 +53192,7 @@ N#define ID_TEXT_123         (GUI_ID_USER + 0x111)
 N#define ID_TEXT_126         (GUI_ID_USER + 0x112)
 N#define ID_TEXT_143         (GUI_ID_USER + 0x012D)
 N#define ID_TEXT_158     	(GUI_ID_USER + 0x0139)
+N#define ID_TEXT_162     	(GUI_ID_USER + 0x013D)
 N
 N#define ID_TimerTime1    2
 N
@@ -53243,6 +53244,8 @@ N    { TEXT_CreateIndirect,   "Text",   ID_TEXT_126, 300, 2, 80, 20, 0, 0x0, 0 }
 X    { TEXT_CreateIndirect,   "Text",   (0x800 + 0x112), 300, 2, 80, 20, 0, 0x0, 0 },
 N    { TEXT_CreateIndirect,   "Text",   ID_TEXT_143, 380, 150, 65, 20, 0, 0x0, 0 },
 X    { TEXT_CreateIndirect,   "Text",   (0x800 + 0x012D), 380, 150, 65, 20, 0, 0x0, 0 },
+N	{ TEXT_CreateIndirect, "Text", ID_TEXT_162, 380, 8, 20, 15, 0, 0x0, 0 },
+X	{ TEXT_CreateIndirect, "Text", (0x800 + 0x013D), 380, 8, 20, 15, 0, 0x0, 0 },
 N  // USER START (Optionally insert additional widgets)
 N  // USER END
 N};
@@ -53313,8 +53316,7 @@ N        GUI_SetFont(&GUI_Fontunit);
 N        GUI_DispStringAt("°",342, 2);
 N        GUI_SetFont(&GUI_Font24_1);
 N        GUI_DispStringAt("C",350, 2);
-W "..\APP\load_Face.c" 152 9 function "DrawLock" declared implicitly
-N        DrawLock();
+N//        DrawLock();
 N//        GUI_SetColor(GUI_WHITE);
 N//        GUI_SetFont(&GUI_Fontset_font);
 N//        GUI_DispStringAt("过放电压",290, 150);
@@ -53339,9 +53341,19 @@ X	case 0x0113:
 N	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime1)
 X	if(WM_GetTimerId(pMsg->Data.v) == 2)
 N	{
-N        lockstat2 = lockstat1;
-N        lockstat1 = lock;
-N        
+N//        lockstat2 = lockstat1;
+N//        lockstat1 = lock;
+N        if(lock == 1)
+N		{
+N			hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_162);
+X			hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x013D));
+N			TEXT_SetText(hItem,"锁");
+N		}else{
+N			hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_162);
+X			hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x013D));
+N			TEXT_SetText(hItem,"");
+N		}
+N		
 N//        if((vu32)(DISS_Current*1000) > SET_Current_Laod)
 N//        {
 N//            testflag = 1;
@@ -53362,13 +53374,13 @@ N//            }
 N//        }
 N        
 N        
-N        if(lockstat1 != lockstat2)
-N        {
-N            WM_InvalidateWindow(load_wind);
-N        }
+N//        if(lockstat1 != lockstat2)
+N//        {
+N//            WM_InvalidateWindow(load_wind);
+N//        }
 N//         if(clear_flag3 == 1)
 N//         {
-W "..\APP\load_Face.c" 201 16 single-precision operand implicitly converted to double-precision
+W "..\APP\load_Face.c" 211 16 single-precision operand implicitly converted to double-precision
 N            if(DISS_Voltage < 0.3)
 N            {
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
@@ -53396,8 +53408,8 @@ N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透
 X            TEXT_SetBkColor(hItem,0xFFFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_WHITE);            
 X            TEXT_SetTextColor(hItem, 0x00FFFFFF);            
-N            if(SET_Current_Laod > 55000 || (float)SET_Current_Laod/1000 * DISS_Voltage > 200){
-X            if(Run_Control[4] > 55000 || (float)Run_Control[4]/1000 * DISS_Voltage > 200){
+N            if(SET_Current_Laod > 30000 || (float)SET_Current_Laod/1000 * DISS_Voltage > 200){
+X            if(Run_Control[4] > 30000 || (float)Run_Control[4]/1000 * DISS_Voltage > 200){
 N                SET_Current_Laod = 0;
 X                Run_Control[4] = 0;
 N            }
@@ -53514,6 +53526,13 @@ N// 		BUTTON_SetText(hItem,"充放电");
 N    //
 N    // Initialization of 'Button'
 N    //
+N		hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_162);
+X		hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x013D));
+N		TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色
+X		TEXT_SetTextColor(hItem, 0x000000FF);
+N		TEXT_SetFont(hItem,&GUI_FontHZ14);
+N		TEXT_SetText(hItem,"");
+N		
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_7);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0B));
 N//		BUTTON_SetTextColor(hItem,0,GUI_BLACK);//设置字体颜色为黑色
@@ -53835,11 +53854,11 @@ N  default:
 N    WM_DefaultProc(pMsg);
 N    break;
 N  }
-W "..\APP\load_Face.c" 108 16 variable "olvbuff"  was declared but never referenced
-W "..\APP\load_Face.c" 108 24 variable "oldv"  was declared but never referenced
-W "..\APP\load_Face.c" 109 16 variable "testc1"  was declared but never referenced
-W "..\APP\load_Face.c" 109 23 variable "testc2"  was declared but never referenced
-W "..\APP\load_Face.c" 109 30 variable "testres"  was declared but never referenced
+W "..\APP\load_Face.c" 110 16 variable "olvbuff"  was declared but never referenced
+W "..\APP\load_Face.c" 110 24 variable "oldv"  was declared but never referenced
+W "..\APP\load_Face.c" 111 16 variable "testc1"  was declared but never referenced
+W "..\APP\load_Face.c" 111 23 variable "testc2"  was declared but never referenced
+W "..\APP\load_Face.c" 111 30 variable "testres"  was declared but never referenced
 N}
 N
 NWM_HWIN CreateWindow2(void) {
@@ -53848,7 +53867,7 @@ N  if(page_sw == face_graph)
 X  if(page_sw == 0)
 N  {      
 N  }else{
-W "..\APP\load_Face.c" 585 7 function "IO_OFF" declared implicitly
+W "..\APP\load_Face.c" 600 7 function "IO_OFF" declared implicitly
 N      IO_OFF();
 N  }
 N  page_sw = face_load;
@@ -54709,7 +54728,7 @@ N
 N        }
 N        default:break;
 N    }
-W "..\APP\load_Face.c" 950 5 variable "i"  was declared but never referenced
+W "..\APP\load_Face.c" 965 5 variable "i"  was declared but never referenced
 N}
 N
 Nvoid test_load(void)

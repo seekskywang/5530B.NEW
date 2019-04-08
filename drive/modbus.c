@@ -1032,8 +1032,8 @@ void Transformation_ADC(void)
 	var32 = 0;
 /*****************************稳压电源测量电流转换*******************************************/
 	var32 = Imon_value;
-	if(flag_CC_MODE==1)
-	{
+//	if(flag_CC_MODE==1)
+//	{
 		var32 = var32 * REG_POWERA;	   
 		if ((Polar4 & 0x01) == 0x01)			   
 		{
@@ -1048,24 +1048,24 @@ void Transformation_ADC(void)
 		Current = var32;;
 		DISS_POW_Current=Current;
 		DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
-	}
-	else
-	{
-		var32 = var32 * CON_POWERA;	   
-		if ((Polar3 & 0x04) == 0x04)			   
-		{
-			if (var32 < CON_POWERA_Offset) var32 = 0;
-			else var32 = var32 - CON_POWERA_Offset;
-		}
-		else
-		{
-			var32 = var32 + CON_POWERA_Offset;
-		}	
-		var32 = var32 >> 14;
-		Current = var32;;
-		DISS_POW_Current=Current;
-		DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
-	}
+//	}
+//	else
+//	{
+//		var32 = var32 * CON_POWERA;	   
+//		if ((Polar3 & 0x04) == 0x04)			   
+//		{
+//			if (var32 < CON_POWERA_Offset) var32 = 0;
+//			else var32 = var32 - CON_POWERA_Offset;
+//		}
+//		else
+//		{
+//			var32 = var32 + CON_POWERA_Offset;
+//		}	
+//		var32 = var32 >> 14;
+//		Current = var32;;
+//		DISS_POW_Current=Current;
+//		DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
+//	}
 /**************************稳压电源设置电压转换******************************************/
 	var32 = SET_Voltage;
     if(SET_Voltage < 1000)

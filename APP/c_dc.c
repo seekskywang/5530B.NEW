@@ -112,6 +112,7 @@ extern struct bitDefine
 #define ID_TEXT_127     (GUI_ID_USER + 0x114)
 #define ID_TEXT_131     (GUI_ID_USER + 0x120)
 #define ID_TEXT_135     (GUI_ID_USER + 0x124)
+#define ID_TEXT_163     (GUI_ID_USER + 0x013E)
 
 #define ID_TimerTime4    5
 
@@ -178,6 +179,7 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate4[] = {
   { TEXT_CreateIndirect,   "Text",   ID_TEXT_79, 444, 205, 40, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect,   "Text",   ID_TEXT_127, 330+60, 4, 80, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect,   "Text",   ID_TEXT_131, 5, 225, 80, 30, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_163, 380+80, 8, 20, 15, 0, 0x0, 0 },
 
   // USER START (Optionally insert additional widgets)
   // USER END
@@ -245,7 +247,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         GUI_DispStringAt("°",372+60, 2);
         GUI_SetFont(&GUI_Font24_1);
         GUI_DispStringAt("C",380+60, 2);       
-        DrawLockc();
+//        DrawLockc();
         
         GUI_SetColor(GUI_WHITE);
         GUI_SetFont(&GUI_Fontset_font);
@@ -261,13 +263,21 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 	case WM_TIMER://֨ʱģࠩлϢ
 	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime4)
 	{
-        lockstat2 = lockstat1;
-        lockstat1 = lock; 
-        if(lockstat1 != lockstat2)
-        {
-            WM_InvalidateWindow(hWincdc);
-        }
-        
+//        lockstat2 = lockstat1;
+//        lockstat1 = lock; 
+//        if(lockstat1 != lockstat2)
+//        {
+//            WM_InvalidateWindow(hWincdc);
+//        }
+        if(lock == 1)
+		{
+			hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_163);
+			TEXT_SetText(hItem,"锁");
+		}else{
+			hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_163);
+			TEXT_SetText(hItem,"");
+		}
+		
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_74);
         sprintf(buf,"%02d",hour);
         TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
@@ -796,7 +806,11 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         hItem = pMsg->hWin;
         WINDOW_SetBkColor(hItem, GUI_BLACK);
 		WM_CreateTimer(hItem,ID_TimerTime4,500,0);//ԴݨѾ԰ࠚ֨ʱǷ
-
+		
+		hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_163);
+		TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色
+		TEXT_SetFont(hItem,&GUI_FontHZ14);
+		TEXT_SetText(hItem,"");
 
 		hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_25);
 //		BUTTON_SetTextColor(hItem,0,GUI_BLACK);//ʨ׃ؖͥҕɫΪۚɫ

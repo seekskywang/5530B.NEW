@@ -144,6 +144,7 @@ extern struct bitDefine
 #define ID_TEXT_151     (GUI_ID_USER + 0x0135)
 #define ID_TEXT_152     (GUI_ID_USER + 0x0136)
 #define ID_TEXT_153     (GUI_ID_USER + 0x0137)
+#define ID_TEXT_160     (GUI_ID_USER + 0x013B)
 
 #define ID_TimerTime    1
 // USER START (Optionally insert additional defines)
@@ -201,6 +202,7 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
   { TEXT_CreateIndirect, "Text", ID_TEXT_151, 400, 170, 40, 15, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_152, 270, 40, 60, 15, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_153, 335, 40, 40, 15, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_160, 380, 8, 20, 15, 0, 0x0, 0 },
   { BUTTON_CreateIndirect, "Button", ID_BUTTON_13, 83, 226, 77, 45, 0, 0x0, 0 },
   { BUTTON_CreateIndirect, "Button", ID_BUTTON_14, 163, 226, 77, 45, 0, 0x0, 0 },
   { BUTTON_CreateIndirect, "Button", ID_BUTTON_15, 243, 226, 77, 45, 0, 0x0, 0 },
@@ -261,7 +263,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     GUI_DispStringAt("°",342, 2);
     GUI_SetFont(&GUI_Font24_1);
     GUI_DispStringAt("C",350, 2);
-    DrawLock();
+//    DrawLock();
 //    GUI_DispDecAt(R_VLUE,50,140,4);//显示内阻值
 //      GUI_GotoXY(220,4);
 //      GUI_DispDec(short_time,6);
@@ -340,11 +342,27 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 	case WM_TIMER://定时模块消息
 	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime)
 	{
-        lockstat1 = lock;
-        if(lockstat1 != lockstat2)
-        {
-            WM_InvalidateWindow(hWinR);
-        }//锁屏处理
+//        lockstat1 = lock;
+//        if(lockstat1 != lockstat2)
+//        {
+//            WM_InvalidateWindow(hWinR);
+//        }//锁屏处理
+		if(lock == 1)
+		{
+			hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_160);
+			TEXT_SetText(hItem,"锁");
+		}else{
+			hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_160);
+			TEXT_SetText(hItem,"");
+		}
+		if(lock == 1)
+		{
+			hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_160);
+			TEXT_SetText(hItem,"锁");
+		}else{
+			hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_160);
+			TEXT_SetText(hItem,"");
+		}
 		if(manual == 0)
         {
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_125);
@@ -619,7 +637,10 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         WINDOW_SetBkColor(hItem, GUI_BLACK);
 		WM_CreateTimer(hItem,ID_TimerTime,500,0);//创建本窗口定时器  
         
-	
+		hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_160);
+		TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色
+		TEXT_SetFont(hItem,&GUI_FontHZ14);
+		TEXT_SetText(hItem,"");
 	
 		hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_13);
 //		BUTTON_SetTextColor(hItem,0,GUI_WHITE);//设置字体颜色为黑色
@@ -1498,13 +1519,13 @@ void OC_SET(void) {
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
             TEXT_SetTextColor(hItem, GUI_WHITE);
 			if(dot_flag == 0){
-				gate_v = atoi(set_limit);					
+				dis_gate_v = atoi(set_limit)*1000;					
 			}else if(dot_flag != 0){
 				memset(buf, '\0', sizeof(buf));
 				strncpy(buf,set_limit,dot_flag + 3);
-				gate_v = atof(buf);
+				dis_gate_v = atof(buf)*1000;
 			}
-//            gate_v = (float)dis_gate_v/1000;
+            gate_v = (float)dis_gate_v/1000;
             sprintf(buf,"%.3f",gate_v);
             TEXT_SetText(hItem,buf);
             

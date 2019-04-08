@@ -37274,9 +37274,8 @@ N    }
 N	var32 = 0;
 N/*****************************稳压电源测量电流转换*******************************************/
 N	var32 = Imon_value;
-N	if(flag_CC_MODE==1)
-X	if((flagE . bit7)==1)
-N	{
+N//	if(flag_CC_MODE==1)
+N//	{
 N		var32 = var32 * REG_POWERA;	   
 X		var32 = var32 * Correct_Parametet[6];	   
 N		if ((Polar4 & 0x01) == 0x01)			   
@@ -37298,31 +37297,24 @@ X		Run_Control[11] = var32;;
 N		DISS_POW_Current=Current;
 X		DISS_POW_Current=Run_Control[11];
 N		DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
-N	}
-N	else
-N	{
-N		var32 = var32 * CON_POWERA;	   
-X		var32 = var32 * Correct_Parametet[10];	   
-N		if ((Polar3 & 0x04) == 0x04)			   
-X		if ((correct_por[3] & 0x04) == 0x04)			   
-N		{
-N			if (var32 < CON_POWERA_Offset) var32 = 0;
-X			if (var32 < Correct_Strong[10]) var32 = 0;
-N			else var32 = var32 - CON_POWERA_Offset;
-X			else var32 = var32 - Correct_Strong[10];
-N		}
-N		else
-N		{
-N			var32 = var32 + CON_POWERA_Offset;
-X			var32 = var32 + Correct_Strong[10];
-N		}	
-N		var32 = var32 >> 14;
-N		Current = var32;;
-X		Run_Control[11] = var32;;
-N		DISS_POW_Current=Current;
-X		DISS_POW_Current=Run_Control[11];
-N		DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
-N	}
+N//	}
+N//	else
+N//	{
+N//		var32 = var32 * CON_POWERA;	   
+N//		if ((Polar3 & 0x04) == 0x04)			   
+N//		{
+N//			if (var32 < CON_POWERA_Offset) var32 = 0;
+N//			else var32 = var32 - CON_POWERA_Offset;
+N//		}
+N//		else
+N//		{
+N//			var32 = var32 + CON_POWERA_Offset;
+N//		}	
+N//		var32 = var32 >> 14;
+N//		Current = var32;;
+N//		DISS_POW_Current=Current;
+N//		DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
+N//	}
 N/**************************稳压电源设置电压转换******************************************/
 N	var32 = SET_Voltage;
 X	var32 = Run_Control[1];

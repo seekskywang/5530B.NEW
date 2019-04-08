@@ -48,6 +48,7 @@ float pow_cutoffc;
 #define ID_TEXT_125         (GUI_ID_USER + 0x10C)
 #define ID_TEXT_144         (GUI_ID_USER + 0x012E)
 #define ID_TEXT_159         (GUI_ID_USER + 0x013A)
+#define ID_TEXT_161         (GUI_ID_USER + 0x013C)
 #define ID_TimerTime2    3
 
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate1[] = {
@@ -73,6 +74,7 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate1[] = {
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_125, 300, 2, 80, 20, 0, 0x0, 0 },
     { TEXT_CreateIndirect,   "Text",   ID_TEXT_144, 370, 150, 65, 20, 0, 0x0, 0 },
 	{ TEXT_CreateIndirect,   "Text",   ID_TEXT_159, 290, 150, 80, 20, 0, 0x0, 0 },
+	{ TEXT_CreateIndirect, "Text", ID_TEXT_161, 380, 8, 20, 15, 0, 0x0, 0 },
   // USER START (Optionally insert additional widgets)
   // USER END
 };
@@ -131,7 +133,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         GUI_DispStringAt("°",342, 2);
         GUI_SetFont(&GUI_Font24_1);
         GUI_DispStringAt("C",350, 2);
-        DrawLock();
+//        DrawLock();
 //        GUI_SetColor(GUI_WHITE);
 //        GUI_SetFont(&GUI_Fontset_font);
 //        GUI_DispStringAt("过充电压",290, 150);
@@ -140,14 +142,22 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 	case WM_TIMER://定时模块消息
 	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime2)
 	{
-        lockstat2 = lockstat1;
-        lockstat1 = lock;
-        if(lockstat1 != lockstat2)
-        {
-            WM_InvalidateWindow(hWinWind);
-        }
+//        lockstat2 = lockstat1;
+//        lockstat1 = lock;
+//        if(lockstat1 != lockstat2)
+//        {
+//            WM_InvalidateWindow(hWinWind);
+//        }
 //         if(clear_flag2 == 1)
 //         {
+		if(lock == 1)
+		{
+			hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_161);
+			TEXT_SetText(hItem,"锁");
+		}else{
+			hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_161);
+			TEXT_SetText(hItem,"");
+		}
             if(DISS_POW_Voltage < 0.1)
             {
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
@@ -238,6 +248,11 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     //
     // Initialization of 'Button'
     //
+		hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_161);
+		TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色
+		TEXT_SetFont(hItem,&GUI_FontHZ14);
+		TEXT_SetText(hItem,"");
+		
         hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_1);
 //		BUTTON_SetTextColor(hItem,0,GUI_BLACK);//设置字体颜色为黑色
 		BUTTON_SetFont      (hItem,    &GUI_FontHZ16);//设定按钮文本字体
