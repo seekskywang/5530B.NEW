@@ -2276,14 +2276,23 @@ void PARA_SET(void) {
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_37);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
+//						if(dot_flag == 0){
+//							dis_max_r = atoi(set_limit);					
+//						}else if(dot_flag != 0){
+//							memset(buf, '\0', sizeof(buf));
+//							strncpy(buf,set_limit,dot_flag);
+//							dis_max_r = atof(buf);
+//						}
+//                        sprintf(buf,"%4d",dis_max_r);
 						if(dot_flag == 0){
-							dis_max_r = atoi(set_limit);					
+							set_max_r = atoi(set_limit);					
 						}else if(dot_flag != 0){
 							memset(buf, '\0', sizeof(buf));
 							strncpy(buf,set_limit,dot_flag);
-							dis_max_r = atof(buf);
+							set_max_r = atof(buf);
 						}
-                        sprintf(buf,"%4d",dis_max_r);
+                        sprintf(buf,"%4d",set_max_r);
+                        TEXT_SetText(hItem,buf);
                         TEXT_SetText(hItem,buf);
                
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_26);
@@ -2321,14 +2330,22 @@ void PARA_SET(void) {
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_38);
                         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
                         TEXT_SetTextColor(hItem, GUI_WHITE);
-                        if(dot_flag == 0){
-							dis_min_r = atoi(set_limit);					
+//                        if(dot_flag == 0){
+//							dis_min_r = atoi(set_limit);					
+//						}else if(dot_flag != 0){
+//							memset(buf, '\0', sizeof(buf));
+//							strncpy(buf,set_limit,dot_flag);
+//							dis_min_r = atof(buf);
+//						}
+//                        sprintf(buf,"%4d",dis_min_r);
+						if(dot_flag == 0){
+							set_min_r = atoi(set_limit);					
 						}else if(dot_flag != 0){
 							memset(buf, '\0', sizeof(buf));
 							strncpy(buf,set_limit,dot_flag);
-							dis_min_r = atof(buf);
+							set_min_r = atof(buf);
 						}
-                        sprintf(buf,"%4d",dis_min_r);
+                        sprintf(buf,"%4d",set_min_r);
                         TEXT_SetText(hItem,buf);
                         
                         hItem = WM_GetDialogItem(hWinset, ID_TEXT_27);

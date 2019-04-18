@@ -618,6 +618,11 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 					TEXT_SetText(hItem,buf);
 				}
 			}
+			//分选
+			if(para_set1 == set_1_on)
+			{
+				test_r();
+			}
 		}
 		//显示温度
 		hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_124);       
